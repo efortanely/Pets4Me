@@ -1,5 +1,10 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Home from './Home/Home'
+import About from './About/About'
+import Pets from './Pets/Pets'
+import Breeds from './Breeds/Breeds'
+import Shelters from './Shelters/Shelters'
 import './App.css';
 
 function App() {
@@ -25,55 +30,6 @@ function App() {
         </Switch>
       </div>
     </Router>
-  );
-}
-
-// default homepage
-function Home() {
-  return(
-    <div>
-      <h2>Home</h2>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/pets">Pets</Link>
-          </li>
-          <li>
-            <Link to="/breeds">Breeds</Link>
-          </li>
-          <li>
-            <Link to="/shelters">Shelters</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  );
-}
-
-function Pets() {
-  return(
-    <h2>Pets</h2>
-  );
-}
-
-function Breeds() {
-  return(
-    <h2>Breeds</h2>
-  );
-}
-
-function Shelters() {
-  return(
-    <h2>Shelters</h2>
-  );
-}
-
-function About() {
-  return(
-    <h2>About</h2>
   );
 }
 
