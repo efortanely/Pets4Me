@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFlask } from '@fortawesome/free-solid-svg-icons'
 import { faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import logo from '../static/logo.png'
 import andrew from '../static/andrew.png'
 import rosemary from '../static/rosemary.jpeg'
 import connor from '../static/connor.jpeg'
@@ -21,35 +19,17 @@ import reactbootstrap from '../static/tools/reactbootstrap.png'
 import marvel from '../static/tools/marvelapp.png'
 import gitlab from '../static/gitlab.jpg'
 import postman from '../static/postman.png'
+import Navbar from '../Components/Navbar'
+import Member from '../Components/Member'
+import ToolDoor from '../Components/ToolDoor'
 import './About.css';
 
 function About() {
+    const bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque risus nibh, dapibus a turpis quis, laoreet sollicitudin metus. Nunc sodales vestibulum efficitur. Aenean quis tincidunt dui, non gravida odio. Nam efficitur augue quis.";
+
     return(
       <div>
-        <nav>
-          <div className="Logo">
-            <img src={logo} alt="A logo featuring a dog and cat"></img>
-            <h1>Pets4Me</h1>
-          </div>
-          
-          <ul>
-            <li>
-              <Link className="nav-link" to="/">HOME</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/pets">PETS</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/breeds">BREEDS</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/shelters">SHELTERS</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/about">ABOUT</Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar/>
   
         <div className="about-header">
           <h2>About</h2>
@@ -62,192 +42,12 @@ function About() {
         <p className="about-p">We're a group of students at the University of Texas at Austin, working together in the Software Engineering class for Spring 2020. Our goal is to consolidate information about dog and cat breeds with the animals available at shelters to help those looking for a new furry friend make the most informed decision with their adoption.</p>
   
         <div className="members">
-  
-          <div className="member">
-            <svg className="svg-1">
-              <rect className="top-rect" width="1" height="1"></rect>
-            </svg>
-            <svg className="svg-2">
-              <rect className="bottom-rect" width="1" height="1"></rect>
-            </svg>
-            
-            <img src={andrew} alt="A headshot of Andrew Cramer"></img>
-            <div className="member-text">
-              <h4>Andrew Cramer</h4>
-              <p>Role</p>
-            </div>
-  
-            <div className="door">
-              <div className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque risus nibh, dapibus a turpis quis, laoreet sollicitudin metus. Nunc sodales vestibulum efficitur. Aenean quis tincidunt dui, non gravida odio. Nam efficitur augue quis.</div>
-            </div>
-            
-            <div className="circles">
-              <div className="circle" title="No. Commits">99</div>
-              <div className="circle" title="No. Issues">99</div>
-              <div className="circle" title="No. Unit Tests">99</div>
-            </div>
-  
-            <div className="icons">
-              <FontAwesomeIcon className="icon" icon={faCodeBranch} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faExclamationCircle} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-            </div>
-          </div>
-          
-          <div className="member">
-            <svg className="svg-1">
-              <rect className="top-rect" width="1" height="1"></rect>
-            </svg>
-            <svg className="svg-2">
-              <rect className="bottom-rect" width="1" height="1"></rect>
-            </svg>
-            
-            <img src={rosemary} alt="A headshot of Rosemary Fortanely"></img>
-            <div className="member-text">
-              <h4>Rosemary Fortanely</h4>
-              <p>Role</p>
-            </div>
-  
-            <div className="door">
-              <div className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque risus nibh, dapibus a turpis quis, laoreet sollicitudin metus. Nunc sodales vestibulum efficitur. Aenean quis tincidunt dui, non gravida odio. Nam efficitur augue quis.</div>
-            </div>
-            
-            <div className="circles">
-              <div className="circle" title="No. Commits">99</div>
-              <div className="circle" title="No. Issues">99</div>
-              <div className="circle" title="No. Unit Tests">99</div>
-            </div>
-  
-            <div className="icons">
-              <FontAwesomeIcon className="icon" icon={faCodeBranch} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faExclamationCircle} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-            </div>
-          </div>
-  
-          <div className="member">
-            <svg className="svg-1">
-              <rect className="top-rect" width="1" height="1"></rect>
-            </svg>
-            <svg className="svg-2">
-              <rect className="bottom-rect" width="1" height="1"></rect>
-            </svg>
-            
-            <img src={connor} alt="A headshot of Connor Sheehan"></img>
-            <div className="member-text">
-              <h4>Connor Sheehan</h4>
-              <p>Role</p>
-            </div>
-  
-            <div className="door">
-              <div className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque risus nibh, dapibus a turpis quis, laoreet sollicitudin metus. Nunc sodales vestibulum efficitur. Aenean quis tincidunt dui, non gravida odio. Nam efficitur augue quis.</div>
-            </div>
-            
-            <div className="circles">
-              <div className="circle" title="No. Commits">99</div>
-              <div className="circle" title="No. Issues">99</div>
-              <div className="circle" title="No. Unit Tests">99</div>
-            </div>
-  
-            <div className="icons">
-              <FontAwesomeIcon className="icon" icon={faCodeBranch} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faExclamationCircle} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-            </div>
-          </div>
-  
-          <div className="member">
-            <svg className="svg-1">
-              <rect className="top-rect" width="1" height="1"></rect>
-            </svg>
-            <svg className="svg-2">
-              <rect className="bottom-rect" width="1" height="1"></rect>
-            </svg>
-            
-            <img src={dean} alt="A headshot of Dean Torkelson"></img>
-            <div className="member-text">
-              <h4>Dean Torkelson</h4>
-              <p>Role</p>
-            </div>
-  
-            <div className="door">
-              <div className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque risus nibh, dapibus a turpis quis, laoreet sollicitudin metus. Nunc sodales vestibulum efficitur. Aenean quis tincidunt dui, non gravida odio. Nam efficitur augue quis.</div>
-            </div>
-            
-            <div className="circles">
-              <div className="circle" title="No. Commits">99</div>
-              <div className="circle" title="No. Issues">99</div>
-              <div className="circle" title="No. Unit Tests">99</div>
-            </div>
-  
-            <div className="icons">
-              <FontAwesomeIcon className="icon" icon={faCodeBranch} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faExclamationCircle} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-            </div>
-          </div>
-  
-          <div className="member">
-            <svg className="svg-1">
-              <rect className="top-rect" width="1" height="1"></rect>
-            </svg>
-            <svg className="svg-2">
-              <rect className="bottom-rect" width="1" height="1"></rect>
-            </svg>
-            
-            <img src={cristian} alt="A headshot of Cristian Garza"></img>
-            <div className="member-text">
-              <h4>Cristian Garza</h4>
-              <p>Role</p>
-            </div>
-  
-            <div className="door">
-              <div className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque risus nibh, dapibus a turpis quis, laoreet sollicitudin metus. Nunc sodales vestibulum efficitur. Aenean quis tincidunt dui, non gravida odio. Nam efficitur augue quis.</div>
-            </div>
-            
-            <div className="circles">
-              <div className="circle" title="No. Commits">99</div>
-              <div className="circle" title="No. Issues">99</div>
-              <div className="circle" title="No. Unit Tests">99</div>
-            </div>
-  
-            <div className="icons">
-              <FontAwesomeIcon className="icon" icon={faCodeBranch} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faExclamationCircle} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-            </div>
-          </div>
-  
-          <div className="member">
-            <svg className="svg-1">
-              <rect className="top-rect" width="1" height="1"></rect>
-            </svg>
-            <svg className="svg-2">
-              <rect className="bottom-rect" width="1" height="1"></rect>
-            </svg>
-            
-            <img src={robert} alt="A headshot of Robert Hrusecky"></img>
-            <div className="member-text">
-              <h4>Robert Hrusecky</h4>
-              <p>Role</p>
-            </div>
-          
-            <div className="door">
-              <div className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque risus nibh, dapibus a turpis quis, laoreet sollicitudin metus. Nunc sodales vestibulum efficitur. Aenean quis tincidunt dui, non gravida odio. Nam efficitur augue quis.</div>
-            </div>
-            
-            <div className="circles">
-              <div className="circle" title="No. Commits">99</div>
-              <div className="circle" title="No. Issues">99</div>
-              <div className="circle" title="No. Unit Tests">99</div>
-            </div>
-  
-            <div className="icons">
-              <FontAwesomeIcon className="icon" icon={faCodeBranch} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faExclamationCircle} color="#528C8B" size="1x"/>
-              <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-            </div>
-          </div>
+          <Member img={andrew} name="Andrew Cramer" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
+          <Member img={rosemary} name="Rosemary Fortanely" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
+          <Member img={connor} name="Connor Sheehan" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
+          <Member img={dean} name="Dean Torkelson" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
+          <Member img={cristian} name="Cristian Garza" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
+          <Member img={robert} name="Robert Hrusecky" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
         </div>
   
         <div className="repo-stats">
@@ -274,7 +74,7 @@ function About() {
         <div className="data-sources">
           <h3>Data Sources</h3>
   
-          <div className="data-source">
+          <div className="data-source">            
             <div className="rect">
               <img src={petfinder} alt="The PetFinder API logo"></img>
             </div>
@@ -313,66 +113,12 @@ function About() {
   
         <div className="tools">
           <h3>Tools</h3>
-  
-          <div className="tool">
-            <div className="rect">
-              <img src={ts} alt="The TypeScript logo"></img>
-            </div>
-            <div className="door">
-              <div className="text">
-                <h5>TypeScript</h5>
-                <p>This is how the tool was used.</p>
-              </div>
-            </div>
-          </div>
-  
-          <div className="tool">
-            <div className="rect">
-              <img src={reactlogo} alt="The React logo"></img>
-            </div>
-            <div className="door">
-              <div className="text">
-                <h5>React</h5>
-                <p>This is how the tool was used.</p>
-              </div>
-            </div>
-          </div>
-  
-          <div className="tool">
-            <div className="rect">
-              <img src={reactrouter} alt="The React Router logo"></img>
-            </div>
-            <div className="door">
-              <div className="text">
-                <h5>React Router</h5>
-                <p>This is how the tool was used.</p>
-              </div>
-            </div>
-          </div>
-  
-          <div className="tool">
-            <div className="rect">
-              <img src={reactbootstrap} alt="The React Bootstrap logo"></img>
-            </div>
-            <div className="door">
-              <div className="text">
-                <h5>React Bootstrap</h5>
-                <p>This is how the tool was used.</p>
-              </div>
-            </div>
-          </div>
-  
-          <div className="tool">
-            <div className="rect">
-              <img src={marvel} alt="The Marvel App logo"></img>
-            </div>
-            <div className="door">
-              <div className="text">
-                <h5>Marvel App</h5>
-                <p>This is how the tool was used.</p>
-              </div>
-            </div>
-          </div>
+
+          <ToolDoor img={ts} title="TypeScript" desc="This is how the tool was used."/>
+          <ToolDoor img={reactlogo} title="React" desc="This is how the tool was used."/>
+          <ToolDoor img={reactrouter} title="React Router" desc="This is how the tool was used."/>
+          <ToolDoor img={reactbootstrap} title="React Bootstrap" desc="This is how the tool was used."/>
+          <ToolDoor img={marvel} title="Marvel App" desc="This is how the tool was used."/>
   
         </div>
   

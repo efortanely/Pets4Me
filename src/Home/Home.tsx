@@ -1,41 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaw } from '@fortawesome/free-solid-svg-icons'
-import logo from '../static/logo.png'
 import shapeOne from '../static/shape1.svg'
 import personOne from '../static/person1.svg'
 import personTwo from '../static/person2.svg'
 import shapeTwo from '../static/shape2.svg'
+import Navbar from '../Components/Navbar'
 import './Home.css';
 
 function Home() {
     return(
       <div>
-        <nav>
-          <div className="Logo">
-            <img src={logo} alt="A logo featuring a dog and cat"></img>
-            <h1>Pets4Me</h1>
-          </div>
-          
-          <ul>
-            <li>
-              <Link className="nav-link" to="/">HOME</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/pets">PETS</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/breeds">BREEDS</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/shelters">SHELTERS</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/about">ABOUT</Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar/>
         
         <img className="shapeOne" src={shapeOne} alt="A rounded pink shape"></img>
         <img className="personOne" src={personOne} alt="A woman holding a brown cat"></img>
