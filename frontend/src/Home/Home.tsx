@@ -5,14 +5,11 @@ import shapeOne from '../static/shape1.svg'
 import personOne from '../static/person1.svg'
 import personTwo from '../static/person2.svg'
 import shapeTwo from '../static/shape2.svg'
-import Navbar from '../Components/Navbar'
 import './Home.css';
 
 function Home() {
     return(
-      <div>
-        <Navbar/>
-        
+      <div>        
         <img className="shapeOne" src={shapeOne} alt="A rounded pink shape"></img>
         <img className="personOne" src={personOne} alt="A woman holding a brown cat"></img>
         <img className="personTwo" src={personTwo} alt="A woman holding a brown dog"></img>
@@ -22,7 +19,6 @@ function Home() {
           <h1>Make a New Friend!</h1>
           <h2>adopt a pet today</h2>
           <p>Our goal is to make finding a new furry friend as easy as possible. Explore the best fit for your lifestyle with our dog and cat breed search engine, or jump right into discovering pets at your local shelters.</p>
-  
           <FontAwesomeIcon className="paw" icon={faPaw} color="#581730" size="2x"/>
         </div>
       </div>
