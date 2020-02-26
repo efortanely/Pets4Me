@@ -5,7 +5,7 @@ import About from './About/About'
 import Pets from './model-homepages/Pets/Pets'
 import Breeds from './model-homepages/Breeds/Breeds'
 import Shelters from './model-homepages/Shelters/Shelters'
-import Navbar from './Components/Navbar'
+import Navbar from './common/components/Navbar'
 import './App.css';
 
 function App() {
