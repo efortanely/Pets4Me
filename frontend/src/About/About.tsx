@@ -1,8 +1,6 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFlask } from '@fortawesome/free-solid-svg-icons'
-import { faCodeBranch } from '@fortawesome/free-solid-svg-icons'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { RepositoryStatistics } from './components/repository-statistics'
+import Navbar from '../common/components/Navbar'
 import andrew from '../static/andrew.png'
 import rosemary from '../static/rosemary.jpeg'
 import connor from '../static/connor.jpeg'
@@ -19,9 +17,8 @@ import reactbootstrap from '../static/tools/reactbootstrap.png'
 import marvel from '../static/tools/marvelapp.png'
 import gitlab from '../static/gitlab.jpg'
 import postman from '../static/postman.png'
-import Navbar from '../Components/Navbar'
-import Member from '../Components/Member'
-import ToolDoor from '../Components/ToolDoor'
+import { Member } from './components/member'
+import ToolDoor from './components/ToolDoor'
 import './About.css';
 
 function About() {
@@ -42,34 +39,15 @@ function About() {
         <p className="about-p">We're a group of students at the University of Texas at Austin, working together in the Software Engineering class for Spring 2020. Our goal is to consolidate information about dog and cat breeds with the animals available at shelters to help those looking for a new furry friend make the most informed decision with their adoption.</p>
   
         <div className="members">
-          <Member img={andrew} name="Andrew Cramer" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
-          <Member img={rosemary} name="Rosemary Fortanely" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
-          <Member img={connor} name="Connor Sheehan" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
-          <Member img={dean} name="Dean Torkelson" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
-          <Member img={cristian} name="Cristian Garza" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
-          <Member img={robert} name="Robert Hrusecky" role="Role" bio={bio} commits={99} issues={99} tests={99}/>
+          <Member img={andrew} name="Andrew Cramer" role="Role" bio={bio} author_name={["Andrew Cramer", "Andrew"]} gitlab_id="acramer" tests={0}/>
+          <Member img={rosemary} name="Rosemary Fortanely" role="Role" bio={bio} author_name={["Rosemary Fortanely", "Rosemary", "codesmary"]} gitlab_id="codesmary" tests={0}/>
+          <Member img={connor} name="Connor Sheehan" role="Role" bio={bio} author_name={["Connor Sheehan", "connor6321", "Connor"]} gitlab_id="connor6321" tests={0}/>
+          <Member img={dean} name="Dean Torkelson" role="Role" bio={bio} author_name={["Dean Torkelson", "Dean"]} gitlab_id="deantorkelson" tests={0}/>
+          <Member img={cristian} name="Cristian Garza" role="Role" bio={bio} author_name={["Cristian Garza", "Cristian"]} gitlab_id="CristianGarza" tests={0}/>
+          <Member img={robert} name="Robert Hrusecky" role="Role" bio={bio} author_name={["Robert Hrusecky", "Robert"]} gitlab_id="robert-hrusecky" tests={0}/>
         </div>
   
-        <div className="repo-stats">
-          <h3>Repository Statistics</h3>
-          <div className="circles">
-            <div className="row">
-              <FontAwesomeIcon className="icon" icon={faCodeBranch} color="#528C8B" size="1x"/>
-              <div className="circle">999</div>
-              <p>Total No. Commits</p>
-            </div>
-            <div className="row">
-              <FontAwesomeIcon className="icon" icon={faExclamationCircle} color="#528C8B" size="1x"/>
-              <div className="circle">999</div>
-              <p>Total No. Issues⠀ ⠀</p>
-            </div>
-            <div className="row">
-              <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-              <div className="circle">999</div>
-              <p>Total No. Unit Tests</p>
-            </div>
-          </div>
-        </div>
+        <RepositoryStatistics/>
   
         <div className="data-sources">
           <h3>Data Sources</h3>

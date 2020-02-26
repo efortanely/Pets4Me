@@ -5,7 +5,7 @@ import shapeOne from '../static/shape1.svg'
 import personOne from '../static/person1.svg'
 import personTwo from '../static/person2.svg'
 import shapeTwo from '../static/shape2.svg'
-import Navbar from '../Components/Navbar'
+import Navbar from '../common/components/Navbar'
 import './Home.css';
 
 function Home() {
