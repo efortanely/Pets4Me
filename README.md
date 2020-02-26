@@ -30,3 +30,10 @@ To run the production optimized server, first build:
 Then start the server:
 
 `PORT=8080 npm start`
+
+### Deploying
+
+Setup the [gloud sdk](https://cloud.google.com/sdk/docs) 
+
+from the `frontend` directory, run `./deploy.sh` with the API_KEY environment
+variable set, or use `./deploy -k <API_KEY>`
