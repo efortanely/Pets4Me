@@ -2,15 +2,17 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Home from './Home/Home'
 import About from './About/About'
-import Pets from './Pets/Pets'
-import Breeds from './Breeds/Breeds'
-import Shelters from './Shelters/Shelters'
+import Pets from './model-homepages/Pets/Pets'
+import Breeds from './model-homepages/Breeds/Breeds'
+import Shelters from './model-homepages/Shelters/Shelters'
+import Navbar from './common/components/Navbar'
 import './App.css';
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <Navbar/>
         <Switch>
           <Route path="/pets">
             <Pets />
