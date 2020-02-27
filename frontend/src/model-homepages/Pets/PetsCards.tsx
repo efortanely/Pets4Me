@@ -6,55 +6,42 @@ import pegasus from '../../static/pets/cat1.jpeg'
 
 function PetsCards() {
     return (
-        <div>
-            <form>
-                <label>
-                    <input type="text" name="name" placeholder='Search' />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-            <div className='cards'>
-                <div className='single-card'>
-                    <img className='card-image' src={tomHanks} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Tom Hanks
+        <div className='cards'>
+            <a className='single-card' href="\pets\tom-hanks">
+                <img className='card-image' src={tomHanks} alt=''></img>
+                <div className='card-text'>
+                    <h3>
+                        Tom Hanks
                     </h3>
-                        Pit mix<br></br>
-                        65 lbs<br></br>
-                        6 years 8 months<br></br>
-                        $25
+                    Terrier mix<br/>
+                    Male<br/>
+                    Adult‏‏‎ ‎‏‏‎ ‎●‏‏‎ ‎‏‏‎ ‎Large
                 </div>
-                </div>
+            </a>
 
-                <div className='single-card'>
-                    <img className='card-image' src={funGuy} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Fun Guy
+            <a className='single-card' href="\pets\fun-guy">
+                <img className='card-image' src={funGuy} alt=''></img>
+                <div className='card-text'>
+                    <h3>
+                        Fun Guy
                     </h3>
-                        Shorthair Chihuahua<br></br>
-                        16 lbs<br></br>
-                        5 years 3 months<br></br>
-                        $175
+                    Chihuahua Mix<br/>
+                    Male<br/>
+                    Adult‏‏ ‏‏‎ ‎‏‏‎‎●‏‏‏‎ ‎‏‎ ‎‎‎‎‎‎‎‎Small
                 </div>
-                </div>
+            </a>
 
-                <div className='single-card'>
-                    <img className='card-image' src={pegasus} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Pegasus 19
+            <a className='single-card' href="\pets\pegasus-19">
+                <img className='card-image' src={pegasus} alt=''></img>
+                <div className='card-text'>
+                    <h3>
+                        Pegasus 19
                     </h3>
-                        <div>
-                            Domestic Shorthair<br></br>
-                            4 lbs<br></br>
-                            1 year 7 months<br></br>
-                            $90<br></br>
-                        </div>
-                    </div>
+                    Domestic Shorthair<br/>
+                    Female<br/>
+                    Adult‏‏‎ ‎‏‏‎ ‎●‏‏‎ ‎‏‏‎ ‎Small
                 </div>
-            </div>
+            </a>
         </div>
     );
 } export default PetsCards;

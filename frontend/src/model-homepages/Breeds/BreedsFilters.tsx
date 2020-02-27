@@ -1,7 +1,24 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown'
 import Slider from '@material-ui/core/Slider'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
+const muiTheme = createMuiTheme({
+    overrides:{
+      MuiSlider: {
+        thumb:{
+        color: "#581730"
+        },
+        track: {
+          color: '#528C8B'
+        },
+        rail: {
+          color: '#84747B',
+          width: '100%',
+        }
+      }
+  }
+  });
 
 function BreedsFilters() {
     return (
@@ -31,25 +48,31 @@ function BreedsFilters() {
                 </Dropdown.Menu>
             </Dropdown>
 
-            <div>
-                <h3>Average lifespan</h3>
-                <Slider/>
-            </div>
+            <ThemeProvider theme={muiTheme}>
+                <div>
+                    <h5>Average lifespan</h5>
+                    <Slider
+                    valueLabelDisplay='auto'/>
+                </div>
 
-            <div>
-                <h3>Average height</h3>
-                <Slider/>
-            </div>
+                <div>
+                    <h5>Average height</h5>
+                    <Slider
+                    valueLabelDisplay='auto'/>
+                </div>
 
-            <div>
-                <h3>Average weight</h3>
-                <Slider/>
-            </div>
+                <div>
+                    <h5>Average weight</h5>
+                    <Slider
+                    valueLabelDisplay='auto'/>
+                </div>
 
-            <div>
-                <h3>Shedding level</h3>
-                <Slider/>
-            </div>
+                <div>
+                    <h5>Shedding level</h5>
+                    <Slider
+                    valueLabelDisplay='auto'/>
+                </div>
+            </ThemeProvider>
         </div>
     );
 } export default BreedsFilters;

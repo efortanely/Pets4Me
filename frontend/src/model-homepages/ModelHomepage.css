@@ -4,34 +4,107 @@
     font-weight: bold;
 }
 
-
 .model-homepage-content {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .model-homepage {
     padding: 10px;
 }
 
+.model-homepage-content-col .sliders{
+    display: flex;
+    flex-direction: row;
+}
+
+.model-homepage-content-col .sliders> *{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+/* Dropdown Menu */
+
 .filters > * {
     flex-grow: 1;
     padding: 5px;
+    text-align: center;
 }
 
-.cards {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    flex-grow: 9;
-    justify-content: flex-start;
-    align-content: flex-start;
+.filters .dropdown{
+    width: 100%;
+}
+
+.filters .dropdown-toggle{
+    background-color: white !important;
+    border-color: #581730 !important;
+    color: #581730 !important;
+    text-align: left;
+    width: 100%;
+}
+
+.dropdown-toggle::after {
+    float: right;
+    transform: translateY(10px);
+}
+
+.filters .dropdown-toggle:focus{
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 140, 139, 255) !important;
+}
+
+.filters .dropdown-item:active{
+    background-color: #BFDEDD;
+}
+
+.filters .dropdown-menu a{
+    color: #581730;
+}
+
+.filters form{
+    border-color: #581730;
+}
+
+.filters form input{
+    width: 350px;
+    box-sizing: border-box;    
+}
+
+.filters h5{
+    color: #581730;
+}
+
+.filters input[type=text], input[type=text]::placeholder{
+    color: #581730;
+}
+
+.filters input[type=text]::placeholder{
+    color: #84747B;
+}
+
+.filters input:focus{
+    outline-color: #528C8B;
+}
+
+/* End Dropdown Menu */
+
+.cards{
+    display: -moz-inline-grid;
+    margin-left: 5%;
+    grid-auto-rows: 1fr;
 }
 
 .single-card {
+    display: inline-block;
     background-color: #966a7d;
     padding: 5px;
     margin: 10px;
     border-radius: 5px;
+    width: 45%;
+}
+
+a.single-card,
+a.single-card:hover {
+  text-decoration: none;
 }
 
 .card-image {
@@ -42,7 +115,10 @@
     margin-right: auto;
     border-radius: 5px;
     margin-bottom: 5px;
-
+    width: 100%;
+}
+.card-text h3{
+    font-size: 20px;
 }
 
 .card-text {
@@ -50,4 +126,47 @@
     color: #591f34;
     border-radius: 5px;
     text-align: center;
+    padding: 5px;
+    font-size: 13px;
+}
+
+@media screen and (min-width: 700px){
+    .single-card {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 950px){
+    .model-homepage-content {
+        flex-direction: row;
+    }
+
+    .model-homepage-content-col{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .model-homepage-content-col .sliders .slider1, .model-homepage-content-col .sliders .slider2{
+        width: 200px;
+    }
+
+    .filters > * {
+        text-align: left;
+    }
+
+    .filters .dropdown{
+        width: 300px;
+    }
+
+    .filters .dropdown-toggle{
+        width: 100%;
+    }
+
+    .filters form input{
+        width: 200px;
+    }
+
+    .single-card {
+        max-width: 350px;
+    }
 }

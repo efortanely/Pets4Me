@@ -6,53 +6,45 @@ import domesticShorthair from '../../static/breeds/domestic-shorthair.jpg'
 
 function BreedsCards() {
     return (
-        <div>
-            <form>
-                <label>
-                    <input type="text" name="name" placeholder='Search' />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-            <div className='cards'>
-                <div className='single-card'>
-                    <img className='card-image' src={chihuahua} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Chihuahua
-                        </h3>
-                        Other Names: Chi, Chi-chi<br></br>
-                        Country of Origin: Mexico<br></br>
-                        Personality Traits: Charming, Graceful, Sassy<br></br>
-                        Species: Dog
+        <div className='cards'>
+            <a className='single-card' href="\breeds\chihuahua">
+                <img className='card-image' src={chihuahua} alt=''></img>
+                <div className='card-text'>
+                    <h3>
+                        Chihuahua
+                    </h3>
+                    Other Names: Chi, Chi-chi<br/>
+                    Country of Origin: Mexico<br/>
+                    Personality Traits: Charming, Graceful, Sassy<br/>
+                    Species: Dog
                 </div>
-                </div>
+                </a>
 
-                <div className='single-card'>
-                    <img className='card-image' src={staffordshire} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Staffordshire Bull Terrier
-                        </h3>
-                        Other Names: Stafford<br></br>
-                        Country of Origin: England<br></br>
-                        Personality Traits: Clever, Brave, Tenacious<br></br>
-                        Species: Dog
+            <a className='single-card' href="\breeds\staffordshire">
+                <img className='card-image' src={staffordshire} alt=''></img>
+                <div className='card-text'>
+                    <h3>
+                        Staffordshire Bull Terrier
+                    </h3>
+                    Other Names: Stafford<br/>
+                    Country of Origin: England<br/>
+                    Personality Traits: Clever, Brave, Tenacious<br/>
+                    Species: Dog
                 </div>
-                </div>
+            </a>
 
-                <div className='single-card'>
-                    <img className='card-image' src={domesticShorthair} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Domestic Shorthair
-                        </h3>
-                        Other Names: Moggie, mutt<br></br>
-                        Country of Origin: Worldwide<br></br>
-                        Personality Traits: Playful, outgoing, friendly, loving<br></br>
-                        Species: Cat
-                    </div>
+            <a className='single-card' href="\breeds\domestic-shorthair">
+                <img className='card-image' src={domesticShorthair} alt=''></img>
+                <div className='card-text'>
+                    <h3>
+                        Domestic Shorthair
+                    </h3>
+                    Other Names: Moggie, mutt<br/>
+                    Country of Origin: Worldwide<br/>
+                    Personality Traits: Playful, outgoing, friendly, loving
+                    Species: Cat
                 </div>
-            </div>
+            </a>
         </div>
     );
 } export default BreedsCards;

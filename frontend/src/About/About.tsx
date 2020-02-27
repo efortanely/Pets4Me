@@ -2,7 +2,7 @@ import React from 'react';
 import { RepositoryStatistics } from './components/repository-statistics'
 import andrew from '../static/andrew.png'
 import rosemary from '../static/rosemary.jpeg'
-import connor from '../static/connor.jpeg'
+import connor from '../static/connor.jpg'
 import dean from '../static/dean.jpeg'
 import cristian from '../static/cristian.jpeg'
 import robert from '../static/robert.png'
@@ -12,6 +12,7 @@ import catapi from '../static/thecatapi.png'
 import ts from '../static/tools/ts.png'
 import reactlogo from '../static/tools/react.png'
 import marvel from '../static/tools/marvelapp.png'
+import bash from '../static/tools/bash.png'
 import gitlab from '../static/gitlab.jpg'
 import postman from '../static/postman.png'
 import { Member } from './components/member'
@@ -49,7 +50,7 @@ function About() {
           <Member img={andrew} name="Andrew Cramer" role={andrew_role} bio={andrew_bio} author_name={["Andrew Cramer", "Andrew"]} gitlab_id="acramer" tests={0}/>
           <Member img={rosemary} name="Rosemary Fortanely" role={rosemary_role} bio={rosemary_bio} author_name={["Rosemary Fortanely", "Rosemary", "codesmary"]} gitlab_id="codesmary" tests={0}/>
           <Member img={connor} name="Connor Sheehan" role={connor_role} bio={connor_bio} author_name={["Connor Sheehan", "connor6321", "Connor"]} gitlab_id="connor6321" tests={0}/>
-          <Member img={dean} name="Dean Torkelson" role={dean_role} bio={dean_bio} author_name={["Dean Torkelson", "Dean"]} gitlab_id="deantorkelson" tests={0}/>
+          <Member img={dean} name="Dean Torkelson" role={dean_role} bio={dean_bio} author_name={["Dean Torkelson", "deantorkelson", "Dean"]} gitlab_id="deantorkelson" tests={0}/>
           <Member img={cristian} name="Cristian Garza" role={cristian_role} bio={cristian_bio} author_name={["Cristian Garza", "Cristian"]} gitlab_id="CristianGarza" tests={0}/>
           <Member img={robert} name="Robert Hrusecky" role={robert_role} bio={robert_bio} author_name={["Robert Hrusecky", "Robert"]} gitlab_id="robert-hrusecky" tests={0}/>
         </div>
@@ -66,7 +67,7 @@ function About() {
             <div className="door">
               <div className="text">
                 <a href="https://www.petfinder.com/developers">PetFinder API</a>
-                <p>This is how the API was scraped.</p>
+                <p></p>
               </div>
             </div>
           </div>
@@ -78,7 +79,7 @@ function About() {
             <div className="door">
               <div className="text">
                 <a href="https://thedogapi.com">The Dog API</a>
-                <p>This is how the API was scraped.</p>
+                <p></p>
               </div>
             </div>
           </div>
@@ -90,7 +91,7 @@ function About() {
             <div className="door">
               <div className="text">
                 <a href="https://thecatapi.com">The Cat API</a>
-                <p>This is how the API was scraped.</p>
+                <p></p>
               </div>
             </div>
           </div>
@@ -99,10 +100,11 @@ function About() {
         <div className="tools">
           <h3>Tools</h3>
 
-          <ToolDoor img={ts} title="TypeScript" desc="This is how the tool was used."/>
-          <ToolDoor img={reactlogo} title="React" desc="This is how the tool was used."/>
-          <ToolDoor img={marvel} title="Marvel App" desc="This is how the tool was used."/>
-  
+          <ToolDoor img={ts} title="TypeScript" desc="We used TypeScript to make our lives a little easier by introducing type safety."/>
+          <ToolDoor img={reactlogo} title="React" desc="We used React for our front-end."/>
+          <ToolDoor img={marvel} title="Marvel App" desc="This was used to create static mock-ups for our pages."/>
+          <ToolDoor img={bash} title="Bash" desc="We used Bash to help with deployment."/>
+
         </div>
   
         <div className="repo-api">
