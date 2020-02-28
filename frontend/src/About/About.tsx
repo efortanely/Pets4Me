@@ -13,6 +13,8 @@ import ts from '../static/tools/ts.png'
 import reactlogo from '../static/tools/react.png'
 import marvel from '../static/tools/marvelapp.png'
 import bash from '../static/tools/bash.png'
+import react_bootstrap from '../static/tools/react-bootstrap.png'
+import material_ui from '../static/tools/material-ui.png'
 import gitlab from '../static/gitlab.jpg'
 import postman from '../static/postman.png'
 import { Member } from './components/member'
@@ -104,6 +106,8 @@ function About() {
           <ToolDoor img={reactlogo} title="React" desc="We used React for our front-end."/>
           <ToolDoor img={marvel} title="Marvel App" desc="This was used to create static mock-ups for our pages."/>
           <ToolDoor img={bash} title="Bash" desc="We used Bash to help with deployment."/>
+          <ToolDoor img={react_bootstrap} title="React Bootstrap" desc="We used these front-end tools to display information in a presentable format."/>
+          <ToolDoor img={material_ui} title="Material UI" desc="We used these front-end tools to add otherwise complicated components to our site with ease."/>
 
         </div>
   
@@ -126,7 +130,7 @@ function About() {
             </div>
             <div className="door">
               <div className="text">
-                <a href="https://google.com">Postman</a>
+                <a href="https://documenter.getpostman.com/view/3840765/SzKYQcyE?version=latest">Postman</a>
               </div>
             </div>
           </div>
