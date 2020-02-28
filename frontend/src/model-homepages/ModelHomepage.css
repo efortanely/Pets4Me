@@ -128,6 +128,8 @@ a.single-card:hover {
     text-align: center;
     padding: 5px;
     font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media screen and (min-width: 700px){
