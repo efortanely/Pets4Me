@@ -20,7 +20,7 @@ function SheltersCards() {
                     </div>
                 </a>
 
-                <a className='single-card' href="/shelters/austin-pets-alive!">
+                <a className='single-card' href="/shelters/austin-pets-alive">
                     <img className='card-image' src={apa} alt=''></img>
                     <div className='card-text'>
                         <h3>

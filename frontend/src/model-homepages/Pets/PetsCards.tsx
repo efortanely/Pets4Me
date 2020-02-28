@@ -7,7 +7,7 @@ import pegasus from '../../static/pets/cat1.jpeg'
 function PetsCards() {
     return (
         <div className='cards'>
-            <a className='single-card' href="\pets\tom-hanks">
+            <a className='single-card' href="/pets/tom-hanks">
                 <img className='card-image' src={tomHanks} alt=''></img>
                 <div className='card-text'>
                     <h3>
@@ -19,7 +19,7 @@ function PetsCards() {
                 </div>
             </a>
 
-            <a className='single-card' href="\pets\fun-guy">
+            <a className='single-card' href="/pets/fun-guy">
                 <img className='card-image' src={funGuy} alt=''></img>
                 <div className='card-text'>
                     <h3>
@@ -31,7 +31,7 @@ function PetsCards() {
                 </div>
             </a>
 
-            <a className='single-card' href="\pets\pegasus-19">
+            <a className='single-card' href="/pets/pegasus-19">
                 <img className='card-image' src={pegasus} alt=''></img>
                 <div className='card-text'>
                     <h3>

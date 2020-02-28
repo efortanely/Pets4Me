@@ -1,0 +1,23 @@
+.model-instancepage {
+    padding-bottom: 20px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    padding-left: 10px;
+}
+
+.instancepage-image {
+    border-radius: 5px;
+    flex-grow: 3;
+    height: 480px;
+}
+
+.instancepage-text {
+    flex-grow: 2;
+    padding: 10px;
+    color: #581730;
+}
+
+.instancepage-text a, .instancepage-text a:hover{
+    color: #FAA851;
+}
