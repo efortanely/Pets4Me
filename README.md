@@ -1,7 +1,49 @@
 # pets4me
+Our goal is to make finding a new furry friend as easy as possible. Explore the best fit for your lifestyle with our dog and cat breed search engine, or jump right into discovering pets at your local shelters.
 
-We’re here to kick ass and make a cool website... and we’re all outta ass.
+## Members
+* Andrew Cramer
+    * EID: ac49725
+    * Gitlab ID: acramer
+    * Estimated Time to Completion: 21 hrs
 
+
+* Rosemary Fortanely 
+    * EID: emf2283
+    * Gitlab ID: codesmary
+    * Estimated Time to Completion: 15 hrs
+
+
+* Connor Sheehan 
+    * EID: cps2255
+    * Gitlab ID: connor6321
+    * Estimated Time to Completion: 20 hrs
+
+
+* Dean Torkelson
+    * EID: dt24566
+    * Gitlab ID: deantorkelson
+    * Estimated Time to Completion: 15 hrs
+
+
+* Cristan Garza
+    * EID: cg42574
+    * Gitlab ID: CristianGarza
+    * Estimated Time to Completion: 16 hrs
+
+
+* Robert Hrusecky
+    * EID: reh3279
+    * Gitlab ID: robert-hrusecky
+    * Estimated Time to Completion: 15 hrs
+
+Git SHA: d9c543e5b3685c830509f820be9cd2ad39a66b2f
+
+Phase One Project Leader: Connor Sheehan
+
+API Doc: https://documenter.getpostman.com/view/3840765/SzKYQcyE?version=latest
+
+Website: https://www.pets4.me
 ## Frontend
 
 ### First time setup
