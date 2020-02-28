@@ -2,14 +2,13 @@ import { IssuesStatistics } from '../../models/issues-statistics'
 import { Commit } from '../../models/commit'
 import { Issue } from '../../models/issue'
 import React from 'react'
+import { Contributor } from '../../models/contributor';
 
 export class GitlabApiService {
-  api_key = process.env.API_KEY
   api_url: string = "https://gitlab.com/api/v4"
   project_id: string = "16969987"
 
   buildUrl(path: string, params: any): string {
-    params.access_token = this.api_key
 
     var query_string = Object.keys(params).map((key) => {
       return '?' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
@@ -25,8 +24,14 @@ export class GitlabApiService {
   }
 
   getCommits(): Promise<any> {
-    return fetch(this.buildUrl('repository/commits', {ref_name: 'master'}))
+    return fetch(this.buildUrl('repository/commits', { ref_name: 'master' }))
         .then(res => res.json() as Promise<Commit[]>)
+        .catch(console.log)
+  }
+
+  getContributors(): Promise<any> {
+    return fetch(this.buildUrl("repository/contributors", { }))
+        .then(res => res.json() as Promise<Contributor[]>)
         .catch(console.log)
   }
 
