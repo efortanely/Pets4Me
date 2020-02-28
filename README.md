@@ -6,44 +6,51 @@ Our goal is to make finding a new furry friend as easy as possible. Explore the 
     * EID: ac49725
     * Gitlab ID: acramer
     * Estimated Time to Completion: 21 hrs
+    * Actual Time to Completion: 24 hrs
 
 
 * Rosemary Fortanely 
     * EID: emf2283
     * Gitlab ID: codesmary
     * Estimated Time to Completion: 15 hrs
+    * Actual Time to Completion: 20 hrs
 
 
 * Connor Sheehan 
     * EID: cps2255
     * Gitlab ID: connor6321
     * Estimated Time to Completion: 20 hrs
+    * Actual Time to Completion: 20 hrs
 
 
 * Dean Torkelson
     * EID: dt24566
     * Gitlab ID: deantorkelson
     * Estimated Time to Completion: 15 hrs
+    * Actual Time to Completion: 21 hrs
 
 
 * Cristan Garza
     * EID: cg42574
     * Gitlab ID: CristianGarza
     * Estimated Time to Completion: 16 hrs
+    * Actual Time to Completion: 22 hrs
 
 
 * Robert Hrusecky
     * EID: reh3279
     * Gitlab ID: robert-hrusecky
     * Estimated Time to Completion: 15 hrs
+    * Actual Time to Completion: 23 hrs
 
-Git SHA: d9c543e5b3685c830509f820be9cd2ad39a66b2f
+Git SHA: 51cf2d0f190c77fb9e403d3491eb2bab83c183f4
 
 Phase One Project Leader: Connor Sheehan
 
-API Doc: https://documenter.getpostman.com/view/3840765/SzKYQcyE?version=latest
+[API Docs](https://documenter.getpostman.com/view/3840765/SzKYQcyE?version=latest)
 
-Website: https://www.pets4.me
+[Website](https://www.pets4.me)
+
 ## Frontend
 
 ### First time setup
@@ -75,7 +82,9 @@ Then start the server:
 
 ### Deploying
 
-Setup the [gloud sdk](https://cloud.google.com/sdk/docs) 
+Setup the [gloud sdk](https://cloud.google.com/sdk/docs)
 
-from the `frontend` directory, run `./deploy.sh` with the API_KEY environment
+Generate the production optimized server with `npm run build`
+
+From the `frontend` directory, run `./deploy.sh` with the API_KEY environment
 variable set, or use `./deploy -k <API_KEY>`
