@@ -7,7 +7,7 @@ import domesticShorthair from '../../static/breeds/domestic-shorthair.jpg'
 function BreedsCards() {
     return (
         <div className='cards'>
-            <a className='single-card' href="\breeds\chihuahua">
+            <a className='single-card' href="/breeds/chihuahua">
                 <img className='card-image' src={chihuahua} alt=''></img>
                 <div className='card-text'>
                     <h3>
@@ -20,7 +20,7 @@ function BreedsCards() {
                 </div>
                 </a>
 
-            <a className='single-card' href="\breeds\staffordshire">
+            <a className='single-card' href="/breeds/staffordshire">
                 <img className='card-image' src={staffordshire} alt=''></img>
                 <div className='card-text'>
                     <h3>
@@ -33,7 +33,7 @@ function BreedsCards() {
                 </div>
             </a>
 
-            <a className='single-card' href="\breeds\domestic-shorthair">
+            <a className='single-card' href="/breeds/domestic-shorthair">
                 <img className='card-image' src={domesticShorthair} alt=''></img>
                 <div className='card-text'>
                     <h3>

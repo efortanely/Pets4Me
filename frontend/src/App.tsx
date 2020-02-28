@@ -6,6 +6,16 @@ import Pets from './model-homepages/Pets/Pets'
 import Breeds from './model-homepages/Breeds/Breeds'
 import Shelters from './model-homepages/Shelters/Shelters'
 import Navbar from './common/components/Navbar'
+import TomHanks from './model-instancepages/Pets/TomHanks'
+import FunGuy from './model-instancepages/Pets/FunGuy'
+import Pegasus19 from './model-instancepages/Pets/Pegasus19'
+import Chihuahua from './model-instancepages/Breeds/Chihuahua'
+import StaffBullTerrier from './model-instancepages/Breeds/StaffBullTerrier'
+import DomesticShorthair from './model-instancepages/Breeds/DomesticShorthair'
+import AnimalCenter from './model-instancepages/Shelters/AnimalCenter'
+import AustinPetsAlive from './model-instancepages/Shelters/AustinPetsAlive'
+import HumaneSociety from './model-instancepages/Shelters/HumaneSociety'
+
 import './App.css';
 
 function App() {
@@ -14,11 +24,38 @@ function App() {
       <div className="App">
         <Navbar/>
         <Switch>
+          <Route path="/pets/tom-hanks">
+            <TomHanks />
+          </Route>
+          <Route path="/pets/fun-guy">
+            <FunGuy />
+          </Route>
+          <Route path="/pets/pegasus-19">
+            <Pegasus19 />
+          </Route>
           <Route path="/pets">
             <Pets />
           </Route>
+          <Route path="/breeds/chihuahua">
+            <Chihuahua />
+          </Route>
+          <Route path="/breeds/staffordshire">
+            <StaffBullTerrier />
+          </Route>
+          <Route path="/breeds/domestic-shorthair">
+            <DomesticShorthair />
+          </Route>
           <Route path="/breeds">
             <Breeds />
+          </Route>
+          <Route path="/shelters/austin-humane-society">
+            <HumaneSociety />
+          </Route>
+          <Route path="/shelters/austin-pets-alive">
+            <AustinPetsAlive />
+          </Route>
+          <Route path="/shelters/austin-animal-center">
+            <AnimalCenter />
           </Route>
           <Route path="/shelters">
             <Shelters />
