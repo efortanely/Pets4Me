@@ -1,2 +1,19 @@
-rm -rf lib
-pip install -t lib -r requirements.txt
+#!/bin/bash
+
+PIP=pip3
+if [ -z $(command -v $PIP) ]
+then
+    PIP=pip
+fi
+PYTHON=python3
+if [ -z $(command -v $PYTHON) ]
+then
+    PIP=python
+fi
+
+if [ ! -d "env" ]
+then
+    $PYTHON -m venv env
+fi
+source env/bin/activate
+$PIP install -r requirements.txt
