@@ -88,3 +88,17 @@ Generate the production optimized server with `npm run build`
 
 From the `frontend` directory, run `./deploy.sh` with the API_KEY environment
 variable set, or use `./deploy -k <API_KEY>`
+
+## Backend
+
+### First time setup
+
+For local development, we are using `venv`. If you're running Ubuntu, make sure you've installed it:
+
+`sudo apt install python3-venv`
+
+Next, change into the `backend` directory.
+
+Run `update_dependencies.sh` to create a virtual environment with the required dependencies.
+Run `source env/bin/activate` to enter the virtual environment.
+Run `deactivate` from within the environment to leave it.
