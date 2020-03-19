@@ -16,4 +16,5 @@ then
     $PYTHON -m venv env
 fi
 source env/bin/activate
+$PIP install wheel
 $PIP install -r requirements.txt
