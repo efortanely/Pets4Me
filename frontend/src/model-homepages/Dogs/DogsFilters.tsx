@@ -23,28 +23,39 @@ const muiTheme = createMuiTheme({
 function BreedsFilters() {
     return (
         <div className='filters'>
+            {/* I put dummy data in here for the purpose */}
             <Dropdown>
                 <Dropdown.Toggle id="dropdown-basic">
-                    Category
+                    Temperament
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
                     <Dropdown.Item>Any</Dropdown.Item>
-                    <Dropdown.Item>Toy</Dropdown.Item>
-                    <Dropdown.Item>Terrier</Dropdown.Item>
-                    <Dropdown.Item>Mixed</Dropdown.Item>
+                    <Dropdown.Item>YELLING</Dropdown.Item>
+                    <Dropdown.Item>calm :)</Dropdown.Item>
+                    <Dropdown.Item>Void king</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
             <Dropdown>
                 <Dropdown.Toggle id="dropdown-basic">
-                    Species
+                    Bred for
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
                     <Dropdown.Item>Any</Dropdown.Item>
-                    <Dropdown.Item>Cat</Dropdown.Item>
-                    <Dropdown.Item>Dog</Dropdown.Item>
+                    <Dropdown.Item>Eat cheese</Dropdown.Item>
+                    <Dropdown.Item>Fight rats</Dropdown.Item>
+                    <Dropdown.Item>Wear sunglasses</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown>
+                <Dropdown.Toggle id="dropdown-basic">
+                    Breed group
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item>Any</Dropdown.Item>
+                    <Dropdown.Item>Very small</Dropdown.Item>
+                    <Dropdown.Item>VERY big</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
@@ -56,19 +67,13 @@ function BreedsFilters() {
                 </div>
 
                 <div>
-                    <h5>Average height</h5>
+                    <h5>Height</h5>
                     <Slider
                     valueLabelDisplay='auto'/>
                 </div>
 
                 <div>
-                    <h5>Average weight</h5>
-                    <Slider
-                    valueLabelDisplay='auto'/>
-                </div>
-
-                <div>
-                    <h5>Shedding level</h5>
+                    <h5>Weight</h5>
                     <Slider
                     valueLabelDisplay='auto'/>
                 </div>

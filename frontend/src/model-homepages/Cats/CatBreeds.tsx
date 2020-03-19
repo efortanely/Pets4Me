@@ -1,15 +1,15 @@
 import React from 'react';
-import BreedsFilters from './BreedsFilters'
-import BreedsCards from './BreedsCards';
+import CatsFilters from './CatsFilters'
+import CatsCards from './CatsCards';
 import '../ModelHomepage.css';
 
-function Breeds() {
+function CatBreeds() {
   return (
     <div className='model-homepage'>
       <div className='model-homepage-content'>
-        <BreedsFilters />
-        <BreedsCards />
+        <CatsFilters />
+        <CatsCards />
       </div>
     </div>
   );
-} export default Breeds;
+} export default CatBreeds;
