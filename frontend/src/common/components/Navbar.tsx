@@ -19,7 +19,10 @@ function Navbar() {
               <Link className="nav-link" to="/pets">PETS</Link>
             </li>
             <li>
-              <Link className="nav-link" to="/breeds">BREEDS</Link>
+              <Link className="nav-link" to="/dog-breeds">DOG BREEDS</Link>
+            </li>
+            <li>
+              <Link className="nav-link" to="/cat-breeds">CAT BREEDS</Link>
             </li>
             <li>
               <Link className="nav-link" to="/shelters">SHELTERS</Link>

@@ -3,7 +3,8 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Home from './Home/Home'
 import About from './About/About'
 import Pets from './model-homepages/Pets/Pets'
-import Breeds from './model-homepages/Breeds/Breeds'
+import DogBreeds from './model-homepages/Dogs/DogBreeds'
+import CatBreeds from './model-homepages/Cats/CatBreeds'
 import Shelters from './model-homepages/Shelters/Shelters'
 import Navbar from './common/components/Navbar'
 import TomHanks from './model-instancepages/Pets/TomHanks'
@@ -36,17 +37,20 @@ function App() {
           <Route path="/pets">
             <Pets />
           </Route>
-          <Route path="/breeds/chihuahua">
+          <Route path="/dog-breeds/chihuahua">
             <Chihuahua />
           </Route>
-          <Route path="/breeds/staffordshire">
+          <Route path="/dog-breeds/staffordshire">
             <StaffBullTerrier />
           </Route>
-          <Route path="/breeds/domestic-shorthair">
+          <Route path="/dog-breeds">
+            <DogBreeds />
+          </Route>
+          <Route path="/cat-breeds/domestic-shorthair">
             <DomesticShorthair />
           </Route>
-          <Route path="/breeds">
-            <Breeds />
+          <Route path="/cat-breeds">
+            <CatBreeds />
           </Route>
           <Route path="/shelters/austin-humane-society">
             <HumaneSociety />

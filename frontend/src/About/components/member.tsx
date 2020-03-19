@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFlask } from '@fortawesome/free-solid-svg-icons'
 import { faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { Commit } from '../../models/commit'
 import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/gitlab-api-service'
 import { Contributor } from '../../models/contributor';
 
