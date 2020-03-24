@@ -4,7 +4,7 @@ import { faFlask } from '@fortawesome/free-solid-svg-icons'
 import { faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/gitlab-api-service'
-import { Contributor } from '../../models/contributor';
+import { Commit } from '../../models/commit'
 
 type MyProps = {  img: string, name: string, role: string; bio: string; author_name: string[], gitlab_id: string, tests: number; }
 type MyState = { commitCount: number, issueCount: number }
@@ -22,17 +22,16 @@ export class Member extends React.Component<MyProps, MyState> {
 
   componentDidMount() {
     const gitlabApiService = new GitlabApiService()
-    gitlabApiService.getContributors()
+    gitlabApiService.getCommits()
       .then(res => this.countCommits(res))
 
     gitlabApiService.getIssuesByAuthor(this.props.gitlab_id)
       .then(res => this.setState({ issueCount: res.length }))
   }
 
-  countCommits(contributors: Contributor[]) {
-    let count: number = contributors.filter((value) => this.props.author_name.some(name => name === value.name))
-    .map(c => c.commits)
-    .reduce(((x, y) => x + y), 0)
+  countCommits(contributors: Commit[]) {
+    let count: number = contributors.filter((value) => this.props.author_name.some(name => name === value.author_name))
+    .length
     
     this.setState({ commitCount: count })
   }
