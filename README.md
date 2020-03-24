@@ -86,8 +86,7 @@ Setup the [gloud sdk](https://cloud.google.com/sdk/docs)
 
 Generate the production optimized server with `npm run build`
 
-From the `frontend` directory, run `./deploy.sh` with the API_KEY environment
-variable set, or use `./deploy -k <API_KEY>`
+From the `frontend` directory, run `gcloud app deploy` 
 
 ## Backend
 
