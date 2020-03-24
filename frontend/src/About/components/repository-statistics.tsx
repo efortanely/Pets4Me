@@ -6,7 +6,6 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/gitlab-api-service'
 import { IssuesStatistics } from '../../models/issues-statistics'
 import { Commit } from '../../models/commit'
-import { Contributor } from '../../models/contributor'
 import '../About.css'
 
 type MyProps = { }
@@ -29,11 +28,11 @@ export class RepositoryStatistics extends React.Component<MyProps, MyState> {
     gitlabApiService.getIssuesStatistics()
     .then(res => this.setState({ issuesStatistics: res }))
     
-    gitlabApiService.getContributors()
+    gitlabApiService.getCommits()
     .then(res => {
-      let count = (res as Contributor[]).map(c => c.commits).reduce((x, y) => x + y, 0)
+      let count = (res as Commit[]).length
       this.setState({ commitCount: count })
-    } )
+    })
 
     // TODO make a test containing this line that will check that the number of names returned by the endpoint stays constant.
     // gitlabApiService.getCommits()

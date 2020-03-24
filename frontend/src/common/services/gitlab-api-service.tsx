@@ -11,10 +11,10 @@ export class GitlabApiService {
   buildUrl(path: string, params: any): string {
 
     var query_string = Object.keys(params).map((key) => {
-      return '?' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+      return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
     }).join('&');
 
-    return `${this.api_url}/projects/${this.project_id}/${path}${query_string}`
+    return `${this.api_url}/projects/${this.project_id}/${path}?${query_string}`
   }
 
   getIssuesStatistics(): Promise<any> {
@@ -24,7 +24,7 @@ export class GitlabApiService {
   }
 
   getCommits(): Promise<any> {
-    return fetch(this.buildUrl('repository/commits', { ref_name: 'master' }))
+    return fetch(this.buildUrl('repository/commits', { ref_name: 'dev', per_page: '10000', page: '0' }))
         .then(res => res.json() as Promise<Commit[]>)
         .catch(console.log)
   }
