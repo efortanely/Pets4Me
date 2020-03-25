@@ -86,8 +86,7 @@ Setup the [gloud sdk](https://cloud.google.com/sdk/docs)
 
 Generate the production optimized server with `npm run build`
 
-From the `frontend` directory, run `./deploy.sh` with the API_KEY environment
-variable set, or use `./deploy -k <API_KEY>`
+From the `frontend` directory, run `gcloud app deploy` 
 
 ## Backend
 
@@ -102,3 +101,12 @@ Next, change into the `backend` directory.
 Run `update_dependencies.sh` to create a virtual environment with the required dependencies.
 Run `source env/bin/activate` to enter the virtual environment.
 Run `deactivate` from within the environment to leave it.
+
+### Deploying
+
+Setup the [gloud sdk](https://cloud.google.com/sdk/docs)
+
+From the `backend` directory, run `./deploy.sh`. You will need to have various
+environment variables set on your machine which will be copied to GCP. These
+appear in the array `ENV_VARS` at the top of `deploy.sh`. To add a new
+environment variable, simply add it to this space-separated array.

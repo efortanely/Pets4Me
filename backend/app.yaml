@@ -1,2 +1,7 @@
 service: backend
 runtime: python37
+
+# This MUST be the last section of this file so that deploy.sh can add the
+# required environment variables. You may ONLY include additional environment
+# variables that need to be passed after the below env_variables line.
+env_variables:
