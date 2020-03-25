@@ -28,11 +28,7 @@ export class RepositoryStatistics extends React.Component<MyProps, MyState> {
     gitlabApiService.getIssuesStatistics()
     .then(res => this.setState({ issuesStatistics: res }))
     
-    gitlabApiService.getCommits()
-    .then(res => {
-      let count = (res as Commit[]).length
-      this.setState({ commitCount: count })
-    })
+    this.getCommitCount(gitlabApiService)
 
     // TODO make a test containing this line that will check that the number of names returned by the endpoint stays constant.
     // gitlabApiService.getCommits()
@@ -42,6 +38,14 @@ export class RepositoryStatistics extends React.Component<MyProps, MyState> {
     
 
     // .then(res => this.setState( { commits: res } ))
+  }
+
+  getCommitCount(gitlabApiService: GitlabApiService) {
+    gitlabApiService.getCommits()
+    .then(res => {
+      let count = (res as Commit[]).length
+      this.setState({ commitCount: count })
+    })
   }
   
   render() {
