@@ -80,6 +80,10 @@ Then start the server:
 
 `PORT=8080 npm start`
 
+### Testing
+
+`npm run s-test` for smoke testing
+
 ### Deploying
 
 Setup the [gloud sdk](https://cloud.google.com/sdk/docs)
