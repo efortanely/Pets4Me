@@ -1,8 +1,10 @@
 import os
+import re
 import json
 from oauthlib.oauth2 import BackendApplicationClient as BAC
 from requests_oauthlib import OAuth2Session
 import requests
+from pets4me_api import Pet, DogBreed, CatBreed, Shelter
 
 class CommonAPI:
     def __init__(self, base_url):
@@ -18,6 +20,28 @@ class CommonAPI:
     def get_raw(self, url):
         return self.session.get(self.base_url + url)
 
+def parse_range(range_str):
+    """
+    This is a bit tricky: range_str might be one of the following
+    4 - 6
+    4 - 6 years
+    4 - 6.5 years
+    11 years
+    something else...
+    Therefore we take this fuzzy approach and hope for the best
+    """
+
+    # Match numbers not preceded by a dot or an integer to ignore decimals
+    nums = [int(match.group(0)) for match in re.finditer(r"(?<![\.\d])\d+", range_str)]
+    size = len(nums)
+    if size == 0:
+        return (None, None)
+    if size == 1:
+        # Just one number, replicate for both low and high
+        return (nums[0], nums[0])
+    # Ignore subsequent numbers
+    return (nums[0], nums[1])
+
 class DogAPI(CommonAPI):
     def __init__(self):
         super().__init__("https://api.thedogapi.com")
@@ -27,16 +51,25 @@ class DogAPI(CommonAPI):
         breeds_response_data = json.loads(breeds_response)
         breeds = []
         for breed in breeds_response_data:
-            new_breed = {
-                'id': breed.get('id', None),
-                'name': breed.get('name', None),
-                'temperament': breed.get('temperament', None),
-                'life_span': breed.get('life_span', None),
-                'height': breed.get('height', {}).get('imperial', None),
-                'weight': breed.get('weight', {}).get('imperial', None),
-                'bred_for': breed.get('bred_for', None),
-                'breed_group': breed.get('breed_group', None)
-            }
+            life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
+            height_imperial_low, height_imperial_high = parse_range(
+                breed.get("height", {}).get("imperial", "")
+            )
+            weight_imperial_low, weight_imperial_high = parse_range(
+                breed.get("weight", {}).get("imperial", "")
+            )
+            new_breed = DogBreed(
+                name=breed.get("name", None),
+                temperament=breed.get("temperament", None),
+                life_span_low=life_span_low,
+                life_span_high=life_span_high,
+                height_imperial_low=height_imperial_low,
+                height_imperial_high=height_imperial_high,
+                weight_imperial_low=weight_imperial_low,
+                weight_imperial_high=weight_imperial_high,
+                bred_for=breed.get("bred_for", None),
+                breed_group=breed.get("breed_group", None)
+            )
             breeds.append(new_breed)
         return breeds
 
@@ -49,17 +82,22 @@ class CatAPI(CommonAPI):
         breeds_response_data = json.loads(breeds_response)
         breeds = []
         for breed in breeds_response_data:
-            new_breed = {
-                'id': breed.get('id', None),
-                'name': breed.get('name', None),
-                'alt_names': breed.get('alt_names', None),
-                'temperament': breed.get('temperament', None),
-                'life_span': breed.get('life_span', None),
-                'indoor': bool(breed.get('indoor', False)),
-                'dog_friendly': breed.get('dog_friendly', None),
-                'child_friendly': breed.get('child_friendly', None),
-                'grooming_level': breed.get('grooming', None),
-            }
+            life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
+            new_breed = CatBreed(
+                name=breed.get("name", None),
+                temperament=breed.get("temperament", None),
+                life_span_low=life_span_low,
+                life_span_high=life_span_high,
+                # Input is comma-separated, split into list
+                alt_names=[n for n in re.split(
+                    r"\s*,\s*",
+                    breed.get("alt_names", "")
+                ) if len(n) > 0],
+                indoor=breed.get("indoor", None),
+                dog_friendly=breed.get("dog_friendly", None),
+                child_friendly=breed.get("child_friendly", None),
+                grooming_level=breed.get("grooming", None)
+            )
             breeds.append(new_breed)
         return breeds
 
@@ -79,6 +117,12 @@ class OAuthAPI:
     def get_raw(self, url):
         return self.oauth.get(self.base_url + url)
 
+def extract_photos(photos):
+    if len(photos) == 0:
+        return ([], [])
+    small, full = zip(*((p.get("small", None), p.get("full", None)) for p in photos))
+    return (list(small), list(full))
+
 class PetAPI(OAuthAPI):
     def __init__(self):
         key = "NpG2i5NuwSKUaMBNcYeQGacuYoeDxQvDfXPouK4lAAneSJyJEA"
@@ -92,7 +136,7 @@ class PetAPI(OAuthAPI):
             # this is a circle that includes most of Texas (as much as we can get)
             response = json.loads(
                 self.get(f"/v2/{endpoint}?page={page}&limit={limit}"
-                         + "&location=76825&distance=500&{parameters}")
+                         f"&location=76825&distance=500&{parameters}")
             )
             if total_pages is None:
                 total_pages = response["pagination"]["total_pages"]
@@ -105,22 +149,26 @@ class PetAPI(OAuthAPI):
         animal_generator = self.get_paginated_data("animals", pages=pages, limit=limit)
         animals = []
         for animal in animal_generator:
-            if animal['type'] != "Cat" and animal['type'] != "Dog":
+            if animal["type"] != "Cat" and animal["type"] != "Dog":
                 continue
-            new_animal = {
-                'id': animal.get('id', None),
-                'name': animal.get('name', None),
-                'species': animal.get('species', None),
-                'gender': animal.get('gender', None),
-                'breeds': animal.get('breeds', None),
-                'contact': animal.get('contact', None),
-                'size': animal.get('size', None),
-                'photos': animal.get('photos', []),
-                'colors': animal.get('colors', None),
-                'age': animal.get('age', None),
-                'description': animal.get('description', None),
-                'link': animal.get('url', None)
-            }
+            photos_small, photos_full = extract_photos(animal.get("photos", []))
+            new_animal = Pet(
+                name=animal.get("name", None),
+                species=animal.get("species", None),
+                gender=animal.get("gender", None),
+                # TODO: Find matching breed/shelter from other apis, requires some searching
+                # MUST be done for Phase II
+                primary_dog_breed=None,
+                secondary_dog_breed=None,
+                shelter_ref=None,
+                size=animal.get("size", None),
+                photos_small=photos_small,
+                photos_full=photos_full,
+                color=animal.get("colors", {}).get("primary", None),
+                age=animal.get("age", None),
+                description=animal.get("description", None),
+                url=animal.get("url", None)
+            )
             animals.append(new_animal)
         return animals
 
@@ -128,15 +176,23 @@ class PetAPI(OAuthAPI):
         shelter_generator = self.get_paginated_data("organizations", pages=pages, limit=limit)
         shelters = []
         for shelter in shelter_generator:
-            new_shelter = {
-                'id': shelter.get('id', None),
-                'name': shelter.get('name', None),
-                'address': shelter.get('address', None),
-                'phone': shelter.get('phone', None),
-                'email': shelter.get('email', None),
-                'mission': shelter.get('mission_statement', None),
-                'policy': shelter.get('adoption', None),
-                'distance': shelter.get('distance', None)
-            }
+            address = shelter.get("address", {})
+            policy_dict = shelter.get("adoption", {})
+            photos_small, photos_full = extract_photos(shelter.get("photos", []))
+            new_shelter = Shelter(
+                name=shelter.get("name", None),
+                address1=address.get("address1", None),
+                address2=address.get("address2", None),
+                city=address.get("city", None),
+                state=address.get("state", None),
+                postcode=address.get("postcode", None),
+                country=address.get("country", None),
+                photos_small=photos_small,
+                photos_full=photos_full,
+                email=shelter.get("email", None),
+                phone_number=shelter.get("phone", None),
+                mission=shelter.get("mission_statement", None),
+                adoption_policy=policy_dict.get("policy", policy_dict.get("url", None)),
+            )
             shelters.append(new_shelter)
         return shelters
