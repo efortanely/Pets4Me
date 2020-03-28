@@ -8,7 +8,7 @@ fi
 PYTHON=python3
 if [ -z $(command -v $PYTHON) ]
 then
-    PIP=python
+    PYTHON=python
 fi
 
 if [ ! -d "env" ]

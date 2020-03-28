@@ -1,0 +1,16 @@
+before_script:
+    - date
+    - uname -a
+
+frontend:
+    image: node:13
+    script:
+    - cd frontend/
+    - npm install --user
+    - make test
+
+backend:
+    image: gpdowning/python
+    script:
+    - make update-backend
+    - make backend-test
