@@ -4,7 +4,7 @@ import json
 from oauthlib.oauth2 import BackendApplicationClient as BAC
 from requests_oauthlib import OAuth2Session
 import requests
-from pets4me_api import Pet, DogBreed, CatBreed, Shelter
+from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
 
 class CommonAPI:
     def __init__(self, base_url):

@@ -1,5 +1,7 @@
-from pets4me_api import app
 from unittest import main, TestCase
+from app import create_app
+
+app = create_app("test_app")
 
 class MyUnitTests(TestCase):
     def setUp(self):

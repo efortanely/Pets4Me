@@ -1,16 +1,11 @@
 import os
-from flask import Flask
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.dialects.postgresql import ARRAY as Array
 from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 import flask_restless as fr
-import refresh_service as rs
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 class Pet(db.Model):
     __tablename__ = 'pet'
@@ -282,38 +277,40 @@ shelter_methods = [
     'distance', 'address', 'contact', 'photos', 'all_pets', 'top_dog_breed_id', 'top_cat_breed_id'
 ]
 
-db.create_all()
+def setup_config(app):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-manager = fr.APIManager(app, flask_sqlalchemy_db=db)
+def setup(app):
+    db.init_app(app)
+    db.app = app
 
-manager.create_api(
-    Pet, methods=['GET'],
-    collection_name='pets',
-    include_methods=pet_methods,
-    include_columns=pet_includes,
-    results_per_page=12)
+    manager = fr.APIManager(app, flask_sqlalchemy_db=db)
 
-manager.create_api(
-    DogBreed, methods=['GET'],
-    collection_name='dog_breeds',
-    include_methods=dog_breed_methods,
-    include_columns=dog_breed_includes,
-    results_per_page=12)
+    manager.create_api(
+        Pet, methods=['GET'],
+        collection_name='pets',
+        include_methods=pet_methods,
+        include_columns=pet_includes,
+        results_per_page=12)
 
-manager.create_api(
-    CatBreed, methods=['GET'],
-    collection_name='cat_breeds',
-    include_methods=cat_breed_methods,
-    include_columns=cat_breed_includes,
-    results_per_page=12)
+    manager.create_api(
+        DogBreed, methods=['GET'],
+        collection_name='dog_breeds',
+        include_methods=dog_breed_methods,
+        include_columns=dog_breed_includes,
+        results_per_page=12)
 
-manager.create_api(
-    Shelter, methods=['GET'],
-    collection_name='shelters',
-    include_methods=shelter_methods,
-    include_columns=shelter_includes,
-    results_per_page=12)
+    manager.create_api(
+        CatBreed, methods=['GET'],
+        collection_name='cat_breeds',
+        include_methods=cat_breed_methods,
+        include_columns=cat_breed_includes,
+        results_per_page=12)
 
-if __name__ == '__main__':
-    rs.start(db)
-    app.run(threaded=True, port=5000)
+    manager.create_api(
+        Shelter, methods=['GET'],
+        collection_name='shelters',
+        include_methods=shelter_methods,
+        include_columns=shelter_includes,
+        results_per_page=12)

@@ -7,5 +7,5 @@ then
 fi
 
 source env/bin/activate
-$PYTHON external_apis.test.py
+$PYTHON -m extensions.external_apis_test
 deactivate

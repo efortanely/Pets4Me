@@ -15,8 +15,11 @@
 env
 
 # Python pycache:
-__pycache__/
+**/__pycache__/
 # Ignored by the build system
 /setup.cfg
 
 update_dependencies.sh
+deploy.sh
+
+app.yaml.bak # created by deploy.sh
