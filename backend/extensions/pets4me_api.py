@@ -1,4 +1,5 @@
 import os
+from flask import after_this_request
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.dialects.postgresql import ARRAY as Array
 from sqlalchemy.orm import relationship
@@ -285,7 +286,18 @@ def setup(app):
     db.init_app(app)
     db.app = app
 
-    manager = fr.APIManager(app, flask_sqlalchemy_db=db)
+    def enable_cors(*_t, **_d):
+        @after_this_request
+        def apply_headers(response):
+            response.headers["Access-Control-Allow-Origin"] = "*"
+            return response
+
+    preprocessors = {
+        "GET_SINGLE": [enable_cors],
+        "GET_MANY": [enable_cors]
+    }
+
+    manager = fr.APIManager(app, flask_sqlalchemy_db=db, preprocessors=preprocessors)
 
     manager.create_api(
         Pet, methods=['GET'],
