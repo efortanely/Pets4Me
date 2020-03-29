@@ -1,5 +1,5 @@
 from unittest import main, TestCase
-from external_apis import DogAPI, CatAPI, PetAPI
+from .external_apis import DogAPI, CatAPI, PetAPI
 
 class ExternalApisTest(TestCase):
     def petfinder_check_endpoint(self, endpoint):

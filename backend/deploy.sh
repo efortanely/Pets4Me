@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ENV_VARS=("PF_API_SECRET")
+ENV_VARS=("PF_API_SECRET" "SQLALCHEMY_DATABASE_URI")
 
 cp app.yaml app.yaml.bak
 
