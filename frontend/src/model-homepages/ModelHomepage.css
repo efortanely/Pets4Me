@@ -87,9 +87,17 @@
 
 /* End Dropdown Menu */
 
+/* Cards */
+
+.cards-container {
+    height: 100%;
+    width: 100%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
 .cards{
     display: -moz-inline-grid;
-    margin-left: 5%;
     grid-auto-rows: 1fr;
 }
 
@@ -172,3 +180,41 @@ a.single-card:hover {
         max-width: 350px;
     }
 }
+
+/* End Cards */
+
+/* Pagination */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.page-item a{
+    color: #581730 !important;
+}
+
+.page-item span{
+    color: #966a7d !important;
+}
+
+.page-link:hover{
+    background-color: #bfd9d9 !important;
+}
+
+.page-item.active .page-link{
+    background-color: #bfd9d9 !important;
+    border-color: #966a7d !important;
+    color: #581730 !important;
+}
+
+.page-link{
+    border: 1px solid #966a7d !important;
+}
+
+.page-item a:focus{
+    box-shadow: none !important;
+}
+
+/* End Pagination */

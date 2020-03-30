@@ -2,6 +2,7 @@ import React from 'react';
 import ahs from '../../static/shelters/ahs.png'
 import apa from '../../static/shelters/apa.png'
 import aac from '../../static/shelters/aac.png'
+import Paginator from '../../common/components/Paginator';
 
 function SheltersCards() {
     return (
@@ -46,6 +47,7 @@ function SheltersCards() {
                     </div>
                 </a>
             </div>
+            <Paginator />
         </div>
     );
 } export default SheltersCards;
