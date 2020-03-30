@@ -4,6 +4,7 @@ import json
 from oauthlib.oauth2 import BackendApplicationClient as BAC
 from requests_oauthlib import OAuth2Session
 import requests
+from pixabay import Image
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
 
 class CommonAPI:
@@ -49,8 +50,11 @@ class DogAPI(CommonAPI):
     def get_breeds(self):
         breeds_response = self.get("/v1/breeds")
         breeds_response_data = json.loads(breeds_response)
+        image = Image(os.getenv("PIXABAY_API_KEY"))
         breeds = []
+
         for breed in breeds_response_data:
+            name = breed.get("name", None)
             life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
             height_imperial_low, height_imperial_high = parse_range(
                 breed.get("height", {}).get("imperial", "")
@@ -58,8 +62,23 @@ class DogAPI(CommonAPI):
             weight_imperial_low, weight_imperial_high = parse_range(
                 breed.get("weight", {}).get("imperial", "")
             )
+
+            img = image.search(q=name,
+                lang='en',
+                image_type='photo',
+                category='animals',
+                safesearch='true',
+                order='latest',
+                page=1,
+                per_page=3)
+
+            try:
+                url = img["hits"][0]["largeImageURL"]
+            except:
+                url = None
+
             new_breed = DogBreed(
-                name=breed.get("name", None),
+                name=name,
                 temperament=breed.get("temperament", None),
                 life_span_low=life_span_low,
                 life_span_high=life_span_high,
@@ -68,7 +87,8 @@ class DogAPI(CommonAPI):
                 weight_imperial_low=weight_imperial_low,
                 weight_imperial_high=weight_imperial_high,
                 bred_for=breed.get("bred_for", None),
-                breed_group=breed.get("breed_group", None)
+                breed_group=breed.get("breed_group", None),
+                photo=url
             )
             breeds.append(new_breed)
         return breeds
@@ -80,11 +100,30 @@ class CatAPI(CommonAPI):
     def get_breeds(self):
         breeds_response = self.get("/v1/breeds")
         breeds_response_data = json.loads(breeds_response)
+        image = Image(os.getenv("PIXABAY_API_KEY"))
         breeds = []
+
         for breed in breeds_response_data:
+            name = breed.get("name", None)
             life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
+            
+            img = image.search(q=name,
+                lang='en',
+                image_type='photo',
+                orientation='horizontal',
+                category='animals',
+                safesearch='true',
+                order='latest',
+                page=1,
+                per_page=3)
+
+            try:
+                url = img["hits"][0]["largeImageURL"]
+            except:
+                url = None
+
             new_breed = CatBreed(
-                name=breed.get("name", None),
+                name=name,
                 temperament=breed.get("temperament", None),
                 life_span_low=life_span_low,
                 life_span_high=life_span_high,
@@ -96,7 +135,8 @@ class CatAPI(CommonAPI):
                 indoor=breed.get("indoor", None),
                 dog_friendly=breed.get("dog_friendly", None),
                 child_friendly=breed.get("child_friendly", None),
-                grooming_level=breed.get("grooming", None)
+                grooming_level=breed.get("grooming", None),
+                photo=url
             )
             breeds.append(new_breed)
         return breeds

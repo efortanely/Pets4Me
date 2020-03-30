@@ -108,6 +108,7 @@ class DogBreed(db.Model):
     weight_imperial_high = Column(Integer)
     bred_for = Column(String(100))
     breed_group = Column(String(100))
+    photo = Column(String(500))
 
     def life_span(self):
         return {"low": self.life_span_low, "high": self.life_span_high}
@@ -139,9 +140,13 @@ class DogBreed(db.Model):
 
         return ids
 
-dog_breed_includes = ['id', 'name', 'temperament', 'bred_for', 'breed_group']
+dog_breed_includes = [
+    'id', 'name', 'temperament', 'bred_for', 
+    'breed_group', 'photo'
+]
 dog_breed_methods = [
-    'life_span', 'height_imperial', 'weight_imperial', 'dog_ids', 'local_shelters_with_breed'
+    'life_span', 'height_imperial', 'weight_imperial', 
+    'dog_ids', 'local_shelters_with_breed'
 ]
 
 class CatBreed(db.Model):
@@ -160,6 +165,7 @@ class CatBreed(db.Model):
     child_friendly = Column(Integer)
     #1-5
     grooming_level = Column(Integer)
+    photo = Column(String(500))
 
     def life_span(self):
         return {'low': self.life_span_low, 'high': self.life_span_high}
@@ -187,7 +193,8 @@ class CatBreed(db.Model):
 
 cat_breed_includes = [
     'id', 'name', 'alt_names', 'temperament', 'indoor',
-    'dog_friendly', 'child_friendly', 'grooming_level'
+    'dog_friendly', 'child_friendly', 'grooming_level',
+    'photo'
 ]
 cat_breed_methods = ['life_span', 'cat_ids', 'local_shelters_with_breed']
 
