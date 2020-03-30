@@ -7,5 +7,11 @@ then
 fi
 
 source env/bin/activate
-$PYTHON -m extensions.external_apis_test
+output="$($PYTHON -m extensions.external_apis_test 2>&1)"
+echo "$output"
 deactivate
+failures="$(echo "$output" | grep FAILED)"
+
+if [ -n "$failures" ]; then
+  exit 1
+fi
