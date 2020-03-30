@@ -1,9 +1,14 @@
 import React from 'react';
 import chihuahua from '../../static/breeds/chihuahua.jpg'
 import staffordshire from '../../static/breeds/staffordshire-bull-terrier.jpg'
+import Paginator from '../../common/components/Paginator';
+import SampleDogData from '../../static/sample-dog-data.json';
 
 function DogsCards() {
+    let active = SampleDogData.page;
+    let num_pages = SampleDogData.num_pages;
     return (
+        <div className='cards-container'>
         <div className='cards'>
             <a className='single-card' href="/dog-breeds/chihuahua">
                 <img className='card-image' src={chihuahua} alt=''></img>
@@ -30,6 +35,8 @@ function DogsCards() {
                     Species: Dog
                 </div>
             </a>
+        </div>
+        <Paginator active={active} numPages={num_pages} pathName={'/dog-breeds'}/>
         </div>
     );
 } export default DogsCards;
