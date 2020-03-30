@@ -8,10 +8,10 @@ import { IssuesStatistics } from '../../models/issues-statistics'
 import { Commit } from '../../models/commit'
 import '../About.css'
 
-type MyProps = { }
-type MyState = { issuesStatistics: IssuesStatistics, commits: Commit[], commitCount: number }
+type RepositoryStatisticsProps = { }
+type RepositoryStatisticsState = { issuesStatistics: IssuesStatistics, commits: Commit[], commitCount: number }
 
-export class RepositoryStatistics extends React.Component<MyProps, MyState> {
+export class RepositoryStatistics extends React.Component<RepositoryStatisticsProps, RepositoryStatisticsState> {
   static contextType = GitlabApiServiceContext
 
   constructor(props: any) {

@@ -10,8 +10,7 @@ import Navbar from './common/components/Navbar'
 import TomHanks from './model-instancepages/Pets/TomHanks'
 import FunGuy from './model-instancepages/Pets/FunGuy'
 import Pegasus19 from './model-instancepages/Pets/Pegasus19'
-import Chihuahua from './model-instancepages/Breeds/Chihuahua'
-import StaffBullTerrier from './model-instancepages/Breeds/StaffBullTerrier'
+import DogBreedInstancePage from './model-instancepages/Breeds/dog-breed-instance-page'
 import DomesticShorthair from './model-instancepages/Breeds/DomesticShorthair'
 import AnimalCenter from './model-instancepages/Shelters/AnimalCenter'
 import AustinPetsAlive from './model-instancepages/Shelters/AustinPetsAlive'
@@ -37,12 +36,7 @@ function App() {
           <Route path="/pets">
             <Pets />
           </Route>
-          <Route path="/dog-breeds/chihuahua">
-            <Chihuahua />
-          </Route>
-          <Route path="/dog-breeds/staffordshire">
-            <StaffBullTerrier />
-          </Route>
+          <Route path="/dog-breeds/:breed_id" component={DogBreedInstancePage} />
           <Route path="/dog-breeds">
             <DogBreeds />
           </Route>

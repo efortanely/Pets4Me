@@ -6,10 +6,10 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/gitlab-api-service'
 import { Commit } from '../../models/commit'
 
-type MyProps = {  img: string, name: string, role: string; bio: string; author_name: string[], gitlab_id: string, tests: number; }
-type MyState = { commitCount: number, issueCount: number }
+type MemberProps = {  img: string, name: string, role: string; bio: string; author_name: string[], gitlab_id: string, tests: number; }
+type MemberState = { commitCount: number, issueCount: number }
 
-export class Member extends React.Component<MyProps, MyState> {
+export class Member extends React.Component<MemberProps, MemberState> {
   static contextType = GitlabApiServiceContext
 
   constructor(props: any) {
@@ -21,7 +21,7 @@ export class Member extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    const gitlabApiService = new GitlabApiService()
+    const gitlabApiService: GitlabApiService = this.context
     gitlabApiService.getCommits()
       .then(res => this.countCommits(res))
 
