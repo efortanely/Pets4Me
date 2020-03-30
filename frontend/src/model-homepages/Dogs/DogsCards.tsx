@@ -10,7 +10,7 @@ function DogsCards() {
     return (
         <div className='cards-container'>
         <div className='cards'>
-            <a className='single-card' href="/dog-breeds/chihuahua">
+            <a className='single-card' href="/dog-breeds/1">
                 <img className='card-image' src={chihuahua} alt=''></img>
                 <div className='card-text'>
                     <h3>
@@ -23,7 +23,7 @@ function DogsCards() {
                 </div>
                 </a>
 
-            <a className='single-card' href="/dog-breeds/staffordshire">
+            <a className='single-card' href="/dog-breeds/2">
                 <img className='card-image' src={staffordshire} alt=''></img>
                 <div className='card-text'>
                     <h3>
