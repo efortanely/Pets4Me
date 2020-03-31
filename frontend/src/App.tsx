@@ -7,9 +7,6 @@ import DogBreeds from './model-homepages/Dogs/DogBreeds'
 import CatBreeds from './model-homepages/Cats/CatBreeds'
 import Shelters from './model-homepages/Shelters/Shelters'
 import Navbar from './common/components/Navbar'
-import TomHanks from './model-instancepages/Pets/TomHanks'
-import FunGuy from './model-instancepages/Pets/FunGuy'
-import Pegasus19 from './model-instancepages/Pets/Pegasus19'
 import DogBreedInstancePage from './model-instancepages/Breeds/dog-breed-instance-page'
 import PetInstancePage from './model-instancepages/Pets/pet-instance-page'
 import DomesticShorthair from './model-instancepages/Breeds/DomesticShorthair'
@@ -25,16 +22,7 @@ function App() {
       <div className="App">
         <Navbar/>
         <Switch>
-        <Route path="/pets/:pet_id" component={PetInstancePage} />
-          <Route path="/pets/tom-hanks">
-            <TomHanks />
-          </Route>
-          <Route path="/pets/fun-guy">
-            <FunGuy />
-          </Route>
-          <Route path="/pets/pegasus-19">
-            <Pegasus19 />
-          </Route>
+          <Route path="/pets/:pet_id" component={PetInstancePage} />
           <Route path="/pets">
             <Pets />
           </Route>

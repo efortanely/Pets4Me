@@ -8,6 +8,7 @@ import { Pet, BackendEntity, Photos } from '../../models/pet';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
+import { MemoryRouter } from 'react-router-dom';
 chai.use(sinonChai)
 
 
@@ -29,10 +30,10 @@ describe('<PetInstancePage/>', () => {
   }
 
   function mountWithPet(pet: Pet, pet_id: string = `${pet.id}`) {
-    return mount(<PetInstancePage
+    return mount(<MemoryRouter><PetInstancePage
       pet={pet}
       match={{params: { pet_id: `${pet_id}` }, isExact: true, path: "", url: ""}}
-    />)
+    /></MemoryRouter>)
   }
 
   function shallowWithPet(pet: Pet, pet_id: string = `${pet.id}`) {

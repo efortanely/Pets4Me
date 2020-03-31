@@ -9,7 +9,7 @@ export class DogBreedCard extends React.Component<DogBreedCardProps> {
   render() {
     return (
       <Link to={{
-        pathname: `dog-breeds/${this.props.breed.id}`,
+        pathname: `/dog-breeds/${this.props.breed.id}`,
         state: { breed: this.props.breed }
         }}>
         <InfoCard image_src={this.props.breed.photo} header={this.props.breed.name} other_info={this.getOtherInfo()} />
