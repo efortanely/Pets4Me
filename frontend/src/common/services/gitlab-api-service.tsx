@@ -25,7 +25,7 @@ export class GitlabApiService extends ApiService{
   }
 
   getIssuesByAuthor(author_username: string): Promise<Issue[]> {
-    return this.fetchJsonAsObject<Issue[]>('issues', { author_username: author_username })
+    return this.fetchJsonAsObject<Issue[]>('issues', { author_username: author_username, 'per_page': 99 })
   }
 }
 

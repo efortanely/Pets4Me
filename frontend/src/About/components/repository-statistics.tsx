@@ -8,7 +8,7 @@ import { IssuesStatistics } from '../../models/issues-statistics'
 import { Commit } from '../../models/commit'
 import '../About.css'
 
-type RepositoryStatisticsProps = { }
+type RepositoryStatisticsProps = { testSum: number }
 type RepositoryStatisticsState = { issuesStatistics: IssuesStatistics, commits: Commit[], commitCount: number }
 
 export class RepositoryStatistics extends React.Component<RepositoryStatisticsProps, RepositoryStatisticsState> {
@@ -65,7 +65,7 @@ export class RepositoryStatistics extends React.Component<RepositoryStatisticsPr
             </div>
             <div className="row">
               <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-              <div className="circle">0</div>
+              <div className="circle">{this.props.testSum}</div>
               <p>Total No. Unit Tests</p>
             </div>
           </div>

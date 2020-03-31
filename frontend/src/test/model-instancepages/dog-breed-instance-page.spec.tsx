@@ -74,13 +74,13 @@ describe('<DogBreedInstancePage/>', () => {
     }
   })
 
-  // author: Connor
+  // author Connor
   it('should not crash when breed is empty', () => {
     shallowWithBreed(emptyBreed)
     expect(testComponent.html()).to.exist
   })
 
-  // author: Connor
+  // author Connor
   it('should not crash when DogBreed is undefined', () => {
     spyOnDogBreedsService(testBreed)
     let testPage = mount(<DogBreedInstancePage
@@ -91,7 +91,7 @@ describe('<DogBreedInstancePage/>', () => {
     expect(testPage.html()).to.exist
   })
 
-  // author: Connor
+  // author Connor
   it('should not crash when api DogBreed is empty', () => {
     spyOnDogBreedsService(emptyBreed)
     let testPage: ReactWrapper<DogBreedInstancePage> = mountWithBreed(emptyBreed)
@@ -100,7 +100,7 @@ describe('<DogBreedInstancePage/>', () => {
     expect(testPage.html()).to.exist
   })
 
-  // author: Connor
+  // author Connor
   it('should render all details', () => {
 
     shallowWithBreed(testBreed)
@@ -119,7 +119,7 @@ describe('<DogBreedInstancePage/>', () => {
     expect(elements.sheltersWithBreed().text()).to.include(testBreed.local_shelters_with_breed.length)
   })
 
-  // author: Connor
+  // author Connor
   it('should GET breed on component mount if no breed supplied in props', () => {
     let getDogBreedSpy = spyOnDogBreedsService(testBreed)
 
@@ -128,7 +128,7 @@ describe('<DogBreedInstancePage/>', () => {
     expect(getDogBreedSpy).to.have.been.calledWith(`${testBreed.id}`)
   })
 
-  // author Connor
+  // author connor
   it('should GET breed on component mount if different breed supplied in props than url param', () => {
     let getDogBreedSpy = spyOnDogBreedsService(testBreed)
     let urlBreedId = testBreed.id + 1
