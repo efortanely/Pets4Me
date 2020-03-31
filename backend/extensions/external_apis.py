@@ -9,6 +9,7 @@ from pixabay import Image
 from util.sql import escape_like
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
 
+
 class CommonAPI:
     def __init__(self, base_url):
         self.base_url = base_url
@@ -22,6 +23,7 @@ class CommonAPI:
 
     def get_raw(self, url):
         return self.session.get(self.base_url + url)
+
 
 def parse_range(range_str):
     """
@@ -63,13 +65,13 @@ class DogAPI(CommonAPI):
 
         img = self.image.search(
             q=name,
-            lang='en',
-            image_type='photo',
-            category='animals',
-            safesearch='true',
-            order='latest',
+            lang="en",
+            image_type="photo",
+            category="animals",
+            safesearch="true",
+            order="latest",
             page=1,
-            per_page=3
+            per_page=3,
         )
 
         try:
@@ -88,7 +90,7 @@ class DogAPI(CommonAPI):
             weight_imperial_high=weight_imperial_high,
             bred_for=breed.get("bred_for", None),
             breed_group=breed.get("breed_group", None),
-            photo=url
+            photo=url,
         )
 
     def find_breed(self, query):
@@ -104,6 +106,7 @@ class DogAPI(CommonAPI):
             breeds.append(self.parse_dog_breed(breed))
         return breeds
 
+
 class CatAPI(CommonAPI):
     def __init__(self):
         super().__init__("https://api.thecatapi.com")
@@ -115,14 +118,14 @@ class CatAPI(CommonAPI):
 
         img = self.image.search(
             q=name,
-            lang='en',
-            image_type='photo',
-            orientation='horizontal',
-            category='animals',
-            safesearch='true',
-            order='latest',
+            lang="en",
+            image_type="photo",
+            orientation="horizontal",
+            category="animals",
+            safesearch="true",
+            order="latest",
             page=1,
-            per_page=3
+            per_page=3,
         )
 
         try:
@@ -136,15 +139,16 @@ class CatAPI(CommonAPI):
             life_span_low=life_span_low,
             life_span_high=life_span_high,
             # Input is comma-separated, split into list
-            alt_names=[n for n in re.split(
-                r"\s*,\s*",
-                breed.get("alt_names", "")
-            ) if len(n) > 0],
+            alt_names=[
+                n
+                for n in re.split(r"\s*,\s*", breed.get("alt_names", ""))
+                if len(n) > 0
+            ],
             indoor=breed.get("indoor", None),
             dog_friendly=breed.get("dog_friendly", None),
             child_friendly=breed.get("child_friendly", None),
             grooming_level=breed.get("grooming", None),
-            photo=url
+            photo=url,
         )
 
     def find_breed(self, query):
@@ -160,12 +164,15 @@ class CatAPI(CommonAPI):
             breeds.append(self.parse_cat_breed(breed))
         return breeds
 
+
 class OAuthAPI:
     def __init__(self, key, secret, base_url, token_url):
         self.base_url = base_url
         client = BAC(client_id=key)
         self.oauth = OAuth2Session(client=client)
-        self.oauth.fetch_token(token_url=base_url + token_url, client_secret=secret, client_id=key)
+        self.oauth.fetch_token(
+            token_url=base_url + token_url, client_secret=secret, client_id=key
+        )
 
     def close(self):
         self.oauth.close()
@@ -176,11 +183,13 @@ class OAuthAPI:
     def get_raw(self, url):
         return self.oauth.get(self.base_url + url)
 
+
 def extract_photos(photos):
     if len(photos) == 0:
         return ([], [])
     small, full = zip(*((p.get("small", None), p.get("full", None)) for p in photos))
     return (list(small), list(full))
+
 
 def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
     photos_small, photos_full = extract_photos(animal.get("photos", []))
@@ -224,8 +233,9 @@ def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
         color=animal.get("colors", {}).get("primary", None),
         age=animal.get("age", None),
         description=animal.get("description", None),
-        url=animal.get("url", None)
+        url=animal.get("url", None),
     )
+
 
 def parse_shelter(shelter):
     address = shelter.get("address", {})
@@ -247,12 +257,17 @@ def parse_shelter(shelter):
         adoption_policy=policy_dict.get("policy", policy_dict.get("url", None)),
     )
 
+
 class PetAPI(OAuthAPI):
     def __init__(self):
         key = "yDkGT4TvLZLzYpK9RGFCx9QaVUertzN66AX24DyViQ0Pw5XbN6"
-        secret = os.environ['PF_API_SECRET']
-        super().__init__(key, secret, base_url="https://api.petfinder.com",
-                         token_url="/v2/oauth2/token")
+        secret = os.environ["PF_API_SECRET"]
+        super().__init__(
+            key,
+            secret,
+            base_url="https://api.petfinder.com",
+            token_url="/v2/oauth2/token",
+        )
         self.shelter_cache = {}
         self.reset_requests()
 
@@ -278,8 +293,10 @@ class PetAPI(OAuthAPI):
         for page in range(1, pages + 1):
             # this is a circle that includes most of Texas (as much as we can get)
             response = json.loads(
-                self.get(f"/v2/{endpoint}?page={page}&limit={limit}"
-                         f"&location=76825&distance=500&{parameters}")
+                self.get(
+                    f"/v2/{endpoint}?page={page}&limit={limit}"
+                    f"&location=76825&distance=500&{parameters}"
+                )
             )
             if total_pages is None:
                 total_pages = response["pagination"]["total_pages"]
@@ -297,9 +314,9 @@ class PetAPI(OAuthAPI):
             long_breed = b["name"]
             breed = None
             for breed_str in re.split(r"\s*[/\\]\s*", long_breed):
-                breed = DogBreed.query                                                \
-                    .filter(DogBreed.name.ilike(escape_like(breed_str), escape="\\")) \
-                    .first()
+                breed = DogBreed.query.filter(
+                    DogBreed.name.ilike(escape_like(breed_str), escape="\\")
+                ).first()
                 if breed is not None:
                     break
 
@@ -321,9 +338,9 @@ class PetAPI(OAuthAPI):
             long_breed = b["name"]
             breed = None
             for breed_str in re.split(r"\s*[/\\]\s*", long_breed):
-                breed = CatBreed.query                                                \
-                    .filter(CatBreed.name.ilike(escape_like(breed_str), escape="\\")) \
-                    .first()
+                breed = CatBreed.query.filter(
+                    CatBreed.name.ilike(escape_like(breed_str), escape="\\")
+                ).first()
                 if breed is not None:
                     break
 
@@ -331,9 +348,9 @@ class PetAPI(OAuthAPI):
                     if word.lower() in ["american", "domestic"]:
                         continue
                     escaped = escape_like(breed_str)
-                    breed = CatBreed.query                                        \
-                        .filter(CatBreed.name.ilike(f"%{escaped}%", escape="\\")) \
-                        .first()
+                    breed = CatBreed.query.filter(
+                        CatBreed.name.ilike(f"%{escaped}%", escape="\\")
+                    ).first()
                     if breed is not None:
                         break
                 if breed is not None:
@@ -368,7 +385,9 @@ class PetAPI(OAuthAPI):
         return self.shelter_cache[pf_id]
 
     def get_shelters(self, pages=1, limit=100):
-        shelter_generator = self.get_paginated_data("organizations", pages=pages, limit=limit)
+        shelter_generator = self.get_paginated_data(
+            "organizations", pages=pages, limit=limit
+        )
         shelters = []
         for shelter in shelter_generator:
             shelters.append(parse_shelter(shelter))
