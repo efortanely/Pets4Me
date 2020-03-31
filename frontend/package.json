@@ -23,6 +23,7 @@
     "jquery": "^1.9.1",
     "mapbox-gl": "^1.9.0",
     "mocha": "^7.1.1",
+    "newman": "^4.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
