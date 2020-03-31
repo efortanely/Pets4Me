@@ -1,6 +1,7 @@
 from unittest import main, TestCase
 from .external_apis import DogAPI, CatAPI, PetAPI
 
+
 class ExternalApisTest(TestCase):
     def petfinder_check_endpoint(self, endpoint):
         pet_api = PetAPI()
@@ -11,7 +12,7 @@ class ExternalApisTest(TestCase):
     # author Robert
     def test_petfinder_pets_liveness(self):
         self.petfinder_check_endpoint("animals")
-    
+
     # author Robert
     def test_petfinder_shelters_liveness(self):
         self.petfinder_check_endpoint("organizations")
@@ -30,5 +31,6 @@ class ExternalApisTest(TestCase):
         self.assertEqual(200, response.status_code)
         cat_api.close()
 
-if __name__ == "__main__": # pragma: no cover
+
+if __name__ == "__main__":  # pragma: no cover
     main()

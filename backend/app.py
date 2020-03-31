@@ -1,6 +1,7 @@
 from flask import Flask
 from extensions import pets4me_api, refresh_service
 
+
 def create_app(name):
     app = Flask(name)
     # Setup config
