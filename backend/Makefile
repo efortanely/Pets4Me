@@ -4,6 +4,9 @@ update-deps:
 test:
 	./run-tests.sh
 
+fmt:
+	./envrun.sh black --exclude env .
+
 clean:
 	rm -f  .coverage
 	rm -f  .pylintrc

@@ -4,10 +4,12 @@ from .pets4me_api import db
 
 scheduler = APScheduler()
 
+
 def commit_all(iterable):
     for e in iterable:
         db.session.add(e)
     db.session.commit()
+
 
 def refresh():
     with db.app.app_context():
@@ -40,19 +42,16 @@ def refresh():
         pet_api.close()
         print("Refresh complete.")
 
+
 def setup_config(app):
-    app.config['JOBS'] = [
-        {
-            'id': 'refresh-service',
-            'func': refresh,
-            'trigger': 'interval',
-            'days': 1
-        }
+    app.config["JOBS"] = [
+        {"id": "refresh-service", "func": refresh, "trigger": "interval", "days": 1}
     ]
-    app.config['SCHEDULER_EXECUTORS'] = {
-        'default': {'type': 'processpool', 'max_workers': 1}
+    app.config["SCHEDULER_EXECUTORS"] = {
+        "default": {"type": "processpool", "max_workers": 1}
     }
-    app.config['SCHEDULER_API_ENABLED'] = False
+    app.config["SCHEDULER_API_ENABLED"] = False
+
 
 def setup(app):
     scheduler.init_app(app)
