@@ -4,37 +4,41 @@ from .pets4me_api import db
 
 scheduler = APScheduler()
 
-def add_all(iterable):
+def commit_all(iterable):
     for e in iterable:
         db.session.add(e)
+    db.session.commit()
 
 def refresh():
-    print("Refreshing...")
     with db.app.app_context():
+        print("Refreshing...")
         db.drop_all()
         db.create_all()
 
+        print("Connecting...")
         dog_api = DogAPI()
-        dog_breeds = dog_api.get_breeds()
-        dog_api.close()
-        add_all(dog_breeds)
-        del dog_breeds
-
         cat_api = CatAPI()
-        cat_breeds = cat_api.get_breeds()
-        cat_api.close()
-        add_all(cat_breeds)
-        del cat_breeds
-
         pet_api = PetAPI()
-        shelters = pet_api.get_shelters(pages=10)
-        pets = pet_api.get_animals(pages=10)
-        pet_api.close()
-        add_all(shelters)
-        add_all(pets)
 
-        db.session.commit()
-    print("Refresh complete.")
+        print("Getting dog breeds...")
+        commit_all(dog_api.get_breeds())
+        dog_breeds_map, new_breeds = pet_api.get_dog_breeds(dog_api)
+        commit_all(new_breeds)
+
+        print("Getting cat breeds...")
+        commit_all(cat_api.get_breeds())
+        cat_breeds_map, new_breeds = pet_api.get_cat_breeds(cat_api)
+        commit_all(new_breeds)
+
+        print("Getting pets and shelters...")
+        commit_all(pet_api.get_animals(dog_breeds_map, cat_breeds_map, pages=10))
+        # Getting pets already gives us 201 shelters
+        # We can leave this out for now
+        # commit_all(pet_api.get_shelters(pages=10))
+        dog_api.close()
+        cat_api.close()
+        pet_api.close()
+        print("Refresh complete.")
 
 def setup_config(app):
     app.config['JOBS'] = [
