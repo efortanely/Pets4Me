@@ -1,12 +1,11 @@
 /* Austin Homo sapiens-e Society B) */
 import React from 'react';
-import Image from 'react-bootstrap/Image'
-import ahs_img from '../../static/shelters/ahs.jpg'
+import MapMedia from '../../common/components/MapMedia';
 
 function HumaneSociety() {
     return(
       <div className='model-instancepage'>
-        <Image className='instancepage-image' src={ahs_img} rounded />
+        <MapMedia address="124 W. Anderson Lane, Austin, Texas 78752"/>
         <div className='instancepage-text'>
           <h1>Austin Humane Society</h1>
           <a href="http://www.austinhumanesociety.org/">Visit their website</a>
