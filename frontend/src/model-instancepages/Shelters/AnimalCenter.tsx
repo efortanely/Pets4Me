@@ -1,12 +1,11 @@
 /* Austin Danimals Center B) */
 import React from 'react';
-import Image from 'react-bootstrap/Image'
-import aac_img from '../../static/shelters/aac.jpg'
+import MapMedia from '../../common/components/MapMedia';
 
 function AnimalCenter() {
     return(
       <div className='model-instancepage'>
-        <Image className='instancepage-image' src={aac_img} rounded />
+        <MapMedia address="7201 Levander Loop asldfhaslkdfjasdlkfj, Austin, TX 78702"/>
         <div className='instancepage-text'>
           <h1>Austin Animal Center</h1>
           <a href="http://www.austintexas.gov/department/aac">Visit their website</a>
