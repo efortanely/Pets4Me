@@ -2,16 +2,16 @@ import 'jsdom-global/register'
 import React from 'react'
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
-import DogBreedInstancePage from '../../model-instancepages/Breeds/dog-breed-instance-page'
-import { Pets4meDogBreedsService } from '../../common/services/pets4me-dog-breeds-service';
-import { DogBreed } from '../../models/dog-breed';
+import DogBreedInstancePage from '../../../model-instancepages/Breeds/dog-breed-instance-page'
+import { Pets4meDogBreedsService } from '../../../common/services/pets4me-dog-breeds-service';
+import { DogBreed } from '../../../models/dog-breed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
 
-describe('<DogBreedInstancePage/>', () => {
+describe('<DogBreedInstancePage />', () => {
   let testComponent: ShallowWrapper
   let testBreed: DogBreed
   let elements: any
@@ -58,7 +58,8 @@ describe('<DogBreedInstancePage/>', () => {
       temperament: 'foobar',
       bred_for: 'barfoo',
       dog_ids: [1, 2],
-      local_shelters_with_breed: [1]
+      local_shelters_with_breed: [1],
+      photo: ''
     }
 
     elements = {
