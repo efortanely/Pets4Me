@@ -11,6 +11,7 @@ import TomHanks from './model-instancepages/Pets/TomHanks'
 import FunGuy from './model-instancepages/Pets/FunGuy'
 import Pegasus19 from './model-instancepages/Pets/Pegasus19'
 import DogBreedInstancePage from './model-instancepages/Breeds/dog-breed-instance-page'
+import PetInstancePage from './model-instancepages/Pets/pet-instance-page'
 import DomesticShorthair from './model-instancepages/Breeds/DomesticShorthair'
 import AnimalCenter from './model-instancepages/Shelters/AnimalCenter'
 import AustinPetsAlive from './model-instancepages/Shelters/AustinPetsAlive'
@@ -24,6 +25,7 @@ function App() {
       <div className="App">
         <Navbar/>
         <Switch>
+        <Route path="/pets/:pet_id" component={PetInstancePage} />
           <Route path="/pets/tom-hanks">
             <TomHanks />
           </Route>
