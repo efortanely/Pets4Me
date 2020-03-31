@@ -7,9 +7,9 @@ import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 import { DogBreedsPage } from '../../../models/dog-breeds-page';
-import { DogBreedsCards } from '../../../model-homepages/Dogs/DogBreedsCards';
 import { Pets4meDogBreedsService } from '../../../common/services/pets4me-dog-breeds-service';
 import DogBreedsService from '../../../common/services/dog-breeds-service';
+import DogBreedsCards from '../../../model-homepages/Dogs/DogBreedsCards';
 chai.use(sinonChai)
 
 const itemsPerPage = 12
