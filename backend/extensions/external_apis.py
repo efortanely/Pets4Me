@@ -249,8 +249,8 @@ def parse_shelter(shelter):
 
 class PetAPI(OAuthAPI):
     def __init__(self):
-        key = "NpG2i5NuwSKUaMBNcYeQGacuYoeDxQvDfXPouK4lAAneSJyJEA"
-        secret = os.getenv("PF_API_SECRET")
+        key = "yDkGT4TvLZLzYpK9RGFCx9QaVUertzN66AX24DyViQ0Pw5XbN6"
+        secret = os.environ['PF_API_SECRET']
         super().__init__(key, secret, base_url="https://api.petfinder.com",
                          token_url="/v2/oauth2/token")
         self.shelter_cache = {}
