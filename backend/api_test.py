@@ -1,5 +1,6 @@
 from unittest import main, TestCase
 from app import create_app
+from extensions.pets4me_api import db
 
 app = create_app("test_app")
 
@@ -8,6 +9,8 @@ class MyUnitTests(TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.app.testing = True
+        with app.app_context():
+            db.create_all()
 
     # author Rosemary
     def test_pet_status_code(self):
