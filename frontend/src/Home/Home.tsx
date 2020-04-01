@@ -8,8 +8,8 @@ import shapeTwo from '../static/shape2.svg'
 import { Link } from 'react-router-dom';
 import './Home.css';
 
-function getRandomPetLink(): any  {
-  return <Link to={`/pets/${Math.floor(Math.random() * 10) + 1}`}><h2>adopt a pet today</h2></Link>
+function getRandomPetLink(): string {
+  return `https://pets4.me/pets/${Math.floor(Math.random() * 10) + 1}`;
 }
 
 function Home() {
@@ -22,7 +22,7 @@ function Home() {
   
         <div className="frontPageInfo">
           <h1>Make a New Friend!</h1>
-          {getRandomPetLink()}
+          <a id='adopt' href={getRandomPetLink()}><h2>adopt a pet today</h2></a>
           <p>Our goal is to make finding a new furry friend as easy as possible. Explore the best fit for your lifestyle with our dog and cat breed search engine, or jump right into discovering pets at your local shelters.</p>
           <FontAwesomeIcon className="paw" icon={faPaw} color="#581730" size="2x"/>
         </div>
