@@ -15,9 +15,9 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   static defaultProps = {
     pet: { } as Pet
   }
-  
+
   constructor(props: PetProps) {
-    super(props)    
+    super(props)
     this.state = {
       pet: props.pet
     }

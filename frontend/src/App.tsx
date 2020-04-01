@@ -9,7 +9,7 @@ import Shelters from './model-homepages/Shelters/Shelters'
 import Navbar from './common/components/Navbar'
 import DogBreedInstancePage from './model-instancepages/Breeds/dog-breed-instance-page'
 import PetInstancePage from './model-instancepages/Pets/pet-instance-page'
-import DomesticShorthair from './model-instancepages/Breeds/DomesticShorthair'
+import CatBreedInstancePage from './model-instancepages/Breeds/cat-breed-instance-page'
 import ShelterInstancePage from './model-instancepages/Shelters/shelter-instance-page'
 
 import './App.css';
@@ -28,9 +28,7 @@ function App() {
           <Route path="/dog-breeds">
             <DogBreeds />
           </Route>
-          <Route path="/cat-breeds/domestic-shorthair">
-            <DomesticShorthair />
-          </Route>
+          <Route path="/cat-breeds/:breed_id" component={CatBreedInstancePage} />
           <Route path="/cat-breeds">
             <CatBreeds />
           </Route>
