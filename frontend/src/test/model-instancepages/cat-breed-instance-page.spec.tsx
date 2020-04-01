@@ -8,6 +8,7 @@ import { CatBreed } from '../../models/cat-breed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
+import { MemoryRouter } from 'react-router-dom';
 chai.use(sinonChai)
 
 
@@ -29,10 +30,10 @@ describe('<CatBreedInstancePage/>', () => {
   }
 
   function mountWithBreed(breed: CatBreed, breed_id: string = `${breed.id}`) {
-    return mount(<CatBreedInstancePage
+    return mount(<MemoryRouter><CatBreedInstancePage
       breed={breed}
       match={{params: { breed_id: `${breed_id}` }, isExact: true, path: "", url: ""}}
-    />)
+    /></MemoryRouter>)
   }
 
   function shallowWithBreed(breed: CatBreed, breed_id: string = `${breed.id}`) {
@@ -59,7 +60,8 @@ describe('<CatBreedInstancePage/>', () => {
       child_friendly: 1,
       grooming_level: 2,
       cat_ids: [2, 3],
-      local_shelters_with_breed: [1]
+      local_shelters_with_breed: [1],
+      photo: ''
     }
 
     elements = {
@@ -76,13 +78,13 @@ describe('<CatBreedInstancePage/>', () => {
     }
   })
 
-  // author: Connor
+  // author Cristian
   it('should not crash when breed is empty', () => {
     shallowWithBreed(emptyBreed)
     expect(testComponent.html()).to.exist
   })
 
-  // author: Connor
+  // author Cristian
   it('should not crash when CatBreed is undefined', () => {
     spyOnCatBreedsService(testBreed)
     let testPage = mount(<CatBreedInstancePage
@@ -93,7 +95,7 @@ describe('<CatBreedInstancePage/>', () => {
     expect(testPage.html()).to.exist
   })
 
-  // author: Connor
+  // author Cristian
   it('should not crash when api CatBreed is empty', () => {
     spyOnCatBreedsService(emptyBreed)
     let testPage: ReactWrapper<CatBreedInstancePage> = mountWithBreed(emptyBreed)
@@ -102,7 +104,7 @@ describe('<CatBreedInstancePage/>', () => {
     expect(testPage.html()).to.exist
   })
 
-  // author: Connor
+  // author Cristian
   it('should render all details', () => {
 
     shallowWithBreed(testBreed)
@@ -120,7 +122,7 @@ describe('<CatBreedInstancePage/>', () => {
     expect(elements.sheltersWithBreed().text()).to.include(testBreed.local_shelters_with_breed.length)
   })
 
-  // author: Connor
+  // author Cristian
   it('should GET breed on component mount if no breed supplied in props', () => {
     let getCatBreedSpy = spyOnCatBreedsService(testBreed)
 

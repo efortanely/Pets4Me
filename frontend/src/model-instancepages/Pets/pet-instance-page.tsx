@@ -52,7 +52,7 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
     if (photos?.full && photos.full[0])
       return <Image className='instancepage-image' src={photos.full[0]} rounded />
     if (photos?.small && photos.small[0])
-      return <Image className='instancepage-image' src={photos.full[0]} rounded />
+      return <Image className='instancepage-image' src={photos.small[0]} rounded />
     return <div>
       <Image className='instancepage-image' src={logo} rounded />
       <p>Uh-oh! No image is available for this pet.</p>

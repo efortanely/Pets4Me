@@ -1,7 +1,8 @@
 import { Pet } from '../../models/pet';
+import { ObjectsPage } from '../../models/ObjectsPage';
 
 interface PetsService {
-  getPets(): Promise<Pet[]>
+  getPets(pageNumber: number): Promise<ObjectsPage<Pet>>
   getPet(id: string): Promise<Pet>
 }
 
