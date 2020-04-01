@@ -5,51 +5,54 @@ Our goal is to make finding a new furry friend as easy as possible. Explore the 
 * Andrew Cramer
     * EID: ac49725
     * Gitlab ID: acramer
-    * Estimated Time to Completion: 21 hrs
-    * Actual Time to Completion: 24 hrs
+    * Estimated Time to Completion: 23 hrs
+    * Actual Time to Completion: 25 hrs
 
 
 * Rosemary Fortanely 
     * EID: emf2283
     * Gitlab ID: codesmary
-    * Estimated Time to Completion: 15 hrs
-    * Actual Time to Completion: 20 hrs
+    * Estimated Time to Completion: 20 hrs
+    * Actual Time to Completion: 25 hrs
 
 
 * Connor Sheehan 
     * EID: cps2255
     * Gitlab ID: connor6321
-    * Estimated Time to Completion: 20 hrs
-    * Actual Time to Completion: 20 hrs
+    * Estimated Time to Completion: 22 hrs
+    * Actual Time to Completion: 25 hrs
 
 
 * Dean Torkelson
     * EID: dt24566
     * Gitlab ID: deantorkelson
-    * Estimated Time to Completion: 15 hrs
-    * Actual Time to Completion: 21 hrs
+    * Estimated Time to Completion: 25 hrs
+    * Actual Time to Completion: 25 hrs
 
 
 * Cristan Garza
     * EID: cg42574
     * Gitlab ID: CristianGarza
-    * Estimated Time to Completion: 16 hrs
-    * Actual Time to Completion: 22 hrs
+    * Estimated Time to Completion: 20 hrs
+    * Actual Time to Completion: 25 hrs
 
 
 * Robert Hrusecky
     * EID: reh3279
     * Gitlab ID: robert-hrusecky
-    * Estimated Time to Completion: 15 hrs
-    * Actual Time to Completion: 23 hrs
+    * Estimated Time to Completion: 22 hrs
+    * Actual Time to Completion: 25 hrs
 
-Git SHA: 51cf2d0f190c77fb9e403d3491eb2bab83c183f4
+Git SHA: FIXME FIXME FIXME FIXME!!!!!!
 
 Phase One Project Leader: Connor Sheehan
+Phase Two Project Leader: Dean Torkelson
 
 [API Docs](https://documenter.getpostman.com/view/3840765/SzKYQcyE?version=latest)
 
 [Website](https://www.pets4.me)
+
+[Pipelines](https://gitlab.com/acramer/pets4me/pipelines)
 
 ## Frontend
 
