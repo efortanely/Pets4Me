@@ -7,7 +7,7 @@ then
 fi
 
 source env/bin/activate
-output="$($PYTHON -m extensions.external_apis_test 2>&1)"
+output="$($PYTHON -m unittest discover -p "*_test.py" 2>&1)"
 echo "$output"
 deactivate
 failures="$(echo "$output" | grep FAILED)"

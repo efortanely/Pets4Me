@@ -10,7 +10,8 @@ frontend:
     - make test
 
 backend:
-    image: gpdowning/python
+    image: pets4me/backend
     script:
+    - sudo /etc/init.d/postgresql start
     - make update-backend
     - make backend-test
