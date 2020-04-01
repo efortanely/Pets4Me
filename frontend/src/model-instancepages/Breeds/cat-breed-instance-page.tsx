@@ -7,7 +7,6 @@ import Figure from 'react-bootstrap/Figure'
 import logo from '../../static/logo.png';
 import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
-import {BrowserRouter as Router} from 'react-router-dom';
 
 type CatBreedProps = { breed: CatBreed, match: match }
 type CatBreedState = { breed: CatBreed }
@@ -73,7 +72,6 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
   render() {
     let breed: CatBreed = this.state.breed
     return (
-    <Router>
     <div className='breed-instancepage'>
       { this.getPhoto(breed.photo) }
         <div className='instancepage-text'>
@@ -96,7 +94,6 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
             />
         </Figure>
       </div>
-      </Router>
     )
   }
 }

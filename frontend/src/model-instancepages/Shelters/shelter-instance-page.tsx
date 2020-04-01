@@ -1,7 +1,6 @@
 import React from 'react'
 import Pets4meSheltersServiceContext from '../../common/services/pets4me-shelters-service';
 import SheltersService from '../../common/services/shelters-service';
-import MapMedia from '../../common/components/MapMedia';
 import { Shelter, Photos } from '../../models/shelter';
 import { match, Link } from 'react-router-dom'
 import Image from 'react-bootstrap/Image';
@@ -42,7 +41,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
       let route = `/${type}/${id}`;
       return <Link to={route}>{text}</Link> as JSX.Element;
     }
-    return <span>Unknown.</span>
+    return <span>{text}: Unknown.</span>
   }
 
   getPhoto = (photos: Photos): JSX.Element => {
@@ -81,8 +80,8 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
           <p id='mission'>Mission: {shelter.mission}</p>
           <p id='distance'>Distance: {shelter.distance}</p>
           <p id='num-pets'>Top pet: {allPets.length > 0 ? this.getLinkedUrl(allPets[0].id, 'pets', allPets[0].species)  : 'None'}</p>
-          <p id='top-dog-breed-id'>{this.getLinkedUrl(shelter.top_dog_breed_id, 'dog-breed', "Top dog breed")}</p>
-          <p id='top-cat-breed-id'>{this.getLinkedUrl(shelter.top_cat_breed_id, 'cat-breed', "Top cat breed")}</p>
+          <p id='top-dog-breed-id'>{this.getLinkedUrl(shelter.top_dog_breed_id, 'dog-breeds', "Top dog breed")}</p>
+          <p id='top-cat-breed-id'>{this.getLinkedUrl(shelter.top_cat_breed_id, 'cat-breeds', "Top cat breed")}</p>
         </div>
       </div>
     )

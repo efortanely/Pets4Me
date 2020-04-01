@@ -1,11 +1,11 @@
 import React from 'react';
 import PetsFilters from './PetsFilters'
-import PetsCards from './PetsCards';
 import { Slider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import MediaQuery from 'react-responsive';
 import '../ModelHomepage.css';
+import PetsInfoCards from './PetsInfoCards';
 
 const muiTheme = createMuiTheme({
   overrides:{
@@ -44,9 +44,8 @@ function Pets() {
               valueLabelDisplay='auto'
             />
           </ThemeProvider>
-
           <PetsFilters />
-          <PetsCards />
+          <PetsInfoCards />
         </div>
       </MediaQuery>
 
@@ -76,7 +75,7 @@ function Pets() {
                 </ThemeProvider>
               </div>
             </div>
-            <PetsCards />
+            <PetsInfoCards />
           </div>
         </div>
       </MediaQuery>

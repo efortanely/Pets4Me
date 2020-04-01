@@ -6,30 +6,30 @@ import { DogBreed } from '../../../models/dog-breed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
-import { DogBreedsPage } from '../../../models/dog-breeds-page';
+import { ObjectsPage } from '../../../models/ObjectsPage';
+import DogBreedsInfoCards from '../../../model-homepages/Dogs/DogBreedsInfoCards';
 import { Pets4meDogBreedsService } from '../../../common/services/pets4me-dog-breeds-service';
 import DogBreedsService from '../../../common/services/dog-breeds-service';
-import DogBreedsCards from '../../../model-homepages/Dogs/DogBreedsCards';
 chai.use(sinonChai)
 
 const itemsPerPage = 12
 
-describe('<DogBreedsCards />', () => {
+describe('<DogBreedsInfoCards />', () => {
   let testComponent: ShallowWrapper
   let testBreed: DogBreed
-  let testBreedPage: DogBreedsPage
+  let testBreedPage: ObjectsPage<DogBreed>
   let elements: any
 
-  function mountWithPage(page: DogBreedsPage, pageNumber: number = 1) {
+  function mountWithPage(page: ObjectsPage<DogBreed>, pageNumber: number = 1) {
     let testDogBreedsService = new Pets4meDogBreedsService()
-    testDogBreedsService.getDogBreeds = (pageNumber?: number) => new Promise<DogBreedsPage>(()=> page)
-    DogBreedsCards.contextType = React.createContext<DogBreedsService>(testDogBreedsService)
+    testDogBreedsService.getDogBreeds = (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
+    DogBreedsInfoCards.contextType = React.createContext<DogBreedsService>(testDogBreedsService)
 
-    return mount(<DogBreedsCards pageNumber={pageNumber}/>)
+    return mount(<DogBreedsInfoCards />)
   }
 
-  function makeDummyPageFunction(page: DogBreedsPage): (pageNumber?: number) => Promise<DogBreedsPage> {
-    return (pageNumber?: number) => new Promise<DogBreedsPage>(()=> page)
+  function makeDummyPageFunction(page: ObjectsPage<DogBreed>): (pageNumber?: number) => Promise<ObjectsPage<DogBreed>> {
+    return (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
   }
 
   function addBreedToTestPage(breed: DogBreed) {

@@ -8,7 +8,8 @@ import { Shelter } from '../../models/shelter';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
-import { Link, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
+import SheltersService from '../../common/services/shelters-service';
 chai.use(sinonChai)
 
 
@@ -23,7 +24,7 @@ describe('<ShelterInstancePage/>', () => {
     let getShelterSpy = spy((shelter_id: string) => new Promise<Shelter>(() => shelter))
     testPets4meSheltersService.getShelter = getShelterSpy
 
-    let testContext = React.createContext<Pets4meSheltersService>(testPets4meSheltersService)
+    let testContext = React.createContext<SheltersService>(testPets4meSheltersService)
     ShelterInstancePage.contextType = testContext
 
     return getShelterSpy
@@ -76,13 +77,13 @@ describe('<ShelterInstancePage/>', () => {
     }
   })
 
-  // author: Connor
+  // author Andrew
   it('should not crash when shelter is empty', () => {
     shallowWithShelter(emptyShelter)
     expect(testComponent.html()).to.exist
   })
 
-  // author: Connor
+  // author Andrew
   it('should not crash when Shelter is undefined', () => {
     spyOnSheltersService(testShelter)
     let testPage = mount(<ShelterInstancePage
@@ -93,7 +94,7 @@ describe('<ShelterInstancePage/>', () => {
     expect(testPage.html()).to.exist
   })
 
-  // author: Connor
+  // author Andrew
   it('should not crash when api Shelter is empty', () => {
     spyOnSheltersService(emptyShelter)
     let testPage: ReactWrapper<ShelterInstancePage> = mountWithShelter(emptyShelter)
@@ -102,7 +103,7 @@ describe('<ShelterInstancePage/>', () => {
     expect(testPage.html()).to.exist
   })
 
-  // author: Connor
+  // author Andrew
   it('should render all details', () => {
 
     shallowWithShelter(testShelter)
@@ -125,7 +126,7 @@ describe('<ShelterInstancePage/>', () => {
     // expect(elements.top_cat_breed_id().text()).to.include(testShelter.top_cat_breed_id)
   })
 
-  // author: Connor
+  // author Andrew
   it('should GET shelter on component mount if no shelter supplied in props', () => {
     let getShelterSpy = spyOnSheltersService(testShelter)
 

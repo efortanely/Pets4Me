@@ -1,53 +1,26 @@
 import React from 'react';
-import ahs from '../../static/shelters/ahs.png'
-import apa from '../../static/shelters/apa.png'
-import aac from '../../static/shelters/aac.png'
-import Paginator from '../../common/components/Paginator';
+import InfoCards from '../../common/components/Cards/InfoCards';
+import { ObjectsPage } from '../../models/ObjectsPage';
+import Pets4meSheltersServiceContext from '../../common/services/pets4me-shelters-service';
+import { Shelter } from '../../models/shelter';
+import ShelterCard from '../../common/components/Cards/ShelterCard';
+import SheltersService from '../../common/services/shelters-service';
 
-function SheltersCards() {
-    return (
-        <div>
-            <div className='cards'>
-                <a className='single-card' href="/shelters/1">
-                    <img className='card-image' src={ahs} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Austin Humane Society
-                        </h3>
-                        Address: 124 W. Anderson Lane, Austin, Texas 78752<br></br>
-                        Email: adoption@austinhumanesociety.org<br></br>
-                        Phone Number: 512-646-7387<br></br>
-                        Hours: M-Sat 12-7pm; Sun 12-5pm
-                    </div>
-                </a>
+class SheltersInfoCards extends InfoCards<Shelter> {
+    static contextType = Pets4meSheltersServiceContext
+    
+    fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<Shelter>> => {
+        const pets4meSheltersService: SheltersService = this.context
+        return pets4meSheltersService.getShelters(pageNumber)
+    }
 
-                <a className='single-card' href="/shelters/2">
-                    <img className='card-image' src={apa} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Austin Pets Alive!
-                        </h3>
-                        Address: 7201 Levander Loop Bldg. A, Austin, TX 78702<br></br>
-                        Email: https://www.austinpetsalive.org/contact<br></br>
-                        Phone Number: 512-961-6519<br></br>
-                        Hours: 11:30am-7pm everyday
-                    </div>
-                </a>
+    createInfoCard = (o: Shelter, key: any): JSX.Element => {
+        return <ShelterCard key={`shelter-card-${key}`} shelter={o} />
+    }
 
-                <a className='single-card' href="/shelters/3">
-                    <img className='card-image' src={aac} alt=''></img>
-                    <div className='card-text'>
-                        <h3>
-                            Austin Animal Center
-                        </h3>
-                        Address: 1156 West Cesar Chavez, Austin, TX 78703<br></br>
-                        Email: N/A<br></br>
-                        Phone Number: 311<br></br>
-                        Hours: 11am-7pm everyday
-                    </div>
-                </a>
-            </div>
-            <Paginator />
-        </div>
-    );
-} export default SheltersCards;
+    getPathName = (): string =>  {
+        return '/shelters'
+    }
+}
+
+export default SheltersInfoCards

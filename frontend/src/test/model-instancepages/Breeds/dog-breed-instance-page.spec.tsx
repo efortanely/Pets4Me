@@ -8,6 +8,8 @@ import { DogBreed } from '../../../models/dog-breed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
+import DogBreedsService from '../../../common/services/dog-breeds-service';
+import { MemoryRouter } from 'react-router-dom';
 chai.use(sinonChai)
 
 
@@ -22,17 +24,17 @@ describe('<DogBreedInstancePage />', () => {
     let getDogBreedSpy = spy((breed_id: string) => new Promise<DogBreed>(() => breed))
     testPets4meDogBreedsService.getDogBreed = getDogBreedSpy
 
-    let testContext = React.createContext<Pets4meDogBreedsService>(testPets4meDogBreedsService)
+    let testContext = React.createContext<DogBreedsService>(testPets4meDogBreedsService)
     DogBreedInstancePage.contextType = testContext
 
     return getDogBreedSpy
   }
 
   function mountWithBreed(breed: DogBreed, breed_id: string = `${breed.id}`) {
-    return mount(<DogBreedInstancePage
+    return mount(<MemoryRouter><DogBreedInstancePage
       breed={breed}
       match={{params: { breed_id: `${breed_id}` }, isExact: true, path: "", url: ""}}
-    />)
+    /></MemoryRouter>)
   }
 
   function shallowWithBreed(breed: DogBreed, breed_id: string = `${breed.id}`) {

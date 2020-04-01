@@ -1,7 +1,8 @@
-export interface PetsPage {
+import { Pet } from "./pet";
+
+export interface PetsPage<T>{
   num_results: number
-  num_pages: number
+  total_pages: number
   page: number
-  // TODO change to Pet[] when Pet interface is created
-  data: any[]
+  objects: T[]
 }

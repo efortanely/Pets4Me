@@ -1,7 +1,7 @@
 import React from 'react';
 import DogsFilters from './DogsFilters'
-import DogBreedsCards from './DogBreedsCards';
 import '../ModelHomepage.css';
+import DogBreedsInfoCards from './DogBreedsInfoCards';
 
 function DogBreeds() {
 
@@ -10,7 +10,7 @@ function DogBreeds() {
       <div className='model-homepage-content'>
         <DogsFilters />
         <div className='cards-container'>
-          <DogBreedsCards />
+          <DogBreedsInfoCards />
         </div>
       </div>
     </div>

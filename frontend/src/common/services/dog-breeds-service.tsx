@@ -1,8 +1,8 @@
 import { DogBreed } from '../../models/dog-breed';
-import { DogBreedsPage } from '../../models/dog-breeds-page';
+import { ObjectsPage } from '../../models/ObjectsPage';
 
 interface DogBreedsService {
-  getDogBreeds(pageNumber?: number): Promise<DogBreedsPage>
+  getDogBreeds(pageNumber: number): Promise<ObjectsPage<DogBreed>>
   getDogBreed(id: string): Promise<DogBreed>
 }
 
