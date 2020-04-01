@@ -9,6 +9,7 @@ import robert from '../static/robert.png'
 import petfinder from '../static/petfinder.jpg'
 import dogapi from '../static/thedogapi.png'
 import catapi from '../static/thecatapi.png'
+import pixabay from '../static/pixabay.png'
 import ts from '../static/tools/ts.png'
 import reactlogo from '../static/tools/react.png'
 import marvel from '../static/tools/marvelapp.png'
@@ -17,17 +18,22 @@ import react_bootstrap from '../static/tools/react-bootstrap.png'
 import material_ui from '../static/tools/material-ui.png'
 import gitlab from '../static/gitlab.jpg'
 import postman from '../static/postman.png'
+import mocha from '../static/mocha.png'
+import mapbox from '../static/mapbox.png'
+import selenium from '../static/selenium.png'
+
 import { Member } from './components/member'
 import ToolDoor from './components/ToolDoor'
+import TestCounts from './test-count.json'
 import './About.css';
 
 function About() {
-    const andrew_role = "Back-end Developer"
-    const rosemary_role = "Front-end Developer"
-    const connor_role = "Front-end Developer"
-    const dean_role = "Front-end Developer"
-    const cristian_role = "Front-end Developer"
-    const robert_role = "Hosting/Tools Developer"
+    const andrew_role = "Backend/DB Developer"
+    const rosemary_role = "Backend/DB Developer"
+    const connor_role = "Frontend Developer"
+    const dean_role = "Frontend/Backend Developer"
+    const cristian_role = "Frontend Developer"
+    const robert_role = "Backend/DB Developer"
 
     const andrew_bio = "I'm a senior in Computer Science at UT Austin originally from Houston and before that Denver.  I have interests in machine learning and data science.  My hobbies at the moment include hiking, board games, and rock climbing."
     const rosemary_bio = "I'm a senior Computer Science/Studio Art major at UT Austin. My technical interests include machine learning and full-stack web development. I like to spend my free time working on side projects and making art."
@@ -49,15 +55,15 @@ function About() {
         <p className="about-p">We're a group of students at the University of Texas at Austin, working together in the Software Engineering class for Spring 2020. Our goal is to consolidate information about dog and cat breeds with the animals available at shelters to help those looking for a new furry friend make the most informed decision with their adoption.</p>
   
         <div className="members">
-          <Member img={andrew} name="Andrew Cramer" role={andrew_role} bio={andrew_bio} author_name={["Andrew Cramer", "Andrew"]} gitlab_id="acramer" tests={0}/>
-          <Member img={rosemary} name="Rosemary Fortanely" role={rosemary_role} bio={rosemary_bio} author_name={["Rosemary Fortanely", "Rosemary", "codesmary"]} gitlab_id="codesmary" tests={0}/>
-          <Member img={connor} name="Connor Sheehan" role={connor_role} bio={connor_bio} author_name={["Connor Sheehan", "connor6321", "Connor"]} gitlab_id="connor6321" tests={0}/>
-          <Member img={dean} name="Dean Torkelson" role={dean_role} bio={dean_bio} author_name={["Dean Torkelson", "deantorkelson", "Dean"]} gitlab_id="deantorkelson" tests={0}/>
-          <Member img={cristian} name="Cristian Garza" role={cristian_role} bio={cristian_bio} author_name={["Cristian Garza", "Cristian"]} gitlab_id="CristianGarza" tests={0}/>
-          <Member img={robert} name="Robert Hrusecky" role={robert_role} bio={robert_bio} author_name={["Robert Hrusecky", "Robert"]} gitlab_id="robert-hrusecky" tests={0}/>
+          <Member img={andrew} name="Andrew Cramer" role={andrew_role} bio={andrew_bio} author_name={["Andrew Cramer", "Andrew"]} gitlab_id="acramer" tests={TestCounts.Andrew}/>
+          <Member img={rosemary} name="Rosemary Fortanely" role={rosemary_role} bio={rosemary_bio} author_name={["Rosemary Fortanely", "Rosemary", "codesmary"]} gitlab_id="codesmary" tests={TestCounts.Rosemary}/>
+          <Member img={connor} name="Connor Sheehan" role={connor_role} bio={connor_bio} author_name={["Connor Sheehan", "connor6321", "Connor"]} gitlab_id="connor6321" tests={TestCounts.Connor}/>
+          <Member img={dean} name="Dean Torkelson" role={dean_role} bio={dean_bio} author_name={["Dean Torkelson", "deantorkelson", "Dean"]} gitlab_id="deantorkelson" tests={TestCounts.Dean}/>
+          <Member img={cristian} name="Cristian Garza" role={cristian_role} bio={cristian_bio} author_name={["Cristian Garza", "Cristian"]} gitlab_id="CristianGarza" tests={TestCounts.Cristian}/>
+          <Member img={robert} name="Robert Hrusecky" role={robert_role} bio={robert_bio} author_name={["Robert Hrusecky", "Robert"]} gitlab_id="robert-hrusecky" tests={TestCounts.Robert}/>
         </div>
   
-        <RepositoryStatistics/>
+        <RepositoryStatistics testSum={TestCounts.sum}/>
   
         <div className="data-sources">
           <h3>Data Sources</h3>
@@ -97,6 +103,18 @@ function About() {
               </div>
             </div>
           </div>
+
+          <div className="data-source">
+            <div className="rect">
+              <img className="pixabay" src={pixabay} alt="The Pixabay logo"></img>
+            </div>
+            <div className="door">
+              <div className="text">
+                <a href="https://pixabay.com/">Pixabay</a>
+                <p></p>
+              </div>
+            </div>
+          </div>
         </div>
   
         <div className="tools">
@@ -108,7 +126,9 @@ function About() {
           <ToolDoor img={bash} title="Bash" desc="We used Bash to help with deployment."/>
           <ToolDoor img={react_bootstrap} title="React Bootstrap" desc="We used these front-end tools to display information in a presentable format."/>
           <ToolDoor img={material_ui} title="Material UI" desc="We used these front-end tools to add otherwise complicated components to our site with ease."/>
-
+          <ToolDoor img={mocha} title="Mocha" desc="We used Mocha to test our frontend components."/>
+          <ToolDoor img={mapbox} title="Mapbox" desc="Mapbox was used to show the location of a shelter on the map."/>
+          <ToolDoor img={selenium} title="Selenium" desc="We used Selenium to test our GUI."/>
         </div>
   
         <div className="repo-api">
@@ -130,7 +150,7 @@ function About() {
             </div>
             <div className="door">
               <div className="text">
-                <a href="https://documenter.getpostman.com/view/3840765/SzKYQcyE?version=latest">Postman</a>
+                <a href="https://documenter.getpostman.com/view/10430017/SzYYzJDX?version=latest">Postman</a>
               </div>
             </div>
           </div>

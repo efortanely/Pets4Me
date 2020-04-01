@@ -8,6 +8,7 @@ update-and-test: update-deps test
 update-deps: update-backend update-frontend
 
 test: frontend-test backend-test
+	./test-counter.sh
 
 update-backend:
 	cd backend/ && $(MAKE) update-deps

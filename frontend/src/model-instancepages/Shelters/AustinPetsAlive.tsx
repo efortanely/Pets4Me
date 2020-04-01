@@ -1,16 +1,15 @@
 /* BAustin Bets BAlive */
 import React from 'react';
-import Image from 'react-bootstrap/Image'
-import apa_img from '../../static/shelters/apa.jpg'
+import MapMedia from '../../common/components/MapMedia';
 
 function AustinPetsAlive() {
     return(
       <div className='model-instancepage'>
-        <Image className='instancepage-image' src={apa_img} rounded/>
+        <MapMedia address="1156 West Cesar Chavez Street, Austin, TX 78703"/>
         <div className='instancepage-text'>
-          <h1>Austin Humane Society</h1>
+          <h1>Austin Pets Alive!</h1>
           <a href="https://www.austinpetsalive.org/">Visit their website</a>
-          <p>Location: 1156 West Cesar Chavez,Austin, TX 78703</p>
+          <p>Location: 1156 West Cesar Chavez, Austin, TX 78703</p>
           <p>Email: No email address available, but you can contace the through this link:
            https://www.austinpetsalive.org/contact</p>
           <p>Phone Number: 512·961·6519</p>

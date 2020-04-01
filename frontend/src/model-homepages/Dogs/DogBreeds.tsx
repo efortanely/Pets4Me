@@ -1,6 +1,6 @@
 import React from 'react';
 import DogsFilters from './DogsFilters'
-import DogsCards from './DogsCards';
+import DogBreedsCards from './DogBreedsCards';
 import '../ModelHomepage.css';
 
 function DogBreeds() {
@@ -9,7 +9,9 @@ function DogBreeds() {
     <div className='model-homepage'>
       <div className='model-homepage-content'>
         <DogsFilters />
-        <DogsCards />
+        <div className='cards-container'>
+          <DogBreedsCards />
+        </div>
       </div>
     </div>
   );

@@ -8,6 +8,8 @@ import { Pet, BackendEntity, Photos } from '../../models/pet';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
+import { MemoryRouter } from 'react-router-dom';
+import PetsService from '../../common/services/pets-service';
 chai.use(sinonChai)
 
 
@@ -22,17 +24,17 @@ describe('<PetInstancePage/>', () => {
     let getPetsSpy = spy((pet_id: string) => new Promise<Pet>(() => pet))
     testPets4mePetsService.getPet = getPetsSpy
 
-    let testContext = React.createContext<Pets4mePetsService>(testPets4mePetsService)
+    let testContext = React.createContext<PetsService>(testPets4mePetsService)
     PetInstancePage.contextType = testContext
 
     return getPetsSpy
   }
 
   function mountWithPet(pet: Pet, pet_id: string = `${pet.id}`) {
-    return mount(<PetInstancePage
+    return mount(<MemoryRouter><PetInstancePage
       pet={pet}
       match={{params: { pet_id: `${pet_id}` }, isExact: true, path: "", url: ""}}
-    />)
+    /></MemoryRouter>)
   }
 
   function shallowWithPet(pet: Pet, pet_id: string = `${pet.id}`) {

@@ -8,7 +8,8 @@ export interface DogBreed {
   bred_for : string
   breed_group : string
   dog_ids: number[]
-  local_shelters_with_breed: number[]
+  local_shelters_with_breed: number[],
+  photo: string
 }
 
 interface Span {

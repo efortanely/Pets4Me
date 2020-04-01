@@ -2,7 +2,7 @@ import React from 'react'
 import Pets4mePetsServiceContext from '../../common/services/pets4me-pets-service';
 import PetsService from '../../common/services/pets-service';
 import { Pet, BackendEntity, Photos } from '../../models/pet';
-import { match } from 'react-router-dom';
+import { match, Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
 import '../ModelInstancepage.css'
@@ -15,9 +15,9 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   static defaultProps = {
     pet: { } as Pet
   }
-  
+
   constructor(props: PetProps) {
-    super(props)    
+    super(props)
     this.state = {
       pet: props.pet
     }
@@ -36,10 +36,14 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
     return `${this.state.pet.id}`
   }
 
+  getBreedType = (): string => {
+    return `${this.state.pet.species?.toLowerCase()}-breeds`
+  }
+
   getLinkedUrl = (backendEntity: BackendEntity, type: string, readable: string): JSX.Element => {
     if (backendEntity?.id) {
-      let url = `http://pets4.me/${type}/${backendEntity.id}`;
-      return <a href={url}>{backendEntity.name}</a> as JSX.Element;
+      let route = `/${type}/${backendEntity.id}`;
+      return <Link to={route}>{backendEntity.name}</Link> as JSX.Element;
     }
     return <span>{readable} unknown.</span>
   }
@@ -76,8 +80,8 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
           <p id='color'>Color: {pet.color}</p>
           <p id='age'>Age: {pet.age}</p>
           <p id='size'>Size: {pet.size}</p>
-          <p id='primary-breed'>Primary breed: {this.getLinkedUrl(pet.primary_breed, 'breeds', 'Breed')}</p>
-          <p id='secondary-breed'>Secondary breed: {this.getLinkedUrl(pet.secondary_breed, 'breeds', 'Breed')}</p>
+          <p id='primary-breed'>Primary breed: {this.getLinkedUrl(pet.primary_breed, this.getBreedType(), 'Breed')}</p>
+          <p id='secondary-breed'>Secondary breed: {this.getLinkedUrl(pet.secondary_breed, this.getBreedType(), 'Breed')}</p>
           <p id='description'>Description: {pet.description}</p>
           <p id='shelter'>Shelter this pet is located at: {this.getLinkedUrl(pet.shelter, 'shelters', 'Shelter')}</p>
           <p id='url'>More info: {pet.url}</p>
