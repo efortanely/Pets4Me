@@ -8,7 +8,7 @@ function SheltersCards() {
     return (
         <div>
             <div className='cards'>
-                <a className='single-card' href="/shelters/austin-humane-society">
+                <a className='single-card' href="/shelters/1">
                     <img className='card-image' src={ahs} alt=''></img>
                     <div className='card-text'>
                         <h3>
@@ -21,7 +21,7 @@ function SheltersCards() {
                     </div>
                 </a>
 
-                <a className='single-card' href="/shelters/austin-pets-alive">
+                <a className='single-card' href="/shelters/2">
                     <img className='card-image' src={apa} alt=''></img>
                     <div className='card-text'>
                         <h3>
@@ -34,7 +34,7 @@ function SheltersCards() {
                     </div>
                 </a>
 
-                <a className='single-card' href="/shelters/austin-animal-center">
+                <a className='single-card' href="/shelters/3">
                     <img className='card-image' src={aac} alt=''></img>
                     <div className='card-text'>
                         <h3>

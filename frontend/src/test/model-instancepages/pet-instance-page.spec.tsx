@@ -9,6 +9,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 import { MemoryRouter } from 'react-router-dom';
+import PetsService from '../../common/services/pets-service';
 chai.use(sinonChai)
 
 
@@ -23,7 +24,7 @@ describe('<PetInstancePage/>', () => {
     let getPetsSpy = spy((pet_id: string) => new Promise<Pet>(() => pet))
     testPets4mePetsService.getPet = getPetsSpy
 
-    let testContext = React.createContext<Pets4mePetsService>(testPets4mePetsService)
+    let testContext = React.createContext<PetsService>(testPets4mePetsService)
     PetInstancePage.contextType = testContext
 
     return getPetsSpy
