@@ -3,6 +3,8 @@ import Pets4meDogBreedsServiceContext from '../../common/services/pets4me-dog-br
 import DogBreedsService from '../../common/services/dog-breeds-service';
 import { DogBreed } from '../../models/dog-breed';
 import { match } from 'react-router-dom'
+import Image from 'react-bootstrap/Image'
+import pixabay from '../../static/pixabay.png'
 import '../ModelInstancepage.css'
 
 type DogBreedProps = { breed: DogBreed, match: match }
@@ -46,8 +48,11 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
   render() {
     let breed: DogBreed = this.state.breed
     return (
-    <div className='model-instancepage'>
-      {/* <Image className='instancepage-image' src={breed.image} rounded /> */}
+      <div className='model-instancepage'>
+        <div>
+        <Image className='instancepage-image' src={breed.photo} rounded />
+        <Image className='logo' src={pixabay} />
+        </div>
         <div className='instancepage-text'>
           <h1 id='name'>{breed.name}</h1>
           <p id='group'>Group: {breed.breed_group}</p>

@@ -18,6 +18,10 @@ import react_bootstrap from '../static/tools/react-bootstrap.png'
 import material_ui from '../static/tools/material-ui.png'
 import gitlab from '../static/gitlab.jpg'
 import postman from '../static/postman.png'
+import mocha from '../static/mocha.png'
+import mapbox from '../static/mapbox.png'
+import selenium from '../static/selenium.png'
+
 import { Member } from './components/member'
 import ToolDoor from './components/ToolDoor'
 import TestCounts from './test-count.json'
@@ -122,7 +126,9 @@ function About() {
           <ToolDoor img={bash} title="Bash" desc="We used Bash to help with deployment."/>
           <ToolDoor img={react_bootstrap} title="React Bootstrap" desc="We used these front-end tools to display information in a presentable format."/>
           <ToolDoor img={material_ui} title="Material UI" desc="We used these front-end tools to add otherwise complicated components to our site with ease."/>
-
+          <ToolDoor img={mocha} title="Mocha" desc="We used Mocha to test our frontend components."/>
+          <ToolDoor img={mapbox} title="Mapbox" desc="Mapbox was used to show the location of a shelter on the map."/>
+          <ToolDoor img={selenium} title="Selenium" desc="We used Selenium to test our GUI."/>
         </div>
   
         <div className="repo-api">
