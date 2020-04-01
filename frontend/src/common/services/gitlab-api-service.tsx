@@ -1,44 +1,31 @@
-import { IssuesStatistics } from '../../models/issues-statistics'
+import React from 'react'
+import { IssuesStatistics } from '../../models/issues-statistics';
 import { Commit } from '../../models/commit'
 import { Issue } from '../../models/issue'
-import React from 'react'
 import { Contributor } from '../../models/contributor';
+import ApiService from './api-service';
 
-export class GitlabApiService {
-  api_url: string = "https://gitlab.com/api/v4"
-  project_id: string = "16969987"
+export class GitlabApiService extends ApiService{
 
-  buildUrl(path: string, params: any): string {
-
-    var query_string = Object.keys(params).map((key) => {
-      return '?' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
-    }).join('&');
-
-    return `${this.api_url}/projects/${this.project_id}/${path}${query_string}`
+  constructor() {
+    const project_id: string = '16969987'
+    super('https://gitlab.com/api/v4/projects/' + project_id)
   }
 
-  getIssuesStatistics(): Promise<any> {
-    return fetch(this.buildUrl('issues_statistics', { scope: 'all' }))
-        .then(res => res.json() as Promise<IssuesStatistics>)
-        .catch(console.log)
+  getIssuesStatistics(): Promise<IssuesStatistics> {
+    return this.fetchJsonAsObject<IssuesStatistics>('issues_statistics', { scope: 'all' })
   }
 
-  getCommits(): Promise<any> {
-    return fetch(this.buildUrl('repository/commits', { ref_name: 'master' }))
-        .then(res => res.json() as Promise<Commit[]>)
-        .catch(console.log)
+  getCommits(): Promise<Commit[]> {
+    return this.fetchJsonAsObject<Commit[]>('repository/commits', { ref_name: 'dev', per_page: '10000', page: '0' })
   }
 
-  getContributors(): Promise<any> {
-    return fetch(this.buildUrl("repository/contributors", { }))
-        .then(res => res.json() as Promise<Contributor[]>)
-        .catch(console.log)
+  getContributors(): Promise<Contributor[]> {
+    return this.fetchJsonAsObject<Contributor[]>('repository/contributors', { })
   }
 
-  getIssuesByAuthor(author_username: string): Promise<any> {
-    return fetch(this.buildUrl('issues', { author_username: author_username }))
-        .then(res => res.json() as Promise<Issue[]>)
-        .catch(console.log)
+  getIssuesByAuthor(author_username: string): Promise<Issue[]> {
+    return this.fetchJsonAsObject<Issue[]>('issues', { author_username: author_username, 'per_page': 99 })
   }
 }
 

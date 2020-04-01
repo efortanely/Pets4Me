@@ -3,13 +3,24 @@ project.log:
 
 all:
 
-clean:
-	rm -f  .coverage
-	rm -f  .pylintrc
-	rm -f  *.pyc
-	rm -f  *.tmp
-	rm -rf __pycache__
-	rm -rf .mypy_cache
+update-and-test: update-deps test
+
+update-deps: update-backend update-frontend
+
+test: frontend-test backend-test
+	./test-counter.sh
+
+update-backend:
+	cd backend/ && $(MAKE) update-deps
+
+update-frontend:
+	cd frontend/ && $(MAKE) update-deps
+
+frontend-test:
+	cd frontend/ && $(MAKE) test
+
+backend-test:
+	cd backend/ && $(MAKE) test
 
 config:
 	git config -l
@@ -30,45 +41,6 @@ status:
 	git remote -v
 	git status
 
-versions:
-	@echo  'shell uname -p'
-	@echo $(shell uname -p)
-	@echo
-	@echo  'shell uname -s'
-	@echo $(shell uname -s)
-	@echo
-	@echo "% which $(BLACK)"
-	@which $(BLACK)
-	@echo
-	@echo "% $(BLACK) --version"
-	@$(BLACK) --version
-	@echo
-	@echo "% which $(COVERAGE)"
-	@which $(COVERAGE)
-	@echo
-	@echo "% $(COVERAGE) --version"
-	@$(COVERAGE) --version
-	@echo
-	@echo "% which $(MYPY)"
-	@which $(MYPY)
-	@echo
-	@echo "% $(MYPY) --version"
-	@$(MYPY) --version
-	@echo
-	@echo "% which $(PYDOC)"
-	@which $(PYDOC)
-	@echo
-	@echo "% $(PYDOC) --version"
-	@$(PYDOC) --version
-	@echo
-	@echo "% which $(PYLINT)"
-	@which $(PYLINT)
-	@echo
-	@echo "% $(PYLINT) --version"
-	@$(PYLINT) --version
-	@echo
-	@echo "% which $(PYTHON)"
-	@which $(PYTHON)
-	@echo
-	@echo "% $(PYTHON) --version"
-	@$(PYTHON) --version
+python-test:
+	cd 
+	

@@ -1,3 +1,6 @@
 frontend/node_modules/
 frontend/build
 .vscode
+backend/env/
+backend/geckodriver.log
+**/__pycache__/

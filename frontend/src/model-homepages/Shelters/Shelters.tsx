@@ -9,7 +9,7 @@ function Shelters() {
       <div className='model-homepage-content'>
         <SheltersFilters />
         <SheltersCards />
-      </div>
+      </div>        
     </div>
   );
 } export default Shelters;

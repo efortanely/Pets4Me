@@ -6,13 +6,12 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/gitlab-api-service'
 import { IssuesStatistics } from '../../models/issues-statistics'
 import { Commit } from '../../models/commit'
-import { Contributor } from '../../models/contributor'
 import '../About.css'
 
-type MyProps = { }
-type MyState = { issuesStatistics: IssuesStatistics, commits: Commit[], commitCount: number }
+type RepositoryStatisticsProps = { testSum: number }
+type RepositoryStatisticsState = { issuesStatistics: IssuesStatistics, commits: Commit[], commitCount: number }
 
-export class RepositoryStatistics extends React.Component<MyProps, MyState> {
+export class RepositoryStatistics extends React.Component<RepositoryStatisticsProps, RepositoryStatisticsState> {
   static contextType = GitlabApiServiceContext
 
   constructor(props: any) {
@@ -29,11 +28,7 @@ export class RepositoryStatistics extends React.Component<MyProps, MyState> {
     gitlabApiService.getIssuesStatistics()
     .then(res => this.setState({ issuesStatistics: res }))
     
-    gitlabApiService.getContributors()
-    .then(res => {
-      let count = (res as Contributor[]).map(c => c.commits).reduce((x, y) => x + y, 0)
-      this.setState({ commitCount: count })
-    } )
+    this.getCommitCount(gitlabApiService)
 
     // TODO make a test containing this line that will check that the number of names returned by the endpoint stays constant.
     // gitlabApiService.getCommits()
@@ -43,6 +38,14 @@ export class RepositoryStatistics extends React.Component<MyProps, MyState> {
     
 
     // .then(res => this.setState( { commits: res } ))
+  }
+
+  getCommitCount(gitlabApiService: GitlabApiService) {
+    gitlabApiService.getCommits()
+    .then(res => {
+      let count = (res as Commit[]).length
+      this.setState({ commitCount: count })
+    })
   }
   
   render() {
@@ -62,7 +65,7 @@ export class RepositoryStatistics extends React.Component<MyProps, MyState> {
             </div>
             <div className="row">
               <FontAwesomeIcon className="icon" icon={faFlask} color="#528C8B" size="1x"/>
-              <div className="circle">0</div>
+              <div className="circle">{this.props.testSum}</div>
               <p>Total No. Unit Tests</p>
             </div>
           </div>
