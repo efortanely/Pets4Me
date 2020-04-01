@@ -12,6 +12,12 @@
     height: 480px;
 }
 
+.logo {
+    padding: 2px;
+    height: 60px;
+    display: block;
+}
+
 .instancepage-text {
     flex-grow: 2;
     padding: 10px;
