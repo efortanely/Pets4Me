@@ -7,10 +7,10 @@ import DogBreeds from './model-homepages/Dogs/DogBreeds'
 import CatBreeds from './model-homepages/Cats/CatBreeds'
 import Shelters from './model-homepages/Shelters/Shelters'
 import Navbar from './common/components/Navbar'
-import DogBreedInstancePage from './model-instancepages/Breeds/dog-breed-instance-page'
-import PetInstancePage from './model-instancepages/Pets/pet-instance-page'
-import CatBreedInstancePage from './model-instancepages/Breeds/cat-breed-instance-page'
-import ShelterInstancePage from './model-instancepages/Shelters/shelter-instance-page'
+import DogBreedInstancePage from './model-instancepages/Breeds/DogBreedInstancePage'
+import PetInstancePage from './model-instancepages/Pets/PetInstancePage'
+import CatBreedInstancePage from './model-instancepages/Breeds/CatBreedInstancePage'
+import ShelterInstancePage from './model-instancepages/Shelters/ShelterInstancePage'
 
 import './App.css';
 

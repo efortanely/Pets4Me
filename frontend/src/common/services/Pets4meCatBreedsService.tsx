@@ -1,7 +1,7 @@
 import React from 'react'
-import Pets4meApiService from './pets4me-api-service';
-import CatBreedsService from './cat-breeds-service'
-import { CatBreed } from '../../models/cat-breed';
+import Pets4meApiService from './Pets4meApiService';
+import CatBreedsService from './CatBreedsService'
+import { CatBreed } from '../../models/CatBreed';
 import { ObjectsPage } from '../../models/ObjectsPage';
 
 export class Pets4meCatBreedsService implements CatBreedsService {

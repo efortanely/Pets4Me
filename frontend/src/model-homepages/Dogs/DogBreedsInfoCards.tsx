@@ -1,9 +1,9 @@
 import React from 'react';
 import { ObjectsPage } from '../../models/ObjectsPage';
 import { DogBreedCard } from '../../common/components/Cards/DogBreedCard';
-import { DogBreed } from '../../models/dog-breed';
-import Pets4meDogBreedsServiceContext from '../../common/services/pets4me-dog-breeds-service';
-import DogBreedsService from '../../common/services/dog-breeds-service';
+import { DogBreed } from '../../models/DogBreed';
+import Pets4meDogBreedsServiceContext from '../../common/services/Pets4meDogBreedsService';
+import DogBreedsService from '../../common/services/DogBreedsService';
 import InfoCards from '../../common/components/Cards/InfoCards';
 
 class DogBreedsInfoCards extends InfoCards<DogBreed> {

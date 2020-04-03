@@ -1,11 +1,14 @@
 import React from 'react'
-import Pets4mePetsServiceContext from '../../common/services/pets4me-pets-service';
-import PetsService from '../../common/services/pets-service';
-import { Pet, BackendEntity, Photos } from '../../models/pet';
+import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService';
+import PetsService from '../../common/services/PetsService';
+import { Pet, BackendEntity, Photos } from '../../models/Pet';
 import { match, Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
+import ImageGallery from 'react-image-gallery';
 import '../ModelInstancepage.css'
+import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
+
 
 type PetProps = { pet: Pet, match: match }
 type PetState = { pet: Pet }
@@ -49,14 +52,20 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   }
 
   getPhoto = (photos: Photos): JSX.Element => {
-    if (photos?.full && photos.full[0])
-      return <Image className='instancepage-image' src={photos.full[0]} rounded />
-    if (photos?.small && photos.small[0])
-      return <Image className='instancepage-image' src={photos.small[0]} rounded />
-    return <div>
-      <Image className='instancepage-image' src={logo} rounded />
-      <p>Uh-oh! No image is available for this pet.</p>
-    </div>
+    if (photos?.full && photos.full[0]){
+      const images = photos.full.map(photo => {
+        return {original: photo}
+      });
+
+      return <div className='instancepage-image'>
+                <ImageGallery items={images} />
+              </div>
+    }else{
+      return <div>
+              <Image className='instancepage-image' src={logo} rounded />
+              <p>Uh-oh! No image is available for this pet.</p>
+            </div>
+    }
   }
 
   componentDidMount() {

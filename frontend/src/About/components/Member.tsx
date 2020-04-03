@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFlask } from '@fortawesome/free-solid-svg-icons'
 import { faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/gitlab-api-service'
-import { Commit } from '../../models/commit'
+import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/GitlabApiService'
+import { Commit } from '../../models/Commit'
 
 type MemberProps = {  img: string, name: string, role: string; bio: string; author_name: string[], gitlab_id: string, tests: number; }
 type MemberState = { commitCount: number, issueCount: number }

@@ -1,4 +1,4 @@
-import { Shelter } from '../../models/shelter';
+import { Shelter } from '../../models/Shelter';
 import { ObjectsPage } from '../../models/ObjectsPage';
 
 interface SheltersService {

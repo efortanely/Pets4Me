@@ -21,7 +21,7 @@ const muiTheme = createMuiTheme({
         width: '100%',
       }
     }
-}
+  }
 });
 
 function Pets() {
@@ -29,6 +29,12 @@ function Pets() {
     <div className='model-homepage'>
       <MediaQuery query="(max-width: 949px)">
         <div className='model-homepage-content'>
+          <form>
+              <label>
+                  <input type="text" name="global-search" placeholder='Search' />
+              </label>
+          </form>
+
           <ThemeProvider theme={muiTheme}>
             <h5>Distance</h5>
               <Slider
@@ -36,16 +42,11 @@ function Pets() {
                 max={1000}
                 valueLabelDisplay='auto'
               />
-
-            <h5>Adoption Fee</h5>
-            <Slider
-              defaultValue={[0,50]}
-              max={1000}
-              valueLabelDisplay='auto'
-            />
           </ThemeProvider>
           <PetsFilters />
-          <PetsInfoCards />
+          <div className='cards-container'>
+            <PetsInfoCards />
+          </div>
         </div>
       </MediaQuery>
 
@@ -54,28 +55,25 @@ function Pets() {
           <PetsFilters />
           <div className='model-homepage-content-col'>
             <div className='sliders'>
-              <div className="slider1">
-                <ThemeProvider theme={muiTheme}>
-                  <h5>Distance</h5>
-                    <Slider
-                      defaultValue={100}
-                      max={1000}
-                      valueLabelDisplay='auto'
-                    />
-                </ThemeProvider>
-              </div>
+              <form>
+                <label>
+                    <input type="text" name="global-search" placeholder='Search' />
+                </label>
+              </form>
               <div className="slider2">
-                <ThemeProvider theme={muiTheme}>
-                  <h5>Adoption Fee</h5>
+              <ThemeProvider theme={muiTheme}>
+                <h5>Distance</h5>
                   <Slider
-                    defaultValue={[0,50]}
+                    defaultValue={100}
                     max={1000}
                     valueLabelDisplay='auto'
                   />
-                </ThemeProvider>
+              </ThemeProvider>
               </div>
             </div>
-            <PetsInfoCards />
+            <div className='cards-container'>
+              <PetsInfoCards />
+            </div>
           </div>
         </div>
       </MediaQuery>

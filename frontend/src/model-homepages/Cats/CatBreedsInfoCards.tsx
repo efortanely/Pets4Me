@@ -1,8 +1,8 @@
 import React from 'react';
 import CatBreedCard from '../../common/components/Cards/CatBreedCard';
-import { CatBreed } from '../../models/cat-breed';
-import CatBreedsService from '../../common/services/cat-breeds-service';
-import Pets4meCatBreedsServiceContext from '../../common/services/pets4me-cat-breeds-service';
+import { CatBreed } from '../../models/CatBreed';
+import CatBreedsService from '../../common/services/CatBreedsService';
+import Pets4meCatBreedsServiceContext from '../../common/services/Pets4meCatBreedsService';
 import InfoCards from '../../common/components/Cards/InfoCards';
 import { ObjectsPage } from '../../models/ObjectsPage';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { InfoCard } from './InfoCard';
 import { Link } from 'react-router-dom';
 import logo from '../../../static/logo.png';
-import { Shelter, Photos } from '../../../models/shelter';
+import { Shelter, Photos } from '../../../models/Shelter';
 
 interface ShelterCardProps { shelter: Shelter }
 
@@ -28,8 +28,8 @@ class ShelterCard extends React.Component<ShelterCardProps> {
 
   getOtherInfo = (): string[] => {
     let otherInfo: string[] = []
-    otherInfo.push(this.props.shelter.address.city)
-    otherInfo.push(`${Object.keys(this.props.shelter.all_pets || {}).length} pets availible`)
+    otherInfo.push(`${this.props.shelter.address.city}, ${this.props.shelter.address.state}`)
+    otherInfo.push(`${Object.keys(this.props.shelter.all_pets || {}).length} pets available`)
     return otherInfo
   }
 }

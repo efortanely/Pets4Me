@@ -1,7 +1,7 @@
 import React from 'react'
-import Pets4meApiService from './pets4me-api-service';
-import PetsService from './pets-service'
-import { Pet } from '../../models/pet';
+import Pets4meApiService from './Pets4meApiService';
+import PetsService from './PetsService'
+import { Pet } from '../../models/Pet';
 import { ObjectsPage } from '../../models/ObjectsPage';
 
 export class Pets4mePetsService implements PetsService {

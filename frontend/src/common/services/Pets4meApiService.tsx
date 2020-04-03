@@ -1,4 +1,4 @@
-import ApiService from './api-service';
+import ApiService from './ApiService';
 
 class Pets4meApiService extends ApiService {
   constructor() {

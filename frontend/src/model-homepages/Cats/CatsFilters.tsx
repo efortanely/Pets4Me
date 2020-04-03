@@ -25,13 +25,21 @@ function CatsFilters() {
         <div className='filters'>
             <Dropdown>
                 <Dropdown.Toggle id="dropdown-basic">
-                    Temperament
+                    Child friendly
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    <Dropdown.Item>Any</Dropdown.Item>
-                    <Dropdown.Item>Evil</Dropdown.Item>
-                    <Dropdown.Item>Malicious</Dropdown.Item>
-                    <Dropdown.Item>Cruel</Dropdown.Item>
+                    <Dropdown.Item>Bad cat no</Dropdown.Item>
+                    <Dropdown.Item>Yes</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown>
+                <Dropdown.Toggle id="dropdown-basic">
+                    Dog friendly
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item>Hiss meow</Dropdown.Item>
+                    <Dropdown.Item>Uh huh</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
@@ -40,35 +48,40 @@ function CatsFilters() {
                     Indoor/outdoor
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    <Dropdown.Item>Either</Dropdown.Item>
                     <Dropdown.Item>Indoor</Dropdown.Item>
                     <Dropdown.Item>Outdoor</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
+            <Dropdown>
+                <Dropdown.Toggle id="dropdown-basic">
+                    Grooming level
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item>Hairy boi</Dropdown.Item>
+                    <Dropdown.Item>Where's the fuzz??</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown>
+                <Dropdown.Toggle id="dropdown-basic">
+                    Name
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item>Abyssinian</Dropdown.Item>
+                    <Dropdown.Item>Aegean</Dropdown.Item>
+                    <Dropdown.Item>American Bobtail</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
             <ThemeProvider theme={muiTheme}>
                 <div>
-                    <h5>Average lifespan</h5>
+                    <h5>Lifespan</h5>
                     <Slider
-                    valueLabelDisplay='auto'/>
-                </div>
-
-                <div>
-                    <h5>Dog friendly</h5>
-                    <Slider
-                    valueLabelDisplay='auto'/>
-                </div>
-
-                <div>
-                    <h5>Child friendly</h5>
-                    <Slider
-                    valueLabelDisplay='auto'/>
-                </div>
-
-                <div>
-                    <h5>Grooming level</h5>
-                    <Slider
-                    valueLabelDisplay='auto'/>
+                        defaultValue={[2,10]}
+                        max={50}
+                        valueLabelDisplay='auto'
+                    />
                 </div>
             </ThemeProvider>
         </div>

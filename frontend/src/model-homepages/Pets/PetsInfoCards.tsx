@@ -1,10 +1,10 @@
 import React from 'react';
-import Pets4mePetsServiceContext from '../../common/services/pets4me-pets-service';
-import PetsService from '../../common/services/pets-service';
+import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService';
+import PetsService from '../../common/services/PetsService';
 import InfoCards from '../../common/components/Cards/InfoCards';
 import PetCard from '../../common/components/Cards/PetCard';
 import { ObjectsPage } from '../../models/ObjectsPage';
-import { Pet } from '../../models/pet';
+import { Pet } from '../../models/Pet';
 
 class PetsInfoCards extends InfoCards<Pet> {
     static contextType = Pets4mePetsServiceContext
