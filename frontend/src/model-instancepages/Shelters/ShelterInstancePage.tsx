@@ -6,6 +6,7 @@ import { match, Link } from 'react-router-dom'
 import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
 import ImageGallery from 'react-image-gallery';
+import MapMedia from '../../common/components/MapMedia'
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 
@@ -81,7 +82,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
       {this.getPhoto(shelter.photos)}
         <div className='instancepage-text'>
           <h1 id='name'>{shelter.name}</h1>
-          {/* <MapMedia address={full_address}/> */}
+          <MapMedia address={full_address}/>
           <p id='address'>Address: {full_address}, {shelter.address?.country}</p>
           <p id='contact'>Contact: {shelter.contact?.email}, {shelter.contact?.phone_number}</p>
           <p id='adoption-policy'>Adoption Policy: {shelter.adoption_policy}</p>
