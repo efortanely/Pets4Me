@@ -1,4 +1,4 @@
-import { Pet } from '../../models/pet';
+import { Pet } from '../../models/Pet';
 import { ObjectsPage } from '../../models/ObjectsPage';
 
 interface PetsService {

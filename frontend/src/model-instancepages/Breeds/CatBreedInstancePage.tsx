@@ -1,7 +1,7 @@
 import React from 'react'
-import Pets4meCatBreedsServiceContext from '../../common/services/pets4me-cat-breeds-service';
-import CatBreedsService from '../../common/services/cat-breeds-service';
-import { CatBreed } from '../../models/cat-breed';
+import Pets4meCatBreedsServiceContext from '../../common/services/Pets4meCatBreedsService';
+import CatBreedsService from '../../common/services/CatBreedsService';
+import { CatBreed } from '../../models/CatBreed';
 import Image from 'react-bootstrap/Image'
 import Figure from 'react-bootstrap/Figure'
 import logo from '../../static/logo.png';

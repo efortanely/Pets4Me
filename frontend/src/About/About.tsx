@@ -1,5 +1,5 @@
 import React from 'react';
-import { RepositoryStatistics } from './components/repository-statistics'
+import { RepositoryStatistics } from './components/RepositoryStatistics'
 import andrew from '../static/andrew.png'
 import rosemary from '../static/rosemary.jpeg'
 import connor from '../static/connor.jpg'
@@ -22,7 +22,7 @@ import mocha from '../static/mocha.png'
 import mapbox from '../static/mapbox.png'
 import selenium from '../static/selenium.png'
 
-import { Member } from './components/member'
+import { Member } from './components/Member'
 import ToolDoor from './components/ToolDoor'
 import TestCounts from './test-count.json'
 import './About.css';

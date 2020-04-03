@@ -115,20 +115,6 @@ function PetsFilters() {
                     <Dropdown.Item>Austin Animal Center</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            
-            <form>
-                <h5>Name</h5>
-                <label>
-                    <input type="text" name="name" placeholder='Search' />
-                </label>
-            </form>
-
-            <form>
-                <h5>Description</h5>
-                <label>
-                    <input type="text" name="name" placeholder='Search' />
-                </label>
-            </form>
         </div>
     );
 } export default PetsFilters;

@@ -1,11 +1,13 @@
 import React from 'react'
-import Pets4meSheltersServiceContext from '../../common/services/pets4me-shelters-service';
-import SheltersService from '../../common/services/shelters-service';
-import { Shelter, Photos } from '../../models/shelter';
+import Pets4meSheltersServiceContext from '../../common/services/Pets4meSheltersService';
+import SheltersService from '../../common/services/SheltersService';
+import { Shelter, Photos } from '../../models/Shelter';
 import { match, Link } from 'react-router-dom'
 import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
+import ImageGallery from 'react-image-gallery';
 import '../ModelInstancepage.css'
+import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 
 type ShelterProps = { shelter: Shelter, match: match }
 type ShelterState = { shelter: Shelter }
@@ -45,14 +47,20 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   }
 
   getPhoto = (photos: Photos): JSX.Element => {
-    if (photos?.full && photos.full[0])
-      return <Image className='instancepage-image' src={photos.full[0]} rounded />
-    if (photos?.small && photos.small[0])
-      return <Image className='instancepage-image' src={photos.full[0]} rounded />
-    return <div>
-      <Image className='instancepage-image' src={logo} rounded />
-      <p>Uh-oh! No image is available for this Shelter.</p>
-    </div>
+    if (photos?.full && photos.full[0]){
+      const images = photos.full.map(photo => {
+        return {original: photo}
+      });
+
+      return <div className='instancepage-image'>
+                <ImageGallery items={images} />
+              </div>
+    }else{
+      return <div>
+              <Image className='instancepage-image' src={logo} rounded />
+              <p>Uh-oh! No image is available for this Shelter.</p>
+            </div>
+    }
   }
 
   componentDidMount() {

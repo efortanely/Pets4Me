@@ -1,9 +1,9 @@
 import React from 'react'
-import { IssuesStatistics } from '../../models/issues-statistics';
-import { Commit } from '../../models/commit'
-import { Issue } from '../../models/issue'
-import { Contributor } from '../../models/contributor';
-import ApiService from './api-service';
+import { IssuesStatistics } from '../../models/IssueStatistics';
+import { Commit } from '../../models/Commit'
+import { Issue } from '../../models/Issue'
+import { Contributor } from '../../models/Contributor';
+import ApiService from './ApiService';
 
 export class GitlabApiService extends ApiService{
 

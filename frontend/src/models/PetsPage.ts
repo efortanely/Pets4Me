@@ -1,4 +1,4 @@
-import { Pet } from "./pet";
+import { Pet } from "./Pet";
 
 export interface PetsPage<T>{
   num_results: number

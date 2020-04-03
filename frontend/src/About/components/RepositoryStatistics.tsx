@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFlask } from '@fortawesome/free-solid-svg-icons'
 import { faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/gitlab-api-service'
-import { IssuesStatistics } from '../../models/issues-statistics'
-import { Commit } from '../../models/commit'
+import GitlabApiServiceContext, { GitlabApiService } from '../../common/services/GitlabApiService'
+import { IssuesStatistics } from '../../models/IssueStatistics'
+import { Commit } from '../../models/Commit'
 import '../About.css'
 
 type RepositoryStatisticsProps = { testSum: number }

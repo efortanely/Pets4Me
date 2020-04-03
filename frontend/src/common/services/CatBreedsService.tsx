@@ -1,4 +1,4 @@
-import { CatBreed } from '../../models/cat-breed';
+import { CatBreed } from '../../models/CatBreed';
 import { ObjectsPage } from '../../models/ObjectsPage';
 
 interface CatBreedsService {

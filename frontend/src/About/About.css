@@ -247,8 +247,8 @@
 }
 
 .data-source:hover .door{
-  width: 100%;
-  left: 0;
+  width: 90%;
+  left: 10px;
 }
 
 .data-source .text{
@@ -319,8 +319,8 @@
 }
 
 .tool:hover .door{
-  width: 100%;
-  left: 0;
+  width: 90%;
+  left: 10px;
 }
 
 .tool .text{
@@ -392,8 +392,8 @@
 }
 
 .repo-api-entity:hover .door{
-  width: 100%;
-  left: 0;
+  width: 90%;
+  left: 10px;
 }
 
 .repo-api-entity .text{

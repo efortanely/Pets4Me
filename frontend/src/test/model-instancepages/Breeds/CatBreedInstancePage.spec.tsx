@@ -2,9 +2,9 @@ import 'jsdom-global/register'
 import React from 'react'
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
-import CatBreedInstancePage from '../../model-instancepages/Breeds/cat-breed-instance-page'
-import { Pets4meCatBreedsService } from '../../common/services/pets4me-cat-breeds-service';
-import { CatBreed } from '../../models/cat-breed';
+import CatBreedInstancePage from '../../../model-instancepages/Breeds/CatBreedInstancePage'
+import { Pets4meCatBreedsService } from '../../../common/services/Pets4meCatBreedsService';
+import { CatBreed } from '../../../models/CatBreed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'

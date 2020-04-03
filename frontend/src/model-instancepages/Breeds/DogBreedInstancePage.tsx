@@ -1,11 +1,10 @@
 import React from 'react'
-import Pets4meDogBreedsServiceContext from '../../common/services/pets4me-dog-breeds-service';
-import DogBreedsService from '../../common/services/dog-breeds-service';
-import { DogBreed } from '../../models/dog-breed';
+import Pets4meDogBreedsServiceContext from '../../common/services/Pets4meDogBreedsService';
+import DogBreedsService from '../../common/services/DogBreedsService';
+import { DogBreed } from '../../models/DogBreed';
 import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image'
-import {BrowserRouter as Router} from 'react-router-dom';
 import pixabay from '../../static/pixabay.png'
 import '../ModelInstancepage.css'
 import Figure from 'react-bootstrap/Figure';

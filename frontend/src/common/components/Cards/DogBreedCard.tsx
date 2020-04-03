@@ -1,6 +1,6 @@
 import React from 'react';
 import { InfoCard } from './InfoCard';
-import { DogBreed } from '../../../models/dog-breed';
+import { DogBreed } from '../../../models/DogBreed';
 import { Link } from 'react-router-dom';
 import logo from '../../../static/logo.png';
 
@@ -20,9 +20,9 @@ export class DogBreedCard extends React.Component<DogBreedCardProps> {
 
   getOtherInfo = (): string[] => {
     let otherInfo: string[] = []
-    otherInfo.push(this.props.breed.temperament)
-    otherInfo.push(`Bred for: ${this.props.breed.bred_for}`)
-    otherInfo.push(this.props.breed.breed_group)
+    otherInfo.push(this.props.breed.breed_group ? `Breed group: ${this.props.breed.breed_group}` : "Breed group unknown")
+    otherInfo.push(`${this.props.breed.height_imperial.low} - ${this.props.breed.height_imperial.high}" tall`)
+    otherInfo.push(`${this.props.breed.weight_imperial.low} - ${this.props.breed.weight_imperial.high} lbs.`)
     return otherInfo
   }
 }

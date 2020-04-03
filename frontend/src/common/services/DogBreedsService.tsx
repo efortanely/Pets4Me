@@ -1,4 +1,4 @@
-import { DogBreed } from '../../models/dog-breed';
+import { DogBreed } from '../../models/DogBreed';
 import { ObjectsPage } from '../../models/ObjectsPage';
 
 interface DogBreedsService {

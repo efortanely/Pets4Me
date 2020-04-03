@@ -1,5 +1,5 @@
 import React from "react";
-import { Pet, Photos } from '../../../models/pet';
+import { Pet, Photos } from '../../../models/Pet';
 import { Link } from "react-router-dom";
 import { InfoCard } from "./InfoCard";
 import logo from '../../../static/logo.png';
@@ -28,12 +28,8 @@ class PetCard extends React.Component<PetCardProps> {
 
   getOtherInfo = (): string[] => {
     let otherInfo: string[] = []
-    otherInfo.push(this.props.pet.species)
-    otherInfo.push(this.props.pet.primary_breed.name)
-    otherInfo.push(this.props.pet.gender)
-    otherInfo.push(this.props.pet.size)
-    otherInfo.push(`Age: ${this.props.pet.age}`)
-    otherInfo.push(this.props.pet.color)
+    otherInfo.push(this.props.pet.primary_breed.name ? this.props.pet.primary_breed.name : "Unknown breed")
+    otherInfo.push(`${this.props.pet.size} • ${this.props.pet.gender} • ${this.props.pet.age}`)
     otherInfo.push(this.props.pet.shelter.name)
 
     return otherInfo

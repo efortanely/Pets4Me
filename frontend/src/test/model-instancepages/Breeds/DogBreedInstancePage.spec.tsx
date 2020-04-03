@@ -2,13 +2,13 @@ import 'jsdom-global/register'
 import React from 'react'
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
-import DogBreedInstancePage from '../../../model-instancepages/Breeds/dog-breed-instance-page'
-import { Pets4meDogBreedsService } from '../../../common/services/pets4me-dog-breeds-service';
-import { DogBreed } from '../../../models/dog-breed';
+import DogBreedInstancePage from '../../../model-instancepages/Breeds/DogBreedInstancePage'
+import { Pets4meDogBreedsService } from '../../../common/services/Pets4meDogBreedsService';
+import { DogBreed } from '../../../models/DogBreed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
-import DogBreedsService from '../../../common/services/dog-breeds-service';
+import DogBreedsService from '../../../common/services/DogBreedsService';
 import { MemoryRouter } from 'react-router-dom';
 chai.use(sinonChai)
 

@@ -1,4 +1,5 @@
 .model-instancepage {
+    padding-top: 20px;
     padding-bottom: 20px;
     font-weight: bold;
     display: flex;
@@ -11,6 +12,10 @@
     flex-grow: 3;
     height: 480px;
 }
+
+.image-gallery {
+    width: 480px;
+  }
 
 .logo {
     padding: 2px;

@@ -26,18 +26,6 @@ function BreedsFilters() {
             {/* I put dummy data in here for the purpose */}
             <Dropdown>
                 <Dropdown.Toggle id="dropdown-basic">
-                    Temperament
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item>Any</Dropdown.Item>
-                    <Dropdown.Item>YELLING</Dropdown.Item>
-                    <Dropdown.Item>calm :)</Dropdown.Item>
-                    <Dropdown.Item>Void king</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-
-            <Dropdown>
-                <Dropdown.Toggle id="dropdown-basic">
                     Bred for
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -59,23 +47,43 @@ function BreedsFilters() {
                 </Dropdown.Menu>
             </Dropdown>
 
+            <Dropdown>
+                <Dropdown.Toggle id="dropdown-basic">
+                    Name
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item>Affenspinscher</Dropdown.Item>
+                    <Dropdown.Item>Afghan Hound</Dropdown.Item>
+                    <Dropdown.Item>African Hunting Dog</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
             <ThemeProvider theme={muiTheme}>
                 <div>
-                    <h5>Average lifespan</h5>
+                    <h5>Lifespan</h5>
                     <Slider
-                    valueLabelDisplay='auto'/>
+                        defaultValue={[2,10]}
+                        max={50}
+                        valueLabelDisplay='auto'
+                    />
                 </div>
 
                 <div>
                     <h5>Height</h5>
                     <Slider
-                    valueLabelDisplay='auto'/>
+                        defaultValue={[15,50]}
+                        max={200}
+                        valueLabelDisplay='auto'
+                    />
                 </div>
 
                 <div>
                     <h5>Weight</h5>
                     <Slider
-                    valueLabelDisplay='auto'/>
+                        defaultValue={[5,40]}
+                        max={200}
+                        valueLabelDisplay='auto'
+                    />
                 </div>
             </ThemeProvider>
         </div>
