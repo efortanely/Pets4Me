@@ -11,6 +11,7 @@
     border-radius: 5px;
     flex-grow: 3;
     height: 480px;
+    max-width: 40%;
 }
 
 .image-gallery {

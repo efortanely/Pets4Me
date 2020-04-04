@@ -72,7 +72,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
   render() {
     let breed: CatBreed = this.state.breed
     return (
-    <div className='breed-instancepage'>
+    <div className='model-instancepage'>
       { this.getPhoto(breed.photo) }
         <div className='instancepage-text'>
           <h1 id='name'>{breed.name}</h1>
