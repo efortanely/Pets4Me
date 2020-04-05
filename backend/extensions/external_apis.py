@@ -5,7 +5,6 @@ import time
 from oauthlib.oauth2 import BackendApplicationClient as BAC
 from requests_oauthlib import OAuth2Session
 import requests
-from pixabay import Image
 from util.sql import escape_like
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
 
@@ -51,7 +50,6 @@ def parse_range(range_str):
 class DogAPI(CommonAPI):
     def __init__(self):
         super().__init__("https://api.thedogapi.com")
-        self.image = Image(os.getenv("PIXABAY_API_KEY"))
 
     def parse_dog_breed(self, breed):
         name = breed.get("name", None)
@@ -61,23 +59,7 @@ class DogAPI(CommonAPI):
         )
         weight_imperial_low, weight_imperial_high = parse_range(
             breed.get("weight", {}).get("imperial", "")
-        )
-
-        img = self.image.search(
-            q=name,
-            lang="en",
-            image_type="photo",
-            category="animals",
-            safesearch="true",
-            order="latest",
-            page=1,
-            per_page=3,
-        )
-
-        try:
-            url = img["hits"][0]["previewURL"]
-        except:
-            url = None
+        )        
 
         return DogBreed(
             name=name,
@@ -90,8 +72,15 @@ class DogAPI(CommonAPI):
             weight_imperial_high=weight_imperial_high,
             bred_for=breed.get("bred_for", None),
             breed_group=breed.get("breed_group", None),
-            photo=url,
+            photo=self.get_photo(breed.get("id", None))
         )
+
+    def get_photo(self, breed_id):
+        try:
+            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0]['url']
+            return url
+        except:
+            return None
 
     def find_breed(self, query):
         result = json.loads(self.get(f"/v1/breeds/search?q={query}"))
@@ -110,28 +99,10 @@ class DogAPI(CommonAPI):
 class CatAPI(CommonAPI):
     def __init__(self):
         super().__init__("https://api.thecatapi.com")
-        self.image = Image(os.getenv("PIXABAY_API_KEY"))
 
     def parse_cat_breed(self, breed):
         name = breed.get("name", None)
         life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
-
-        img = self.image.search(
-            q=name,
-            lang="en",
-            image_type="photo",
-            orientation="horizontal",
-            category="animals",
-            safesearch="true",
-            order="latest",
-            page=1,
-            per_page=3,
-        )
-
-        try:
-            url = img["hits"][0]["previewURL"]
-        except:
-            url = None
 
         return CatBreed(
             name=name,
@@ -148,8 +119,15 @@ class CatAPI(CommonAPI):
             dog_friendly=breed.get("dog_friendly", None),
             child_friendly=breed.get("child_friendly", None),
             grooming_level=breed.get("grooming", None),
-            photo=url,
+            photo=self.get_photo(breed.get("id", None))
         )
+
+    def get_photo(self, breed_id):
+        try:
+            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0]['url']
+            return url
+        except:
+            return None
 
     def find_breed(self, query):
         result = json.loads(self.get(f"/v1/breeds/search?q={query}"))
