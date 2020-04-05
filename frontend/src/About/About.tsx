@@ -9,7 +9,6 @@ import robert from '../static/robert.png'
 import petfinder from '../static/petfinder.jpg'
 import dogapi from '../static/thedogapi.png'
 import catapi from '../static/thecatapi.png'
-import pixabay from '../static/pixabay.png'
 import ts from '../static/tools/ts.png'
 import reactlogo from '../static/tools/react.png'
 import marvel from '../static/tools/marvelapp.png'
@@ -99,18 +98,6 @@ function About() {
             <div className="door">
               <div className="text">
                 <a href="https://thecatapi.com">The Cat API</a>
-                <p></p>
-              </div>
-            </div>
-          </div>
-
-          <div className="data-source">
-            <div className="rect">
-              <img className="pixabay" src={pixabay} alt="The Pixabay logo"></img>
-            </div>
-            <div className="door">
-              <div className="text">
-                <a href="https://pixabay.com/">Pixabay</a>
                 <p></p>
               </div>
             </div>

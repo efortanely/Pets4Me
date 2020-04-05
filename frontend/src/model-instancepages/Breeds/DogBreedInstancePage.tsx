@@ -5,9 +5,7 @@ import { DogBreed } from '../../models/DogBreed';
 import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image'
-import pixabay from '../../static/pixabay.png'
 import '../ModelInstancepage.css'
-import Figure from 'react-bootstrap/Figure';
 
 type DogBreedProps = { breed: DogBreed, match: match }
 type DogBreedState = { breed: DogBreed }
@@ -77,13 +75,6 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
             <p id='pets-with-breed'>Dogs with this breed: {this.getLinkedUrl(breed.dog_ids, 'pets')}</p>
             <p id='shelters-with-breed'>Local shelters with breed: {this.getLinkedUrl(breed.local_shelters_with_breed, 'shelters')}</p>
           </div>
-          <Figure>
-            <Figure.Image
-              width={80}
-              height={31}
-              src={pixabay}
-            />
-        </Figure>
         </div>
     )
   }

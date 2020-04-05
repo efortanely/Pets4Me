@@ -3,7 +3,6 @@ import Pets4meCatBreedsServiceContext from '../../common/services/Pets4meCatBree
 import CatBreedsService from '../../common/services/CatBreedsService';
 import { CatBreed } from '../../models/CatBreed';
 import Image from 'react-bootstrap/Image'
-import Figure from 'react-bootstrap/Figure'
 import logo from '../../static/logo.png';
 import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
@@ -86,13 +85,6 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
           <p id='pets-with-breed'>Cats with this breed: {this.getLinkedUrl(breed.cat_ids, 'pets')}</p>
           <p id='shelters-with-breed'>Local shelters with breed: {this.getLinkedUrl(breed.local_shelters_with_breed, 'shelters')}</p>
         </div>
-        <Figure>
-            <Figure.Image
-              width={80}
-              height={31}
-              src="https://pixabay.com/static/img/logo.png"
-            />
-        </Figure>
       </div>
     )
   }
