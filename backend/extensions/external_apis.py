@@ -266,14 +266,16 @@ class PetAPI(OAuthAPI):
         self.requests += 1
         return super().get_raw(url)
 
-    def get_paginated_data(self, endpoint, parameters="", pages=1, limit=100):
+    def get_paginated_data(self, endpoint, pages=1, limit=100, **parameters):
         total_pages = None
+        param_query = ''
+        for key, val in parameters.items():
+            param_query += f"&{key}={val}"
         for page in range(1, pages + 1):
-            # this is a circle that includes most of Texas (as much as we can get)
             response = json.loads(
                 self.get(
                     f"/v2/{endpoint}?page={page}&limit={limit}"
-                    f"&location=76825&distance=500&{parameters}"
+                    f"{param_query}"
                 )
             )
             if total_pages is None:
@@ -344,7 +346,7 @@ class PetAPI(OAuthAPI):
         return (breed_map, new_breeds)
 
     def get_animals(self, dog_breed_map, cat_breed_map, pages=1, limit=100):
-        animal_generator = self.get_paginated_data("animals", pages=pages, limit=limit)
+        animal_generator = self.get_paginated_data("animals", pages=pages, limit=limit, location='76825', distance=278)
         animals = []
         for animal in animal_generator:
             if animal["type"] != "Cat" and animal["type"] != "Dog":
