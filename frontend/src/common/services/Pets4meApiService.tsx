@@ -2,12 +2,12 @@ import ApiService from './ApiService';
 
 class Pets4meApiService extends ApiService {
   constructor() {
-    if(process.env.NODE_ENV === "development") {
+    if(process.env.REACT_APP_USE_LOCAL_BACKEND === "1") {
       super('http://localhost:databasePort/');
-      console.log('Connecting to local database');
+      console.log('!!Connecting to local database');
     } else {
       super('https://api.pets4.me/api');
-      console.log('Connecting to the Real databse')
+      console.log('!!Connecting to the Real database')
     }
   }
 }
