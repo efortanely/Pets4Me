@@ -3,6 +3,9 @@ class ApiService {
 
   protected constructor(api_url: string) {
     this.api_url = api_url
+    process.argv.forEach((val, index) => {
+      console.log(`${index}: ${val}`);
+    });
   }
 
   buildUrl(path: string, params: any): string {
