@@ -281,7 +281,7 @@ class Shelter(db.Model):
 
         for pet in self.pets:
             if pet.primary_dog_breed or pet.primary_cat_breed:
-                pets_dict[pet_num] = {"species": pet.species, "id": pet.id}
+                pets_dict[pet_num] = {"id": pet.id, "name": pet.name, "photos": pet.photos_small}
                 pet_num += 1
 
         return pets_dict
