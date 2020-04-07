@@ -1,13 +1,27 @@
 import os
 from flask import after_this_request
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, alias, or_
 from sqlalchemy.dialects.postgresql import ARRAY as Array
 from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 import flask_restless as fr
+from math import pow, cos, sin, atan2, sqrt, radians
+from geopy.geocoders import Nominatim
 
 db = SQLAlchemy()
 
+def distance(pt1, pt2):
+    lat1, lon1 = pt1
+    lat2, lon2 = pt2
+    R = 3961
+
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+
+    a = pow(sin(dlat/2), 2) + cos(radians(lat1)) * cos(radians(lat2)) * pow(sin(dlon/2), 2)
+    c = 2 * atan2(sqrt(a), sqrt(1-a))
+    d = R * c
+    return d
 
 class Pet(db.Model):
     __tablename__ = "pet"
@@ -58,9 +72,15 @@ class Pet(db.Model):
     description = Column(String(5000))
     url = Column(String(500))
 
-    # TODO calculate with shelter's address
+    # TODO calculate with shelter's address, use user's address
     def distance(self):
-        return None
+        geolocator = Nominatim()
+        gdc = geolocator.geocode("2317 Speedway Austin, TX 78712")
+        gdc = (gdc.latitude, gdc.longitude)
+        shelter_address = geolocator.geocode(self.shelter_ref.postcode)
+        shelter_address = (shelter_address.latitude, shelter_address.longitude)
+
+        return distance(gdc, shelter_address)
 
     def primary_breed(self):
         id = None
@@ -140,27 +160,17 @@ class DogBreed(db.Model):
     def dog_ids(self):
         return [dog.id for dog in self.dogs]
 
-    # TODO call api to get local shelters
-    def local_shelters_with_breed(self):
-        # temporary limit until only local shelters can be singled out
-        shelters = Shelter.query.limit(40).all()
-        num_shelters = 20
-        ct = 0
-        ids = []
-        for shelter in shelters:
-            if num_shelters == len(ids):
-                break
-            for pet in shelter.pets:
-                if (
-                    pet.primary_dog_breed_id == self.id
-                    or pet.secondary_dog_breed_id == self.id
-                ):
-                    ids.append(shelter.id)
-                    ct += 1
-                    break
+    def shelters_with_breed(self):
+        primary = alias(DogBreed)
+        secondary = alias(DogBreed)
+        shelters = db.session.query(Shelter.id)                                                      \
+            .join(Pet, Shelter.pets)                                                                 \
+            .join(primary, Pet.primary_dog_breed)                                                    \
+            .join(secondary, Pet.secondary_dog_breed)                                                \
+            .filter(or_(Pet.primary_dog_breed_id == self.id, Pet.secondary_dog_breed_id == self.id)) \
+            .all()
 
-        return ids
-
+        return [shelter[0] for shelter in shelters]
 
 dog_breed_includes = ["id", "name", "temperament", "bred_for", "breed_group", "photo"]
 dog_breed_methods = [
@@ -168,7 +178,7 @@ dog_breed_methods = [
     "height_imperial",
     "weight_imperial",
     "dog_ids",
-    "local_shelters_with_breed",
+    "shelters_with_breed",
 ]
 
 
@@ -196,27 +206,17 @@ class CatBreed(db.Model):
     def cat_ids(self):
         return [cat.id for cat in self.cats]
 
-    # TODO call api to get local shelters
-    def local_shelters_with_breed(self):
-        # temporary limit until only local shelters can be singled out
-        shelters = Shelter.query.limit(40).all()
-        num_shelters = 20
-        ct = 0
-        ids = []
-        for shelter in shelters:
-            if num_shelters == len(ids):
-                break
-            for pet in shelter.pets:
-                if (
-                    pet.primary_cat_breed_id == self.id
-                    or pet.secondary_cat_breed_id == self.id
-                ):
-                    ids.append(shelter.id)
-                    ct += 1
-                    break
+    def shelters_with_breed(self):
+        primary = alias(CatBreed)
+        secondary = alias(CatBreed)
+        shelters = db.session.query(Shelter.id)                                                      \
+            .join(Pet, Shelter.pets)                                                                 \
+            .join(primary, Pet.primary_cat_breed)                                                    \
+            .join(secondary, Pet.secondary_cat_breed)                                                \
+            .filter(or_(Pet.primary_cat_breed_id == self.id, Pet.secondary_cat_breed_id == self.id)) \
+            .all()
 
-        return ids
-
+        return [shelter[0] for shelter in shelters]
 
 cat_breed_includes = [
     "id",
@@ -229,7 +229,7 @@ cat_breed_includes = [
     "grooming_level",
     "photo",
 ]
-cat_breed_methods = ["life_span", "cat_ids", "local_shelters_with_breed"]
+cat_breed_methods = ["life_span", "cat_ids", "shelters_with_breed"]
 
 
 class Shelter(db.Model):
@@ -252,9 +252,15 @@ class Shelter(db.Model):
     # references to all pets for shelters, generated by setting shelter in pet instances
     pets = relationship("Pet", back_populates="shelter_ref")
 
-    # TODO calculate with address
+    # TODO use user's address
     def distance(self):
-        return None
+        geolocator = Nominatim()
+        gdc = geolocator.geocode("2317 Speedway Austin, TX 78712")
+        gdc = (gdc.latitude, gdc.longitude)
+        shelter_address = geolocator.geocode(self.postcode)
+        shelter_address = (shelter_address.latitude, shelter_address.longitude)
+
+        return distance(gdc, shelter_address)
 
     def address(self):
         return {
