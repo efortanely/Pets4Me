@@ -3,6 +3,7 @@ import Pets4meApiService from './Pets4meApiService';
 import PetsService from './PetsService'
 import { Pet } from '../../models/Pet';
 import { ObjectsPage } from '../../models/ObjectsPage';
+import { PetsFiltersData, sampleFilterData } from '../../models/PetsFiltersData'
 
 export class Pets4mePetsService implements PetsService {
   private endpoint: string = 'pets'
@@ -18,6 +19,14 @@ export class Pets4mePetsService implements PetsService {
 
   getPet(id: string): Promise<Pet> {
     return this.pets4meApiService.fetchJsonAsObject<Pet>(`${this.endpoint}/${id}`, { })
+  }
+
+
+  getPetMetadata(): Promise<PetsFiltersData> {
+    
+    return new Promise(function(response) {
+      response(sampleFilterData);
+    });
   }
 }
 
