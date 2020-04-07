@@ -6,6 +6,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import MediaQuery from 'react-responsive';
 import '../ModelHomepage.css';
 import PetsInfoCards from './PetsInfoCards';
+import { sampleFilterData } from '../../models/PetsFiltersData'
 
 const muiTheme = createMuiTheme({
   overrides:{
@@ -43,7 +44,7 @@ function Pets() {
                 valueLabelDisplay='auto'
               />
           </ThemeProvider>
-          <PetsFilters />
+          <PetsFilters {...sampleFilterData}/>
           <div className='cards-container'>
             <PetsInfoCards />
           </div>
@@ -52,7 +53,7 @@ function Pets() {
 
       <MediaQuery query="(min-width: 950px)">
         <div className='model-homepage-content'>
-          <PetsFilters />
+          <PetsFilters {...sampleFilterData}/>
           <div className='model-homepage-content-col'>
             <div className='sliders'>
               <form>
