@@ -74,10 +74,10 @@ class Pet(db.Model):
 
     def distance(self):
         query = request.query_string.decode("utf-8")
-        params = dict([tuple(q.split("=")) for q in query.split("&")])
 
         geolocator = Nominatim()
         try:
+            params = dict([tuple(q.split("=")) for q in query.split("&")])
             user_loc = geolocator.geocode(params['zip_code'])
         except:
             user_loc = geolocator.geocode("2317 Speedway Austin, TX 78712")
@@ -261,10 +261,10 @@ class Shelter(db.Model):
 
     def distance(self):
         query = request.query_string.decode("utf-8")
-        params = dict([tuple(q.split("=")) for q in query.split("&")])
 
         geolocator = Nominatim()
         try:
+            params = dict([tuple(q.split("=")) for q in query.split("&")])
             user_loc = geolocator.geocode(params['zip_code'])
         except:
             user_loc = geolocator.geocode("2317 Speedway Austin, TX 78712")
@@ -345,7 +345,6 @@ shelter_methods = [
 def setup_config(app):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 
 def setup(app):
     db.init_app(app)
