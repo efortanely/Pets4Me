@@ -4,12 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Slider from '@material-ui/core/Slider'
 import { PetsFiltersData } from '../../models/PetsFiltersData'
 import { ThemeProvider } from '@material-ui/core';
-import { sliderTheme } from '../HomePageUtils'
-
-interface SelectItem {
-    value: string;
-    label: string;
-}
+import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 
 interface PetsFiltersState {
     species: string | undefined;
@@ -25,23 +20,23 @@ interface PetsFiltersState {
 export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersState> {
 
     public speciesData = [
-    {
-        label: "Cat",
-        value: "Cat"
-    },
-    {
-        label: "Dog",
-        value: "Dog"
-    }]
+        {
+            label: "Cat",
+            value: "Cat"
+        },
+        {
+            label: "Dog",
+            value: "Dog"
+        }]
     public genderData = [
-    {
-        label: "Female",
-        value: "Female"
-    },
-    {
-        label: "Male",
-        value: "Male"
-    }]
+        {
+            label: "Female",
+            value: "Female"
+        },
+        {
+            label: "Male",
+            value: "Male"
+        }]
     public breedData: SelectItem[] = [];
     public colorData: SelectItem[] = [];
     public sizeData: SelectItem[] = [];
@@ -52,10 +47,10 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
 
     constructor(props: PetsFiltersData) {
         super(props);
-        this.selectifyDataArray(this.props.breeds, this.breedData);
-        this.selectifyDataArray(this.props.colors, this.colorData);
-        this.selectifyDataArray(this.props.sizes, this.sizeData);
-        this.selectifyDataArray(this.props.ages, this.ageData);
+        selectifyDataArray(this.props.breeds, this.breedData);
+        selectifyDataArray(this.props.colors, this.colorData);
+        selectifyDataArray(this.props.sizes, this.sizeData);
+        selectifyDataArray(this.props.ages, this.ageData);
         this.maxDistance = this.props.max_distance;
         this.state = {
             species: undefined,
@@ -68,14 +63,6 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
             distanceMax: 1000
         } as PetsFiltersState;
     }
-
-    selectifyDataArray(data: string[], selectList: SelectItem[]): void {
-        data.forEach((datum: string) => selectList.push({
-            value: datum,
-            label: datum
-        }));
-    }
-
 
     render() {
         return (
@@ -97,9 +84,8 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                     <ThemeProvider theme={sliderTheme}>
                         <h5>Distance</h5>
                         <Slider
-                            defaultValue={0}
-                            max={this.props.max_distance}
-                            valueLabelDisplay='auto'
+                            defaultValue={0} max={this.props.max_distance} valueLabelDisplay='auto'
+                            onChange={(value: any) => this.setState({distanceMax: value})}
                         />
                     </ThemeProvider>
                 <Button variant='primary' onClick={() => console.log("button pressed")}>Submit</Button>
