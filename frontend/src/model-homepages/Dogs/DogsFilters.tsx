@@ -1,24 +1,8 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown'
 import Slider from '@material-ui/core/Slider'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-
-const muiTheme = createMuiTheme({
-    overrides:{
-      MuiSlider: {
-        thumb:{
-        color: "#581730"
-        },
-        track: {
-          color: '#528C8B'
-        },
-        rail: {
-          color: '#84747B',
-          width: '100%',
-        }
-      }
-  }
-  });
+import { ThemeProvider } from '@material-ui/core';
+import { sliderTheme } from '../HomePageUtils'
 
 function BreedsFilters() {
     return (
@@ -58,7 +42,7 @@ function BreedsFilters() {
                 </Dropdown.Menu>
             </Dropdown>
 
-            <ThemeProvider theme={muiTheme}>
+            <ThemeProvider theme={sliderTheme}>
                 <div>
                     <h5>Lifespan</h5>
                     <Slider

@@ -1,135 +1,108 @@
 import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown'
+import Select from 'react-select';
+import Button from 'react-bootstrap/Button'
+import Slider from '@material-ui/core/Slider'
 import { PetsFiltersData } from '../../models/PetsFiltersData'
+import { ThemeProvider } from '@material-ui/core';
+import { sliderTheme } from '../HomePageUtils'
 
+interface SelectItem {
+    value: string;
+    label: string;
+}
 
 interface PetsFiltersState {
-    currentFilters: boolean;
+    species: string | undefined;
+    gender: string | undefined;
+    primaryBreed: string | undefined;
+    secondaryBreed: string | undefined;
+    color: string | undefined;
+    size: string | undefined;
+    age: string | undefined;
+    distanceMax: number;
 }
 
 export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersState> {
 
-    public testList = ["test1", "test2"];
+    public speciesData = [
+    {
+        label: "Cat",
+        value: "Cat"
+    },
+    {
+        label: "Dog",
+        value: "Dog"
+    }]
+    public genderData = [
+    {
+        label: "Female",
+        value: "Female"
+    },
+    {
+        label: "Male",
+        value: "Male"
+    }]
+    public breedData: SelectItem[] = [];
+    public colorData: SelectItem[] = [];
+    public sizeData: SelectItem[] = [];
+    public ageData: SelectItem[] = [];
+    public maxDistance: number = -1;
 
-    getBreedsList(): JSX.Element[] { 
-        return this.testList.map((breed: string, index: number) => {
-            return (
-                <Dropdown.Item id={breed}>{breed}</Dropdown.Item>
-            )
-        });
+    public breedSelected: any;
+
+    constructor(props: PetsFiltersData) {
+        super(props);
+        this.selectifyDataArray(this.props.breeds, this.breedData);
+        this.selectifyDataArray(this.props.colors, this.colorData);
+        this.selectifyDataArray(this.props.sizes, this.sizeData);
+        this.selectifyDataArray(this.props.ages, this.ageData);
+        this.maxDistance = this.props.max_distance;
+        this.state = {
+            species: undefined,
+            gender: undefined,
+            primaryBreed: undefined,
+            secondaryBreed: undefined,
+            color: undefined,
+            size: undefined,
+            age: undefined,
+            distanceMax: 1000
+        } as PetsFiltersState;
     }
+
+    selectifyDataArray(data: string[], selectList: SelectItem[]): void {
+        data.forEach((datum: string) => selectList.push({
+            value: datum,
+            label: datum
+        }));
+    }
+
 
     render() {
         return (
             <div className='filters'>
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic">
-                        Species
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        {this.getBreedsList()}
-                    </Dropdown.Menu>
-                </Dropdown>
-
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic">
-                        Breed
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item>
-                        <form>
-                            <label>
-                                <input type="text" name="name" placeholder='Search' />
-                            </label>
-                        </form>
-                        </Dropdown.Item>
-                        <Dropdown.Item>Any</Dropdown.Item>
-                        <Dropdown.Item>Chihuahua</Dropdown.Item>
-                        <Dropdown.Item>Pitbull/Mix</Dropdown.Item>
-                        <Dropdown.Item>Domestic Shorthair</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic">
-                        Size
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item>Any</Dropdown.Item>
-                        <Dropdown.Item>Small</Dropdown.Item>
-                        <Dropdown.Item>Medium</Dropdown.Item>
-                        <Dropdown.Item>Large</Dropdown.Item>
-                        <Dropdown.Item>Extra Large</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic">
-                        Gender
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item>Any</Dropdown.Item>
-                        <Dropdown.Item>Male</Dropdown.Item>
-                        <Dropdown.Item>Female</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic">
-                        Age
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item>Any</Dropdown.Item>
-                        <Dropdown.Item>Puppy</Dropdown.Item>
-                        <Dropdown.Item>Young</Dropdown.Item>
-                        <Dropdown.Item>Adult</Dropdown.Item>
-                        <Dropdown.Item>Senior</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic">
-                        Color
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item>
-                        <form>
-                            <label>
-                                <input type="text" name="name" placeholder='Search' />
-                            </label>
-                        </form>
-                        </Dropdown.Item>
-                        <Dropdown.Item>Any</Dropdown.Item>
-                        <Dropdown.Item>Apricot/Beige</Dropdown.Item>
-                        <Dropdown.Item>Bicolor</Dropdown.Item>
-                        <Dropdown.Item>Black</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic">
-                        Shelter
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item>
-                        <form>
-                            <label>
-                                <input type="text" name="name" placeholder='Search' />
-                            </label>
-                        </form>
-                        </Dropdown.Item>
-                        <Dropdown.Item>Any</Dropdown.Item>
-                        <Dropdown.Item>Austin Humane Society</Dropdown.Item>
-                        <Dropdown.Item>Austin Pets Alive!</Dropdown.Item>
-                        <Dropdown.Item>Austin Animal Center</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
+                    onChange={(value: any) => this.setState({species: value?.value})} />
+                <Select options={this.genderData} placeholder="Select a gender..." isClearable={true}
+                    onChange={(value: any) => this.setState({gender: value?.value})} />
+                <Select options={this.breedData} placeholder="Select a primary breed..." isClearable={true}
+                    onChange={(value: any) => this.setState({primaryBreed: value?.value})} />
+                <Select options={this.breedData} placeholder="Select a secondary breed..." isClearable={true}
+                    onChange={(value: any) => this.setState({secondaryBreed: value?.value})} />
+                <Select options={this.colorData} placeholder="Select a color..." isClearable={true}
+                    onChange={(value: any) => this.setState({color: value?.value})} />
+                <Select options={this.sizeData} placeholder="Select a size..." isClearable={true}
+                    onChange={(value: any) => this.setState({size: value?.value})} />
+                <Select options={this.ageData} placeholder="Select an age..." isClearable={true}
+                    onChange={(value: any) => this.setState({age: value?.value})} />
+                    <ThemeProvider theme={sliderTheme}>
+                        <h5>Distance</h5>
+                        <Slider
+                            defaultValue={0}
+                            max={this.props.max_distance}
+                            valueLabelDisplay='auto'
+                        />
+                    </ThemeProvider>
+                <Button variant='primary' onClick={() => console.log("button pressed")}>Submit</Button>
             </div>
         );
     }
