@@ -12,4 +12,4 @@ export let sampleFilterData = {
     sizes: ["Small", "Medium", "Large"],
     ages: ["Baby", "Puppy", "Adult"],
     max_distance: 20
-  };
+} as PetsFiltersData;
