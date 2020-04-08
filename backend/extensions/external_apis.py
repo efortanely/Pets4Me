@@ -6,6 +6,7 @@ from oauthlib.oauth2 import BackendApplicationClient as BAC
 from requests_oauthlib import OAuth2Session
 import requests
 from util.sql import escape_like
+from geopy.geocoders import Nominatim
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
 
 class CommonAPI:
@@ -214,17 +215,20 @@ def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
     )
 
 
-def parse_shelter(shelter):
+def parse_shelter(shelter, geolocator):
     address = shelter.get("address", {})
     policy_dict = shelter.get("adoption", {})
     photos_small, photos_full = extract_photos(shelter.get("photos", []))
+    postcode = address.get("postcode", None)
+    shelter_loc = geolocator.geocode(postcode)
+                
     return Shelter(
         name=shelter.get("name", None),
         address1=address.get("address1", None),
         address2=address.get("address2", None),
         city=address.get("city", None),
         state=address.get("state", None),
-        postcode=address.get("postcode", None),
+        postcode=postcode,
         country=address.get("country", None),
         photos_small=photos_small,
         photos_full=photos_full,
@@ -232,6 +236,8 @@ def parse_shelter(shelter):
         phone_number=shelter.get("phone", None),
         mission=shelter.get("mission_statement", None),
         adoption_policy=policy_dict.get("policy", policy_dict.get("url", None)),
+        latitude=shelter_loc.latitude,
+        longitude=shelter_loc.longitude
     )
 
 
@@ -247,6 +253,7 @@ class PetAPI(OAuthAPI):
         )
         self.shelter_cache = {}
         self.reset_requests()
+        self.geolocator = Nominatim()
 
     def reset_requests(self):
         self.requests = 0
@@ -355,9 +362,14 @@ class PetAPI(OAuthAPI):
 
     def get_shelter(self, pf_id):
         if pf_id not in self.shelter_cache:
-            self.shelter_cache[pf_id] = parse_shelter(
-                json.loads(self.get(f"/v2/organizations/{pf_id}"))["organization"]
-            )
+            data = self.get(f"/v2/organizations/{pf_id}")
+            try:
+                self.shelter_cache[pf_id] = parse_shelter(
+                    json.loads(data)["organization"],
+                    self.geolocator
+                )
+            except:
+                return None
 
         return self.shelter_cache[pf_id]
 
@@ -367,5 +379,5 @@ class PetAPI(OAuthAPI):
         )
         shelters = []
         for shelter in shelter_generator:
-            shelters.append(parse_shelter(shelter))
+            shelters.append(parse_shelter(shelter, self.geolocator))
         return shelters
