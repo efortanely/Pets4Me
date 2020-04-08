@@ -41,9 +41,6 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
     public colorData: SelectItem[] = [];
     public sizeData: SelectItem[] = [];
     public ageData: SelectItem[] = [];
-    public maxDistance: number = -1;
-
-    public breedSelected: any;
 
     constructor(props: PetsFiltersData) {
         super(props);
@@ -51,7 +48,6 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
         selectifyDataArray(this.props.colors, this.colorData);
         selectifyDataArray(this.props.sizes, this.sizeData);
         selectifyDataArray(this.props.ages, this.ageData);
-        this.maxDistance = this.props.max_distance;
         this.state = {
             species: undefined,
             gender: undefined,
@@ -63,6 +59,8 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
             distanceMax: 1000
         } as PetsFiltersState;
     }
+
+    
 
     render() {
         return (
@@ -85,10 +83,10 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                         <h5>Distance</h5>
                         <Slider
                             defaultValue={0} max={this.props.max_distance} valueLabelDisplay='auto'
-                            onChange={(value: any) => this.setState({distanceMax: value})}
+                            onChange={(event: any, value: any) => this.setState({distanceMax: value})}
                         />
                     </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("button pressed")}>Submit</Button>
+                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
             </div>
         );
     }
