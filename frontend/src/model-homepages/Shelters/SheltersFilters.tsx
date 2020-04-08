@@ -1,90 +1,77 @@
 import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown'
 import Slider from '@material-ui/core/Slider'
+import Select from 'react-select';
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import { SheltersFiltersData } from '../../models/SheltersFiltersData'
+import { ThemeProvider } from '@material-ui/core';
+import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 
-function SheltersFilters() {
-    return (
-        <div className='filters'>
-            <Dropdown>
-                <Dropdown.Toggle id="dropdown-basic">
-                    Name
-                </Dropdown.Toggle>
+interface SheltersFiltersState {
+    city: string | undefined;
+    postcode: string | undefined;
+    state: string | undefined;
+    distanceMax: number;
+    shelterWithSpecies: string | undefined;
+}
+/*
+City (dropdown [bonus - with search])
+Postcode (Text entry)
+State (dropdown)
+Distance from given postcode (slider)
+Shelter has cats/dogs (dropdown)
+*/
 
-                <Dropdown.Menu>
-                    <Dropdown.Item>It's Raining Dogs Dog Rescue</Dropdown.Item>
-                    <Dropdown.Item>Companion Animal Network</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+export class SheltersFilters extends React.Component<SheltersFiltersData, SheltersFiltersState> {
 
-            <Dropdown>
-                <Dropdown.Toggle id="dropdown-basic">
-                    City
-                </Dropdown.Toggle>
+    public cityData: SelectItem[] = [];
+    public stateData: SelectItem[] = [];
+    public speciesData = [
+        {
+            label: "Cat",
+            value: "Shelter has cats"
+        },
+        {
+            label: "Dog",
+            value: "Shelter has dogs"
+        }]
 
-                <Dropdown.Menu>
-                    <Dropdown.Item>Austin</Dropdown.Item>
-                    <Dropdown.Item>Houston</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+    constructor(props: SheltersFiltersData) {
+        super(props);
+        selectifyDataArray(this.props.cities, this.cityData);
+        selectifyDataArray(this.props.states, this.stateData);
+        this.state = {
+            city: undefined,
+            postcode: undefined,
+            state: undefined,
+            distanceMax: 1000,
+            shelterWithSpecies: undefined
+        }
+    }
 
-            <Dropdown>
-                <Dropdown.Toggle id="dropdown-basic">
-                    State
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item>Tx</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-
-            <Dropdown>
-                <Dropdown.Toggle id="dropdown-basic">
-                    Zip code
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item>78705</Dropdown.Item>
-                    <Dropdown.Item>78660</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-
-            <Dropdown>
-                <Dropdown.Toggle id="dropdown-basic">
-                    Country
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item>US</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-
-            <div>
-                <h5>Number of pets</h5>
-                <Slider
-                    defaultValue={[5,50]}
-                    max={200}
-                    valueLabelDisplay='auto'
-                />
+    render() {
+        return (
+            <div className='filters'>
+                <Select options={this.cityData} placeholder="Select a city..." isClearable={true}
+                    onChange={(value: any) => this.setState({city: value?.value})} />
+                <Select options={this.stateData} placeholder="Select a state..." isClearable={true}
+                    onChange={(value: any) => this.setState({state: value?.value})} />
+                <Form className="postcode">
+                    <Form.Group controlId="postcode">
+                        <Form.Control type="number" placeholder="Enter a postcode..." />
+                    </Form.Group>
+                </Form>
+                <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
+                    onChange={(value: any) => this.setState({shelterWithSpecies: value?.value})} />
+                <ThemeProvider theme={sliderTheme}>
+                    <h5>Distance from your postcode (miles)</h5>
+                    <Slider
+                        defaultValue={0} max={300} valueLabelDisplay='auto'
+                        onChange={(event: any, value: any) => this.setState({distanceMax: value})}
+                    />
+                </ThemeProvider>
+            <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
             </div>
-
-            <div>
-                <h5>Number of cats</h5>
-                <Slider
-                    defaultValue={[5,50]}
-                    max={200}
-                    valueLabelDisplay='auto'
-                />
-            </div>
-
-            <div>
-                <h5>Number of dogs</h5>
-                <Slider
-                    defaultValue={[5,50]}
-                    max={200}
-                    valueLabelDisplay='auto'
-                />
-            </div>
-
-        </div>
-    );
+        );
+    }
 } export default SheltersFilters;

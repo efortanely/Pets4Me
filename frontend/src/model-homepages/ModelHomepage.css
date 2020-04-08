@@ -71,8 +71,11 @@
 }
 
 .filters form input{
-    width: 350px;
     box-sizing: border-box;    
+}
+
+.postcode {
+    height: 50px;
 }
 
 .filters h5{
