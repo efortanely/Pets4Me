@@ -74,19 +74,7 @@ class Pet(db.Model):
     dist = Column(Float)
 
     def distance(self):
-        geolocator = Nominatim()
-        query = request.query_string.decode("utf-8")
-
-        try:
-            params = dict([tuple(q.split("=")) for q in query.split("&")])
-            user_loc = geolocator.geocode(params['zip_code'])
-            user_loc = (user_loc.latitude, user_loc.longitude)
-        except:
-            user_loc = (30.286, -97.736) #GDC
-        
-        shelter_address = (self.shelter_ref.latitude, self.shelter_ref.longitude)
-
-        return distance(user_loc, shelter_address)
+        return self.dist
         
     def primary_breed(self):
         id = None
@@ -279,19 +267,7 @@ class Shelter(db.Model):
     pets = relationship("Pet", back_populates="shelter_ref")
 
     def distance(self):
-        query = request.query_string.decode("utf-8")
-
-        geolocator = Nominatim()
-        try:
-            params = dict([tuple(q.split("=")) for q in query.split("&")])
-            user_loc = geolocator.geocode(params['zip_code'])
-            user_loc = (user_loc.latitude, user_loc.longitude)
-        except:
-            user_loc = (30.286, -97.736) #GDC
-        
-        shelter_address = (self.latitude, self.longitude)
-
-        return distance(user_loc, shelter_address)
+        return self.dist
 
     def address(self):
         return {
