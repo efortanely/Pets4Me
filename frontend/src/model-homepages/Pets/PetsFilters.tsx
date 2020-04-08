@@ -79,13 +79,13 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                     onChange={(value: any) => this.setState({size: value?.value})} />
                 <Select options={this.ageData} placeholder="Select an age..." isClearable={true}
                     onChange={(value: any) => this.setState({age: value?.value})} />
-                    <ThemeProvider theme={sliderTheme}>
-                        <h5>Distance</h5>
-                        <Slider
-                            defaultValue={0} max={this.props.max_distance} valueLabelDisplay='auto'
-                            onChange={(event: any, value: any) => this.setState({distanceMax: value})}
-                        />
-                    </ThemeProvider>
+                <ThemeProvider theme={sliderTheme}>
+                    <h5>Distance</h5>
+                    <Slider
+                        defaultValue={0} max={this.props.max_distance} valueLabelDisplay='auto'
+                        onChange={(event: any, value: any) => this.setState({distanceMax: value})}
+                    />
+                </ThemeProvider>
                 <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
             </div>
         );
