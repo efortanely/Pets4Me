@@ -3,6 +3,7 @@ import Pets4meApiService from './Pets4meApiService';
 import SheltersService from './SheltersService'
 import { Shelter } from '../../models/Shelter';
 import { ObjectsPage } from '../../models/ObjectsPage';
+import { SheltersFiltersData, sampleFilterData } from '../../models/SheltersFiltersData';
 
 export class Pets4meSheltersService implements SheltersService {
   private endpoint: string = 'shelters'
@@ -19,6 +20,13 @@ export class Pets4meSheltersService implements SheltersService {
   getShelter(id: string): Promise<Shelter> {
     return this.pets4meApiService.fetchJsonAsObject<Shelter>(`${this.endpoint}/${id}`, { })
   }
+
+  getShelterMetadata(): Promise<SheltersFiltersData> {
+    return new Promise(function(response) {
+      response(sampleFilterData);
+    });
+  }
+
 }
 
 const pets4meSheltersService: Pets4meSheltersService = new Pets4meSheltersService()

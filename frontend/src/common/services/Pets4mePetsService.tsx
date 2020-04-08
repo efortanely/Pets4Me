@@ -23,7 +23,6 @@ export class Pets4mePetsService implements PetsService {
 
 
   getPetMetadata(): Promise<PetsFiltersData> {
-    
     return new Promise(function(response) {
       response(sampleFilterData);
     });
