@@ -6,6 +6,7 @@ import { match, Link } from 'react-router-dom'
 import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
 import ImageGallery from 'react-image-gallery';
+import MapMedia from '../../common/components/MapMedia'
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 
@@ -52,12 +53,10 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
         return {original: photo}
       });
 
-      return <div className='instancepage-image'>
-                <ImageGallery items={images} />
-              </div>
-    }else{
+      return <ImageGallery items={images} />
+    } else {
       return <div>
-              <Image className='instancepage-image' src={logo} rounded />
+              <Image src={logo} rounded />
               <p>Uh-oh! No image is available for this Shelter.</p>
             </div>
     }
@@ -77,11 +76,13 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
     let full_address: string = (shelter.address?.address1 || "") +" "+ (shelter.address?.address2 || "") +", "+ shelter.address?.city +", "+ shelter.address?.state +" "+ shelter.address?.postcode 
     let allPets = Object.values(shelter.all_pets || {})
     return (
-    <div className='shelter-instancepage'>
-      {this.getPhoto(shelter.photos)}
+      <div className='model-instancepage'>
+        <div className='instancepage-image'>
+          {this.getPhoto(shelter.photos)}
+          <MapMedia address={full_address}/>
+        </div>
         <div className='instancepage-text'>
           <h1 id='name'>{shelter.name}</h1>
-          {/* <MapMedia address={full_address}/> */}
           <p id='address'>Address: {full_address}, {shelter.address?.country}</p>
           <p id='contact'>Contact: {shelter.contact?.email}, {shelter.contact?.phone_number}</p>
           <p id='adoption-policy'>Adoption Policy: {shelter.adoption_policy}</p>
