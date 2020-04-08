@@ -2,7 +2,7 @@ import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown'
 import Slider from '@material-ui/core/Slider'
 import { ThemeProvider } from '@material-ui/core';
-import { sliderTheme } from '../HomePageUtils'
+import { sliderTheme } from '../ModelHomepageUtils'
 
 function BreedsFilters() {
     return (

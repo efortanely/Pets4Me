@@ -3,6 +3,7 @@ import CatsFilters from './CatsFilters'
 import '../ModelHomepage.css';
 import CatBreedsInfoCards from './CatBreedsInfoCards';
 import MediaQuery from 'react-responsive';
+import { sampleFilterData } from '../../models/CatsFiltersData'
 
 function CatBreeds() {
   return (
@@ -14,14 +15,14 @@ function CatBreeds() {
                   <input type="text" name="global-search" placeholder='Search' />
               </label>
           </form>
-          <CatsFilters />
+          <CatsFilters {...sampleFilterData}/>
           <CatBreedsInfoCards />
         </div>
       </MediaQuery>
 
       <MediaQuery query="(min-width: 950px)">
         <div className='model-homepage-content'>
-          <CatsFilters />
+          <CatsFilters {...sampleFilterData}/>
           <div className='model-homepage-content-col'>
             <div className='sliders'>
               <form>
