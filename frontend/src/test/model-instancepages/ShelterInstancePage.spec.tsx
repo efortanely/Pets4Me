@@ -1,23 +1,28 @@
-import 'jsdom-global/register'
-import React from 'react'
+import 'jsdom-global/register';
+import React from 'react';
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
-import chai, { expect } from 'chai'
-import ShelterInstancePage from '../../model-instancepages/Shelters/ShelterInstancePage'
+import chai, { expect } from 'chai';
+import ShelterInstancePage from '../../model-instancepages/Shelters/ShelterInstancePage';
 import { Pets4meSheltersService } from '../../common/services/Pets4meSheltersService';
 import { Shelter } from '../../models/Shelter';
 import Adapter from 'enzyme-adapter-react-16';
-import { spy } from 'sinon'
-import sinonChai from 'sinon-chai'
+import sinon from 'sinon'
+import { spy } from 'sinon';
+import sinonChai from 'sinon-chai';
 import { MemoryRouter } from 'react-router-dom';
 import SheltersService from '../../common/services/SheltersService';
+import * as MapMedia from '../../common/components/MapMedia';
 chai.use(sinonChai)
-
 
 describe('<ShelterInstancePage/>', () => {
   let testComponent: ShallowWrapper
   let testShelter: Shelter
   let elements: any
   const emptyShelter = { } as Shelter
+
+  before( () => {
+    sinon.stub(MapMedia, "default").returns(<div></div>);
+  })
 
   function spyOnSheltersService(shelter: Shelter) {
     let testPets4meSheltersService = new Pets4meSheltersService()
