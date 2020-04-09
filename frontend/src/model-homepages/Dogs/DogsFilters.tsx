@@ -10,7 +10,9 @@ interface DogsFiltersState {
   nameInitials: string[] | undefined;
   breedGroup: string[] | undefined;
   maxHeight: number;
+  minHeight: number;
   maxWeight: number;
+  minWeight: number;
   lifespanMin: number;
   lifespanMax: number;
   sortType: string | undefined;
@@ -36,8 +38,10 @@ export class DogsFilters extends React.Component<DogsFiltersData, DogsFiltersSta
             nameInitials: [],
             breedGroup: [],
             maxHeight: 100,
+            minHeight: 0,
             maxWeight: 100,
-            lifespanMin: 100,
+            minWeight: 0,
+            lifespanMin: 0,
             lifespanMax: 100,
             sortType: undefined,
             sortDir: undefined
@@ -78,22 +82,22 @@ render() {
             <ThemeProvider theme={sliderTheme}>
                 <h5>Height</h5>
                 <Slider
-                    defaultValue={0} max={this.props.max_height} valueLabelDisplay='auto'
-                    onChange={(event: any, value: any) => this.setState({maxHeight: value})}
+                    defaultValue={[this.props.min_height, this.props.max_height]} max={this.props.max_height} valueLabelDisplay='auto'
+                    onChange={(event: any, value: any) => this.setState({minHeight: value[0], maxHeight: value[1]})}
                 />
             </ThemeProvider>
             <ThemeProvider theme={sliderTheme}>
                 <h5>Weight</h5>
                 <Slider
-                    defaultValue={0} max={this.props.max_weight} valueLabelDisplay='auto'
-                    onChange={(event: any, value: any) => this.setState({maxWeight: value})}
+                    defaultValue={[this.props.min_weight, this.props.max_weight]} max={this.props.max_weight} valueLabelDisplay='auto'
+                    onChange={(event: any, value: any) => this.setState({minWeight: value[0], maxWeight: value[1]})}
                 />
             </ThemeProvider>
             <ThemeProvider theme={sliderTheme}>
                 <h5>Lifespan</h5>
                 <Slider
-                    defaultValue={0} min={this.props.lifespan_min} max={this.props.lifespan_max} valueLabelDisplay='auto'
-                    onChange={(event: any, value: any) => this.setState({lifespanMax: value})}
+                    defaultValue={[this.props.lifespan_min, this.props.lifespan_min]} max={this.props.lifespan_max} valueLabelDisplay='auto'
+                    onChange={(event: any, value: any) => this.setState({lifespanMin: value[0], lifespanMax: value[1]})}
                 />
             </ThemeProvider>
 
