@@ -7,8 +7,8 @@ import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 
 interface DogsFiltersState {
-  nameInitials: string | undefined;
-  breedGroup: string | undefined;
+  nameInitials: string[] | undefined;
+  breedGroup: string[] | undefined;
   maxHeight: number;
   maxWeight: number;
   lifespanMin: number;
@@ -25,26 +25,16 @@ export class DogsFilters extends React.Component<DogsFiltersData, DogsFiltersSta
         {label: "Weight", value: "Weight"},
         {label: "Breed group", value: "Breed group"}
     ]
-
-    public genderData = [
-        {
-            label: "Female",
-            value: "Female"
-        },
-        {
-            label: "Male",
-            value: "Male"
-        }]
-        public nameInitials: SelectItem[] = [];
-        public breedGroup: SelectItem[] = [];
+    public nameInitials: SelectItem[] = [];
+    public breedGroup: SelectItem[] = [];
 
     constructor(props: DogsFiltersData) {
         super(props);
         selectifyDataArray(this.props.name_initials, this.nameInitials);
         selectifyDataArray(this.props.breed_group, this.breedGroup);
         this.state = {
-            nameInitials: undefined,
-            breedGroup: undefined,
+            nameInitials: [],
+            breedGroup: [],
             maxHeight: 100,
             maxWeight: 100,
             lifespanMin: 100,
@@ -66,10 +56,24 @@ render() {
                 <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
                 </div>
             </div>
-            <Select options={this.nameInitials} placeholder="Select a letter..." isClearable={true}
-                onChange={(value: any) => this.setState({nameInitials: value?.value})} />
-            <Select options={this.breedGroup} placeholder="Select a breed group..." isClearable={true}
-                onChange={(value: any) => this.setState({breedGroup: value?.value})} />
+            <Select isMulti options={this.nameInitials} placeholder="Select a letter..." isClearable={true}
+            onChange={(newFilters: any) => {
+                if (newFilters) {
+                    this.setState({nameInitials: newFilters.map((selectItem: SelectItem) => {
+                        return selectItem.value;
+                    })});
+                } else {
+                    this.setState({nameInitials: undefined});
+                }}} />
+            <Select isMulti options={this.breedGroup} placeholder="Select a breed group..." isClearable={true}
+            onChange={(newFilters: any) => {
+                if (newFilters) {
+                    this.setState({breedGroup: newFilters.map((selectItem: SelectItem) => {
+                        return selectItem.value;
+                    })});
+                } else {
+                    this.setState({breedGroup: undefined});
+                }}} />
 
             <ThemeProvider theme={sliderTheme}>
                 <h5>Height</h5>
