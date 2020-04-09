@@ -5,6 +5,7 @@ import Slider from '@material-ui/core/Slider'
 import { PetsFiltersData } from '../../models/PetsFiltersData'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
+import '../ModelHomepage.css'
 
 interface PetsFiltersState {
     species: string | undefined;
@@ -15,28 +16,28 @@ interface PetsFiltersState {
     size: string | undefined;
     age: string | undefined;
     distanceMax: number;
+    sortType: string | undefined;
+    sortDir: string | undefined;
 }
 
 export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersState> {
 
+    public sortData: SelectItem[] = [
+        {label: "Primary breed", value: "Primary breed"},
+        {label: "Secondary breed", value: "Secondary breed"},
+        {label: "Shelter", value: "Shelter"},
+        {label: "Distance", value: "Distance"},
+        {label: "Size", value: "Size"},
+        {label: "Color", value: "Color"},
+        {label: "Age", value: "Age"}
+    ]
+
     public speciesData = [
-        {
-            label: "Cat",
-            value: "Cat"
-        },
-        {
-            label: "Dog",
-            value: "Dog"
-        }]
+        { label: "Cat", value: "Cat" },
+        { label: "Dog", value: "Dog" }] as SelectItem[];
     public genderData = [
-        {
-            label: "Female",
-            value: "Female"
-        },
-        {
-            label: "Male",
-            value: "Male"
-        }]
+        { label: "Female", value: "Female" },
+        { label: "Male", value: "Male" }] as SelectItem[];
     public breedData: SelectItem[] = [];
     public colorData: SelectItem[] = [];
     public sizeData: SelectItem[] = [];
@@ -56,7 +57,9 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
             color: undefined,
             size: undefined,
             age: undefined,
-            distanceMax: 1000
+            distanceMax: 1000,
+            sortType: undefined,
+            sortDir: undefined
         } as PetsFiltersState;
     }
 
@@ -65,6 +68,15 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
     render() {
         return (
             <div className='filters'>
+                <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
+                    onChange={(value: any) => this.setState({sortType: value?.value})} />
+                {/* React is tragically very stupid and this is the only way I could style it right*/}
+                <div className='sort-buttons'>
+                    <div>
+                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</Button>
+                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
+                    </div>
+                </div>
                 <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
                     onChange={(value: any) => this.setState({species: value?.value})} />
                 <Select options={this.genderData} placeholder="Select a gender..." isClearable={true}

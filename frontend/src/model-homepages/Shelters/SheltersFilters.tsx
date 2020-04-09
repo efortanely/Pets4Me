@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form'
 import { SheltersFiltersData } from '../../models/SheltersFiltersData'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
+import '../ModelHomepage.css'
 
 interface SheltersFiltersState {
     city: string | undefined;
@@ -13,28 +14,23 @@ interface SheltersFiltersState {
     state: string | undefined;
     distanceMax: number;
     shelterWithSpecies: string | undefined;
+    sortType: string | undefined;
+    sortDir: string | undefined;
 }
-/*
-City (dropdown [bonus - with search])
-Postcode (Text entry)
-State (dropdown)
-Distance from given postcode (slider)
-Shelter has cats/dogs (dropdown)
-*/
 
 export class SheltersFilters extends React.Component<SheltersFiltersData, SheltersFiltersState> {
 
+    public sortData: SelectItem[] = [
+        {label: "Name", value: "Name"},
+        {label: "City", value: "City"},
+        {label: "State", value: "State"},
+        {label: "Distance", value: "Distance"}
+    ]
     public cityData: SelectItem[] = [];
     public stateData: SelectItem[] = [];
     public speciesData = [
-        {
-            label: "Cat",
-            value: "Shelter has cats"
-        },
-        {
-            label: "Dog",
-            value: "Shelter has dogs"
-        }]
+        { label: "Cat", value: "Shelter has cats" },
+        { label: "Dog", value: "Shelter has dogs" }] as SelectItem[];
 
     constructor(props: SheltersFiltersData) {
         super(props);
@@ -45,13 +41,24 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
             postcode: undefined,
             state: undefined,
             distanceMax: 1000,
-            shelterWithSpecies: undefined
+            shelterWithSpecies: undefined,
+            sortType: undefined,
+            sortDir: undefined
         }
     }
 
     render() {
         return (
             <div className='filters'>
+                <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
+                    onChange={(value: any) => this.setState({sortType: value?.value})} />
+                {/* React is tragically very stupid and this is the only way I could style it right*/}
+                <div className='sort-buttons'>
+                    <div>
+                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</Button>
+                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
+                    </div>
+                </div>
                 <Select options={this.cityData} placeholder="Select a city..." isClearable={true}
                     onChange={(value: any) => this.setState({city: value?.value})} />
                 <Select options={this.stateData} placeholder="Select a state..." isClearable={true}

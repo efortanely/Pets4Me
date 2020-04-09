@@ -1,5 +1,10 @@
 import { createMuiTheme } from '@material-ui/core';
 
+export interface SelectItem {
+  value: string;
+  label: string;
+}
+
 export const sliderTheme = createMuiTheme({
     overrides:{
       MuiSlider: {
@@ -16,10 +21,6 @@ export const sliderTheme = createMuiTheme({
       }
   }});
 
-export interface SelectItem {
-    value: string;
-    label: string;
-}
 
 
 export function selectifyDataArray(data: string[], selectList: SelectItem[]): void {
@@ -28,3 +29,5 @@ export function selectifyDataArray(data: string[], selectList: SelectItem[]): vo
       label: datum
   }));
 }
+
+
