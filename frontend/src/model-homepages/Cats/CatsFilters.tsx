@@ -5,6 +5,7 @@ import Slider from '@material-ui/core/Slider'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 import { CatsFiltersData } from '../../models/CatsFiltersData';
+import '../ModelHomepage.css'
 
 /*
     Name
@@ -22,18 +23,22 @@ interface CatsFiltersState {
     groomingLevel: number;
     lifespan_min: number;
     lifespan_max: number;
+    sortType: string | undefined;
+    sortDir: string | undefined;
 }
 export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersState> {
     
+    public sortData: SelectItem[] = [
+        {label: "Name", value: "Name"},
+        {label: "Life span", value: "Life span"},
+        {label: "Dog-friendliness", value: "Dog-friendliness"},
+        {label: "Child-friendliness", value: "Child-friendliness"},
+        {label: "Grooming level", value: "Grooming level"},
+    ]
+
     public doorsinessData = [
-        {
-            label: "Indoor",
-            value: "Indoor"
-        },
-        {
-            label: "Outdoor",
-            value: "Outdoor"
-        }]
+        { label: "Indoor", value: "Indoor" },
+        { label: "Outdoor", value: "Outdoor" }] as SelectItem[];
     public nameData: SelectItem[] = [];
     
     constructor(props: CatsFiltersData) {
@@ -46,7 +51,9 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
             childLevel: 0,
             groomingLevel: 0,
             lifespan_min: 0,
-            lifespan_max: 30
+            lifespan_max: 30,
+            sortType: undefined,
+            sortDir: undefined
         } as CatsFiltersState;
     }
 
@@ -57,6 +64,15 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
     render() {
         return (
             <div className='filters'>
+                <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
+                    onChange={(value: any) => this.setState({sortType: value?.value})} />
+                {/* React is tragically very stupid and this is the only way I could style it right*/}
+                <div className='sort-buttons'>
+                    <div>
+                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</Button>
+                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
+                    </div>
+                </div>
                 <Select options={this.nameData} placeholder="Select a first letter..." isClearable={true}
                     onChange={(value: any) => this.setState({nameInitial: value?.value})} />
                 <Select options={this.doorsinessData} placeholder="Indoor/outdoor?" isClearable={true}
