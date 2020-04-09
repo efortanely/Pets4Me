@@ -9,11 +9,11 @@ import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUti
 import '../ModelHomepage.css'
 
 interface SheltersFiltersState {
-    city: string | undefined;
-    postcode: string | undefined;
-    state: string | undefined;
+    city: string[];
+    postcode: string[];
+    state: string[];
     distanceMax: number;
-    shelterWithSpecies: string | undefined;
+    shelterWithSpecies: string[];
     sortType: string | undefined;
     sortDir: string | undefined;
 }
@@ -29,19 +29,19 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
     public cityData: SelectItem[] = [];
     public stateData: SelectItem[] = [];
     public speciesData = [
-        { label: "Cat", value: "Shelter has cats" },
-        { label: "Dog", value: "Shelter has dogs" }] as SelectItem[];
+        { label: "Cat", value: "cats" },
+        { label: "Dog", value: "dogs" }] as SelectItem[];
 
     constructor(props: SheltersFiltersData) {
         super(props);
         selectifyDataArray(this.props.cities, this.cityData);
         selectifyDataArray(this.props.states, this.stateData);
         this.state = {
-            city: undefined,
-            postcode: undefined,
-            state: undefined,
+            city: [],
+            postcode: [],
+            state: [],
             distanceMax: 1000,
-            shelterWithSpecies: undefined,
+            shelterWithSpecies: [],
             sortType: undefined,
             sortDir: undefined
         }
@@ -59,10 +59,24 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                     <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
                     </div>
                 </div>
-                <Select options={this.cityData} placeholder="Select a city..." isClearable={true}
-                    onChange={(value: any) => this.setState({city: value?.value})} />
-                <Select options={this.stateData} placeholder="Select a state..." isClearable={true}
-                    onChange={(value: any) => this.setState({state: value?.value})} />
+                <Select isMulti options={this.cityData} placeholder="Select a city..." isClearable={true}
+                    onChange={(newFilters: any) => {
+                        if (newFilters) {
+                            this.setState({city: newFilters.map((selectItem: SelectItem) => {
+                                return selectItem.value;
+                            })});
+                        } else {
+                            this.setState({city: []});
+                        }}} />
+                <Select isMulti options={this.stateData} placeholder="Select a state..." isClearable={true}
+                    onChange={(newFilters: any) => {
+                        if (newFilters) {
+                            this.setState({state: newFilters.map((selectItem: SelectItem) => {
+                                return selectItem.value;
+                            })});
+                        } else {
+                            this.setState({state: []});
+                        }}} />
                 <Form className="postcode">
                     <Form.Group controlId="postcode">
                         <Form.Control type="number" placeholder="Enter a postcode..." />
@@ -71,7 +85,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                 <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
                     onChange={(value: any) => this.setState({shelterWithSpecies: value?.value})} />
                 <ThemeProvider theme={sliderTheme}>
-                    <h5>Distance from your postcode (miles)</h5>
+                    <h5>Max distance from your postcode (miles)</h5>
                     <Slider
                         defaultValue={0} max={300} valueLabelDisplay='auto'
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
