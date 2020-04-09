@@ -13,9 +13,18 @@ interface DogsFiltersState {
   maxWeight: number;
   lifespanMin: number;
   lifespanMax: number;
+  sortType: string | undefined;
+  sortDir: string | undefined;
 }
 
 export class DogsFilters extends React.Component<DogsFiltersData, DogsFiltersState> {
+
+    public sortData: SelectItem[] = [
+        {label: "Name", value: "Name"},
+        {label: "Height", value: "Height"},
+        {label: "Weight", value: "Weight"},
+        {label: "Breed group", value: "Breed group"}
+    ]
 
     public genderData = [
         {
@@ -39,14 +48,24 @@ export class DogsFilters extends React.Component<DogsFiltersData, DogsFiltersSta
             maxHeight: 100,
             maxWeight: 100,
             lifespanMin: 100,
-            lifespanMax: 100
+            lifespanMax: 100,
+            sortType: undefined,
+            sortDir: undefined
         } as DogsFiltersState;
     }
 
 render() {
     return (
         <div className='filters'>
-
+            <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
+                    onChange={(value: any) => this.setState({sortType: value?.value})} />
+            {/* React is tragically very stupid and this is the only way I could style it right*/}
+            <div className='sort-buttons'>
+                <div>
+                <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</Button>
+                <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
+                </div>
+            </div>
             <Select options={this.nameInitials} placeholder="Select a letter..." isClearable={true}
                 onChange={(value: any) => this.setState({nameInitials: value?.value})} />
             <Select options={this.breedGroup} placeholder="Select a breed group..." isClearable={true}
