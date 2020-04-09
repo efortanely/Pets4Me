@@ -8,7 +8,7 @@ import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUti
 import '../ModelHomepage.css'
 
 interface PetsFiltersState {
-    species: string | undefined;
+    species: string[] | undefined;
     gender: string | undefined;
     primaryBreed: string | undefined;
     secondaryBreed: string | undefined;
@@ -63,8 +63,6 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
         } as PetsFiltersState;
     }
 
-    
-
     render() {
         return (
             <div className='filters'>
@@ -77,8 +75,15 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                     <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
                     </div>
                 </div>
-                <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
-                    onChange={(value: any) => this.setState({species: value?.value})} />
+                <Select isMulti options={this.speciesData} placeholder="Select a species..." isClearable={true}
+                    onChange={(newFilters: any) => {
+                        if (newFilters) {
+                            this.setState({species: newFilters.map((selectItem: SelectItem) => {
+                                return selectItem.value;
+                            })});
+                        } else {
+                            this.setState({species: undefined});
+                        }}} />
                 <Select options={this.genderData} placeholder="Select a gender..." isClearable={true}
                     onChange={(value: any) => this.setState({gender: value?.value})} />
                 <Select options={this.breedData} placeholder="Select a primary breed..." isClearable={true}
