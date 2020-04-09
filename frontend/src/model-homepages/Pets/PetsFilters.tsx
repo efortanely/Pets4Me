@@ -8,13 +8,13 @@ import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUti
 import '../ModelHomepage.css'
 
 interface PetsFiltersState {
-    species: string[] | undefined;
+    species: string | undefined;
     gender: string | undefined;
-    primaryBreed: string | undefined;
-    secondaryBreed: string | undefined;
-    color: string | undefined;
-    size: string | undefined;
-    age: string | undefined;
+    primaryBreed: string[];
+    secondaryBreed: string[];
+    color: string[];
+    size: string[];
+    age: string[];
     distanceMax: number;
     sortType: string | undefined;
     sortDir: string | undefined;
@@ -52,11 +52,11 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
         this.state = {
             species: undefined,
             gender: undefined,
-            primaryBreed: undefined,
-            secondaryBreed: undefined,
-            color: undefined,
-            size: undefined,
-            age: undefined,
+            primaryBreed: [],
+            secondaryBreed: [],
+            color: [],
+            size: [],
+            age: [],
             distanceMax: 1000,
             sortType: undefined,
             sortDir: undefined
@@ -76,26 +76,54 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                     </div>
                 </div>
                 <Select isMulti options={this.speciesData} placeholder="Select a species..." isClearable={true}
+                    onChange={(value: any) => this.setState({species: value?.value})} />
+                <Select isMulti options={this.genderData} placeholder="Select a gender..." isClearable={true}
+                    onChange={(value: any) => this.setState({gender: value?.value})} />
+                <Select isMulti options={this.breedData} placeholder="Select a primary breed..." isClearable={true}
                     onChange={(newFilters: any) => {
                         if (newFilters) {
-                            this.setState({species: newFilters.map((selectItem: SelectItem) => {
+                            this.setState({primaryBreed: newFilters.map((selectItem: SelectItem) => {
                                 return selectItem.value;
                             })});
                         } else {
-                            this.setState({species: undefined});
+                            this.setState({primaryBreed: []});
                         }}} />
-                <Select options={this.genderData} placeholder="Select a gender..." isClearable={true}
-                    onChange={(value: any) => this.setState({gender: value?.value})} />
-                <Select options={this.breedData} placeholder="Select a primary breed..." isClearable={true}
-                    onChange={(value: any) => this.setState({primaryBreed: value?.value})} />
-                <Select options={this.breedData} placeholder="Select a secondary breed..." isClearable={true}
-                    onChange={(value: any) => this.setState({secondaryBreed: value?.value})} />
-                <Select options={this.colorData} placeholder="Select a color..." isClearable={true}
-                    onChange={(value: any) => this.setState({color: value?.value})} />
-                <Select options={this.sizeData} placeholder="Select a size..." isClearable={true}
-                    onChange={(value: any) => this.setState({size: value?.value})} />
-                <Select options={this.ageData} placeholder="Select an age..." isClearable={true}
-                    onChange={(value: any) => this.setState({age: value?.value})} />
+                <Select isMulti options={this.breedData} placeholder="Select a secondary breed..." isClearable={true}
+                    onChange={(newFilters: any) => {
+                        if (newFilters) {
+                            this.setState({secondaryBreed: newFilters.map((selectItem: SelectItem) => {
+                                return selectItem.value;
+                            })});
+                        } else {
+                            this.setState({secondaryBreed: []});
+                        }}} />
+                <Select isMulti options={this.colorData} placeholder="Select a color..." isClearable={true}
+                    onChange={(newFilters: any) => {
+                        if (newFilters) {
+                            this.setState({color: newFilters.map((selectItem: SelectItem) => {
+                                return selectItem.value;
+                            })});
+                        } else {
+                            this.setState({color: []});
+                        }}} />
+                <Select isMulti options={this.sizeData} placeholder="Select a size..." isClearable={true}
+                    onChange={(newFilters: any) => {
+                        if (newFilters) {
+                            this.setState({size: newFilters.map((selectItem: SelectItem) => {
+                                return selectItem.value;
+                            })});
+                        } else {
+                            this.setState({size: []});
+                        }}} />
+                <Select isMulti options={this.ageData} placeholder="Select an age..." isClearable={true}
+                    onChange={(newFilters: any) => {
+                    if (newFilters) {
+                        this.setState({age: newFilters.map((selectItem: SelectItem) => {
+                            return selectItem.value;
+                        })});
+                    } else {
+                        this.setState({age: []});
+                    }}} />
                 <ThemeProvider theme={sliderTheme}>
                     <h5>Distance</h5>
                     <Slider
