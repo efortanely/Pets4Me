@@ -225,7 +225,15 @@ def parse_shelter(shelter, geolocator):
     policy_dict = shelter.get("adoption", {})
     photos_small, photos_full = extract_photos(shelter.get("photos", []))
     postcode = address.get("postcode", None)
-    shelter_loc = geolocator.geocode(postcode)
+    
+    if postcode:
+        shelter_loc = geolocator.geocode(postcode)
+        latitude = shelter_loc.latitude
+        longitude = shelter_loc.longitude
+    else:
+        #default to GDC
+        latitude = 30.286
+        longitude = -97.736
 
     return Shelter(
         name=shelter.get("name", None),
@@ -241,8 +249,8 @@ def parse_shelter(shelter, geolocator):
         phone_number=shelter.get("phone", None),
         mission=shelter.get("mission_statement", None),
         adoption_policy=policy_dict.get("policy", policy_dict.get("url", None)),
-        latitude=shelter_loc.latitude,
-        longitude=shelter_loc.longitude,
+        latitude=latitude,
+        longitude=longitude,
     )
 
 
