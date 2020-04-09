@@ -9,6 +9,7 @@ from util.sql import escape_like
 from geopy.geocoders import Nominatim
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
 
+
 class CommonAPI:
     def __init__(self, base_url):
         self.base_url = base_url
@@ -59,7 +60,7 @@ class DogAPI(CommonAPI):
         )
         weight_imperial_low, weight_imperial_high = parse_range(
             breed.get("weight", {}).get("imperial", "")
-        )        
+        )
 
         return DogBreed(
             name=name,
@@ -72,12 +73,14 @@ class DogAPI(CommonAPI):
             weight_imperial_high=weight_imperial_high,
             bred_for=breed.get("bred_for", None),
             breed_group=breed.get("breed_group", None),
-            photo=self.get_photo(breed.get("id", None))
+            photo=self.get_photo(breed.get("id", None)),
         )
 
     def get_photo(self, breed_id):
         try:
-            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0]['url']
+            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0][
+                "url"
+            ]
             return url
         except:
             return None
@@ -119,12 +122,14 @@ class CatAPI(CommonAPI):
             dog_friendly=breed.get("dog_friendly", None),
             child_friendly=breed.get("child_friendly", None),
             grooming_level=breed.get("grooming", None),
-            photo=self.get_photo(breed.get("id", None))
+            photo=self.get_photo(breed.get("id", None)),
         )
 
     def get_photo(self, breed_id):
         try:
-            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0]['url']
+            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0][
+                "url"
+            ]
             return url
         except:
             return None
@@ -221,7 +226,7 @@ def parse_shelter(shelter, geolocator):
     photos_small, photos_full = extract_photos(shelter.get("photos", []))
     postcode = address.get("postcode", None)
     shelter_loc = geolocator.geocode(postcode)
-                
+
     return Shelter(
         name=shelter.get("name", None),
         address1=address.get("address1", None),
@@ -237,7 +242,7 @@ def parse_shelter(shelter, geolocator):
         mission=shelter.get("mission_statement", None),
         adoption_policy=policy_dict.get("policy", policy_dict.get("url", None)),
         latitude=shelter_loc.latitude,
-        longitude=shelter_loc.longitude
+        longitude=shelter_loc.longitude,
     )
 
 
@@ -365,8 +370,7 @@ class PetAPI(OAuthAPI):
             data = self.get(f"/v2/organizations/{pf_id}")
             try:
                 self.shelter_cache[pf_id] = parse_shelter(
-                    json.loads(data)["organization"],
-                    self.geolocator
+                    json.loads(data)["organization"], self.geolocator
                 )
             except:
                 return None
