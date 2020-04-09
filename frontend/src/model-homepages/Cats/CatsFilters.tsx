@@ -21,8 +21,8 @@ interface CatsFiltersState {
     dogLevel: number;
     childLevel: number;
     groomingLevel: number;
-    lifespan_min: number;
-    lifespan_max: number;
+    minLifespan: number;
+    maxLifespan: number;
     sortType: string | undefined;
     sortDir: string | undefined;
 }
@@ -50,8 +50,8 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
             dogLevel: 0,
             childLevel: 0,
             groomingLevel: 0,
-            lifespan_min: 0,
-            lifespan_max: 30,
+            minLifespan: 0,
+            maxLifespan: 30,
             sortType: undefined,
             sortDir: undefined
         } as CatsFiltersState;
@@ -105,7 +105,7 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
                     <Slider
                         defaultValue={[this.props.lifespan_min, this.props.lifespan_max]}
                         max={this.props.lifespan_max} valueLabelDisplay='auto'
-                        onChange={(event: any, value: any) => this.setState({lifespan_min: value[0], lifespan_max: value[1]})}
+                        onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>
                 <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
