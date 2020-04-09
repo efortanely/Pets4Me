@@ -24,7 +24,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
     this.fetchObjectsPage(this.props.pageNumber)
         .then(this.updatePage)
         .catch(console.log)
-}
+  }
 
   updatePage = (newPage: ObjectsPage<T>) => {
     this.setState({ page: newPage, loading: false})
