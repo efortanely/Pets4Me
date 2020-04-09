@@ -16,7 +16,7 @@ import '../ModelHomepage.css'
     lifespan
 */
 interface CatsFiltersState {
-    nameInitial: string | undefined;
+    nameInitials: string[] | undefined;
     doorsiness: string | undefined;
     dogLevel: number;
     childLevel: number;
@@ -27,7 +27,7 @@ interface CatsFiltersState {
     sortDir: string | undefined;
 }
 export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersState> {
-    
+
     public sortData: SelectItem[] = [
         {label: "Name", value: "Name"},
         {label: "Life span", value: "Life span"},
@@ -40,12 +40,12 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
         { label: "Indoor", value: "Indoor" },
         { label: "Outdoor", value: "Outdoor" }] as SelectItem[];
     public nameData: SelectItem[] = [];
-    
+
     constructor(props: CatsFiltersData) {
         super(props);
         selectifyDataArray(this.props.name_initials, this.nameData);
         this.state = {
-            nameInitial: undefined,
+            nameInitials: [],
             doorsiness: undefined,
             dogLevel: 0,
             childLevel: 0,
@@ -73,8 +73,15 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
                     <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
                     </div>
                 </div>
-                <Select options={this.nameData} placeholder="Select a first letter..." isClearable={true}
-                    onChange={(value: any) => this.setState({nameInitial: value?.value})} />
+                <Select isMulti options={this.nameData} placeholder="Select a first letter..." isClearable={true}
+                  onChange={(newFilters: any) => {
+                      if (newFilters) {
+                          this.setState({nameInitials: newFilters.map((selectItem: SelectItem) => {
+                              return selectItem.value;
+                          })});
+                      } else {
+                          this.setState({nameInitials: undefined});
+                      }}} />
                 <Select options={this.doorsinessData} placeholder="Indoor/outdoor?" isClearable={true}
                     onChange={(value: any) => this.setState({doorsiness: value?.value})} />
 
