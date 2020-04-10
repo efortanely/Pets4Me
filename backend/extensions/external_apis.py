@@ -6,7 +6,8 @@ from oauthlib.oauth2 import BackendApplicationClient as BAC
 from requests_oauthlib import OAuth2Session
 import requests
 from util.sql import escape_like
-from geopy.geocoders import Nominatim
+import pgeocode
+import sys
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
 
 
@@ -220,16 +221,16 @@ def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
     )
 
 
-def parse_shelter(shelter, geolocator):
+def parse_shelter(shelter, nomi):
     address = shelter.get("address", {})
     policy_dict = shelter.get("adoption", {})
     photos_small, photos_full = extract_photos(shelter.get("photos", []))
     postcode = address.get("postcode", None)
     
     if postcode:
-        shelter_loc = geolocator.geocode(postcode)
-        latitude = shelter_loc.latitude
-        longitude = shelter_loc.longitude
+        geo_data = nomi.query_postal_code(postcode)
+        latitude = geo_data['latitude']
+        longitude = geo_data['longitude']
     else:
         #default to GDC
         latitude = 30.286
@@ -266,7 +267,7 @@ class PetAPI(OAuthAPI):
         )
         self.shelter_cache = {}
         self.reset_requests()
-        self.geolocator = Nominatim()
+        self.nomi = pgeocode.Nominatim('us')
 
     def reset_requests(self):
         self.requests = 0
@@ -285,16 +286,21 @@ class PetAPI(OAuthAPI):
         self.requests += 1
         return super().get_raw(url)
 
-    def get_paginated_data(self, endpoint, parameters="", pages=1, limit=100):
+    def get_paginated_data(self, endpoint, pages=1, limit=100, **parameters):
         total_pages = None
+        param_query = ''
+        for key, val in parameters.items():
+            param_query += f"&{key}={val}"
+
         for page in range(1, pages + 1):
-            # this is a circle that includes most of Texas (as much as we can get)
             response = json.loads(
                 self.get(
                     f"/v2/{endpoint}?page={page}&limit={limit}"
-                    f"&location=76825&distance=500&{parameters}"
+                    f"{param_query}"
                 )
             )
+            if 'status' in response and response['status'] != 200:
+                sys.exit('Error: ' + response['title'])
             if total_pages is None:
                 total_pages = response["pagination"]["total_pages"]
             if page > total_pages:
@@ -305,7 +311,11 @@ class PetAPI(OAuthAPI):
     def get_dog_breeds(self, dog_api):
         breed_map = {}
         new_breeds = []
-        for b in json.loads(self.get("/v2/types/Dog/breeds"))["breeds"]:
+        response = json.loads(self.get("/v2/types/Dog/breeds"))
+        if 'status' in response and response['status'] != 200:
+            sys.exit('Error: ' + response['title'])
+
+        for b in response["breeds"]:
             if "name" not in b:
                 continue
             long_breed = b["name"]
@@ -329,7 +339,11 @@ class PetAPI(OAuthAPI):
     def get_cat_breeds(self, cat_api):
         breed_map = {}
         new_breeds = []
-        for b in json.loads(self.get("/v2/types/Cat/breeds"))["breeds"]:
+        response = json.loads(self.get("/v2/types/Cat/breeds"))
+        if 'status' in response and response['status'] != 200:
+            sys.exit('Error: ' + response['title'])
+
+        for b in response["breeds"]:
             if "name" not in b:
                 continue
             long_breed = b["name"]
@@ -363,7 +377,7 @@ class PetAPI(OAuthAPI):
         return (breed_map, new_breeds)
 
     def get_animals(self, dog_breed_map, cat_breed_map, pages=1, limit=100):
-        animal_generator = self.get_paginated_data("animals", pages=pages, limit=limit)
+        animal_generator = self.get_paginated_data("animals", pages=pages, limit=limit, location='76825', distance=278)
         animals = []
         for animal in animal_generator:
             if animal["type"] != "Cat" and animal["type"] != "Dog":
@@ -375,21 +389,17 @@ class PetAPI(OAuthAPI):
 
     def get_shelter(self, pf_id):
         if pf_id not in self.shelter_cache:
-            data = self.get(f"/v2/organizations/{pf_id}")
-            try:
-                self.shelter_cache[pf_id] = parse_shelter(
-                    json.loads(data)["organization"], self.geolocator
-                )
-            except:
-                return None
+            response = json.loads(self.get(f"/v2/organizations/{pf_id}"))
+            if 'status' in response and response['status'] != 200:
+                sys.exit('Error: ' + response['title'])
+            
+            self.shelter_cache[pf_id] = parse_shelter(response["organization"], self.nomi)
 
         return self.shelter_cache[pf_id]
 
     def get_shelters(self, pages=1, limit=100):
-        shelter_generator = self.get_paginated_data(
-            "organizations", pages=pages, limit=limit
-        )
+        shelter_generator = self.get_paginated_data("organizations", pages=pages, limit=limit, location='76825', distance=278)
         shelters = []
         for shelter in shelter_generator:
-            shelters.append(parse_shelter(shelter, self.geolocator))
+            shelters.append(parse_shelter(shelter, self.nomi))
         return shelters
