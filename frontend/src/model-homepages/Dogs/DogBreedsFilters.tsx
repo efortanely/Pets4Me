@@ -2,11 +2,11 @@ import React from 'react';
 import Select from 'react-select';
 import Button from 'react-bootstrap/Button'
 import Slider from '@material-ui/core/Slider'
-import { DogsFiltersData } from '../../models/DogsFiltersData'
+import { DogBreedsFiltersData } from '../../models/DogBreedsFiltersData'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 
-interface DogsFiltersState {
+interface DogBreedsFiltersState {
   nameInitials: string[] | undefined;
   breedGroup: string[] | undefined;
   maxHeight: number;
@@ -19,7 +19,7 @@ interface DogsFiltersState {
   sortDir: string | undefined;
 }
 
-export class DogsFilters extends React.Component<DogsFiltersData, DogsFiltersState> {
+export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogBreedsFiltersState> {
 
     public sortData: SelectItem[] = [
         {label: "Name", value: "Name"},
@@ -30,7 +30,7 @@ export class DogsFilters extends React.Component<DogsFiltersData, DogsFiltersSta
     public nameInitials: SelectItem[] = [];
     public breedGroup: SelectItem[] = [];
 
-    constructor(props: DogsFiltersData) {
+    constructor(props: DogBreedsFiltersData) {
         super(props);
         selectifyDataArray(this.props.name_initials, this.nameInitials);
         selectifyDataArray(this.props.breed_group, this.breedGroup);
@@ -45,7 +45,7 @@ export class DogsFilters extends React.Component<DogsFiltersData, DogsFiltersSta
             lifespanMax: 100,
             sortType: undefined,
             sortDir: undefined
-        } as DogsFiltersState;
+        } as DogBreedsFiltersState;
     }
 
 render() {
@@ -105,4 +105,4 @@ render() {
         </div>
     );
 }
-} export default DogsFilters;
+} export default DogBreedsFilters;
