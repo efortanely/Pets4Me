@@ -88,7 +88,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                 <ThemeProvider theme={sliderTheme}>
                     <h5>Max distance from your postcode (miles)</h5>
                     <Slider
-                        defaultValue={0} max={300} valueLabelDisplay='auto'
+                        defaultValue={0} max={this.props.max_distance} valueLabelDisplay='auto'
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
                     />
                 </ThemeProvider>
