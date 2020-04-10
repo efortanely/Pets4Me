@@ -1,6 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import Button from 'react-bootstrap/Button'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
 import { PetsFiltersData } from '../../models/PetsFiltersData'
 import { ThemeProvider } from '@material-ui/core';
@@ -69,11 +71,11 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                 <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
                     onChange={(value: any) => this.setState({sortType: value?.value})} />
                 {/* React is tragically very stupid and this is the only way I could style it right*/}
-                <div className='sort-buttons'>
-                    <div>
-                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</Button>
-                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
-                    </div>
+                <div className="sort-button-group">
+                    <ToggleButtonGroup type="radio" name="sortOrder" defaultValue={2}>
+                        <ToggleButton value={1} onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</ToggleButton>
+                        <ToggleButton value={2} onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</ToggleButton>
+                    </ToggleButtonGroup>
                 </div>
                 <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
                     onChange={(value: any) => this.setState({species: value?.value})} />
