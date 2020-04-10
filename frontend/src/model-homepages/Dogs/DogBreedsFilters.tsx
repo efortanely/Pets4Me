@@ -1,6 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import Button from 'react-bootstrap/Button'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
 import { DogBreedsFiltersData } from '../../models/DogBreedsFiltersData'
 import { ThemeProvider } from '@material-ui/core';
@@ -54,11 +56,11 @@ render() {
             <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
                     onChange={(value: any) => this.setState({sortType: value?.value})} />
             {/* React is tragically very stupid and this is the only way I could style it right*/}
-            <div className='sort-buttons'>
-                <div>
-                <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</Button>
-                <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
-                </div>
+            <div className="sort-button-group">
+                <ToggleButtonGroup type="radio" name="sortOrder" defaultValue={2}>
+                    <ToggleButton value={1} onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</ToggleButton>
+                    <ToggleButton value={2} onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</ToggleButton>
+                </ToggleButtonGroup>
             </div>
             <Select isMulti options={this.nameInitials} placeholder="Select a letter..." isClearable={true}
             onChange={(newFilters: any) => {
@@ -86,19 +88,15 @@ render() {
                     min={this.props.min_height} max={this.props.max_height}
                     onChange={(event: any, value: any) => this.setState({minHeight: value[0], maxHeight: value[1]})}
                 />
-            </ThemeProvider>
-            <ThemeProvider theme={sliderTheme}>
                 <h5>Weight</h5>
                 <Slider
                     defaultValue={[this.props.min_weight, this.props.max_weight]} valueLabelDisplay='auto'
                     min={this.props.min_weight} max={this.props.max_weight}
                     onChange={(event: any, value: any) => this.setState({minWeight: value[0], maxWeight: value[1]})}
                 />
-            </ThemeProvider>
-            <ThemeProvider theme={sliderTheme}>
                 <h5>Lifespan</h5>
                 <Slider
-                    defaultValue={[this.props.lifespan_min, this.props.lifespan_min]} valueLabelDisplay='auto'
+                    defaultValue={[this.props.lifespan_min, this.props.lifespan_max]} valueLabelDisplay='auto'
                     min={this.props.lifespan_min} max={this.props.lifespan_max}
                     onChange={(event: any, value: any) => this.setState({lifespanMin: value[0], lifespanMax: value[1]})}
                 />

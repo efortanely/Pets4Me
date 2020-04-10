@@ -28,14 +28,6 @@
     margin-right: 20px;
 }
 
-.sort-button-group {
-    text-align: center;
-}
-
-.sort-button-group > * {
-    z-index: 0 !important;
-}
-
 /* Dropdown Menu */
 
 .filters > * {
@@ -87,6 +79,7 @@
 
 .filters h5{
     color: #581730;
+    margin-bottom: 0px !important;
 }
 
 .filters input[type=text], input[type=text]::placeholder{
@@ -99,6 +92,14 @@
 
 .filters input:focus{
     outline-color: #528C8B;
+}
+
+.sort-button-group {
+    text-align: center !important;
+}
+
+.sort-button-group > * {
+    z-index: 0 !important;
 }
 
 /* End Dropdown Menu */

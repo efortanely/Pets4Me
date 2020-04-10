@@ -1,20 +1,14 @@
 import React from 'react';
 import Select from 'react-select';
 import Button from 'react-bootstrap/Button'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 import { CatBreedsFiltersData } from '../../models/CatBreedsFiltersData';
 import '../ModelHomepage.css'
 
-/*
-    Name
-    Indoor/outdoor
-    Dog-friendly
-    child friendly
-    grooming level
-    lifespan
-*/
 interface CatBreedsFiltersState {
     nameInitials: string[] | undefined;
     doorsiness: string | undefined;
@@ -39,6 +33,12 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
     public doorsinessData = [
         { label: "Indoor", value: "Indoor" },
         { label: "Outdoor", value: "Outdoor" }] as SelectItem[];
+
+    public qualitativeQuantifier = [
+        { label: "Low", value: 0 },
+        { label: "Moderate", value: 2 },
+        { label: "High", value: 4 }];
+
     public nameData: SelectItem[] = [];
 
     constructor(props: CatBreedsFiltersData) {
@@ -67,11 +67,11 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                 <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
                     onChange={(value: any) => this.setState({sortType: value?.value})} />
                 {/* React is tragically very stupid and this is the only way I could style it right*/}
-                <div className='sort-buttons'>
-                    <div>
-                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</Button>
-                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
-                    </div>
+                <div className="sort-button-group">
+                    <ToggleButtonGroup type="radio" name="sortOrder" defaultValue={2}>
+                        <ToggleButton value={1} onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</ToggleButton>
+                        <ToggleButton value={2} onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</ToggleButton>
+                    </ToggleButtonGroup>
                 </div>
                 <Select isMulti options={this.nameData} placeholder="Select a first letter..." isClearable={true}
                   onChange={(newFilters: any) => {
@@ -85,22 +85,19 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                 <Select options={this.doorsinessData} placeholder="Indoor/outdoor?" isClearable={true}
                     onChange={(value: any) => this.setState({doorsiness: value?.value})} />
 
+                <h5 className='slider-header'>Minimum dog-friendliness level</h5>
+                <Select options={this.qualitativeQuantifier} isClearable={true}
+                    onChange={(value: any) => this.setState({dogLevel: value?.value})} />
+
+                <h5>Minimum child-friendliness level</h5>
+                <Select options={this.qualitativeQuantifier} isClearable={true}
+                    onChange={(value: any) => this.setState({childLevel: value?.value})} />
+
+                <h5>Minimum grooming level</h5>
+                <Select options={this.qualitativeQuantifier} isClearable={true}
+                    onChange={(value: any) => this.setState({groomingLevel: value?.value})} />
+
                 <ThemeProvider theme={sliderTheme}>
-                    <h5>Minimum dog-friendliness level</h5>
-                    <Slider
-                        defaultValue={[0]} max={5} valueLabelDisplay='auto'
-                        onChange={(event: any, value: any) => this.setState({dogLevel: value[0]})}
-                    />
-                    <h5>Minimum child-friendliness level</h5>
-                    <Slider
-                        defaultValue={[0]} max={5} valueLabelDisplay='auto'
-                        onChange={(event: any, value: any) => this.setState({childLevel: value[0]})}
-                    />
-                    <h5>Minimum grooming level</h5>
-                    <Slider
-                        defaultValue={[0]} max={5} valueLabelDisplay='auto'
-                        onChange={(event: any, value: any) => this.setState({groomingLevel: value[0]})}
-                    />
                     <h5>Lifespan</h5>
                     <Slider
                         defaultValue={[this.props.lifespan_min, this.props.lifespan_max]}
