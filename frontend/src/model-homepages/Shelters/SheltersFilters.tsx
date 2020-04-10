@@ -10,7 +10,7 @@ import '../ModelHomepage.css'
 
 interface SheltersFiltersState {
     city: string[];
-    postcode: string[];
+    postcode: number;
     state: string[];
     distanceMax: number;
     shelterWithSpecies: string[];
@@ -38,7 +38,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
         selectifyDataArray(this.props.states, this.stateData);
         this.state = {
             city: [],
-            postcode: [],
+            postcode: 0,
             state: [],
             distanceMax: 1000,
             shelterWithSpecies: [],
@@ -79,7 +79,8 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                         }}} />
                 <Form className="postcode">
                     <Form.Group controlId="postcode">
-                        <Form.Control type="number" placeholder="Enter a postcode..." />
+                        <Form.Control type="number" placeholder="Enter a postcode..."
+                            onInput={(value: any) => this.setState({postcode: value.target.value})} />
                     </Form.Group>
                 </Form>
                 <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
