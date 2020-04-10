@@ -368,16 +368,16 @@ class Shelter(db.Model):
                 query = (
                     query.join(Pet, Shelter.pets)
                     .filter(Pet.species == "Dog")
-                    .distinct()
+                    .group_by(cls)
                 )
             elif has == "cats":
                 query = (
                     query.join(Pet, Shelter.pets)
                     .filter(Pet.species == "Cat")
-                    .distinct()
+                    .group_by(cls)
                 )
             elif has == "pets":
-                query = query.join(Pet, Shelter.pets).distinct()
+                query = query.join(Pet, Shelter.pets).group_by(cls)
 
         if "max_dist" in request.args:
             max_dist = request.args.get("max_dist")
