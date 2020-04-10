@@ -88,7 +88,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                 <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
                     onChange={(value: any) => this.setState({shelterWithSpecies: value?.value})} />
                 <ThemeProvider theme={sliderTheme}>
-                    <h5>Max distance from your postcode (miles)</h5>
+                    <h5>Max distance from ${this.state.postcode} (mi.)</h5>
                     <Slider
                         defaultValue={0} max={this.props.max_distance} valueLabelDisplay='auto'
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
