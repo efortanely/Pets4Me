@@ -3,7 +3,7 @@ import Pets4meApiService from './Pets4meApiService';
 import CatBreedsService from './CatBreedsService'
 import { CatBreed } from '../../models/CatBreed';
 import { ObjectsPage } from '../../models/ObjectsPage';
-import { CatsFiltersData, sampleFilterData } from '../../models/CatsFiltersData';
+import { CatBreedsFiltersData, sampleFilterData } from '../../models/CatBreedsFiltersData';
 
 export class Pets4meCatBreedsService implements CatBreedsService {
   private endpoint: string = 'cat_breeds'
@@ -21,7 +21,7 @@ export class Pets4meCatBreedsService implements CatBreedsService {
     return this.pets4meApiService.fetchJsonAsObject<CatBreed>(`${this.endpoint}/${id}`, { })
   }
 
-  getCatBreedMetadata(): Promise<CatsFiltersData> {
+  getCatBreedMetadata(): Promise<CatBreedsFiltersData> {
     return new Promise(function(response) {
       response(sampleFilterData);
     });

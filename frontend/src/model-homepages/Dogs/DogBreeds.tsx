@@ -1,12 +1,12 @@
 import React from 'react';
-import DogBreedsFilters from './DogsFilters'
+import DogBreedsFilters from './DogBreedsFilters'
 import { Slider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import MediaQuery from 'react-responsive';
 import '../ModelHomepage.css';
 import DogBreedsInfoCards from './DogBreedsInfoCards';
-import { sampleFilterData } from '../../models/DogsFiltersData'
+import { sampleFilterData } from '../../models/DogBreedsFiltersData'
 
 const muiTheme = createMuiTheme({
   overrides:{

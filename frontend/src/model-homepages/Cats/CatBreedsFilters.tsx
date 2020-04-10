@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Slider from '@material-ui/core/Slider'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
-import { CatsFiltersData } from '../../models/CatsFiltersData';
+import { CatBreedsFiltersData } from '../../models/CatBreedsFiltersData';
 import '../ModelHomepage.css'
 
 /*
@@ -15,7 +15,7 @@ import '../ModelHomepage.css'
     grooming level
     lifespan
 */
-interface CatsFiltersState {
+interface CatBreedsFiltersState {
     nameInitials: string[] | undefined;
     doorsiness: string | undefined;
     dogLevel: number;
@@ -26,7 +26,7 @@ interface CatsFiltersState {
     sortType: string | undefined;
     sortDir: string | undefined;
 }
-export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersState> {
+export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatBreedsFiltersState> {
 
     public sortData: SelectItem[] = [
         {label: "Name", value: "Name"},
@@ -41,7 +41,7 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
         { label: "Outdoor", value: "Outdoor" }] as SelectItem[];
     public nameData: SelectItem[] = [];
 
-    constructor(props: CatsFiltersData) {
+    constructor(props: CatBreedsFiltersData) {
         super(props);
         selectifyDataArray(this.props.name_initials, this.nameData);
         this.state = {
@@ -54,7 +54,7 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
             maxLifespan: 30,
             sortType: undefined,
             sortDir: undefined
-        } as CatsFiltersState;
+        } as CatBreedsFiltersState;
     }
 
     handleChange = (event: any, newValue: number | number[]) => {
@@ -112,4 +112,4 @@ export class CatsFilters extends React.Component<CatsFiltersData, CatsFiltersSta
             </div>
         );
     }
-} export default CatsFilters;
+} export default CatBreedsFilters;
