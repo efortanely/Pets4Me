@@ -10,7 +10,7 @@ from sqlalchemy import (
     alias,
     or_,
     and_,
-    func
+    func,
 )
 from sqlalchemy.dialects.postgresql import ARRAY as Array
 from sqlalchemy.orm import relationship
@@ -21,6 +21,7 @@ import pgeocode
 
 db = SQLAlchemy()
 
+
 def distance(pt1, pt2):
     lat1, lon1 = pt1
     lat2, lon2 = pt2
@@ -29,12 +30,13 @@ def distance(pt1, pt2):
     dlat = func.radians(lat2 - lat1)
     dlon = func.radians(lon2 - lon1)
 
-    a = func.power(func.sin(dlat / 2), 2) + func.cos(func.radians(lat1)) * func.cos(func.radians(lat2)) * func.power(
-        func.sin(dlon / 2), 2
-    )
+    a = func.power(func.sin(dlat / 2), 2) + func.cos(func.radians(lat1)) * func.cos(
+        func.radians(lat2)
+    ) * func.power(func.sin(dlon / 2), 2)
     c = 2 * func.atan2(func.sqrt(a), func.sqrt(1 - a))
     d = R * c
     return d
+
 
 class Pet(db.Model):
     __tablename__ = "pet"
@@ -130,19 +132,21 @@ class Pet(db.Model):
         else:
             return db.session.query(cls)
 
-        if "zip_code" in request.args:            
-            nomi = pgeocode.Nominatim('us')
+        if "zip_code" in request.args:
+            nomi = pgeocode.Nominatim("us")
             user_loc = nomi.query_postal_code(request.args.get("zip_code"))
-            user_loc = (user_loc['latitude'], user_loc['longitude'])
+            user_loc = (user_loc["latitude"], user_loc["longitude"])
         else:
             user_loc = (30.286, -97.736)  # GDC
 
-        return db.session.query(Pet)\
-        .join(cls.shelter_ref)\
-        .filter(
-            distance(
-                user_loc, (Shelter.latitude, Shelter.longitude)
-            ) <= max_dist)
+        return (
+            db.session.query(Pet)
+            .join(cls.shelter_ref)
+            .filter(
+                distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+            )
+        )
+
 
 pet_includes = [
     "id",
@@ -361,9 +365,17 @@ class Shelter(db.Model):
         if "has" in request.args:
             has = request.args.get("has")
             if has == "dogs":
-                query = query.join(Pet, Shelter.pets).filter(Pet.species=="Dog").distinct()
+                query = (
+                    query.join(Pet, Shelter.pets)
+                    .filter(Pet.species == "Dog")
+                    .distinct()
+                )
             elif has == "cats":
-                query = query.join(Pet, Shelter.pets).filter(Pet.species=="Cat").distinct()
+                query = (
+                    query.join(Pet, Shelter.pets)
+                    .filter(Pet.species == "Cat")
+                    .distinct()
+                )
             elif has == "pets":
                 query = query.join(Pet, Shelter.pets).distinct()
 
@@ -373,16 +385,14 @@ class Shelter(db.Model):
             return query
 
         if "zip_code" in request.args:
-            nomi = pgeocode.Nominatim('us')
+            nomi = pgeocode.Nominatim("us")
             user_loc = nomi.query_postal_code(request.args.get("zip_code"))
-            user_loc = (user_loc['latitude'], user_loc['longitude'])
+            user_loc = (user_loc["latitude"], user_loc["longitude"])
         else:
             user_loc = (30.286, -97.736)  # GDC
 
         return query.filter(
-            distance(
-                user_loc, (Shelter.latitude, Shelter.longitude)
-            ) <= max_dist
+            distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
         )
 
 
