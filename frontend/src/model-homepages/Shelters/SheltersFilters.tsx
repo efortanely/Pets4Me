@@ -2,6 +2,8 @@ import React from 'react';
 import Slider from '@material-ui/core/Slider'
 import Select from 'react-select';
 import Button from 'react-bootstrap/Button'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 import Form from 'react-bootstrap/Form'
 import { SheltersFiltersData } from '../../models/SheltersFiltersData'
 import { ThemeProvider } from '@material-ui/core';
@@ -43,7 +45,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
             distanceMax: 1000,
             shelterWithSpecies: [],
             sortType: undefined,
-            sortDir: undefined
+            sortDir: "desc"
         }
     }
 
@@ -53,11 +55,11 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                 <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
                     onChange={(value: any) => this.setState({sortType: value?.value})} />
                 {/* React is tragically very stupid and this is the only way I could style it right*/}
-                <div className='sort-buttons'>
-                    <div>
-                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</Button>
-                    <Button className='sort-buttons' variant='outline-secondary' onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</Button>
-                    </div>
+                <div className="sort-button-group">
+                    <ToggleButtonGroup type="radio" name="sortOrder" defaultValue={2}>
+                        <ToggleButton value={1} onClick={(value: any) => this.setState({sortDir: "asc"})}>Ascending</ToggleButton>
+                        <ToggleButton value={2} onClick={(value: any) => this.setState({sortDir: "desc"})}>Descending</ToggleButton>
+                    </ToggleButtonGroup>
                 </div>
                 <Select isMulti options={this.cityData} placeholder="Select a city..." isClearable={true}
                     onChange={(newFilters: any) => {

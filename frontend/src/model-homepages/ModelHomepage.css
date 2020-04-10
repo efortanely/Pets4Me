@@ -28,10 +28,12 @@
     margin-right: 20px;
 }
 
-.sort-buttons {
-    margin-right: 5px;
-    text-align: center !important;
-    /* need to center align these*/
+.sort-button-group {
+    text-align: center;
+}
+
+.sort-button-group > * {
+    z-index: 0 !important;
 }
 
 /* Dropdown Menu */
