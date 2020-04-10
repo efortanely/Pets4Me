@@ -365,19 +365,26 @@ class Shelter(db.Model):
         if "has" in request.args:
             has = request.args.get("has")
             if has == "dogs":
-                query = (
-                    query.join(Pet, Shelter.pets)
+                sub = (
+                    db.session.query(cls.id)
+                    .join(Pet, cls.pets)
                     .filter(Pet.species == "Dog")
-                    .group_by(cls)
+                    .distinct()
+                    .subquery()
                 )
+                query = query.join(sub, cls.id == sub.c.id)
             elif has == "cats":
-                query = (
-                    query.join(Pet, Shelter.pets)
+                sub = (
+                    db.session.query(cls.id)
+                    .join(Pet, cls.pets)
                     .filter(Pet.species == "Cat")
-                    .group_by(cls)
+                    .distinct()
+                    .subquery()
                 )
+                query = query.join(sub, cls.id == sub.c.id)
             elif has == "pets":
-                query = query.join(Pet, Shelter.pets).group_by(cls)
+                sub = db.session.query(cls.id).join(Pet, cls.pets).distinct().subquery()
+                query = query.join(sub, cls.id == sub.c.id)
 
         if "max_dist" in request.args:
             max_dist = request.args.get("max_dist")
