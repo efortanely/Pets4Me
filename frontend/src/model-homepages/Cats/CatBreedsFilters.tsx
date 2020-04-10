@@ -104,7 +104,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                     <h5>Lifespan</h5>
                     <Slider
                         defaultValue={[this.props.lifespan_min, this.props.lifespan_max]}
-                        max={this.props.lifespan_max} valueLabelDisplay='auto'
+                        min={this.props.lifespan_min} max={this.props.lifespan_max} valueLabelDisplay='auto'
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>

@@ -82,21 +82,24 @@ render() {
             <ThemeProvider theme={sliderTheme}>
                 <h5>Height</h5>
                 <Slider
-                    defaultValue={[this.props.min_height, this.props.max_height]} max={this.props.max_height} valueLabelDisplay='auto'
+                    defaultValue={[this.props.min_height, this.props.max_height]} valueLabelDisplay='auto'
+                    min={this.props.min_height} max={this.props.max_height}
                     onChange={(event: any, value: any) => this.setState({minHeight: value[0], maxHeight: value[1]})}
                 />
             </ThemeProvider>
             <ThemeProvider theme={sliderTheme}>
                 <h5>Weight</h5>
                 <Slider
-                    defaultValue={[this.props.min_weight, this.props.max_weight]} max={this.props.max_weight} valueLabelDisplay='auto'
+                    defaultValue={[this.props.min_weight, this.props.max_weight]} valueLabelDisplay='auto'
+                    min={this.props.min_weight} max={this.props.max_weight}
                     onChange={(event: any, value: any) => this.setState({minWeight: value[0], maxWeight: value[1]})}
                 />
             </ThemeProvider>
             <ThemeProvider theme={sliderTheme}>
                 <h5>Lifespan</h5>
                 <Slider
-                    defaultValue={[this.props.lifespan_min, this.props.lifespan_min]} max={this.props.lifespan_max} valueLabelDisplay='auto'
+                    defaultValue={[this.props.lifespan_min, this.props.lifespan_min]} valueLabelDisplay='auto'
+                    min={this.props.lifespan_min} max={this.props.lifespan_max}
                     onChange={(event: any, value: any) => this.setState({lifespanMin: value[0], lifespanMax: value[1]})}
                 />
             </ThemeProvider>
