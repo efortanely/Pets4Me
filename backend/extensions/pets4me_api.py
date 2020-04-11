@@ -377,7 +377,7 @@ class Shelter(db.Model):
         )
 
 
-shelter_includes = ["id", "name", "mission", "adoption_policy", "latitude", "longitude"]
+shelter_includes = ["id", "name", "mission", "adoption_policy"]
 shelter_methods = [
     "address",
     "contact",
