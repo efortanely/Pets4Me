@@ -5,20 +5,10 @@ import Button from 'react-bootstrap/Button'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Form from 'react-bootstrap/Form'
-import { SheltersFiltersData } from '../../models/SheltersFiltersData'
+import { SheltersFiltersData, SheltersFiltersState } from '../../models/SheltersFiltersData'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
-
-interface SheltersFiltersState {
-    city: string[];
-    postcode: number;
-    state: string[];
-    distanceMax: number;
-    shelterWithSpecies: string[];
-    sortType: string | undefined;
-    sortDir: string | undefined;
-}
 
 export class SheltersFilters extends React.Component<SheltersFiltersData, SheltersFiltersState> {
 
@@ -46,7 +36,11 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
             shelterWithSpecies: [],
             sortType: undefined,
             sortDir: "desc"
-        }
+        } as SheltersFiltersState;
+    }
+
+    handleFilterUpdate() {
+        this.props.updateFilters(this.state);
     }
 
     render() {
@@ -94,7 +88,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
                     />
                 </ThemeProvider>
-            <Button variant='primary' onClick={() => this.props.updateFilters(this.state)}>Submit</Button>
+            <Button variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }

@@ -13,8 +13,11 @@ export class Pets4meSheltersService implements SheltersService {
     this.pets4meApiService = new Pets4meApiService()
   }
 
-  getShelters(pageNumber: number): Promise<ObjectsPage<Shelter>> {
-    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<Shelter>>(this.endpoint, { page: pageNumber })
+  getShelters(pageNumber: number, filterString: string): Promise<ObjectsPage<Shelter>> {
+    if (filterString.length > 0)
+      return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<Shelter>>(this.endpoint, { page: pageNumber, q: filterString })
+    else
+      return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<Shelter>>(this.endpoint, { page: pageNumber })
   }
 
   getShelter(id: string): Promise<Shelter> {

@@ -6,10 +6,30 @@ export interface SheltersFiltersData {
     updateFilters: any;
 }
 
+export interface SheltersFiltersState {
+    city: string[];
+    postcode: number;
+    state: string[];
+    distanceMax: number;
+    shelterWithSpecies: string[];
+    sortType: string | undefined;
+    sortDir: string | undefined;
+}
+
+export let defaultFilterState = {
+    city: [],
+    postcode: 0,
+    state: [],
+    distanceMax: 1000,
+    shelterWithSpecies: [],
+    sortType: undefined,
+    sortDir: "desc"
+};
+
 export let sampleFilterData = {
     cities: ["Austin", "Amarillo", "El Paso"],
     states: ["Texas", "New Mexico", "Louisiana"],
     max_pets: 72,
     max_distance: 275,
-    updateFilters: (arg: any) => {}
-}
+    updateFilters: (arg: any) => console.log("Filter callback not set!")
+};

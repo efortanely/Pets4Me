@@ -3,47 +3,62 @@ import SheltersFilters from './SheltersFilters'
 import SheltersCards from './SheltersCards';
 import '../ModelHomepage.css';
 import MediaQuery from 'react-responsive';
-import { SheltersFiltersData, sampleFilterData } from '../../models/SheltersFiltersData'
+import { SheltersFiltersState, defaultFilterState, sampleFilterData } from '../../models/SheltersFiltersData'
 
-function handleFilterUpdate(updatedFilters: SheltersFiltersData): void {
-  console.log(updatedFilters);
+interface SheltersState {
+  filters: SheltersFiltersState
 }
 
-function Shelters() {
-  sampleFilterData.updateFilters = handleFilterUpdate;
-  return (
-    <div className='model-homepage'>
-      <MediaQuery query="(max-width: 949px)">
-        <div className='model-homepage-content'>
-          <form>
-              <label>
-                  <input type="text" name="global-search" placeholder='Search' />
-              </label>
-          </form>
-          <SheltersFilters {...sampleFilterData}/>
-          <div className='cards-container'>
-            <SheltersCards />
-          </div>
-        </div>
-      </MediaQuery>
+export class Shelters extends React.Component<{}, SheltersState> {
 
-      <MediaQuery query="(min-width: 950px)">
-        <div className='model-homepage-content'>
-          <SheltersFilters {...sampleFilterData} />
-          <div className='model-homepage-content-col'>
-            <div className='sliders'>
-              <form>
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      filters: defaultFilterState
+    }
+    this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
+    sampleFilterData.updateFilters = this.handleFilterUpdate;
+  }
+
+  public handleFilterUpdate(updatedFilters: SheltersFiltersState): void {
+    this.setState({filters: updatedFilters});
+  }
+
+  render() {
+    return (
+      <div className='model-homepage'>
+        <MediaQuery query="(max-width: 949px)">
+          <div className='model-homepage-content'>
+            <form>
                 <label>
                     <input type="text" name="global-search" placeholder='Search' />
                 </label>
-              </form>
-            </div>
+            </form>
+            <SheltersFilters {...sampleFilterData}/>
             <div className='cards-container'>
-              <SheltersCards />
+              <SheltersCards filters={this.state.filters}/>
             </div>
           </div>
-        </div>
-      </MediaQuery>
-    </div>
-  );
+        </MediaQuery>
+
+        <MediaQuery query="(min-width: 950px)">
+          <div className='model-homepage-content'>
+            <SheltersFilters {...sampleFilterData} />
+            <div className='model-homepage-content-col'>
+              <div className='sliders'>
+                <form>
+                  <label>
+                      <input type="text" name="global-search" placeholder='Search' />
+                  </label>
+                </form>
+              </div>
+              <div className='cards-container'>
+                <SheltersCards filters={this.state.filters}/>
+              </div>
+            </div>
+          </div>
+        </MediaQuery>
+      </div>
+    );
+  }
 } export default Shelters;
