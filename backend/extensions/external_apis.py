@@ -252,6 +252,8 @@ def parse_shelter(shelter, nomi):
         adoption_policy=policy_dict.get("policy", policy_dict.get("url", None)),
         latitude=latitude,
         longitude=longitude,
+        has_cats=0,
+        has_dogs=0,
     )
 
 
@@ -382,7 +384,14 @@ class PetAPI(OAuthAPI):
             if animal["type"] != "Cat" and animal["type"] != "Dog":
                 continue
             pf_id = animal.get("organization_id", None)
-            shelter = self.get_shelter(pf_id) if pf_id is not None else None
+            if pf_id:
+                shelter = self.get_shelter(pf_id)
+                if shelter.has_cats == 0 and animal["type"] == "Cat":
+                    shelter.has_cats = 1
+                elif shelter.has_dogs == 0 and animal["type"] == "Dog":
+                    shelter.has_dogs = 1
+            else:
+                shelter = None
             animals.append(parse_pet(animal, shelter, dog_breed_map, cat_breed_map))
         return animals
 
