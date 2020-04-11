@@ -33,6 +33,4 @@ class SheltersInfoCards extends InfoCards<Shelter> {
     getPathName = (): string =>  {
         return '/shelters'
     }
-}
-
-export default SheltersInfoCards
+} export default SheltersInfoCards;

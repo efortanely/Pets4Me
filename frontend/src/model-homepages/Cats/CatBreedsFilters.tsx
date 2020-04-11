@@ -6,20 +6,9 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
-import { CatBreedsFiltersData } from '../../models/CatBreedsFiltersData';
+import { CatBreedsFiltersData, CatBreedsFiltersState, defaultFilterState } from '../../models/CatBreedsFiltersData';
 import '../ModelHomepage.css'
 
-interface CatBreedsFiltersState {
-    nameInitials: string[] | undefined;
-    doorsiness: string | undefined;
-    dogLevel: number;
-    childLevel: number;
-    groomingLevel: number;
-    minLifespan: number;
-    maxLifespan: number;
-    sortType: string | undefined;
-    sortDir: string | undefined;
-}
 export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatBreedsFiltersState> {
 
     public sortData: SelectItem[] = [
@@ -44,22 +33,16 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
     constructor(props: CatBreedsFiltersData) {
         super(props);
         selectifyDataArray(this.props.name_initials, this.nameData);
-        this.state = {
-            nameInitials: [],
-            doorsiness: undefined,
-            dogLevel: 0,
-            childLevel: 0,
-            groomingLevel: 0,
-            minLifespan: 0,
-            maxLifespan: 30,
-            sortType: undefined,
-            sortDir: undefined
-        } as CatBreedsFiltersState;
+        this.state = defaultFilterState;
     }
 
     handleChange = (event: any, newValue: number | number[]) => {
         this.setState({dogLevel: newValue as number});
     };
+
+    handleFilterUpdate() {
+        this.props.updateFilters(this.state);
+    }
 
     render() {
         return (
@@ -105,7 +88,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+                <Button variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }

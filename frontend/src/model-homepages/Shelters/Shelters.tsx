@@ -1,6 +1,6 @@
 import React from 'react';
 import SheltersFilters from './SheltersFilters'
-import SheltersCards from './SheltersCards';
+import SheltersInfoCards from './SheltersInfoCards';
 import '../ModelHomepage.css';
 import MediaQuery from 'react-responsive';
 import { SheltersFiltersState, defaultFilterState, sampleFilterData } from '../../models/SheltersFiltersData'
@@ -36,7 +36,7 @@ export class Shelters extends React.Component<{}, SheltersState> {
             </form>
             <SheltersFilters {...sampleFilterData}/>
             <div className='cards-container'>
-              <SheltersCards filters={this.state.filters}/>
+              <SheltersInfoCards filters={this.state.filters}/>
             </div>
           </div>
         </MediaQuery>
@@ -53,7 +53,7 @@ export class Shelters extends React.Component<{}, SheltersState> {
                 </form>
               </div>
               <div className='cards-container'>
-                <SheltersCards filters={this.state.filters}/>
+                <SheltersInfoCards filters={this.state.filters}/>
               </div>
             </div>
           </div>

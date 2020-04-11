@@ -13,8 +13,11 @@ export class Pets4meCatBreedsService implements CatBreedsService {
     this.pets4meApiService = new Pets4meApiService()
   }
 
-  getCatBreeds(pageNumber: number): Promise<ObjectsPage<CatBreed>> {
-    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<CatBreed>>(this.endpoint, { page: pageNumber })
+  getCatBreeds(pageNumber: number, filterString: string): Promise<ObjectsPage<CatBreed>> {
+    if (filterString.length > 0)
+      return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<CatBreed>>(this.endpoint, { page: pageNumber, q: filterString })
+    else
+      return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<CatBreed>>(this.endpoint, { page: pageNumber })
   }
 
   getCatBreed(id: string): Promise<CatBreed> {
