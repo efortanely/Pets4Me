@@ -26,7 +26,7 @@ export let defaultFilterState = {
     minLifespan: 0,
     maxLifespan: 30,
     sortType: undefined,
-    sortDir: undefined
+    sortDir: "desc"
 } as CatBreedsFiltersState;
 
 export let sampleFilterData = {

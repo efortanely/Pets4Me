@@ -33,7 +33,7 @@ export let defaultFilterState = {
     lifespanMin: 0,
     lifespanMax: 100,
     sortType: undefined,
-    sortDir: undefined
+    sortDir: "desc"
 } as DogBreedsFiltersState;
 
 export let sampleFilterData = {

@@ -4,23 +4,10 @@ import Button from 'react-bootstrap/Button'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
-import { PetsFiltersData } from '../../models/PetsFiltersData'
+import { PetsFiltersData, PetsFiltersState, defaultFilterState } from '../../models/PetsFiltersData'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
-
-interface PetsFiltersState {
-    species: string | undefined;
-    gender: string | undefined;
-    primaryBreed: string[];
-    secondaryBreed: string[];
-    color: string[];
-    size: string[];
-    age: string[];
-    distanceMax: number;
-    sortType: string | undefined;
-    sortDir: string | undefined;
-}
 
 export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersState> {
 
@@ -51,18 +38,11 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
         selectifyDataArray(this.props.colors, this.colorData);
         selectifyDataArray(this.props.sizes, this.sizeData);
         selectifyDataArray(this.props.ages, this.ageData);
-        this.state = {
-            species: undefined,
-            gender: undefined,
-            primaryBreed: [],
-            secondaryBreed: [],
-            color: [],
-            size: [],
-            age: [],
-            distanceMax: 1000,
-            sortType: undefined,
-            sortDir: undefined
-        } as PetsFiltersState;
+        this.state = defaultFilterState;
+    }
+
+    handleFilterUpdate() {
+        this.props.updateFilters(this.state);
     }
 
     render() {
@@ -133,7 +113,7 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+                <Button variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }
