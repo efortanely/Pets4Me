@@ -4,7 +4,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Paginator from "../Paginator";
 
 interface InfoCardsProps { pageNumber: number, filters: any }
-interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean, filters: any }
+interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean}
 
 abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsState<T>> {
   static defaultProps = {
@@ -17,8 +17,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
     this.state = {
         pageNumber: props.pageNumber,
         page: { objects: [] as T[] } as ObjectsPage<T>,
-        loading: true,
-        filters: this.props.filters
+        loading: true
     }
   } 
 

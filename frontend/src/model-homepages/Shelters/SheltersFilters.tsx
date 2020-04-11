@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Form from 'react-bootstrap/Form'
-import { SheltersFiltersData, SheltersFiltersState } from '../../models/SheltersFiltersData'
+import { SheltersFiltersData, SheltersFiltersState, defaultFilterState } from '../../models/SheltersFiltersData'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
@@ -28,15 +28,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
         super(props);
         selectifyDataArray(this.props.cities, this.cityData);
         selectifyDataArray(this.props.states, this.stateData);
-        this.state = {
-            city: [],
-            postcode: 0,
-            state: [],
-            distanceMax: 1000,
-            shelterWithSpecies: [],
-            sortType: undefined,
-            sortDir: "desc"
-        } as SheltersFiltersState;
+        this.state = defaultFilterState;
     }
 
     handleFilterUpdate() {

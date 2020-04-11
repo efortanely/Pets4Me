@@ -6,78 +6,82 @@ import { ThemeProvider } from '@material-ui/styles';
 import MediaQuery from 'react-responsive';
 import '../ModelHomepage.css';
 import DogBreedsInfoCards from './DogBreedsInfoCards';
-import { sampleFilterData } from '../../models/DogBreedsFiltersData'
+import { DogBreedsFiltersState, sampleFilterData, defaultFilterState } from '../../models/DogBreedsFiltersData'
+import { sliderTheme } from '../ModelHomepageUtils'
 
-const muiTheme = createMuiTheme({
-  overrides:{
-    MuiSlider: {
-      thumb:{
-      color: "#581730"
-      },
-      track: {
-        color: '#528C8B'
-      },
-      rail: {
-        color: '#84747B',
-        width: '100%',
-      }
+interface DogBreedsState {
+  filters: DogBreedsFiltersState
+}
+
+export class DogBreeds extends React.Component<{}, DogBreedsState> {
+
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      filters: defaultFilterState
     }
+    this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
+    sampleFilterData.updateFilters = this.handleFilterUpdate;
   }
-});
 
-function DogBreeds() {
-  return (
-    <div className='model-homepage'>
-      <MediaQuery query="(max-width: 949px)">
-        <div className='model-homepage-content'>
-          <form>
-              <label>
-                  <input type="text" name="global-search" placeholder='Search' />
-              </label>
-          </form>
+  public handleFilterUpdate(updatedFilters: DogBreedsFiltersState): void {
+    this.setState({filters: updatedFilters});
+  }
 
-          <ThemeProvider theme={muiTheme}>
-            <h5>Distance</h5>
+  render() {
+    return (
+      <div className='model-homepage'>
+        <MediaQuery query="(max-width: 949px)">
+          <div className='model-homepage-content'>
+            <form>
+                <label>
+                    <input type="text" name="global-search" placeholder='Search' />
+                </label>
+            </form>
+
+            <ThemeProvider theme={sliderTheme}>
+              <h5>Distance</h5>
               <Slider
                 defaultValue={100}
                 max={1000}
                 valueLabelDisplay='auto'
               />
-          </ThemeProvider>
-          <DogBreedsFilters {...sampleFilterData}/>
-          <div className='cards-container'>
-            <DogBreedsInfoCards />
+            </ThemeProvider>
+            <DogBreedsFilters {...sampleFilterData}/>
+            <div className='cards-container'>
+              <DogBreedsInfoCards filters={this.state.filters}/>
+            </div>
           </div>
-        </div>
-      </MediaQuery>
+        </MediaQuery>
 
-      <MediaQuery query="(min-width: 950px)">
-        <div className='model-homepage-content'>
-          <DogBreedsFilters {...sampleFilterData}/>
-          <div className='model-homepage-content-col'>
-            <div className='sliders'>
-              <form>
-                <label>
-                    <input type="text" name="global-search" placeholder='Search' />
-                </label>
-              </form>
-              <div className="slider2">
-              <ThemeProvider theme={muiTheme}>
-                <h5>Distance</h5>
+        <MediaQuery query="(min-width: 950px)">
+          <div className='model-homepage-content'>
+            <DogBreedsFilters {...sampleFilterData}/>
+            <div className='model-homepage-content-col'>
+              <div className='sliders'>
+                <form>
+                  <label>
+                      <input type="text" name="global-search" placeholder='Search' />
+                  </label>
+                </form>
+                <div className="slider2">
+                <ThemeProvider theme={sliderTheme}>
+                  <h5>Distance</h5>
                   <Slider
                     defaultValue={100}
                     max={1000}
                     valueLabelDisplay='auto'
                   />
-              </ThemeProvider>
+                </ThemeProvider>
+                </div>
+              </div>
+              <div className='cards-container'>
+                <DogBreedsInfoCards filters={this.state.filters} />
               </div>
             </div>
-            <div className='cards-container'>
-              <DogBreedsInfoCards />
-            </div>
           </div>
-        </div>
-      </MediaQuery>
-    </div>
+        </MediaQuery>
+      </div>
     );
+  }
 } export default DogBreeds;

@@ -5,13 +5,25 @@ import { DogBreed } from '../../models/DogBreed';
 import Pets4meDogBreedsServiceContext from '../../common/services/Pets4meDogBreedsService';
 import DogBreedsService from '../../common/services/DogBreedsService';
 import InfoCards from '../../common/components/Cards/InfoCards';
+import { DogBreedsFiltersState } from '../../models/DogBreedsFiltersData';
 
 class DogBreedsInfoCards extends InfoCards<DogBreed> {
     static contextType = Pets4meDogBreedsServiceContext
+
+    componentDidUpdate(prevProps: any) {
+        if (this.props.filters !== prevProps.filters) {
+            this.onPageChange(1);
+        }
+    }
     
     fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<DogBreed>> => {
         const pets4meDogBreedService: DogBreedsService = this.context
-        return pets4meDogBreedService.getDogBreeds(pageNumber)
+        return pets4meDogBreedService.getDogBreeds(pageNumber, this.getFilterString(this.props.filters))
+    }
+
+    getFilterString(filters: DogBreedsFiltersState): string {
+        console.log("creating string with these filters:", filters);
+        return 'test';
     }
 
     createInfoCard = (o: DogBreed, key: any): JSX.Element => {

@@ -24,7 +24,7 @@ export let defaultFilterState = {
     shelterWithSpecies: [],
     sortType: undefined,
     sortDir: "desc"
-};
+} as SheltersFiltersState;
 
 export let sampleFilterData = {
     cities: ["Austin", "Amarillo", "El Paso"],
@@ -32,4 +32,4 @@ export let sampleFilterData = {
     max_pets: 72,
     max_distance: 275,
     updateFilters: (arg: any) => console.log("Filter callback not set!")
-};
+} as SheltersFiltersData;

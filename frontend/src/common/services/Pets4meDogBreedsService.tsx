@@ -12,8 +12,11 @@ export class Pets4meDogBreedsService implements DogBreedsService {
     this.pets4meApiService = new Pets4meApiService()
   }
 
-  getDogBreeds(pageNumber: number): Promise<ObjectsPage<DogBreed>> {
-    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<DogBreed>>(this.endpoint, { page: pageNumber })
+  getDogBreeds(pageNumber: number, filterString: string): Promise<ObjectsPage<DogBreed>> {
+    if (filterString.length > 0)
+      return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<DogBreed>>(this.endpoint, { page: pageNumber, q: filterString })
+    else
+      return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<DogBreed>>(this.endpoint, { page: pageNumber })
   }
 
   getDogBreed(id: string): Promise<DogBreed> {
