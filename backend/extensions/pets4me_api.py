@@ -143,6 +143,8 @@ class Pet(db.Model):
             .join(cls.shelter_ref)
             .filter(
                 distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+            ).order_by(
+                distance(user_loc, (Shelter.latitude, Shelter.longitude))
             )
         )
 
@@ -374,6 +376,8 @@ class Shelter(db.Model):
 
         return db.session.query(cls).filter(
             distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+        ).order_by(
+            distance(user_loc, (Shelter.latitude, Shelter.longitude))
         )
 
 
