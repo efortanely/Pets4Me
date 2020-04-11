@@ -6,7 +6,7 @@ from oauthlib.oauth2 import BackendApplicationClient as BAC
 from requests_oauthlib import OAuth2Session
 import requests
 from util.sql import escape_like
-from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
+from .pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
 
 
 class CommonAPI:
@@ -59,7 +59,7 @@ class DogAPI(CommonAPI):
         )
         weight_imperial_low, weight_imperial_high = parse_range(
             breed.get("weight", {}).get("imperial", "")
-        )        
+        )
 
         return DogBreed(
             name=name,
@@ -72,12 +72,14 @@ class DogAPI(CommonAPI):
             weight_imperial_high=weight_imperial_high,
             bred_for=breed.get("bred_for", None),
             breed_group=breed.get("breed_group", None),
-            photo=self.get_photo(breed.get("id", None))
+            photo=self.get_photo(breed.get("id", None)),
         )
 
     def get_photo(self, breed_id):
         try:
-            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0]['url']
+            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0][
+                "url"
+            ]
             return url
         except:
             return None
@@ -119,12 +121,14 @@ class CatAPI(CommonAPI):
             dog_friendly=breed.get("dog_friendly", None),
             child_friendly=breed.get("child_friendly", None),
             grooming_level=breed.get("grooming", None),
-            photo=self.get_photo(breed.get("id", None))
+            photo=self.get_photo(breed.get("id", None)),
         )
 
     def get_photo(self, breed_id):
         try:
-            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0]['url']
+            url = json.loads(self.get(f"/v1/images/search?breed_ids={breed_id}"))[0][
+                "url"
+            ]
             return url
         except:
             return None
@@ -292,9 +296,11 @@ class PetAPI(OAuthAPI):
             long_breed = b["name"]
             breed = None
             for breed_str in re.split(r"\s*[/\\]\s*", long_breed):
-                breed = DogBreed.query.filter(
-                    DogBreed.name.ilike(escape_like(breed_str), escape="\\")
-                ).first()
+                breed = (
+                    db.session.query(DogBreed)
+                    .filter(DogBreed.name.ilike(escape_like(breed_str), escape="\\"))
+                    .first()
+                )
                 if breed is not None:
                     break
 
@@ -316,9 +322,11 @@ class PetAPI(OAuthAPI):
             long_breed = b["name"]
             breed = None
             for breed_str in re.split(r"\s*[/\\]\s*", long_breed):
-                breed = CatBreed.query.filter(
-                    CatBreed.name.ilike(escape_like(breed_str), escape="\\")
-                ).first()
+                breed = (
+                    db.session.query(CatBreed)
+                    .filter(CatBreed.name.ilike(escape_like(breed_str), escape="\\"))
+                    .first()
+                )
                 if breed is not None:
                     break
 
@@ -326,9 +334,11 @@ class PetAPI(OAuthAPI):
                     if word.lower() in ["american", "domestic"]:
                         continue
                     escaped = escape_like(breed_str)
-                    breed = CatBreed.query.filter(
-                        CatBreed.name.ilike(f"%{escaped}%", escape="\\")
-                    ).first()
+                    breed = (
+                        db.session.query(CatBreed)
+                        .filter(CatBreed.name.ilike(f"%{escaped}%", escape="\\"))
+                        .first()
+                    )
                     if breed is not None:
                         break
                 if breed is not None:
