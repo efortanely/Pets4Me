@@ -15,7 +15,7 @@ class SheltersInfoCards extends InfoCards<Shelter> {
     }
 
     createInfoCard = (o: Shelter, key: any): JSX.Element => {
-        return <ShelterCard key={`shelter-card-${key}`} shelter={o} />
+        return <ShelterCard key={`shelter-card-${key}`} info={o} />
     }
 
     getPathName = (): string =>  {
