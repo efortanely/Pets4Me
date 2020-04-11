@@ -58,9 +58,10 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
       });
 
       return <div className='instancepage-image'>
-                <ImageGallery items={images} />
+                <ImageGallery items={images} autoPlay={true}/>
               </div>
-    }else{
+    }
+    else {
       return <div>
               <Image className='instancepage-image' src={logo} rounded />
               <p>Uh-oh! No image is available for this pet.</p>

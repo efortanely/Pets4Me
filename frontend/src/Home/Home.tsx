@@ -14,7 +14,7 @@ function getRandomPetLink(): JSX.Element {
 
 function Home() {
     return(
-      <div>        
+      <div>
         <img className="shapeOne" src={shapeOne} alt="A rounded pink shape"></img>
         <img className="personOne" src={personOne} alt="A woman holding a brown cat"></img>
         <img className="personTwo" src={personTwo} alt="A woman holding a brown dog"></img>
@@ -27,7 +27,7 @@ function Home() {
           <FontAwesomeIcon className="paw" icon={faPaw} color="#581730" size="2x"/>
         </div>
       </div>
-    );
+    )
   }
 
 export default Home;
