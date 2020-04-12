@@ -8,7 +8,7 @@ import requests
 from util.sql import escape_like
 import pgeocode
 import sys
-from .pets4me_api import Pet, DogBreed, CatBreed, Shelter
+from .pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
 
 
 class CommonAPI:
@@ -320,9 +320,11 @@ class PetAPI(OAuthAPI):
             long_breed = b["name"]
             breed = None
             for breed_str in re.split(r"\s*[/\\]\s*", long_breed):
-                breed = DogBreed.query.filter(
-                    DogBreed.name.ilike(escape_like(breed_str), escape="\\")
-                ).first()
+                breed = (
+                    db.session.query(DogBreed)
+                    .filter(DogBreed.name.ilike(escape_like(breed_str), escape="\\"))
+                    .first()
+                )
                 if breed is not None:
                     break
 
@@ -348,9 +350,11 @@ class PetAPI(OAuthAPI):
             long_breed = b["name"]
             breed = None
             for breed_str in re.split(r"\s*[/\\]\s*", long_breed):
-                breed = CatBreed.query.filter(
-                    CatBreed.name.ilike(escape_like(breed_str), escape="\\")
-                ).first()
+                breed = (
+                    db.session.query(CatBreed)
+                    .filter(CatBreed.name.ilike(escape_like(breed_str), escape="\\"))
+                    .first()
+                )
                 if breed is not None:
                     break
 
@@ -358,9 +362,11 @@ class PetAPI(OAuthAPI):
                     if word.lower() in ["american", "domestic"]:
                         continue
                     escaped = escape_like(breed_str)
-                    breed = CatBreed.query.filter(
-                        CatBreed.name.ilike(f"%{escaped}%", escape="\\")
-                    ).first()
+                    breed = (
+                        db.session.query(CatBreed)
+                        .filter(CatBreed.name.ilike(f"%{escaped}%", escape="\\"))
+                        .first()
+                    )
                     if breed is not None:
                         break
                 if breed is not None:

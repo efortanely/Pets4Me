@@ -1,28 +1,24 @@
-import React from 'react';
-import { InfoCard } from './InfoCard';
-import { Link } from 'react-router-dom';
-import logo from '../../../static/logo.png';
+import InfoCard from './InfoCard';
 import { CatBreed } from '../../../models/CatBreed';
 
-interface CatBreedCardProps { breed: CatBreed }
-
-class CatBreedCard extends React.Component<CatBreedCardProps> {  
-  render() {
-    return (
-      <Link to={{
-        pathname: `/cat-breeds/${this.props.breed.id}`,
-        state: { breed: this.props.breed }
-        }}>
-        <InfoCard image_src={this.props.breed.photo || logo} header={this.props.breed.name} other_info={this.getOtherInfo()} />
-      </Link>
-    )
+class CatBreedCard extends InfoCard<CatBreed> {
+  getHeader(): string {
+    return this.props.info.name
   }
+
+  getLinkPathname(): string {
+    return `/cat-breeds/${this.props.info.id}`
+  }
+
+  getImageSrc(): string {
+    return this.props.info.photo
+  }  
 
   getOtherInfo = (): string[] => {
     let otherInfo: string[] = []
-    otherInfo.push(this.props.breed.alt_names.length > 0 ? `Alternate names: ${this.props.breed.alt_names.join(', ')}` : 'No alternate names')
-    otherInfo.push(this.props.breed.indoor ?  'Outdoor': 'Indoor')
-    switch(this.props.breed.dog_friendly){
+    otherInfo.push(this.props.info.alt_names.length > 0 ? `Alternate names: ${this.props.info.alt_names.join(', ')}` : 'No alternate names')
+    otherInfo.push(this.props.info.indoor ?  'Outdoor': 'Indoor')
+    switch(this.props.info.dog_friendly){
       case 1: {
         otherInfo.push('Not dog-friendly');
         break;
