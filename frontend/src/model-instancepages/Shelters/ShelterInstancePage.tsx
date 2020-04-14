@@ -32,7 +32,6 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   }
 
   updateShelter = (shelter: Shelter) => {
-    console.log(shelter);
     this.setState({ shelter: shelter })
   }
 
@@ -85,13 +84,12 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
 
   render() {
     let shelter: Shelter = this.state.shelter
-    console.log(this.state);
     let allPets = Object.values(shelter.all_pets || {})
     return (
       <div className='model-instancepage'>
         <div className='instancepage-image'>
           {this.getPhoto(shelter.photos)}
-          <MapMedia address={this.getApiShelterAddress(shelter)} postcode={shelter?.address?.postcode}/>
+          <MapMedia address={this.getApiShelterAddress(shelter)} postcode={shelter?.address?.postcode} country={shelter?.address?.country}/>
         </div>
         <div className='instancepage-text'>
           <h1 id='name'>{shelter.name}</h1>
