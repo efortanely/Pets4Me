@@ -20,7 +20,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   }
   
   constructor(props: ShelterProps) {
-    super(props)    
+    super(props)
     this.state = {
       shelter: props.shelter
     }
@@ -32,11 +32,24 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   }
 
   updateShelter = (shelter: Shelter) => {
+    console.log(shelter);
     this.setState({ shelter: shelter })
   }
 
   getCurrentShelterId = (): string => {
     return `${this.state.shelter.id}`
+  }
+
+  getDisplayShelterAddress = (shelter: Shelter) => {
+    let address = (shelter.address?.address1 + " " || "") + (shelter.address?.address2 + ", " || "") + (shelter.address?.city + ", "|| "") + (shelter.address?.state + " " || "") + (shelter.address?.postcode || "");
+    if (address.length === 0) {
+      return "Address info not available."
+    }
+    return address;
+  }
+
+  getApiShelterAddress = (shelter: Shelter) => {
+    return (shelter.address?.address1 + " " || "") + (shelter.address?.city + " "|| "") + (shelter.address?.state + " " || "") + (shelter.address?.postcode || "");
   }
   
   getLinkedUrl = (id: number | undefined, type: string, text: string): JSX.Element => {
@@ -52,7 +65,6 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
       const images = photos.full.map(photo => {
         return {original: photo}
       });
-
       return <ImageGallery items={images} />
     } else {
       return <div>
@@ -73,17 +85,17 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
 
   render() {
     let shelter: Shelter = this.state.shelter
-    let full_address: string = (shelter.address?.address1 || "") +" "+ (shelter.address?.address2 || "") +", "+ shelter.address?.city +", "+ shelter.address?.state +" "+ shelter.address?.postcode 
+    console.log(this.state);
     let allPets = Object.values(shelter.all_pets || {})
     return (
       <div className='model-instancepage'>
         <div className='instancepage-image'>
           {this.getPhoto(shelter.photos)}
-          <MapMedia address={full_address}/>
+          <MapMedia address={this.getApiShelterAddress(shelter)} postcode={shelter?.address?.postcode}/>
         </div>
         <div className='instancepage-text'>
           <h1 id='name'>{shelter.name}</h1>
-          <p id='address'>Address: {full_address}, {shelter.address?.country}</p>
+          <p id='address'>Address: {this.getDisplayShelterAddress(shelter)}, {shelter.address?.country}</p>
           <p id='contact'>Contact: {shelter.contact?.email}, {shelter.contact?.phone_number}</p>
           <p id='adoption-policy'>Adoption Policy: {shelter.adoption_policy}</p>
           <p id='mission'>Mission: {shelter.mission}</p>

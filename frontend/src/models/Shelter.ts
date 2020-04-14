@@ -12,13 +12,14 @@ export interface Shelter {
   top_dog_breed_id?: number
 }
 
-interface Address {
+export interface Address {
   country: string
   state: string
   postcode: number
   address1: string
   address2: string
   city: string
+  apiString: string;
 }
 
 interface Contact {

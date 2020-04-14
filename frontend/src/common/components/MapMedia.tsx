@@ -4,7 +4,9 @@ import "./MapMedia.css"
 
 interface MapMediaProps { 
   address: string;
+  postcode: number;
 }
+
 interface MapMediaState {
   long: number;
   lat: number;
@@ -24,50 +26,78 @@ class MapMedia extends React.Component<MapMediaProps, MapMediaState> {
     this.state = {
       long: this.DEFAULT_LONG,
       lat: this.DEFAULT_LAT,
-      zoom: 15
+      zoom: 12
     };
   }
 
-  componentDidMount() {
-    let address = this.props.address.split(' ').join('+');
-    let nominatimUrl = "https://nominatim.openstreetmap.org/?q="+address+"&format=json&limit=1";
-    // fetch(nominatimUrl, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    // })
-    // .then(res => {
-    //   res.json()
-    //   .then((data) => {
-    //     this.createMapWithNominatimData(data);
-    //     // Currently disabled because Markers are screwy
-    //     /* let marker = new mapboxgl.Marker().setLngLat({
-    //       lat: this.state.lat,
-    //       lng: this.state.long
-    //     }).addTo(map);
-    //     map.scrollZoom.disable(); */
-    //   })
-    // })
+  componentDidUpdate(prevProps: MapMediaProps) {
+    if (this.props !== prevProps) {
+      let address = this.props.address.replace(/[, ]/g, '+')
+      let nominatimUrl = "https://nominatim.openstreetmap.org/?q="+address+"&format=json&limit=1";
+      fetch(nominatimUrl, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(res => {
+        res.json()
+        .then((data) => {
+          if (data.length !== 0) {
+            this.setState({
+              lat: data[0].lat,
+              long: data[0].lon
+            });
+            this.createMap();
+          } else {
+            this.getPostcodeMap();
+          }
+        })
+      })
+    }
+  }
+
+  getPostcodeMap() {
+    let nominatimUrl = "https://nominatim.openstreetmap.org/?q="+this.props.postcode+"&format=json&limit=1";
+    fetch(nominatimUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(res => {
+      res.json()
+      .then((data) => {
+        if (data.length !== 0) {
+          this.setState({
+            lat: data[0].lat,
+            long: data[0].lon
+          });
+        }
+        this.createMap();
+      });
+    })
   }
   
-  createMapWithNominatimData(data: any) {
-    if (data.length !== 0) {
-      this.setState({
-        lat: data[0].lat,
-        long: data[0].lon
-      });
-    }
+  createMap() {
     new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [this.state.long, this.state.lat],
       zoom: this.state.zoom
     });
+    // Currently disabled because Markers are screwy
+    /* let marker = new mapboxgl.Marker().setLngLat({
+      lat: this.state.lat,
+      lng: this.state.long
+    }).addTo(map);
+    map.scrollZoom.disable(); */
   }
 
   render() {
+    
     return (
       <div>
         <div ref={el => this.mapContainer = el}
