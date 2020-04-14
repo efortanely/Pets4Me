@@ -25,7 +25,7 @@ export class Member extends React.Component<MemberProps, MemberState> {
     gitlabApiService.getCommits()
       .then(res => this.countCommits(res))
 
-    gitlabApiService.getIssuesByAuthor(this.props.gitlab_id)
+    gitlabApiService.getIssuesByAssignee(this.props.gitlab_id)
       .then(res => this.setState({ issueCount: res.length }))
   }
 
