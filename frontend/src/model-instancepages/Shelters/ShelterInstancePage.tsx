@@ -1,6 +1,5 @@
 import React from 'react'
 import Pets4meSheltersServiceContext from '../../common/services/Pets4meSheltersService';
-import SheltersService from '../../common/services/SheltersService';
 import { Shelter, Photos } from '../../models/Shelter';
 import { match, Link } from 'react-router-dom'
 import Image from 'react-bootstrap/Image';
@@ -9,6 +8,7 @@ import ImageGallery from 'react-image-gallery';
 import MapMedia from '../../common/components/MapMedia'
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 
 type ShelterProps = { shelter: Shelter, match: match }
 type ShelterState = { shelter: Shelter }
@@ -27,8 +27,8 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   }
 
   fetchShelter = (shelter_id: string): Promise<Shelter> => {
-    const pets4meShelterService: SheltersService = this.context
-    return pets4meShelterService.getShelter(shelter_id)
+    const pets4meShelterService: ModelInstanceService<Shelter> = this.context
+    return pets4meShelterService.getInstanceById(shelter_id)
   }
 
   updateShelter = (shelter: Shelter) => {

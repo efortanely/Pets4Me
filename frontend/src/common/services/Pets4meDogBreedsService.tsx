@@ -1,10 +1,10 @@
 import React from 'react'
 import Pets4meApiService from './Pets4meApiService';
-import DogBreedsService from './DogBreedsService'
 import { DogBreed } from '../../models/DogBreed';
 import { ObjectsPage } from '../../models/ObjectsPage';
+import ModelInstanceService from './ModelInstanceService';
 
-export class Pets4meDogBreedsService implements DogBreedsService {
+export class Pets4meDogBreedsService implements ModelInstanceService<DogBreed> {
   private endpoint: string = 'dog_breeds'
   pets4meApiService: Pets4meApiService
 
@@ -12,20 +12,17 @@ export class Pets4meDogBreedsService implements DogBreedsService {
     this.pets4meApiService = new Pets4meApiService()
   }
 
-  getDogBreeds(pageNumber: number, filterString: string): Promise<ObjectsPage<DogBreed>> {
-    if (filterString.length > 0)
-      return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<DogBreed>>(this.endpoint, { page: pageNumber, q: filterString })
-    else
-      return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<DogBreed>>(this.endpoint, { page: pageNumber })
+  getModelPageOfInstances(pageNumber: number, search: string =''): Promise<ObjectsPage<DogBreed>> {
+    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<DogBreed>>(this.endpoint, { page: pageNumber, q: search })
   }
 
-  getDogBreed(id: string): Promise<DogBreed> {
+  getInstanceById(id: string): Promise<DogBreed> {
     return this.pets4meApiService.fetchJsonAsObject<DogBreed>(`${this.endpoint}/${id}`, { })
   }
 }
 
 const pets4meDogBreedsService: Pets4meDogBreedsService = new Pets4meDogBreedsService()
 
-const Pets4meDogBreedsServiceContext = React.createContext<DogBreedsService>(pets4meDogBreedsService)
+const Pets4meDogBreedsServiceContext = React.createContext<ModelInstanceService<DogBreed>>(pets4meDogBreedsService)
 
 export default Pets4meDogBreedsServiceContext

@@ -1,6 +1,6 @@
 import React from 'react';
 import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService';
-import PetsService from '../../common/services/PetsService';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 import InfoCards from '../../common/components/Cards/InfoCards';
 import PetCard from '../../common/components/Cards/PetCard';
 import { ObjectsPage } from '../../models/ObjectsPage';
@@ -17,8 +17,8 @@ class PetsInfoCards extends InfoCards<Pet> {
     }
 
     fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<Pet>> => {
-        const pets4meDogBreedService: PetsService = this.context
-        return pets4meDogBreedService.getPets(pageNumber, this.getFilterString(this.props.filters))
+        const pets4mePetsService: ModelInstanceService<Pet> = this.context
+        return pets4mePetsService.getModelPageOfInstances(pageNumber)
     }
 
     getFilterString(filters: PetsFiltersState): string {

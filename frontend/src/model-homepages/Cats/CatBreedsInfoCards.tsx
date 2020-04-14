@@ -1,11 +1,11 @@
 import React from 'react';
 import CatBreedCard from '../../common/components/Cards/CatBreedCard';
 import { CatBreed } from '../../models/CatBreed';
-import CatBreedsService from '../../common/services/CatBreedsService';
 import Pets4meCatBreedsServiceContext from '../../common/services/Pets4meCatBreedsService';
 import InfoCards from '../../common/components/Cards/InfoCards';
 import { ObjectsPage } from '../../models/ObjectsPage';
 import { CatBreedsFiltersState } from '../../models/CatBreedsFiltersData';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 
 class CatBreedsInfoCards extends InfoCards<CatBreed> {
     static contextType = Pets4meCatBreedsServiceContext
@@ -17,8 +17,8 @@ class CatBreedsInfoCards extends InfoCards<CatBreed> {
     }
     
     fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<CatBreed>> => {
-        const pets4meDogBreedService: CatBreedsService = this.context
-        return pets4meDogBreedService.getCatBreeds(pageNumber, this.getFilterString(this.props.filters))
+        const pets4meDogBreedService: ModelInstanceService<CatBreed> = this.context
+        return pets4meDogBreedService.getModelPageOfInstances(pageNumber)
     }
 
     getFilterString(filters: CatBreedsFiltersState): string {

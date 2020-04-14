@@ -4,8 +4,8 @@ import { ObjectsPage } from '../../models/ObjectsPage';
 import Pets4meSheltersServiceContext from '../../common/services/Pets4meSheltersService';
 import { Shelter } from '../../models/Shelter';
 import ShelterCard from '../../common/components/Cards/ShelterCard';
-import SheltersService from '../../common/services/SheltersService';
 import { SheltersFiltersState } from '../../models/SheltersFiltersData'
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 
 class SheltersInfoCards extends InfoCards<Shelter> {
     static contextType = Pets4meSheltersServiceContext
@@ -17,13 +17,14 @@ class SheltersInfoCards extends InfoCards<Shelter> {
     }
 
     fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<Shelter>> => {
-        const pets4meSheltersService: SheltersService = this.context
-        return pets4meSheltersService.getShelters(pageNumber, this.getFilterString(this.props.filters))
+        const pets4meSheltersService: ModelInstanceService<Shelter> = this.context;
+        return pets4meSheltersService.getModelPageOfInstances(pageNumber);
     }
 
     getFilterString(filters: SheltersFiltersState): string {
         console.log("creating string with these filters:", filters);
         return '';
+        
     }
 
     createInfoCard = (o: Shelter, key: any): JSX.Element => {

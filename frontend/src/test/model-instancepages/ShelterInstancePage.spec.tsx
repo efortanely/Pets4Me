@@ -10,8 +10,8 @@ import sinon from 'sinon'
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 import { MemoryRouter } from 'react-router-dom';
-import SheltersService from '../../common/services/SheltersService';
 import * as MapMedia from '../../common/components/MapMedia';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 chai.use(sinonChai)
 
 describe('<ShelterInstancePage/>', () => {
@@ -27,9 +27,9 @@ describe('<ShelterInstancePage/>', () => {
   function spyOnSheltersService(shelter: Shelter) {
     let testPets4meSheltersService = new Pets4meSheltersService()
     let getShelterSpy = spy((shelter_id: string) => new Promise<Shelter>(() => shelter))
-    testPets4meSheltersService.getShelter = getShelterSpy
+    testPets4meSheltersService.getInstanceById = getShelterSpy
 
-    let testContext = React.createContext<SheltersService>(testPets4meSheltersService)
+    let testContext = React.createContext<ModelInstanceService<Shelter>>(testPets4meSheltersService)
     ShelterInstancePage.contextType = testContext
 
     return getShelterSpy
