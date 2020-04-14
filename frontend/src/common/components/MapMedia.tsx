@@ -1,6 +1,7 @@
 import React from 'react'
-import mapboxgl from 'mapbox-gl';
+import ReactMapboxGl, { Layer, Popup, Marker } from 'react-mapbox-gl';
 import "./MapMedia.css"
+import "./mapbox-gl.css"
 
 interface MapMediaProps { 
   address: string;
@@ -13,9 +14,13 @@ interface MapMediaState {
   zoom: number;
 }
 
-mapboxgl.accessToken = "pk.eyJ1IjoiZGVhbnRvcmtlbHNvbiIsImEiOiJjazhienAxZDQwZWdpM2VxYzI2bWs0bWFvIn0.50o7Qc543TVjRT5XaXbFpA";
+const Map = ReactMapboxGl({
+  accessToken:
+    'pk.eyJ1IjoiZGVhbnRvcmtlbHNvbiIsImEiOiJjazhienAxZDQwZWdpM2VxYzI2bWs0bWFvIn0.50o7Qc543TVjRT5XaXbFpA'
+});
 
 class MapMedia extends React.Component<MapMediaProps, MapMediaState> {
+
   mapContainer: any;
   DEFAULT_LONG = -97.7357368;
   DEFAULT_LAT = 30.2853668;
@@ -49,9 +54,6 @@ class MapMedia extends React.Component<MapMediaProps, MapMediaState> {
               lat: data[0].lat,
               long: data[0].lon
             });
-            this.createMap();
-          } else {
-            this.getPostcodeMap();
           }
         })
       })
@@ -76,18 +78,11 @@ class MapMedia extends React.Component<MapMediaProps, MapMediaState> {
             long: data[0].lon
           });
         }
-        this.createMap();
       });
     })
   }
   
   createMap() {
-    new mapboxgl.Map({
-      container: this.mapContainer,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [this.state.long, this.state.lat],
-      zoom: this.state.zoom
-    });
     // Currently disabled because Markers are screwy
     /* let marker = new mapboxgl.Marker().setLngLat({
       lat: this.state.lat,
@@ -100,8 +95,27 @@ class MapMedia extends React.Component<MapMediaProps, MapMediaState> {
     
     return (
       <div>
-        <div ref={el => this.mapContainer = el}
-          className="mapContainer"/>
+        <Map
+          style={"mapbox://styles/mapbox/streets-v9"}
+          center={[this.DEFAULT_LONG, this.DEFAULT_LAT]}
+          containerStyle={{
+            height: '100vh',
+            width: '100vw'
+          }}
+        >
+          <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
+            <Marker
+              className="marker"
+              coordinates={[this.DEFAULT_LONG, this.DEFAULT_LAT]}
+              anchor="bottom">
+            </Marker>
+            <img src={''}/>
+          </Layer>
+          <Popup
+            coordinates={[this.DEFAULT_LONG,this.DEFAULT_LAT]}>
+            <h5>Shelter location</h5>
+          </Popup>
+        </Map>
         {this.state.lat === this.DEFAULT_LAT && this.state.long === this.DEFAULT_LONG && 
         <div className='error'>Uh-oh! We encountered an error trying to display the map for this shelter. Displaying default location instead.</div>}
       </div>)
