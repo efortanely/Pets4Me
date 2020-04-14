@@ -45,7 +45,6 @@ def searchable_query(class_query):
         search = request.args.get("search")
         if search:
             search = escape_like(search.strip())
-            print(search)
             q_or = reduce(
                 or_,
                 (
@@ -164,10 +163,44 @@ class Pet(db.Model):
     @classmethod
     @searchable_query
     def query(cls):
+        query = db.session.query(cls)
+
+        if "sort" in request.args and "dir" in request.args:
+            sort = request.args.get("sort")
+            dir = request.args.get("dir")
+            if sort == "primary_dog_breed":
+                if dir == "asc":
+                    query = query.join(cls.primary_dog_breed).order_by(DogBreed.name)
+                elif dir == "desc":
+                    query = query.join(cls.primary_dog_breed).order_by(
+                        DogBreed.name.desc()
+                    )
+            elif sort == "secondary_dog_breed":
+                if dir == "asc":
+                    query = query.join(cls.secondary_dog_breed).order_by(DogBreed.name)
+                elif dir == "desc":
+                    query = query.join(cls.secondary_dog_breed).order_by(
+                        DogBreed.name.desc()
+                    )
+            elif sort == "primary_cat_breed":
+                if dir == "asc":
+                    query = query.join(cls.primary_cat_breed).order_by(CatBreed.name)
+                elif dir == "desc":
+                    query = query.join(cls.primary_cat_breed).order_by(
+                        CatBreed.name.desc()
+                    )
+            elif sort == "secondary_cat_breed":
+                if dir == "asc":
+                    query = query.join(cls.secondary_cat_breed).order_by(CatBreed.name)
+                elif dir == "desc":
+                    query = query.join(cls.secondary_cat_breed).order_by(
+                        CatBreed.name.desc()
+                    )
+
         if "max_dist" in request.args:
             max_dist = request.args.get("max_dist")
         else:
-            return db.session.query(cls)
+            return query
 
         if "zip_code" in request.args:
             nomi = pgeocode.Nominatim("us")
@@ -177,8 +210,7 @@ class Pet(db.Model):
             user_loc = (30.286, -97.736)  # GDC
 
         return (
-            db.session.query(Pet)
-            .join(cls.shelter_ref)
+            query.join(cls.shelter_ref)
             .filter(
                 distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
             )
