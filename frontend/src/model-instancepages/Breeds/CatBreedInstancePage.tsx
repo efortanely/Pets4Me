@@ -1,11 +1,11 @@
 import React from 'react'
 import Pets4meCatBreedsServiceContext from '../../common/services/Pets4meCatBreedsService';
-import CatBreedsService from '../../common/services/CatBreedsService';
 import { CatBreed } from '../../models/CatBreed';
 import Image from 'react-bootstrap/Image'
 import logo from '../../static/logo.png';
 import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 
 type CatBreedProps = { breed: CatBreed, match: match }
 type CatBreedState = { breed: CatBreed }
@@ -24,8 +24,8 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
   }
 
   fetchCatBreed = (breed_id: string): Promise<CatBreed> => {
-    const pets4meCatBreedService: CatBreedsService = this.context
-    return pets4meCatBreedService.getCatBreed(breed_id)
+    const pets4meCatBreedService: ModelInstanceService<CatBreed> = this.context
+    return pets4meCatBreedService.getInstanceById(breed_id)
   }
 
   updateCatBreed = (breed: CatBreed) => {
