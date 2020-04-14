@@ -1,11 +1,11 @@
 import React from 'react'
 import Pets4meDogBreedsServiceContext from '../../common/services/Pets4meDogBreedsService';
-import DogBreedsService from '../../common/services/DogBreedsService';
 import { DogBreed } from '../../models/DogBreed';
 import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image'
 import '../ModelInstancepage.css'
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 
 type DogBreedProps = { breed: DogBreed, match: match }
 type DogBreedState = { breed: DogBreed }
@@ -17,15 +17,15 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
   }
   
   constructor(props: DogBreedProps) {
-    super(props)    
+    super(props)
     this.state = {
       breed: props.breed
     }
   }
 
   fetchDogBreed = (breed_id: string): Promise<DogBreed> => {
-    const pets4meDogBreedService: DogBreedsService = this.context
-    return pets4meDogBreedService.getDogBreed(breed_id)
+    const pets4meDogBreedService: ModelInstanceService<DogBreed> = this.context
+    return pets4meDogBreedService.getInstanceById(breed_id)
   }
 
   updateDogBreed = (breed: DogBreed) => {

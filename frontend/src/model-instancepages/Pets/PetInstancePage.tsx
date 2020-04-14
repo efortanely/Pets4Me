@@ -1,6 +1,6 @@
 import React from 'react'
 import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService';
-import PetsService from '../../common/services/PetsService';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 import { Pet, BackendEntity, Photos } from '../../models/Pet';
 import { match, Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
@@ -27,8 +27,8 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   }
 
   fetchPet = (pet_id: string): Promise<Pet> => {
-    const pets4mePetsService: PetsService = this.context
-    return pets4mePetsService.getPet(pet_id)
+    const pets4mePetsService: ModelInstanceService<Pet> = this.context
+    return pets4mePetsService.getInstanceById(pet_id)
   }
 
   updatePet = (pet: Pet) => {

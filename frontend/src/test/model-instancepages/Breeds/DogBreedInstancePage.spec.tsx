@@ -10,6 +10,7 @@ import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 import DogBreedsService from '../../../common/services/DogBreedsService';
 import { MemoryRouter } from 'react-router-dom';
+import ModelInstanceService from '../../../common/services/ModelInstanceService';
 chai.use(sinonChai)
 
 
@@ -22,9 +23,9 @@ describe('<DogBreedInstancePage />', () => {
   function spyOnDogBreedsService(breed: DogBreed) {
     let testPets4meDogBreedsService = new Pets4meDogBreedsService()
     let getDogBreedSpy = spy((breed_id: string) => new Promise<DogBreed>(() => breed))
-    testPets4meDogBreedsService.getDogBreed = getDogBreedSpy
+    testPets4meDogBreedsService.getInstanceById = getDogBreedSpy
 
-    let testContext = React.createContext<DogBreedsService>(testPets4meDogBreedsService)
+    let testContext = React.createContext<ModelInstanceService<DogBreed>>(testPets4meDogBreedsService)
     DogBreedInstancePage.contextType = testContext
 
     return getDogBreedSpy
