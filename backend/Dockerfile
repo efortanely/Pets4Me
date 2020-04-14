@@ -20,6 +20,10 @@ RUN sudo apt-get update && sudo apt-get install -y python3 python3-venv python3-
 ENV TZ Etc/UTC
 ENV SQLALCHEMY_DATABASE_URI postgresql://postgres@localhost/postgres
 
-CMD bash
+EXPOSE 5000
+
+WORKDIR workspace
+
+CMD [ "bash" ]
 
 

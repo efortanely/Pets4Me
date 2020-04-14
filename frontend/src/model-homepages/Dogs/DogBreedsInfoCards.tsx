@@ -23,7 +23,7 @@ class DogBreedsInfoCards extends InfoCards<DogBreed> {
 
     getFilterString(filters: DogBreedsFiltersState): string {
         console.log("creating string with these filters:", filters);
-        return 'test';
+        return '';
     }
 
     createInfoCard = (o: DogBreed, key: any): JSX.Element => {

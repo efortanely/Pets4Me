@@ -23,7 +23,7 @@ class PetsInfoCards extends InfoCards<Pet> {
 
     getFilterString(filters: PetsFiltersState): string {
         console.log("creating string with these filters:", filters);
-        return 'test';
+        return '';
     }
 
     createInfoCard = (o: Pet, key: any): JSX.Element => {

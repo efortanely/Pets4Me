@@ -82,6 +82,68 @@
     margin-bottom: 0px !important;
 }
 
+.selectButton > div {
+    background-color: coral;
+}
+
+.css-2b097c-container{
+    width: 100%;
+}
+
+.css-14jk2my-container{
+    width: 100%;
+}
+
+.css-yk16xz-control:active{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.css-10ku62j {
+    color:white !important;
+}
+
+.filters h5{
+    color: #581730;
+    margin-bottom: 0px !important;
+}
+
+.filters .btn-primary {
+    background-color: #966a7d;
+    border-color: #966a7d;
+}
+
+.filters .submit {
+    background-color: #581730;
+    border-color: #581730;
+}
+
+.btn-primary {
+    background-color: #966a7d;
+    border-color: #966a7d;
+    width: 100%;
+}
+
+.filters .active {
+    background-color: #581730 !important;
+    border-color: #641A34 !important;
+}
+
+.btn-primary:hover {
+    background-color: #581730 !important;
+    box-shadow: 0 0 0 .25rem rgba(88, 23, 48, .5) !important;
+    border-color: #641A34 !important;
+}
+
+.btn-primary.focus {
+    box-shadow: 0 0 0 .25rem rgba(255, 255, 255, 1) !important;
+}
+
+.btn-primary:focus {
+    background-color: #581730 !important;
+    box-shadow: 0 0 0 .25rem rgba(88, 23, 48, .5) !important;
+}
+
 .filters input[type=text], input[type=text]::placeholder{
     color: #581730;
 }
@@ -96,10 +158,20 @@
 
 .sort-button-group {
     text-align: center !important;
+    width: 100%;
 }
 
 .sort-button-group > * {
     z-index: 0 !important;
+    width: 100%;
+}
+
+.postcode{
+    width: 100%;
+}
+
+input:focus {
+    outline:none !important;
 }
 
 /* End Dropdown Menu */

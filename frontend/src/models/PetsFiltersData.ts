@@ -1,5 +1,6 @@
 export interface PetsFiltersData {
-    breeds: string[];
+    dogBreeds: string[];
+    catBreeds: string[];
     colors: string[];
     sizes: string[]
     ages: string[];
@@ -34,10 +35,11 @@ export let defaultFilterState = {
 } as PetsFiltersState;
 
 export let sampleFilterData = {
-    breeds: ["Maltese", "Poodle"],
+    dogBreeds: ["Maltese", "Poodle"],
+    catBreeds: ["Domestic Shorthair", "Tabby"],
     colors: ["Green", "Fuchsia"],
     sizes: ["Small", "Medium", "Large"],
     ages: ["Baby", "Puppy", "Adult"],
     max_distance: 20,
     updateFilters: (arg: any) => console.log("Filter callback not set!")
-} as PetsFiltersData;
+}

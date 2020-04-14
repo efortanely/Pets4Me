@@ -10,19 +10,29 @@ import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
 
+const customStyles = {
+    control: (base: any, state: { isFocused: any; }) => ({
+        ...base,
+        borderColor: state.isFocused ? "#D3D3D3" : "#D3D3D3",
+        boxShadow: null,
+        "&:hover": {
+        borderColor: "none"
+        }
+    })
+  };
+
 export class SheltersFilters extends React.Component<SheltersFiltersData, SheltersFiltersState> {
 
     public sortData: SelectItem[] = [
         {label: "Name", value: "Name"},
         {label: "City", value: "City"},
-        {label: "State", value: "State"},
-        {label: "Distance", value: "Distance"}
+        {label: "State", value: "State"}
     ]
     public cityData: SelectItem[] = [];
     public stateData: SelectItem[] = [];
     public speciesData = [
-        { label: "Cat", value: "cats" },
-        { label: "Dog", value: "dogs" }] as SelectItem[];
+        { label: "Shelter has cats", value: "cats" },
+        { label: "Shelter has dogs", value: "dogs" }] as SelectItem[];
 
     constructor(props: SheltersFiltersData) {
         super(props);
@@ -39,7 +49,19 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
         return (
             <div className='filters'>
                 <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
-                    onChange={(value: any) => this.setState({sortType: value?.value})} />
+                    onChange={(value: any) => this.setState({sortType: value?.value})}
+                    styles={customStyles}
+                    theme={theme => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                          ...theme.colors,
+                          primary25: '#966a7d',
+                          primary: '#581730',
+                          primary50: '#966a7d'
+                        },
+                    })}
+                    />
                 {/* React is tragically very stupid and this is the only way I could style it right*/}
                 <div className="sort-button-group">
                     <ToggleButtonGroup type="radio" name="sortOrder" defaultValue={2}>
@@ -55,7 +77,23 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                             })});
                         } else {
                             this.setState({city: []});
-                        }}} />
+                        }}}
+                        styles={customStyles}
+                        theme={theme => ({
+                            ...theme,
+                            borderRadius: 0,
+                            colors: {
+                            ...theme.colors,
+                            primary25: '#966a7d',
+                            primary: '#581730',
+                            primary50: '#966a7d',
+                            dangerLight: '#966a7d',
+                            danger: '#581730',
+                            neutral10: '#966a7d',
+                            neutral20: '#966a7d',
+                            },
+                        })}
+                        />
                 <Select isMulti options={this.stateData} placeholder="Select a state..." isClearable={true}
                     onChange={(newFilters: any) => {
                         if (newFilters) {
@@ -64,7 +102,23 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                             })});
                         } else {
                             this.setState({state: []});
-                        }}} />
+                        }}}
+                        styles={customStyles}
+                        theme={theme => ({
+                            ...theme,
+                            borderRadius: 0,
+                            colors: {
+                            ...theme.colors,
+                            primary25: '#966a7d',
+                            primary: '#581730',
+                            primary50: '#966a7d',
+                            dangerLight: '#966a7d',
+                            danger: '#581730',
+                            neutral10: '#966a7d',
+                            neutral20: '#966a7d',
+                            },
+                        })}
+                        />
                 <Form className="postcode">
                     <Form.Group controlId="postcode">
                         <Form.Control type="number" placeholder="Enter a postcode..."
@@ -72,15 +126,31 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                     </Form.Group>
                 </Form>
                 <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
-                    onChange={(value: any) => this.setState({shelterWithSpecies: value?.value})} />
+                    onChange={(value: any) => this.setState({shelterWithSpecies: value?.value})}
+                    styles={customStyles}
+                        theme={theme => ({
+                            ...theme,
+                            borderRadius: 0,
+                            colors: {
+                            ...theme.colors,
+                            primary25: '#966a7d',
+                            primary: '#581730',
+                            primary50: '#966a7d',
+                            dangerLight: '#966a7d',
+                            danger: '#581730',
+                            neutral10: '#966a7d',
+                            neutral20: '#966a7d',
+                            },
+                        })}
+                        />
                 <ThemeProvider theme={sliderTheme}>
-                    <h5>Max distance from ${this.state.postcode} (mi.)</h5>
+                    <h5>Max distance from your postcode (mi.)</h5>
                     <Slider
                         defaultValue={0} max={this.props.max_distance} valueLabelDisplay='auto'
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
                     />
                 </ThemeProvider>
-            <Button variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
+                <Button className="submit" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }

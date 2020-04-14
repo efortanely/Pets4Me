@@ -9,6 +9,17 @@ import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUti
 import { CatBreedsFiltersData, CatBreedsFiltersState, defaultFilterState } from '../../models/CatBreedsFiltersData';
 import '../ModelHomepage.css'
 
+const customStyles = {
+    control: (base: any, state: { isFocused: any; }) => ({
+        ...base,
+        borderColor: state.isFocused ? "#D3D3D3" : "#D3D3D3",
+        boxShadow: null,
+        "&:hover": {
+        borderColor: "none"
+        }
+    })
+  };
+
 export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatBreedsFiltersState> {
 
     public sortData: SelectItem[] = [
@@ -48,7 +59,19 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
         return (
             <div className='filters'>
                 <Select options={this.sortData} placeholder="Sort by..." isClearable={true}
-                    onChange={(value: any) => this.setState({sortType: value?.value})} />
+                    onChange={(value: any) => this.setState({sortType: value?.value})}
+                    styles={customStyles}
+                    theme={theme => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                          ...theme.colors,
+                          primary25: '#966a7d',
+                          primary: '#581730',
+                          primary50: '#966a7d'
+                        },
+                    })}
+                    />
                 {/* React is tragically very stupid and this is the only way I could style it right*/}
                 <div className="sort-button-group">
                     <ToggleButtonGroup type="radio" name="sortOrder" defaultValue={2}>
@@ -64,21 +87,85 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                           })});
                       } else {
                           this.setState({nameInitials: undefined});
-                      }}} />
+                      }}}
+                      styles={customStyles}
+                        theme={theme => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                        ...theme.colors,
+                        primary25: '#966a7d',
+                        primary: '#581730',
+                        primary50: '#966a7d',
+                        dangerLight: '#966a7d',
+                        danger: '#581730',
+                        neutral10: '#966a7d',
+                        neutral20: '#966a7d',
+                        },
+                      })}
+                      />
                 <Select options={this.doorsinessData} placeholder="Indoor/outdoor?" isClearable={true}
-                    onChange={(value: any) => this.setState({doorsiness: value?.value})} />
+                    onChange={(value: any) => this.setState({doorsiness: value?.value})}
+                    styles={customStyles}
+                    theme={theme => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                          ...theme.colors,
+                          primary25: '#966a7d',
+                          primary: '#581730',
+                          primary50: '#966a7d'
+                        },
+                    })}
+                    />
 
                 <h5 className='slider-header'>Minimum dog-friendliness level</h5>
                 <Select options={this.qualitativeQuantifier} isClearable={true}
-                    onChange={(value: any) => this.setState({dogLevel: value?.value})} />
+                    onChange={(value: any) => this.setState({dogLevel: value?.value})}
+                    styles={customStyles}
+                    theme={theme => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                          ...theme.colors,
+                          primary25: '#966a7d',
+                          primary: '#581730',
+                          primary50: '#966a7d'
+                        },
+                    })}
+                    />
 
                 <h5>Minimum child-friendliness level</h5>
                 <Select options={this.qualitativeQuantifier} isClearable={true}
-                    onChange={(value: any) => this.setState({childLevel: value?.value})} />
+                    onChange={(value: any) => this.setState({childLevel: value?.value})}
+                    styles={customStyles}
+                    theme={theme => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                          ...theme.colors,
+                          primary25: '#966a7d',
+                          primary: '#581730',
+                          primary50: '#966a7d'
+                        },
+                    })}
+                    />
 
                 <h5>Minimum grooming level</h5>
                 <Select options={this.qualitativeQuantifier} isClearable={true}
-                    onChange={(value: any) => this.setState({groomingLevel: value?.value})} />
+                    onChange={(value: any) => this.setState({groomingLevel: value?.value})}
+                    styles={customStyles}
+                    theme={theme => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                          ...theme.colors,
+                          primary25: '#966a7d',
+                          primary: '#581730',
+                          primary50: '#966a7d'
+                        },
+                    })}
+                    />
 
                 <ThemeProvider theme={sliderTheme}>
                     <h5>Lifespan</h5>
@@ -88,7 +175,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
+                <Button className="submit" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }

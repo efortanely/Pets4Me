@@ -23,7 +23,7 @@ class CatBreedsInfoCards extends InfoCards<CatBreed> {
 
     getFilterString(filters: CatBreedsFiltersState): string {
         console.log("creating string with these filters:", filters);
-        return 'test';
+        return '';
     }
 
     createInfoCard = (o: CatBreed, key: any): JSX.Element => {

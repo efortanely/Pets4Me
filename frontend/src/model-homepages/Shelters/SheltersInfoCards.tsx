@@ -23,7 +23,7 @@ class SheltersInfoCards extends InfoCards<Shelter> {
 
     getFilterString(filters: SheltersFiltersState): string {
         console.log("creating string with these filters:", filters);
-        return 'test';
+        return '';
     }
 
     createInfoCard = (o: Shelter, key: any): JSX.Element => {

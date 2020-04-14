@@ -17,6 +17,5 @@ then
 fi
 source env/bin/activate
 $PIP install wheel
-$PIP install pylint
 $PIP install black
 $PIP install -r requirements.txt
