@@ -31,36 +31,40 @@ class MapMedia extends React.Component<MapMediaProps, MapMediaState> {
   componentDidMount() {
     let address = this.props.address.split(' ').join('+');
     let nominatimUrl = "https://nominatim.openstreetmap.org/?q="+address+"&format=json&limit=1";
-    fetch(nominatimUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-    .then(res => {
-      res.json()
-      .then((data) => {
-        if (data.length !== 0) {
-          this.setState({
-            lat: data[0].lat,
-            long: data[0].lon
-          });
-        }
-        new mapboxgl.Map({
-          container: this.mapContainer,
-          style: 'mapbox://styles/mapbox/streets-v11',
-          center: [this.state.long, this.state.lat],
-          zoom: this.state.zoom
-        });
-        // Currently disabled because Markers are screwy
-        /* let marker = new mapboxgl.Marker().setLngLat({
-          lat: this.state.lat,
-          lng: this.state.long
-        }).addTo(map);
-        map.scrollZoom.disable(); */
-      })
-    })
+    // fetch(nominatimUrl, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    // })
+    // .then(res => {
+    //   res.json()
+    //   .then((data) => {
+    //     this.createMapWithNominatimData(data);
+    //     // Currently disabled because Markers are screwy
+    //     /* let marker = new mapboxgl.Marker().setLngLat({
+    //       lat: this.state.lat,
+    //       lng: this.state.long
+    //     }).addTo(map);
+    //     map.scrollZoom.disable(); */
+    //   })
+    // })
+  }
+  
+  createMapWithNominatimData(data: any) {
+    if (data.length !== 0) {
+      this.setState({
+        lat: data[0].lat,
+        long: data[0].lon
+      });
+    }
+    new mapboxgl.Map({
+      container: this.mapContainer,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [this.state.long, this.state.lat],
+      zoom: this.state.zoom
+    });
   }
 
   render() {
