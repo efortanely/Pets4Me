@@ -21,6 +21,4 @@ class PetsInfoCards extends InfoCards<Pet> {
     getPathName = (): string =>  {
         return '/pets'
     }
-}
-
-export default PetsInfoCards
+} export default PetsInfoCards
