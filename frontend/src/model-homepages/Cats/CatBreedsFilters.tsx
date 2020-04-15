@@ -53,7 +53,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
             minLifespan: 0,
             maxLifespan: 30,
             sortType: undefined,
-            sortDir: undefined
+            sortDir: "desc"
         } as CatBreedsFiltersState;
     }
 
@@ -63,12 +63,13 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
 
     public constructQuery(){
       let filters = []
+      let order_by = []
       //FIXME: NameInitials query
       if (this.state.nameInitials.length > 0)
         filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
       if (this.state.doorsiness){
         let val = 0
-        if (this.state.doorsiness == "Indoor")
+        if (this.state.doorsiness === "Indoor")
           val = 1
         filters.push({ "name": "indoor", "op": "eq", "val": val})
       }
@@ -80,7 +81,9 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
         filters.push({ "name": "grooming_level", "op": "gt", "val": this.state.groomingLevel})
       filters.push({ "name": "life_span_low", "op": "gt", "val": this.state.minLifespan})
       filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.maxLifespan})
-      return "q=" + JSON.stringify({"filters": filters});
+      if (this.state.sortType)
+        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
+      return "?q=" + JSON.stringify({"filters": filters, "order_by": order_by});
     }
 
     render() {

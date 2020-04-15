@@ -51,19 +51,21 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
 
     public constructQuery(){
       let filters = []
-      //FIXME: distance and stuff
+      let order_by = []
       if (this.state.city.length > 0)
         filters.push({ "name": "city", "op": "eq", "val": this.state.city})
-      if (this.state.postcode === 0)
-        //filters.push({ "name": "city", "op": "opname", "val": this.state.city})
       if (this.state.state.length > 0)
         filters.push({ "name": "state", "op": "eq", "val": this.state.state})
       //FIXME: zip code and distance
       if (this.state.distanceMax !== 0)
         //filters.push({ "name": "city", "op": "opname", "val": this.state.city})
+      if (this.state.postcode === 0)
+        //filters.push({ "name": "city", "op": "opname", "val": this.state.city})
       if (this.state.shelterWithSpecies.length > 0)
         filters.push({ "name": "shelterWithSpecies", "op": "eq", "val": this.state.shelterWithSpecies})
-      return JSON.stringify({"filters": filters});
+      if (this.state.sortType)
+        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
+      return "?q=" + JSON.stringify({"filters": filters, "order_by": order_by});
     }
 
     render() {

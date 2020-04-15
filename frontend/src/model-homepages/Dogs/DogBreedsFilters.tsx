@@ -46,12 +46,13 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
             lifespanMin: 0,
             lifespanMax: 100,
             sortType: undefined,
-            sortDir: undefined
+            sortDir: "desc"
         } as DogBreedsFiltersState;
     }
 
     public constructQuery(){
       let filters = []
+      let order_by = []
       //FIXME: NameInitials query
       if (this.state.nameInitials.length > 0)
         filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
@@ -63,7 +64,9 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
       filters.push({ "name": "weight_imperial_high", "op": "lt", "val": this.state.maxWeight})
       filters.push({ "name": "life_span_low", "op": "gt", "val": this.state.lifespanMin})
       filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.lifespanMax})
-      return "q=" + JSON.stringify({"filters": filters});
+      if (this.state.sortType)
+        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
+      return "?q=" + JSON.stringify({"filters": filters, "order_by": order_by});
     }
 
 render() {

@@ -61,13 +61,13 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
             age: [],
             distanceMax: 1000,
             sortType: undefined,
-            sortDir: undefined
+            sortDir: "desc"
         } as PetsFiltersState;
     }
 
     public constructQuery(){
       let filters = []
-      //FIXME: species query
+      let order_by = []
       if (this.state.species)
         filters.push({ "name": "name", "op": "eq", "val": this.state.species})
       if (this.state.gender)
@@ -85,7 +85,9 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
       //FIXME: distanceMax query
       if (this.state.distanceMax > 0)
         filters.push({ "name": "breed_group", "op": "eq", "val": this.state.gender})
-      return "q=" + JSON.stringify({"filters": filters});
+      if (this.state.sortType)
+        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
+      return "?q=" + JSON.stringify({"filters": filters, "order_by": order_by});
     }
 
     render() {
@@ -156,7 +158,7 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+                <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
             </div>
         );
     }
