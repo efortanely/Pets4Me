@@ -53,6 +53,7 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
     public constructQuery(){
       let filters = []
       let order_by = []
+      let query = ""
       //FIXME: NameInitials query
       if (this.state.nameInitials.length > 0)
         filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
@@ -66,7 +67,16 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
       filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.lifespanMax})
       if (this.state.sortType)
         order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
-      return "?q=" + JSON.stringify({"filters": filters, "order_by": order_by});
+
+      if (filters.length > 0){
+        if (order_by.length > 0)
+          query += "?q=" + JSON.stringify({"filters": filters, "order_by": order_by})
+        else
+          query += "?q=" + JSON.stringify({"filters": filters})
+      }
+      else if (order_by.length > 0)
+        query += "?q=" + JSON.stringify({"order_by": order_by})
+      return query;
     }
 
 render() {

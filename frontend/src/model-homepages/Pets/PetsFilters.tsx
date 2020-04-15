@@ -68,26 +68,33 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
     public constructQuery(){
       let filters = []
       let order_by = []
+      let query = "?zip_code=78705&max_dist=" + this.state.distanceMax
       if (this.state.species)
         filters.push({ "name": "name", "op": "eq", "val": this.state.species})
       if (this.state.gender)
         filters.push({ "name": "gender", "op": "eq", "val": this.state.gender})
-      if (this.state.primaryBreed.length > 0)
-        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.primaryBreed})
-      if (this.state.secondaryBreed.length > 0)
-        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.secondaryBreed})
+      // if (false)
+      //   filters.push({ "name": "primary_dog_breed", "op": "eq", "val": this.state.primaryBreed})
+      // if (false)
+      //   filters.push({ "name": "secondary_dog_breed", "op": "eq", "val": this.state.secondaryBreed})
       if (this.state.color.length > 0)
         filters.push({ "name": "color", "op": "eq", "val": this.state.color})
       if (this.state.size.length > 0)
         filters.push({ "name": "size", "op": "eq", "val": this.state.size})
       if (this.state.age.length > 0)
         filters.push({ "name": "age", "op": "eq", "val": this.state.age})
-      //FIXME: distanceMax query
-      if (this.state.distanceMax > 0)
-        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.gender})
       if (this.state.sortType)
         order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
-      return "?q=" + JSON.stringify({"filters": filters, "order_by": order_by});
+
+      if (filters.length > 0){
+        if (order_by.length > 0)
+          query += "&q=" + JSON.stringify({"filters": filters, "order_by": order_by})
+        else
+          query += "&q=" + JSON.stringify({"filters": filters})
+      }
+      else if (order_by.length > 0)
+        query += "&q=" + JSON.stringify({"order_by": order_by})
+      return query;
     }
 
     render() {
