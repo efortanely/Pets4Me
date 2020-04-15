@@ -9,8 +9,8 @@ import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 
 interface DogBreedsFiltersState {
-  nameInitials: string[] | undefined;
-  breedGroup: string[] | undefined;
+  nameInitials: string[];
+  breedGroup: string[];
   maxHeight: number;
   minHeight: number;
   maxWeight: number;
@@ -39,15 +39,31 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
         this.state = {
             nameInitials: [],
             breedGroup: [],
-            maxHeight: 100,
+            maxHeight: 1000,
             minHeight: 0,
-            maxWeight: 100,
+            maxWeight: 1000,
             minWeight: 0,
             lifespanMin: 0,
             lifespanMax: 100,
             sortType: undefined,
             sortDir: undefined
         } as DogBreedsFiltersState;
+    }
+
+    public constructQuery(){
+      let filters = []
+      //FIXME: NameInitials query
+      if (this.state.nameInitials.length > 0)
+        filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
+      if (this.state.breedGroup.length > 0)
+        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.breedGroup})
+      filters.push({ "name": "height_imperial_low", "op": "gt", "val": this.state.minHeight})
+      filters.push({ "name": "height_imperial_high", "op": "lt", "val": this.state.maxHeight})
+      filters.push({ "name": "weight_imperial_low", "op": "gt", "val": this.state.minWeight})
+      filters.push({ "name": "weight_imperial_high", "op": "lt", "val": this.state.maxWeight})
+      filters.push({ "name": "life_span_low", "op": "gt", "val": this.state.lifespanMin})
+      filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.lifespanMax})
+      return "q=" + JSON.stringify({"filters": filters});
     }
 
 render() {
@@ -69,7 +85,7 @@ render() {
                         return selectItem.value;
                     })});
                 } else {
-                    this.setState({nameInitials: undefined});
+                    this.setState({nameInitials: []});
                 }}} />
             <Select isMulti options={this.breedGroup} placeholder="Select a breed group..." isClearable={true}
             onChange={(newFilters: any) => {
@@ -78,7 +94,7 @@ render() {
                         return selectItem.value;
                     })});
                 } else {
-                    this.setState({breedGroup: undefined});
+                    this.setState({breedGroup: []});
                 }}} />
 
             <ThemeProvider theme={sliderTheme}>
@@ -102,7 +118,7 @@ render() {
                 />
             </ThemeProvider>
 
-            <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+            <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
         </div>
     );
 }

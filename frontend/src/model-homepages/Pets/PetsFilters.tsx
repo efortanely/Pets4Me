@@ -65,6 +65,29 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
         } as PetsFiltersState;
     }
 
+    public constructQuery(){
+      let filters = []
+      //FIXME: species query
+      if (this.state.species)
+        filters.push({ "name": "name", "op": "eq", "val": this.state.species})
+      if (this.state.gender)
+        filters.push({ "name": "gender", "op": "eq", "val": this.state.gender})
+      if (this.state.primaryBreed.length > 0)
+        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.primaryBreed})
+      if (this.state.secondaryBreed.length > 0)
+        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.secondaryBreed})
+      if (this.state.color.length > 0)
+        filters.push({ "name": "color", "op": "eq", "val": this.state.color})
+      if (this.state.size.length > 0)
+        filters.push({ "name": "size", "op": "eq", "val": this.state.size})
+      if (this.state.age.length > 0)
+        filters.push({ "name": "age", "op": "eq", "val": this.state.age})
+      //FIXME: distanceMax query
+      if (this.state.distanceMax > 0)
+        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.gender})
+      return "q=" + JSON.stringify({"filters": filters});
+    }
+
     render() {
         return (
             <div className='filters'>

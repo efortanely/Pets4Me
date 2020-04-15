@@ -10,7 +10,7 @@ import { CatBreedsFiltersData } from '../../models/CatBreedsFiltersData';
 import '../ModelHomepage.css'
 
 interface CatBreedsFiltersState {
-    nameInitials: string[] | undefined;
+    nameInitials: string[];
     doorsiness: string | undefined;
     dogLevel: number;
     childLevel: number;
@@ -61,6 +61,28 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
         this.setState({dogLevel: newValue as number});
     };
 
+    public constructQuery(){
+      let filters = []
+      //FIXME: NameInitials query
+      if (this.state.nameInitials.length > 0)
+        filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
+      if (this.state.doorsiness){
+        let val = 0
+        if (this.state.doorsiness == "Indoor")
+          val = 1
+        filters.push({ "name": "indoor", "op": "eq", "val": val})
+      }
+      if (this.state.dogLevel > 0)
+        filters.push({ "name": "dog_friendly", "op": "gt", "val": this.state.dogLevel})
+      if (this.state.childLevel > 0)
+        filters.push({ "name": "child_friendly", "op": "gt", "val": this.state.childLevel})
+      if (this.state.groomingLevel > 0)
+        filters.push({ "name": "grooming_level", "op": "gt", "val": this.state.groomingLevel})
+      filters.push({ "name": "life_span_low", "op": "gt", "val": this.state.minLifespan})
+      filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.maxLifespan})
+      return "q=" + JSON.stringify({"filters": filters});
+    }
+
     render() {
         return (
             <div className='filters'>
@@ -80,7 +102,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                               return selectItem.value;
                           })});
                       } else {
-                          this.setState({nameInitials: undefined});
+                          this.setState({nameInitials: []});
                       }}} />
                 <Select options={this.doorsinessData} placeholder="Indoor/outdoor?" isClearable={true}
                     onChange={(value: any) => this.setState({doorsiness: value?.value})} />
@@ -105,7 +127,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+                <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
             </div>
         );
     }

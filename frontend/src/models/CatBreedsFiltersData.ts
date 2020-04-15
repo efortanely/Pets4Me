@@ -6,6 +6,6 @@ export interface CatBreedsFiltersData {
 
 export let sampleFilterData = {
     name_initials: ["A", "B", "C"],
-    lifespan_min: 6,
-    lifespan_max: 15
+    lifespan_min: 0,
+    lifespan_max: 25
 } as CatBreedsFiltersData;

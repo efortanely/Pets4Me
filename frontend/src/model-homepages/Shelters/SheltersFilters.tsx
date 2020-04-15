@@ -49,6 +49,23 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
         }
     }
 
+    public constructQuery(){
+      let filters = []
+      //FIXME: distance and stuff
+      if (this.state.city.length > 0)
+        filters.push({ "name": "city", "op": "eq", "val": this.state.city})
+      if (this.state.postcode === 0)
+        //filters.push({ "name": "city", "op": "opname", "val": this.state.city})
+      if (this.state.state.length > 0)
+        filters.push({ "name": "state", "op": "eq", "val": this.state.state})
+      //FIXME: zip code and distance
+      if (this.state.distanceMax !== 0)
+        //filters.push({ "name": "city", "op": "opname", "val": this.state.city})
+      if (this.state.shelterWithSpecies.length > 0)
+        filters.push({ "name": "shelterWithSpecies", "op": "eq", "val": this.state.shelterWithSpecies})
+      return JSON.stringify({"filters": filters});
+    }
+
     render() {
         return (
             <div className='filters'>
@@ -94,7 +111,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
                     />
                 </ThemeProvider>
-            <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+            <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
             </div>
         );
     }
