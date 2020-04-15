@@ -94,7 +94,7 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
           <p id='secondary-breed'>Secondary breed: {this.getLinkedUrl(pet.secondary_breed, this.getBreedType(), 'Breed')}</p>
           <p id='description'>Description: {pet.description}</p>
           <p id='shelter'>Shelter this pet is located at: {this.getLinkedUrl(pet.shelter, 'shelters', 'Shelter')}</p>
-          <p id='url'>More info: {pet.url}</p>
+          <p id='url'>More info: <a href={pet.url}>{pet.url}</a></p>
         </div>
       </div>
     )
