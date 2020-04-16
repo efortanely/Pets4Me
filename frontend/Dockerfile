@@ -13,9 +13,11 @@ WORKDIR /home/frontend
 
 RUN sudo apt-get update && sudo apt-get install -y curl
 
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
-ENV NVM_DIR=/home/frontend/.nvm
-RUN . $NVM_DIR/nvm.sh && nvm install v13.9.0 
+RUN sudo curl -O https://nodejs.org/download/release/v13.9.0/node-v13.9.0-linux-x64.tar.gz \
+    && tar xzf node-v13.9.0-linux-x64.tar.gz \
+    && sudo mv node-v13.9.0-linux-x64 /opt/node-v13.9.0-linux-x64
+
+ENV PATH="/opt/node-v13.9.0-linux-x64/bin:${PATH}"
 
 RUN sudo apt-get update && sudo apt-get install -y firefox
 
