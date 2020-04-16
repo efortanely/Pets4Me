@@ -9,10 +9,12 @@ function Navbar() {
       <Container fluid>
         <Row>
           <Col xl={2}>
-            <div className="Logo">
-              <img src={logo} alt="A logo featuring a dog and cat"></img>
-              <h1>Pets4Me</h1>
-            </div>
+            <a href="/">
+              <div className="Logo">
+                <img src={logo} alt="A logo featuring a dog and cat"></img>
+                <h1>Pets4Me</h1>
+              </div>
+              </a>
           </Col>
           <Col xl={4}>
             <SearchBar />
