@@ -8,7 +8,7 @@ import { DogBreedsFiltersData } from '../../models/DogBreedsFiltersData'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 
-interface DogBreedsFiltersState {
+export interface DogBreedsFiltersState {
   nameInitials: string[];
   breedGroup: string[];
   maxHeight: number;
@@ -31,6 +31,34 @@ const customStyles = {
         }
     })
   };
+
+export const constructQuery = (selectedFilters: DogBreedsFiltersState) => {
+    let filters = []
+    let order_by = []
+    let query = ""
+    //FIXME: NameInitials query
+    if (selectedFilters.nameInitials.length > 0)
+      filters.push({ "name": "name", "op": "opname", "val": selectedFilters.nameInitials})
+    if (selectedFilters.breedGroup.length > 0)
+      filters.push({ "name": "breed_group", "op": "eq", "val": selectedFilters.breedGroup})
+    filters.push({ "name": "height_imperial_low", "op": "gt", "val": selectedFilters.minHeight})
+    filters.push({ "name": "height_imperial_high", "op": "lt", "val": selectedFilters.maxHeight})
+    filters.push({ "name": "weight_imperial_low", "op": "gt", "val": selectedFilters.minWeight})
+    filters.push({ "name": "weight_imperial_high", "op": "lt", "val": selectedFilters.maxWeight})
+    filters.push({ "name": "life_span_low", "op": "gt", "val": selectedFilters.lifespanMin})
+    filters.push({ "name": "life_span_high", "op": "lt", "val": selectedFilters.lifespanMax})
+    if (selectedFilters.sortType)
+      order_by.push({ "field": selectedFilters.sortType, "direction": selectedFilters.sortDir})
+    if (filters.length > 0){
+      if (order_by.length > 0)
+        query += JSON.stringify({"filters": filters, "order_by": order_by})
+      else
+        query += JSON.stringify({"filters": filters})
+    }
+    else if (order_by.length > 0)
+      query += JSON.stringify({"order_by": order_by})
+    return query;
+  }
 
 export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogBreedsFiltersState> {
 
@@ -61,33 +89,6 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
         } as DogBreedsFiltersState;
     }
 
-    public constructQuery(){
-      let filters = []
-      let order_by = []
-      let query = ""
-      //FIXME: NameInitials query
-      if (this.state.nameInitials.length > 0)
-        filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
-      if (this.state.breedGroup.length > 0)
-        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.breedGroup})
-      filters.push({ "name": "height_imperial_low", "op": "gt", "val": this.state.minHeight})
-      filters.push({ "name": "height_imperial_high", "op": "lt", "val": this.state.maxHeight})
-      filters.push({ "name": "weight_imperial_low", "op": "gt", "val": this.state.minWeight})
-      filters.push({ "name": "weight_imperial_high", "op": "lt", "val": this.state.maxWeight})
-      filters.push({ "name": "life_span_low", "op": "gt", "val": this.state.lifespanMin})
-      filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.lifespanMax})
-      if (this.state.sortType)
-        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
-      if (filters.length > 0){
-        if (order_by.length > 0)
-          query += JSON.stringify({"filters": filters, "order_by": order_by})
-        else
-          query += JSON.stringify({"filters": filters})
-      }
-      else if (order_by.length > 0)
-        query += JSON.stringify({"order_by": order_by})
-      return query;
-    }
 
 
 render() {
