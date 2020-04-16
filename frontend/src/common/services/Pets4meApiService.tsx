@@ -12,7 +12,7 @@ class Pets4meApiService extends ApiService {
   }
 
   getFilterOptions() {
-    return this.fetchJsonAsObject<any>('/filter', { })
+    return this.fetchJsonAsObject<any>('filter', { })
   }
 }
 

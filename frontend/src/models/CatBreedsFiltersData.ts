@@ -1,5 +1,6 @@
 export interface CatBreedsFiltersData {
     name_initials: string[];
+    catBreeds: string[];
     lifespan_min: number;
     lifespan_max: number;
 }
