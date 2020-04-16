@@ -1,9 +1,18 @@
 export interface CatBreedsFiltersData {
     name_initials: string[];
+    breeds: string[];
     lifespan_min: number;
     lifespan_max: number;
     updateFilters: any;
 }
+
+export let sampleFilterData = {
+    name_initials: ["A", "B", "C"],
+    breeds: ["Beast of the night", "gary"],
+    lifespan_min: 6,
+    lifespan_max: 15,
+    updateFilters: (arg: any) => console.log("Filter callback not set!")
+} as CatBreedsFiltersData;
 
 export interface CatBreedsFiltersState {
     nameInitials: string[] | undefined;
@@ -28,10 +37,3 @@ export let defaultFilterState = {
     sortType: undefined,
     sortDir: "desc"
 } as CatBreedsFiltersState;
-
-export let sampleFilterData = {
-    name_initials: ["A", "B", "C"],
-    lifespan_min: 6,
-    lifespan_max: 15,
-    updateFilters: (arg: any) => console.log("Filter callback not set!")
-} as CatBreedsFiltersData;

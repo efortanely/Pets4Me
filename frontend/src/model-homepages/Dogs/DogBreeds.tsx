@@ -5,14 +5,18 @@ import { ThemeProvider } from '@material-ui/styles';
 import MediaQuery from 'react-responsive';
 import '../ModelHomepage.css';
 import DogBreedsInfoCards from './DogBreedsInfoCards';
-import { DogBreedsFiltersState, sampleFilterData, defaultFilterState } from '../../models/DogBreedsFiltersData'
+import { DogBreedsFiltersState, defaultFilterState, DogBreedsFiltersData } from '../../models/DogBreedsFiltersData'
 import { sliderTheme } from '../ModelHomepageUtils'
+
+interface DogBreedsProps {
+  filterOptions: DogBreedsFiltersData
+}
 
 interface DogBreedsState {
   filters: DogBreedsFiltersState
 }
 
-export class DogBreeds extends React.Component<{}, DogBreedsState> {
+export class DogBreeds extends React.Component<DogBreedsProps, DogBreedsState> {
 
   constructor(props: any) {
     super(props)
@@ -20,7 +24,7 @@ export class DogBreeds extends React.Component<{}, DogBreedsState> {
       filters: defaultFilterState
     }
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
-    sampleFilterData.updateFilters = this.handleFilterUpdate;
+    this.props.filterOptions.updateFilters = this.handleFilterUpdate;
   }
 
   public handleFilterUpdate(updatedFilters: DogBreedsFiltersState): void {
@@ -46,7 +50,7 @@ export class DogBreeds extends React.Component<{}, DogBreedsState> {
                 valueLabelDisplay='auto'
               />
             </ThemeProvider>
-            <DogBreedsFilters {...sampleFilterData}/>
+            <DogBreedsFilters {...this.props.filterOptions}/>
             <div className='cards-container'>
               <DogBreedsInfoCards filters={this.state.filters}/>
             </div>
@@ -55,7 +59,7 @@ export class DogBreeds extends React.Component<{}, DogBreedsState> {
 
         <MediaQuery query="(min-width: 950px)">
           <div className='model-homepage-content'>
-            <DogBreedsFilters {...sampleFilterData}/>
+            <DogBreedsFilters {...this.props.filterOptions}/>
             <div className='model-homepage-content-col'>
               <div className='sliders'>
                 <form>
