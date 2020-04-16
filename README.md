@@ -5,48 +5,51 @@ Our goal is to make finding a new furry friend as easy as possible. Explore the 
 * Andrew Cramer
     * EID: ac49725
     * Gitlab ID: acramer
-    * Estimated Time to Completion: 23 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 15 hrs
+    * Actual Time to Completion: 16 hrs
 
 
 * Rosemary Fortanely 
     * EID: emf2283
     * Gitlab ID: codesmary
-    * Estimated Time to Completion: 20 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 18 hrs
+    * Actual Time to Completion: 22 hrs
 
 
 * Connor Sheehan 
     * EID: cps2255
     * Gitlab ID: connor6321
-    * Estimated Time to Completion: 22 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 15 hrs
+    * Actual Time to Completion: 20 hrs
 
 
 * Dean Torkelson
     * EID: dt24566
     * Gitlab ID: deantorkelson
-    * Estimated Time to Completion: 25 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 17 hrs
+    * Actual Time to Completion: 20 hrs
 
 
 * Cristan Garza
     * EID: cg42574
     * Gitlab ID: CristianGarza
-    * Estimated Time to Completion: 20 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 10 hrs
+    * Actual Time to Completion: 13 hrs
 
 
 * Robert Hrusecky
     * EID: reh3279
     * Gitlab ID: robert-hrusecky
-    * Estimated Time to Completion: 22 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 15 hrs
+    * Actual Time to Completion: 23 hrs
 
 Git SHA: 8808b921b316f708c6cd909c9d97cd955aec6f66
 
 Phase One Project Leader: Connor Sheehan
+
 Phase Two Project Leader: Dean Torkelson
+
+Phase Three Project Leader: Elizabeth "Rosemary" Fortanely
 
 [API Docs](https://documenter.getpostman.com/view/10430017/SzYYzJDX?version=latest)
 
@@ -107,6 +110,7 @@ Then start the server:
 ### Testing
 
 `npm run s-test` for smoke testing
+`npm run g-test` for gui testing
 Use `make test` to run postman tests as well.
 
 ### Deploying
