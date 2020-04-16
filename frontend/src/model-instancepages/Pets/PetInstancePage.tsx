@@ -5,9 +5,9 @@ import { Pet, BackendEntity, Photos } from '../../models/Pet';
 import { match, Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
-import ImageGallery from 'react-image-gallery';
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
+import ImageCarousel from '../../common/components/ImageCarouesel';
 
 
 type PetProps = { pet: Pet, match: match }
@@ -18,6 +18,8 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   static defaultProps = {
     pet: { } as Pet
   }
+
+  mouse: boolean = false
 
   constructor(props: PetProps) {
     super(props)
@@ -57,9 +59,11 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
         return {original: photo}
       });
 
-      return <div className='instancepage-image'>
-                <ImageGallery items={images} autoPlay={true}/>
-              </div>
+      return (
+      <div className='instancepage-image'>
+        <ImageCarousel images={images}/>
+      </div>
+      )
     }
     else {
       return <div>

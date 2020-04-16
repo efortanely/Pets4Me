@@ -2,10 +2,10 @@ import React from 'react'
 import Pets4meDogBreedsServiceContext from '../../common/services/Pets4meDogBreedsService';
 import { DogBreed } from '../../models/DogBreed';
 import { match } from 'react-router-dom'
-import { Link } from 'react-router-dom';
-import Image from 'react-bootstrap/Image'
+import { Link } from 'react-router-dom'
 import '../ModelInstancepage.css'
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import ImageCarousel from '../../common/components/ImageCarouesel';
 
 type DogBreedProps = { breed: DogBreed, match: match }
 type DogBreedState = { breed: DogBreed }
@@ -63,7 +63,7 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
     let breed: DogBreed = this.state.breed
     return (
       <div className='model-instancepage'>
-        <Image className='instancepage-image' src={breed.photo} rounded />
+        <ImageCarousel images={[{original: breed.photo}]} />
           <div className='instancepage-text'>
             <h1 id='name'>{breed.name}</h1>
             <p id='group'>Group: {breed.breed_group}</p>

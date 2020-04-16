@@ -4,11 +4,11 @@ import { Shelter, Photos } from '../../models/Shelter';
 import { match, Link } from 'react-router-dom'
 import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
-import ImageGallery from 'react-image-gallery';
 import MapMedia from '../../common/components/MapMedia'
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import ImageCarousel from '../../common/components/ImageCarouesel';
 
 type ShelterProps = { shelter: Shelter, match: match }
 type ShelterState = { shelter: Shelter }
@@ -53,7 +53,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
         return {original: photo}
       });
 
-      return <ImageGallery items={images} />
+      return <ImageCarousel images={images}/>
     } else {
       return <div>
               <Image src={logo} rounded />

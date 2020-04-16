@@ -6,6 +6,7 @@ import logo from '../../static/logo.png';
 import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import ImageCarousel from '../../common/components/ImageCarouesel';
 
 type CatBreedProps = { breed: CatBreed, match: match }
 type CatBreedState = { breed: CatBreed }
@@ -47,10 +48,10 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
 
   getPhoto = (photo : string): JSX.Element => {
     if (photo != null)
-      return <Image className='instancepage-image' src={photo} rounded />
+      return <ImageCarousel images={[{original: photo}]} />
     return <div>
       <Image className='instancepage-image' src={logo} rounded />
-      <p>Uh-oh! No image is available for this pet.</p>
+      <p>Uh-oh! No image is available for this breed.</p>
     </div>
   }
 
