@@ -9,7 +9,7 @@ import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUti
 import { CatBreedsFiltersData } from '../../models/CatBreedsFiltersData';
 import '../ModelHomepage.css'
 
-interface CatBreedsFiltersState {
+export interface CatBreedsFiltersState {
     nameInitials: string[];
     doorsiness: string | undefined;
     dogLevel: number;
@@ -19,6 +19,41 @@ interface CatBreedsFiltersState {
     maxLifespan: number;
     sortType: string | undefined;
     sortDir: string | undefined;
+}
+
+export const constructQuery = (selectedFilters: CatBreedsFiltersState) => {
+  let filters = []
+  let order_by = []
+  let query = ""
+  //FIXME: NameInitials query
+  if (selectedFilters.nameInitials.length > 0)
+    filters.push({ "name": "name", "op": "opname", "val": selectedFilters.nameInitials})
+  if (selectedFilters.doorsiness){
+    let val = 0
+    if (selectedFilters.doorsiness === "Indoor")
+      val = 1
+    filters.push({ "name": "indoor", "op": "eq", "val": val})
+  }
+  if (selectedFilters.dogLevel > 0)
+    filters.push({ "name": "dog_friendly", "op": "gt", "val": selectedFilters.dogLevel})
+  if (selectedFilters.childLevel > 0)
+    filters.push({ "name": "child_friendly", "op": "gt", "val": selectedFilters.childLevel})
+  if (selectedFilters.groomingLevel > 0)
+    filters.push({ "name": "grooming_level", "op": "gt", "val": selectedFilters.groomingLevel})
+  filters.push({ "name": "life_span_low", "op": "gt", "val": selectedFilters.minLifespan})
+  filters.push({ "name": "life_span_high", "op": "lt", "val": selectedFilters.maxLifespan})
+  if (selectedFilters.sortType)
+    order_by.push({ "field": selectedFilters.sortType, "direction": selectedFilters.sortDir})
+
+  if (filters.length > 0){
+    if (order_by.length > 0)
+      query += JSON.stringify({"filters": filters, "order_by": order_by})
+    else
+      query += JSON.stringify({"filters": filters})
+  }
+  else if (order_by.length > 0)
+    query += JSON.stringify({"order_by": order_by})
+  return query;
 }
 
 const customStyles = {
@@ -68,42 +103,6 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
             sortDir: "desc"
         } as CatBreedsFiltersState;
     }
-
-    public constructQuery(){
-      let filters = []
-      let order_by = []
-      let query = ""
-      //FIXME: NameInitials query
-      if (this.state.nameInitials.length > 0)
-        filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
-      if (this.state.doorsiness){
-        let val = 0
-        if (this.state.doorsiness === "Indoor")
-          val = 1
-        filters.push({ "name": "indoor", "op": "eq", "val": val})
-      }
-      if (this.state.dogLevel > 0)
-        filters.push({ "name": "dog_friendly", "op": "gt", "val": this.state.dogLevel})
-      if (this.state.childLevel > 0)
-        filters.push({ "name": "child_friendly", "op": "gt", "val": this.state.childLevel})
-      if (this.state.groomingLevel > 0)
-        filters.push({ "name": "grooming_level", "op": "gt", "val": this.state.groomingLevel})
-      filters.push({ "name": "life_span_low", "op": "gt", "val": this.state.minLifespan})
-      filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.maxLifespan})
-      if (this.state.sortType)
-        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
-
-      if (filters.length > 0){
-        if (order_by.length > 0)
-          query += JSON.stringify({"filters": filters, "order_by": order_by})
-        else
-          query += JSON.stringify({"filters": filters})
-      }
-      else if (order_by.length > 0)
-        query += JSON.stringify({"order_by": order_by})
-      return query;
-    }
-
 
     handleChange = (event: any, newValue: number | number[]) => {
         this.setState({dogLevel: newValue as number});
@@ -229,7 +228,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
+                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
             </div>
         );
     }

@@ -8,35 +8,58 @@ import { DogBreedsFiltersData } from '../../../models/DogBreedsFiltersData'
 chai.use(sinonChai)
 
 describe('<DogBreedsFilters />', () => {
-  let emptyFilters = { } as DogBreedsFiltersState;
 
-  let expectedFilters = {
-        "filters": [
-            {
-                "name": "city",
-                "op": "in",
-                "val": ["Austin", "Amarillo"]
-            },
-            {
-                "name": "max_distance",
-                "op": "le",
-                "val": 1000
-            }
-        ],
-        "order_by": [
-            {
-                "field": "primary_dog_breed_name",
-                "direction": "asc"
-            }
-        ]
-    }
+  let testDefaultFilterState = {
+    nameInitials: [],
+    breedGroup: [],
+    maxHeight: 4,
+    minHeight: 0,
+    maxWeight: 20,
+    minWeight: 5,
+    lifespanMin: 6,
+    lifespanMax: 9,
+    sortType: undefined,
+    sortDir: "desc",
+  }
+
+  let expectedFilters = [
+    {
+    "name": "height_imperial_low",
+    "op": "gt",
+    "val": 0
+    },
+    {
+    "name": "height_imperial_high",
+    "op": "lt",
+    "val": 4
+    },
+    {
+    "name": "weight_imperial_low",
+    "op": "gt",
+    "val": 5
+    },
+    {
+    "name": "weight_imperial_high",
+    "op": "lt",
+    "val": 20
+    },
+    {
+    "name": "life_span_low",
+    "op": "gt",
+    "val": 6
+    },
+    {
+    "name": "life_span_high",
+    "op": "lt",
+    "val": 9
+    }]
 
   function mountWithPage(filterOptions: DogBreedsFiltersData) {
     return mount(<DogBreedsFilters {...filterOptions}/>)
   }
-  
+
   // author Dean
-  it('should render loading page', () => {
-    expect(true).to.equal(true);
+  it('default call to the submit button with no options selected', () => {
+    expect(constructQuery(testDefaultFilterState)).to.equal(JSON.stringify({"filters": expectedFilters}));
   });
 })

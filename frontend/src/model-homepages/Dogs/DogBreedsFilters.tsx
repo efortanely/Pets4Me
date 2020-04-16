@@ -187,7 +187,7 @@ render() {
                 />
             </ThemeProvider>
 
-            <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
+            <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
         </div>
     );
 }

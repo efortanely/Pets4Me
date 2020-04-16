@@ -10,7 +10,7 @@ import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
 
-interface SheltersFiltersState {
+export interface SheltersFiltersState {
     city: string[];
     postcode: number;
     state: string[];
@@ -18,6 +18,34 @@ interface SheltersFiltersState {
     shelterWithSpecies: string;
     sortType: string | undefined;
     sortDir: string | undefined;
+}
+
+export const constructQuery = (selectedFilters: SheltersFiltersState) => {
+    let filters = []
+    let order_by = []
+    let query = "?zip_code=78705&max_dist=" + selectedFilters.distanceMax
+    if (selectedFilters.city.length > 0)
+     filters.push({ "name": "city", "op": "eq", "val": selectedFilters.city})
+    if (selectedFilters.state.length > 0)
+     filters.push({ "name": "state", "op": "eq", "val": selectedFilters.state})
+    if (selectedFilters.postcode !== 0)
+     filters.push({ "name": "postcode", "op": "eq", "val": selectedFilters.postcode})
+    if (selectedFilters.shelterWithSpecies === "dogs")
+      filters.push({ "name": "has_dogs", "op": "eq", "val": 1})
+    if (selectedFilters.shelterWithSpecies === "cats")
+     filters.push({ "name": "has_cats", "op": "eq", "val": 1})
+    if (selectedFilters.sortType)
+     order_by.push({ "field": selectedFilters.sortType, "direction": selectedFilters.sortDir})
+
+    if (filters.length > 0){
+     if (order_by.length > 0)
+       query += "&q=" + JSON.stringify({"filters": filters, "order_by": order_by})
+     else
+       query += "&q=" + JSON.stringify({"filters": filters})
+    }
+    else if (order_by.length > 0)
+     query += "&q=" + JSON.stringify({"order_by": order_by})
+    return query;
 }
 
 const customStyles = {
@@ -59,35 +87,6 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
             sortDir: "desc"
         }
     }
-
-    public constructQuery(){
-     let filters = []
-     let order_by = []
-     let query = "?zip_code=78705&max_dist=" + this.state.distanceMax
-     if (this.state.city.length > 0)
-       filters.push({ "name": "city", "op": "eq", "val": this.state.city})
-     if (this.state.state.length > 0)
-       filters.push({ "name": "state", "op": "eq", "val": this.state.state})
-     if (this.state.postcode !== 0)
-       filters.push({ "name": "postcode", "op": "eq", "val": this.state.postcode})
-     if (this.state.shelterWithSpecies === "dogs")
-        filters.push({ "name": "has_dogs", "op": "eq", "val": 1})
-     if (this.state.shelterWithSpecies === "cats")
-       filters.push({ "name": "has_cats", "op": "eq", "val": 1})
-     if (this.state.sortType)
-       order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
-
-     if (filters.length > 0){
-       if (order_by.length > 0)
-         query += "&q=" + JSON.stringify({"filters": filters, "order_by": order_by})
-       else
-         query += "&q=" + JSON.stringify({"filters": filters})
-     }
-     else if (order_by.length > 0)
-       query += "&q=" + JSON.stringify({"order_by": order_by})
-     return query;
-   }
-
 
     render() {
         return (
@@ -194,7 +193,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                             },
                         })}
                         />
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
+                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
             </div>
         );
     }
