@@ -75,6 +75,7 @@
     "@babel/register": "^7.9.0",
     "@types/mocha": "^7.0.2",
     "@types/react-responsive": "^8.0.2",
+    "@types/react-router-dom": "^5.1.4",
     "@types/sinon": "^7.5.2",
     "@types/sinon-chai": "^3.2.3",
     "babel-loader": "^8.0.6",
