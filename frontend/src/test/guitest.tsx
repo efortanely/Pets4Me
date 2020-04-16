@@ -1,23 +1,40 @@
 import { expect } from 'chai';
-import { Builder, By, Key, until } from 'selenium-webdriver'
-import chrome from 'selenium-webdriver/chrome'
+import { Builder, By } from 'selenium-webdriver'
+import firefox from 'selenium-webdriver/firefox'
 
-describe('DefaultTest', () => {
-  let chrome_options = new chrome.Options()
-      // uncomment if you need to specify a specific binary
-      // .setChromeBinaryPath("/mnt/c/Program Files (x86)/Google/Chrome/Application/chrome.exe")
-      
+
+describe('GuiTests', () => {
+  let firefoxOptions = new firefox.Options()
+
   const driver = new Builder()
-      .forBrowser('chrome')
-      .setChromeOptions(chrome_options)
+      .forBrowser('firefox')
+      .setFirefoxOptions(firefoxOptions.headless())
       .build();
+  
+  driver.manage().window().maximize();
+  
+  const base_url = "https://pets4.me/"
 
-  it('should go to nehalist.io and check the title', async () => {
-      await driver.get('https://www.nehalist.io');
+  // author: Rosemary
+  it('should have pets4me title', async () => {
+      await driver.get(base_url);
+      await driver.sleep(1500);
       const title = await driver.getTitle();
-
-      expect(title).to.equal('nehalist.io');
+      expect(title).to.equal('Pets4Me');
   });
+
+  // author: Rosemary
+  it('should have adoption link', async () => {
+    await driver.get(base_url);
+    await driver.sleep(1500);
+    const adoption_link = (await driver).findElement(By.linkText("adopt a pet today"))
+    adoption_link.click()
+    await driver.sleep(1500);
+    const current_url = (await driver).getCurrentUrl()
+      .then(value =>
+        expect(value).to.include(base_url + "pets/")
+      );
+});
 
   after(async () => driver.quit());
 });
