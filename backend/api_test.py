@@ -357,11 +357,11 @@ class MyUnitTests(TestCase):
         response = self.app.get("/api/shelters")
         self.assertEqual(response.status_code, 200)
 
-    # author Andrew 
+    # author Andrew
     def test_shelter_status_code(self):
         response = self.app.get("/api/filter")
         self.assertEqual(response.status_code, 200)
-        
+
     # author Rosemary
     def test_shelter_json(self):
         valid_shelters_json = True
