@@ -9,7 +9,7 @@ parser.add_argument(
     action="store_true",
     help="When specified, the backend server is not started. Instead, a full database refresh is performed.",
 )
-args = parser.parse_args()
+args, _ = parser.parse_known_args()
 
 app = create_app(__name__)
 
