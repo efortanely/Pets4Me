@@ -20,13 +20,6 @@ export class Pets4mePetsService implements ModelInstanceService<Pet> {
   getInstanceById(id: string): Promise<Pet> {
     return this.pets4meApiService.fetchJsonAsObject<Pet>(`${this.endpoint}/${id}`, { })
   }
-
-
-  getPetMetadata(): Promise<PetsFiltersData> {
-    return new Promise(function(response) {
-      response(sampleFilterData);
-    });
-  }
 }
 
 const pets4mePetsService: Pets4mePetsService = new Pets4mePetsService()

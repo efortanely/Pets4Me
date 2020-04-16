@@ -20,13 +20,6 @@ export class Pets4meSheltersService implements ModelInstanceService<Shelter> {
   getInstanceById(id: string): Promise<Shelter> {
     return this.pets4meApiService.fetchJsonAsObject<Shelter>(`${this.endpoint}/${id}`, { })
   }
-
-  getShelterMetadata(): Promise<SheltersFiltersData> {
-    return new Promise(function(response) {
-      response(sampleFilterData);
-    });
-  }
-
 }
 
 const pets4meSheltersService: Pets4meSheltersService = new Pets4meSheltersService()

@@ -10,6 +10,10 @@ class Pets4meApiService extends ApiService {
       console.log('!!Connecting to the Real database')
     }
   }
+
+  getFilterOptions() {
+    return this.fetchJsonAsObject<any>('/filter', { })
+  }
 }
 
 export default Pets4meApiService

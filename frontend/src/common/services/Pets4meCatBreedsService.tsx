@@ -20,12 +20,6 @@ export class Pets4meCatBreedsService implements ModelInstanceService<CatBreed> {
   getInstanceById(id: string): Promise<CatBreed> {
     return this.pets4meApiService.fetchJsonAsObject<CatBreed>(`${this.endpoint}/${id}`, { })
   }
-
-  getCatBreedMetadata(): Promise<CatBreedsFiltersData> {
-    return new Promise(function(response) {
-      response(sampleFilterData);
-    });
-  }
 }
 
 const pets4meCatBreedsService: Pets4meCatBreedsService = new Pets4meCatBreedsService()

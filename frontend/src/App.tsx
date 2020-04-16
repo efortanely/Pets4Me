@@ -11,41 +11,51 @@ import DogBreedInstancePage from './model-instancepages/Breeds/DogBreedInstanceP
 import PetInstancePage from './model-instancepages/Pets/PetInstancePage'
 import CatBreedInstancePage from './model-instancepages/Breeds/CatBreedInstancePage'
 import ShelterInstancePage from './model-instancepages/Shelters/ShelterInstancePage'
+import Pets4meApiService from './common/services/Pets4meApiService'
 
 import './App.css';
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Navbar/>
-        <Switch>
-          <Route path="/pets/:pet_id" component={PetInstancePage} />
-          <Route path="/pets">
-            <Pets />
-          </Route>
-          <Route path="/dog-breeds/:breed_id" component={DogBreedInstancePage} />
-          <Route path="/dog-breeds">
-            <DogBreeds />
-          </Route>
-          <Route path="/cat-breeds/:breed_id" component={CatBreedInstancePage} />
-          <Route path="/cat-breeds">
-            <CatBreeds />
-          </Route>
-          <Route path="/shelters/:shelter_id" component={ShelterInstancePage} />
-          <Route path="/shelters">
-            <Shelters />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
+class App extends React.Component<{}, {}> {
+
+  componentDidMount() {
+    let apiService = new Pets4meApiService();
+    let filterOptions = apiService.getFilterOptions();
+    console.log(filterOptions);
+  }
+
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <Navbar/>
+          <Switch>
+            <Route path="/pets/:pet_id" component={PetInstancePage} />
+            <Route path="/pets">
+              <Pets />
+            </Route>
+            <Route path="/dog-breeds/:breed_id" component={DogBreedInstancePage} />
+            <Route path="/dog-breeds">
+              <DogBreeds />
+            </Route>
+            <Route path="/cat-breeds/:breed_id" component={CatBreedInstancePage} />
+            <Route path="/cat-breeds">
+              <CatBreeds />
+            </Route>
+            <Route path="/shelters/:shelter_id" component={ShelterInstancePage} />
+            <Route path="/shelters">
+              <Shelters />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
