@@ -21,6 +21,8 @@ ENV PATH="/opt/node-v13.9.0-linux-x64/bin:${PATH}"
 
 RUN sudo apt-get update && sudo apt-get install -y firefox
 
+RUN sudo apt-get update && sudo apt-get install -y make
+
 EXPOSE 3000
 
 WORKDIR workspace
