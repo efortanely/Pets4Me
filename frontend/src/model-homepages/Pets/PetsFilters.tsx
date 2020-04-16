@@ -74,9 +74,51 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
             age: [],
             distanceMax: 1000,
             sortType: undefined,
-            sortDir: undefined
+            sortDir: "desc"
         } as PetsFiltersState;
     }
+
+    public constructQuery(){
+      let filters = []
+      let order_by = []
+      let query = "?zip_code=78705&max_dist=" + this.state.distanceMax
+      if (this.state.species){
+        filters.push({ "name": "name", "op": "eq", "val": this.state.species})
+        if (this.state.primaryBreed.length > 0){
+          if (this.state.species === "Dog")
+            filters.push({ "name": "primary_dog_breed", "op": "eq", "val": {"name":"name","op":"eq","val":this.state.primaryBreed}})
+          else if (this.state.species === "Cat")
+            filters.push({ "name": "primary_cat_breed", "op": "eq", "val": {"name":"name","op":"eq","val":this.state.primaryBreed}})
+        }
+        if (this.state.secondaryBreed.length > 0){
+          if (this.state.species === "Dog")
+            filters.push({ "name": "secondary_dog_breed", "op": "eq", "val": {"name":"name","op":"eq","val":this.state.secondaryBreed}})
+          else if (this.state.species === "Cat")
+            filters.push({ "name": "secondary_cat_breed", "op": "eq", "val": {"name":"name","op":"eq","val":this.state.secondaryBreed}})
+        }
+      }
+      if (this.state.gender)
+        filters.push({ "name": "gender", "op": "eq", "val": this.state.gender})
+      if (this.state.color.length > 0)
+        filters.push({ "name": "color", "op": "eq", "val": this.state.color})
+      if (this.state.size.length > 0)
+        filters.push({ "name": "size", "op": "eq", "val": this.state.size})
+      if (this.state.age.length > 0)
+        filters.push({ "name": "age", "op": "eq", "val": this.state.age})
+      if (this.state.sortType)
+        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
+
+      if (filters.length > 0){
+        if (order_by.length > 0)
+          query += "&q=" + JSON.stringify({"filters": filters, "order_by": order_by})
+        else
+          query += "&q=" + JSON.stringify({"filters": filters})
+      }
+      else if (order_by.length > 0)
+        query += "&q=" + JSON.stringify({"order_by": order_by})
+      return query;
+    }
+
 
     getBreedData() {
         if (this.state.species === "Dog") {
@@ -86,7 +128,7 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
         }
     }
 
-    
+
     breedPlaceholderText(importance: string) {
         if (!this.state.species) {
             return "Please select a species first."
@@ -234,7 +276,7 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                             })});
                         } else {
                             this.setState({size: []});
-                        }}} 
+                        }}}
                         styles={customStyles}
                         theme={theme => ({
                             ...theme,
@@ -283,7 +325,7 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                         onChange={(event: any, value: any) => this.setState({distanceMax: value})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+                <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
             </div>
         );
     }

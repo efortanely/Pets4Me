@@ -9,8 +9,8 @@ import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 
 interface DogBreedsFiltersState {
-  nameInitials: string[] | undefined;
-  breedGroup: string[] | undefined;
+  nameInitials: string[];
+  breedGroup: string[];
   maxHeight: number;
   minHeight: number;
   maxWeight: number;
@@ -57,9 +57,38 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
             lifespanMin: 0,
             lifespanMax: 100,
             sortType: undefined,
-            sortDir: undefined
+            sortDir: "desc"
         } as DogBreedsFiltersState;
     }
+
+    public constructQuery(){
+      let filters = []
+      let order_by = []
+      let query = ""
+      //FIXME: NameInitials query
+      if (this.state.nameInitials.length > 0)
+        filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
+      if (this.state.breedGroup.length > 0)
+        filters.push({ "name": "breed_group", "op": "eq", "val": this.state.breedGroup})
+      filters.push({ "name": "height_imperial_low", "op": "gt", "val": this.state.minHeight})
+      filters.push({ "name": "height_imperial_high", "op": "lt", "val": this.state.maxHeight})
+      filters.push({ "name": "weight_imperial_low", "op": "gt", "val": this.state.minWeight})
+      filters.push({ "name": "weight_imperial_high", "op": "lt", "val": this.state.maxWeight})
+      filters.push({ "name": "life_span_low", "op": "gt", "val": this.state.lifespanMin})
+      filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.lifespanMax})
+      if (this.state.sortType)
+        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
+      if (filters.length > 0){
+        if (order_by.length > 0)
+          query += JSON.stringify({"filters": filters, "order_by": order_by})
+        else
+          query += JSON.stringify({"filters": filters})
+      }
+      else if (order_by.length > 0)
+        query += JSON.stringify({"order_by": order_by})
+      return query;
+    }
+
 
 render() {
     return (
@@ -92,7 +121,7 @@ render() {
                         return selectItem.value;
                     })});
                 } else {
-                    this.setState({nameInitials: undefined});
+                    this.setState({nameInitials: [] });
                 }}}
                 styles={customStyles}
                 theme={theme => ({
@@ -117,7 +146,7 @@ render() {
                         return selectItem.value;
                     })});
                 } else {
-                    this.setState({breedGroup: undefined});
+                    this.setState({breedGroup: [] });
                 }}}
                 styles={customStyles}
                 theme={theme => ({
@@ -157,7 +186,7 @@ render() {
                 />
             </ThemeProvider>
 
-            <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+            <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
         </div>
     );
 }

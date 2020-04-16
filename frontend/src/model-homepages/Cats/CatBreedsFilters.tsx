@@ -10,7 +10,7 @@ import { CatBreedsFiltersData } from '../../models/CatBreedsFiltersData';
 import '../ModelHomepage.css'
 
 interface CatBreedsFiltersState {
-    nameInitials: string[] | undefined;
+    nameInitials: string[];
     doorsiness: string | undefined;
     dogLevel: number;
     childLevel: number;
@@ -65,9 +65,45 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
             minLifespan: 0,
             maxLifespan: 30,
             sortType: undefined,
-            sortDir: undefined
+            sortDir: "desc"
         } as CatBreedsFiltersState;
     }
+
+    public constructQuery(){
+      let filters = []
+      let order_by = []
+      let query = ""
+      //FIXME: NameInitials query
+      if (this.state.nameInitials.length > 0)
+        filters.push({ "name": "name", "op": "opname", "val": this.state.nameInitials})
+      if (this.state.doorsiness){
+        let val = 0
+        if (this.state.doorsiness === "Indoor")
+          val = 1
+        filters.push({ "name": "indoor", "op": "eq", "val": val})
+      }
+      if (this.state.dogLevel > 0)
+        filters.push({ "name": "dog_friendly", "op": "gt", "val": this.state.dogLevel})
+      if (this.state.childLevel > 0)
+        filters.push({ "name": "child_friendly", "op": "gt", "val": this.state.childLevel})
+      if (this.state.groomingLevel > 0)
+        filters.push({ "name": "grooming_level", "op": "gt", "val": this.state.groomingLevel})
+      filters.push({ "name": "life_span_low", "op": "gt", "val": this.state.minLifespan})
+      filters.push({ "name": "life_span_high", "op": "lt", "val": this.state.maxLifespan})
+      if (this.state.sortType)
+        order_by.push({ "field": this.state.sortType, "direction": this.state.sortDir})
+
+      if (filters.length > 0){
+        if (order_by.length > 0)
+          query += JSON.stringify({"filters": filters, "order_by": order_by})
+        else
+          query += JSON.stringify({"filters": filters})
+      }
+      else if (order_by.length > 0)
+        query += JSON.stringify({"order_by": order_by})
+      return query;
+    }
+
 
     handleChange = (event: any, newValue: number | number[]) => {
         this.setState({dogLevel: newValue as number});
@@ -104,7 +140,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                               return selectItem.value;
                           })});
                       } else {
-                          this.setState({nameInitials: undefined});
+                          this.setState({nameInitials: [] });
                       }}}
                       styles={customStyles}
                         theme={theme => ({
@@ -193,7 +229,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+                <Button variant='primary' onClick={() => console.log("current filters:: ", this.constructQuery())}>Submit</Button>
             </div>
         );
     }
