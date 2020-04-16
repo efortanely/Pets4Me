@@ -1,5 +1,5 @@
 import os
-from flask import after_this_request, request
+from flask import after_this_request, request, jsonify
 from sqlalchemy import (
     Column,
     Integer,
@@ -10,6 +10,7 @@ from sqlalchemy import (
     or_,
     and_,
     func,
+    create_engine,
 )
 from functools import reduce
 from sqlalchemy.dialects.postgresql import ARRAY as Array
@@ -508,6 +509,7 @@ def setup(app):
     db.init_app(app)
     db.app = app
 
+
     def enable_cors(*_t, **_d):
         @after_this_request
         def apply_headers(response):
@@ -553,3 +555,58 @@ def setup(app):
         include_columns=shelter_includes,
         results_per_page=12,
     )
+
+    @app.route('/api/filter')
+    def filter_info():
+        def listify(c):
+            return sorted([i[0] for i in c if len(i)>0 and i[0] is not None and i[0] != ""])
+
+        def itemify(c):
+            c = list(c)
+            if len(c):
+                return c[0]
+            return None
+
+        def unique_letter(ul):
+            return sorted(list(set([l[0].upper() for l in ul if len(l)>0])))
+
+        unique_dog_breeds     = listify(db.session.query(DogBreed.name).distinct())
+        unique_cat_breeds     = listify(db.session.query(CatBreed.name).distinct())
+        unique_colors         = listify(db.session.query(Pet.color).distinct())
+        unique_size           = listify(db.session.query(Pet.size).distinct())
+        unique_age            = listify(db.session.query(Pet.age).distinct())
+        # Dog Breeds
+        unique_breed_groups   = listify(db.session.query(DogBreed.breed_group).distinct())
+        min_max_dog_life_span = itemify(db.session.query(func.min(DogBreed.life_span_low), func.max(DogBreed.life_span_high)))
+        min_max_height        = itemify(db.session.query(func.min(DogBreed.height_imperial_low), func.max(DogBreed.height_imperial_high)))
+        min_max_weight        = itemify(db.session.query(func.min(DogBreed.weight_imperial_low), func.max(DogBreed.weight_imperial_high)))
+        # Cat Breeds
+        min_max_cat_life_span = itemify(db.session.query(func.min(CatBreed.life_span_low), func.max(CatBreed.life_span_high)))
+        # Shelters
+        cities                = listify(db.session.query(Shelter.city).distinct())
+        states                = listify(db.session.query(Shelter.state).distinct())
+        max_num_pets          = listify(db.session.query(func.count(Pet.id)).join(Pet, Shelter.pets).group_by(Shelter.id).all())
+        if len(max_num_pets):
+            max_num_pets = max(max_num_pets)
+        else:
+            max_num_pets = None
+
+        return jsonify({"pets":       {"dog_breeds"     :unique_dog_breeds,
+                                       "cat_breeds"     :unique_cat_breeds,
+                                       "colors"         :unique_colors,
+                                       "sizes"          :unique_size,
+                                       "ages"           :unique_age,
+                                       "max_distance"   :300},
+                        "dog_breeds": {"dog_breeds"     :unique_dog_breeds,
+                                       "unique_letters" :unique_letter(unique_dog_breeds),
+                                       "breed_groups"   :unique_breed_groups,
+                                       "life_span"      :{"min":min_max_dog_life_span[0],"max":min_max_dog_life_span[1]},
+                                       "height_span"    :{"min":min_max_height[0],"max":min_max_height[1]},
+                                       "weight_span"    :{"min":min_max_weight[0],"max":min_max_weight[1]}},
+                        "cat_breeds": {"cat_breeds"     :unique_cat_breeds,
+                                       "unique_letters" :unique_letter(unique_cat_breeds),
+                                       "life_span"      :{"min":min_max_dog_life_span[0],"max":min_max_dog_life_span[1]}},
+                        "shelters":   {"cities"         :cities,
+                                       "states"         :states,
+                                       "num_pets"       :max_num_pets},
+                      })
