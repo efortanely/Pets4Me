@@ -69,14 +69,23 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
       let filters = []
       let order_by = []
       let query = "?zip_code=78705&max_dist=" + this.state.distanceMax
-      if (this.state.species)
+      if (this.state.species){
         filters.push({ "name": "name", "op": "eq", "val": this.state.species})
+        if (this.state.primaryBreed.length > 0){
+          if (this.state.species === "Dog")
+            filters.push({ "name": "primary_dog_breed", "op": "eq", "val": {"name":"name","op":"eq","val":this.state.primaryBreed}})
+          else if (this.state.species === "Cat")
+            filters.push({ "name": "primary_cat_breed", "op": "eq", "val": {"name":"name","op":"eq","val":this.state.primaryBreed}})
+        }
+        if (this.state.secondaryBreed.length > 0){
+          if (this.state.species === "Dog")
+            filters.push({ "name": "secondary_dog_breed", "op": "eq", "val": {"name":"name","op":"eq","val":this.state.secondaryBreed}})
+          else if (this.state.species === "Cat")
+            filters.push({ "name": "secondary_cat_breed", "op": "eq", "val": {"name":"name","op":"eq","val":this.state.secondaryBreed}})
+        }
+      }
       if (this.state.gender)
         filters.push({ "name": "gender", "op": "eq", "val": this.state.gender})
-      // if (false)
-      //   filters.push({ "name": "primary_dog_breed", "op": "eq", "val": this.state.primaryBreed})
-      // if (false)
-      //   filters.push({ "name": "secondary_dog_breed", "op": "eq", "val": this.state.secondaryBreed})
       if (this.state.color.length > 0)
         filters.push({ "name": "color", "op": "eq", "val": this.state.color})
       if (this.state.size.length > 0)
