@@ -1,19 +1,14 @@
 import { expect } from 'chai';
 import { Builder, By } from 'selenium-webdriver'
-import chrome from 'selenium-webdriver/chrome'
-import 'babel-polyfill'
+import firefox from 'selenium-webdriver/firefox'
 
 
 describe('GuiTests', () => {
-  let chrome_options = new chrome.Options()
-  let path = process.cwd() + '/chromedriver'
-
-  var service = new chrome.ServiceBuilder(path).build()
-  chrome.setDefaultService(service)
+  let firefoxOptions = new firefox.Options()
 
   const driver = new Builder()
-      .forBrowser('chrome')
-      .setChromeOptions(chrome_options.headless())
+      .forBrowser('firefox')
+      .setFirefoxOptions(firefoxOptions.headless())
       .build();
   
   driver.manage().window().maximize();
