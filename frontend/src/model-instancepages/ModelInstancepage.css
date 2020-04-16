@@ -3,20 +3,30 @@
     padding-bottom: 20px;
     font-weight: bold;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding-left: 10px;
 }
 
 .instancepage-image {
     border-radius: 5px;
     flex-grow: 3;
-    height: 480px;
-    max-width: 40%;
+    flex-direction: row;
 }
 
 .image-gallery {
-    width: 480px;
-  }
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.instancepage-image p {
+    color: #581730;
+    text-align: center;
+}
+
+.mapMedia {
+    margin-bottom: 20px;
+}
 
 .logo {
     padding: 2px;
@@ -32,4 +42,19 @@
 
 .instancepage-text a, .instancepage-text a:hover{
     color: #FAA851;
+}
+
+@media screen and (min-width: 950px){
+    .model-instancepage {
+        flex-direction: row;
+    }
+
+    .instancepage-image {
+        max-width: 500px;
+        flex-direction: column;
+    }
+
+    .image-gallery{
+        width: 480px;
+    }
 }
