@@ -10,6 +10,7 @@ import { ObjectsPage } from '../../../models/ObjectsPage';
 import DogBreedsInfoCards from '../../../model-homepages/Dogs/DogBreedsInfoCards';
 import { Pets4meDogBreedsService } from '../../../common/services/Pets4meDogBreedsService';
 import DogBreedsService from '../../../common/services/DogBreedsService';
+import ModelInstanceService from '../../../common/services/ModelInstanceService';
 chai.use(sinonChai)
 
 const itemsPerPage = 12
@@ -22,8 +23,8 @@ describe('<DogBreedsInfoCards />', () => {
 
   function mountWithPage(page: ObjectsPage<DogBreed>, pageNumber: number = 1) {
     let testDogBreedsService = new Pets4meDogBreedsService()
-    testDogBreedsService.getDogBreeds = (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
-    DogBreedsInfoCards.contextType = React.createContext<DogBreedsService>(testDogBreedsService)
+    testDogBreedsService.getModelPageOfInstances = (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
+    DogBreedsInfoCards.contextType = React.createContext<ModelInstanceService<DogBreed>>(testDogBreedsService)
 
     return mount(<DogBreedsInfoCards />)
   }

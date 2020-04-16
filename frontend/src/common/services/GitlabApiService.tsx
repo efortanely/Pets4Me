@@ -17,15 +17,15 @@ export class GitlabApiService extends ApiService{
   }
 
   getCommits(): Promise<Commit[]> {
-    return this.fetchJsonAsObject<Commit[]>('repository/commits', { ref_name: 'dev', per_page: '10000', page: '0' })
+    return this.fetchJsonAsObject<Commit[]>('repository/commits', { ref_name: 'dev', 'per_page': 100 })
   }
 
   getContributors(): Promise<Contributor[]> {
     return this.fetchJsonAsObject<Contributor[]>('repository/contributors', { })
   }
 
-  getIssuesByAuthor(author_username: string): Promise<Issue[]> {
-    return this.fetchJsonAsObject<Issue[]>('issues', { author_username: author_username, 'per_page': 99 })
+  getIssuesByAssignee(assignee_username: string): Promise<Issue[]> {
+    return this.fetchJsonAsObject<Issue[]>('issues', { assignee_username: assignee_username, 'per_page': 99 })
   }
 }
 

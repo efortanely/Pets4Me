@@ -1,6 +1,6 @@
 import React from 'react'
 import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService';
-import PetsService from '../../common/services/PetsService';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 import { Pet, BackendEntity, Photos } from '../../models/Pet';
 import { match, Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
@@ -27,8 +27,8 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   }
 
   fetchPet = (pet_id: string): Promise<Pet> => {
-    const pets4mePetsService: PetsService = this.context
-    return pets4mePetsService.getPet(pet_id)
+    const pets4mePetsService: ModelInstanceService<Pet> = this.context
+    return pets4mePetsService.getInstanceById(pet_id)
   }
 
   updatePet = (pet: Pet) => {
@@ -94,7 +94,7 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
           <p id='secondary-breed'>Secondary breed: {this.getLinkedUrl(pet.secondary_breed, this.getBreedType(), 'Breed')}</p>
           <p id='description'>Description: {pet.description}</p>
           <p id='shelter'>Shelter this pet is located at: {this.getLinkedUrl(pet.shelter, 'shelters', 'Shelter')}</p>
-          <p id='url'>More info: {pet.url}</p>
+          <p id='url'>More info: <a href={pet.url}>{pet.url}</a></p>
         </div>
       </div>
     )

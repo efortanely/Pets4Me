@@ -1,6 +1,6 @@
 import React from 'react';
 import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService';
-import PetsService from '../../common/services/PetsService';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
 import InfoCards from '../../common/components/Cards/InfoCards';
 import PetCard from '../../common/components/Cards/PetCard';
 import { ObjectsPage } from '../../models/ObjectsPage';
@@ -10,8 +10,8 @@ class PetsInfoCards extends InfoCards<Pet> {
     static contextType = Pets4mePetsServiceContext
     
     fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<Pet>> => {
-        const pets4meDogBreedService: PetsService = this.context
-        return pets4meDogBreedService.getPets(pageNumber)
+        const pets4mePetsService: ModelInstanceService<Pet> = this.context
+        return pets4mePetsService.getModelPageOfInstances(pageNumber)
     }
 
     createInfoCard = (o: Pet, key: any): JSX.Element => {
@@ -21,6 +21,4 @@ class PetsInfoCards extends InfoCards<Pet> {
     getPathName = (): string =>  {
         return '/pets'
     }
-}
-
-export default PetsInfoCards
+} export default PetsInfoCards

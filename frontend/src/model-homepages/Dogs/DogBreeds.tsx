@@ -1,8 +1,9 @@
 import React from 'react';
-import DogsFilters from './DogsFilters'
+import DogBreedsFilters from './DogBreedsFilters'
+import MediaQuery from 'react-responsive';
 import '../ModelHomepage.css';
 import DogBreedsInfoCards from './DogBreedsInfoCards';
-import MediaQuery from 'react-responsive';
+import { sampleFilterData } from '../../models/DogBreedsFiltersData'
 
 function DogBreeds() {
   return (
@@ -14,14 +15,16 @@ function DogBreeds() {
                   <input type="text" name="global-search" placeholder='Search' />
               </label>
           </form>
-          <DogsFilters />
-          <DogBreedsInfoCards />
+          <DogBreedsFilters {...sampleFilterData}/>
+          <div className='cards-container'>
+            <DogBreedsInfoCards />
+          </div>
         </div>
       </MediaQuery>
 
       <MediaQuery query="(min-width: 950px)">
         <div className='model-homepage-content'>
-          <DogsFilters />
+          <DogBreedsFilters {...sampleFilterData}/>
           <div className='model-homepage-content-col'>
             <div className='sliders'>
               <form>
@@ -37,5 +40,5 @@ function DogBreeds() {
         </div>
       </MediaQuery>
     </div>
-  );
+    );
 } export default DogBreeds;
