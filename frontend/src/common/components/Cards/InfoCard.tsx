@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../../static/logo.png';
+import './InfoCards.css'
 
 export interface InfoCardProps<T> { info: T }
 
