@@ -6,20 +6,8 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
-import { CatBreedsFiltersData } from '../../models/CatBreedsFiltersData';
+import { CatBreedsFiltersData, CatBreedsFiltersState, defaultFilterState } from '../../models/CatBreedsFiltersData';
 import '../ModelHomepage.css'
-
-interface CatBreedsFiltersState {
-    nameInitials: string[] | undefined;
-    doorsiness: string | undefined;
-    dogLevel: number;
-    childLevel: number;
-    groomingLevel: number;
-    minLifespan: number;
-    maxLifespan: number;
-    sortType: string | undefined;
-    sortDir: string | undefined;
-}
 
 const customStyles = {
     control: (base: any, state: { isFocused: any; }) => ({
@@ -32,14 +20,55 @@ const customStyles = {
     })
   };
 
+  export const constructQuery = (breeds: string[], selectedFilters: CatBreedsFiltersState) => {
+    let filters = []
+    let order_by = []
+    let query = ""
+    if (selectedFilters.nameInitials.length > 0) {
+      let listOfBreeds = breeds.filter((breedName: string) => {
+          if (selectedFilters.nameInitials.includes(breedName.slice(0, 1)))
+              return true;
+          return false;
+      });
+      filters.push({ "name": "name", "op": "in", "val": listOfBreeds})
+  }
+    if (selectedFilters.doorsiness){
+      let val = 1
+      if (selectedFilters.doorsiness === "Indoor")
+        val = 0
+      filters.push({ "name": "indoor", "op": "eq", "val": val})
+    }
+    if (selectedFilters.dogLevel > 0)
+      filters.push({ "name": "dog_friendly",   "op": "ge", "val": selectedFilters.dogLevel})
+    if (selectedFilters.childLevel > 0)
+      filters.push({ "name": "child_friendly", "op": "ge", "val": selectedFilters.childLevel})
+    if (selectedFilters.groomingLevel > 0)
+      filters.push({ "name": "grooming_level", "op": "le", "val": selectedFilters.groomingLevel})
+    filters.push({ "name": "life_span_low",    "op": "ge", "val": selectedFilters.minLifespan})
+    filters.push({ "name": "life_span_high",   "op": "le", "val": selectedFilters.maxLifespan})
+    if (selectedFilters.sortType)
+      order_by.push({ "field": selectedFilters.sortType, "direction": selectedFilters.sortDir})
+    if (filters.length > 0){
+      query += "q=";
+      if (order_by.length > 0)
+        query += JSON.stringify({"filters": filters, "order_by": order_by})
+      else
+        query += JSON.stringify({"filters": filters})
+    }
+    else if (order_by.length > 0)
+      query += JSON.stringify({"order_by": order_by})
+    return query;
+  }
+  
+
 export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatBreedsFiltersState> {
 
     public sortData: SelectItem[] = [
-        {label: "Name", value: "Name"},
-        {label: "Life span", value: "Life span"},
-        {label: "Dog-friendliness", value: "Dog-friendliness"},
-        {label: "Child-friendliness", value: "Child-friendliness"},
-        {label: "Grooming level", value: "Grooming level"},
+        {label: "Name", value: "name"},
+        {label: "Life span", value: "life_span_low"},
+        {label: "Dog-friendliness", value: "dog_friendly"},
+        {label: "Child-friendliness", value: "child_friendly"},
+        {label: "Grooming level", value: "grooming_level"},
     ]
 
     public doorsinessData = [
@@ -47,7 +76,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
         { label: "Outdoor", value: "Outdoor" }] as SelectItem[];
 
     public qualitativeQuantifier = [
-        { label: "Low", value: 0 },
+        { label: "Low", value: 1 },
         { label: "Moderate", value: 2 },
         { label: "High", value: 4 }];
 
@@ -56,22 +85,16 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
     constructor(props: CatBreedsFiltersData) {
         super(props);
         selectifyDataArray(this.props.name_initials, this.nameData);
-        this.state = {
-            nameInitials: [],
-            doorsiness: undefined,
-            dogLevel: 0,
-            childLevel: 0,
-            groomingLevel: 0,
-            minLifespan: 0,
-            maxLifespan: 30,
-            sortType: undefined,
-            sortDir: undefined
-        } as CatBreedsFiltersState;
+        this.state = defaultFilterState;
     }
 
     handleChange = (event: any, newValue: number | number[]) => {
         this.setState({dogLevel: newValue as number});
     };
+
+    handleFilterUpdate() {
+      this.props.updateFilters(constructQuery(this.props.breeds, this.state));
+    }
 
     render() {
         return (
@@ -104,7 +127,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                               return selectItem.value;
                           })});
                       } else {
-                          this.setState({nameInitials: undefined});
+                          this.setState({nameInitials: []});
                       }}}
                       styles={customStyles}
                         theme={theme => ({
@@ -169,7 +192,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                     })}
                     />
 
-                <h5>Minimum grooming level</h5>
+                <h5>Maximum grooming level</h5>
                 <Select options={this.qualitativeQuantifier} isClearable={true}
                     onChange={(value: any) => this.setState({groomingLevel: value?.value})}
                     styles={customStyles}
@@ -193,7 +216,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>
-                <Button variant='primary' onClick={() => console.log("current filters:: ", this.state)}>Submit</Button>
+                <Button className="submit" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }

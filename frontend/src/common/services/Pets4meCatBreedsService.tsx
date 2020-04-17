@@ -3,7 +3,6 @@ import Pets4meApiService from './Pets4meApiService';
 import { CatBreed } from '../../models/CatBreed';
 import { ObjectsPage } from '../../models/ObjectsPage';
 import ModelInstanceService from './ModelInstanceService';
-import { CatBreedsFiltersData, sampleFilterData } from '../../models/CatBreedsFiltersData';
 
 export class Pets4meCatBreedsService implements ModelInstanceService<CatBreed> {
   private endpoint: string = 'cat_breeds'
@@ -13,18 +12,12 @@ export class Pets4meCatBreedsService implements ModelInstanceService<CatBreed> {
     this.pets4meApiService = new Pets4meApiService()
   }
 
-  getModelPageOfInstances(pageNumber: number): Promise<ObjectsPage<CatBreed>> {
-    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<CatBreed>>(this.endpoint, { page: pageNumber })
+  getModelPageOfInstances(pageNumber: number, search: string = '',  filterString: string = ''): Promise<ObjectsPage<CatBreed>> {
+    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<CatBreed>>(this.endpoint, { page: pageNumber, search: search }, filterString)
   }
 
   getInstanceById(id: string): Promise<CatBreed> {
     return this.pets4meApiService.fetchJsonAsObject<CatBreed>(`${this.endpoint}/${id}`, { })
-  }
-
-  getCatBreedMetadata(): Promise<CatBreedsFiltersData> {
-    return new Promise(function(response) {
-      response(sampleFilterData);
-    });
   }
 }
 

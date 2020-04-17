@@ -5,54 +5,61 @@ Our goal is to make finding a new furry friend as easy as possible. Explore the 
 * Andrew Cramer
     * EID: ac49725
     * Gitlab ID: acramer
-    * Estimated Time to Completion: 23 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 30 hrs
+    * Actual Time to Completion: 31 hrs
 
 
 * Rosemary Fortanely 
     * EID: emf2283
     * Gitlab ID: codesmary
-    * Estimated Time to Completion: 20 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 30 hrs
+    * Actual Time to Completion: 44 hrs
 
 
 * Connor Sheehan 
     * EID: cps2255
     * Gitlab ID: connor6321
-    * Estimated Time to Completion: 22 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 30 hrs
+    * Actual Time to Completion: 34 hrs
 
 
 * Dean Torkelson
     * EID: dt24566
     * Gitlab ID: deantorkelson
-    * Estimated Time to Completion: 25 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 30 hrs
+    * Actual Time to Completion: 33 hrs
 
 
 * Cristan Garza
     * EID: cg42574
     * Gitlab ID: CristianGarza
-    * Estimated Time to Completion: 20 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 30 hrs
+    * Actual Time to Completion: 30 hrs
 
 
 * Robert Hrusecky
     * EID: reh3279
     * Gitlab ID: robert-hrusecky
-    * Estimated Time to Completion: 22 hrs
-    * Actual Time to Completion: 25 hrs
+    * Estimated Time to Completion: 30 hrs
+    * Actual Time to Completion:35 hrs
 
-Git SHA: 8808b921b316f708c6cd909c9d97cd955aec6f66
+Git SHA: 84351f57ca24509de55b1d7e833690449b65cf0d
 
 Phase One Project Leader: Connor Sheehan
 Phase Two Project Leader: Dean Torkelson
+Phase Three Project Leader: Rosemary Fortanely
 
 [API Docs](https://documenter.getpostman.com/view/10430017/SzYYzJDX?version=latest)
 
 [Website](https://www.pets4.me)
 
 [Pipelines](https://gitlab.com/acramer/pets4me/pipelines)
+
+Tests:
+    Frontend tests are in frontend/src/test/*.spec.tsx files
+    Selenium tests are in frontend/src/test/guitest.tsx
+    Postman tests are in backend/postman_api_test.json
+    Backend tests are in backend/extensions/*_test.py files
 
 ## Overall Setup
 
@@ -165,8 +172,9 @@ run `make drun` as many times as you want.
 
 ### Testing with docker
 
-Use `make dtest`. This uses a temporary container to run the tests that is
-separate from any container you've created with `make dcreate` etc.
+Use `make dtest`. This uses a container you created with make `make dcreate`
+etc. Do __NOT__ use `make dcreate-remote`, or you'll end up wiping the real
+database and putting our garbage test data in it instead.
 
 ### Formatting
 

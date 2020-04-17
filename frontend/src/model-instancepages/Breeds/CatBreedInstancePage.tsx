@@ -7,6 +7,7 @@ import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 import ImageCarousel from '../../common/components/ImageCarouesel';
+import { isNullOrUndefined } from 'util';
 
 type CatBreedProps = { breed: CatBreed, match: match }
 type CatBreedState = { breed: CatBreed }
@@ -69,6 +70,27 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
     return elements;
   }
 
+  genericEmpty(value: string): string {
+    if (isNullOrUndefined(value) || value.length === 0)
+      return "None specified."
+    return value;
+  }
+
+  printFriendliness(value: number): string{
+    switch(value){
+      case 1:
+        return 'No';
+      case 2:
+        return 'A little';
+      case 5:
+        return 'Very';
+      case 3:
+      case 4:
+      default:
+        return 'Moderately';
+    }
+}
+
   render() {
     let breed: CatBreed = this.state.breed
     return (
@@ -76,13 +98,13 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
       { this.getPhoto(breed.photo) }
         <div className='instancepage-text'>
           <h1 id='name'>{breed.name}</h1>
-          <p id='alt-names'>Alternate Names: {breed.alt_names}</p>
-          <p id='temperament'>Temperament: {breed.temperament}</p>
+          <p id='alt-names'>Alternate Names: {!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified." : breed.alt_names}</p>
+          <p id='temperament'>Temperament: {this.genericEmpty(breed.temperament)}</p>
           <p id='life-span'>Life span: {breed.life_span?.low} - {breed.life_span?.high} yr.</p>
           <p id='indoor'>Indoor or Outdoor: {breed.indoor ? "Indoor" : "Outdoor"}</p>
-          <p id='dog-friendly'>Dog Friendly: {breed.dog_friendly ? "Yes" : "No"}</p>
-          <p id='child-friendly'>Child Friendly: {breed.child_friendly ? "Yes" : "No"}</p>
-          <p id='grooming-level'>Grooming Level: {breed.grooming_level}</p>
+          <p id='dog-friendly'>Dog Friendly: {this.printFriendliness(breed.dog_friendly)}</p>
+          <p id='child-friendly'>Child Friendly: {this.printFriendliness(breed.child_friendly)}</p>
+          <p id='grooming-level'>Grooming Level: {breed.grooming_level}/5</p>
           <p id='pets-with-breed'>Cats with this breed: {this.getLinkedUrl(breed.cat_ids, 'pets')}</p>
           <p id='shelters-with-breed'>Local shelters with breed: {this.getLinkedUrl(breed.local_shelters_with_breed, 'shelters')}</p>
         </div>

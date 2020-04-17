@@ -210,13 +210,19 @@ class Pet(db.Model):
         else:
             user_loc = (30.286, -97.736)  # GDC
 
-        return (
-            query.join(cls.shelter_ref)
-            .filter(
+        if "q" in request.args and "order_by" in request.args.get("q"):
+            return query.join(cls.shelter_ref).filter(
                 distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
             )
-            .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
-        )
+        else:
+            return (
+                query.join(cls.shelter_ref)
+                .filter(
+                    distance(user_loc, (Shelter.latitude, Shelter.longitude))
+                    <= max_dist
+                )
+                .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
+            )
 
 
 pet_includes = [
@@ -480,13 +486,19 @@ class Shelter(db.Model):
         else:
             user_loc = (30.286, -97.736)  # GDC
 
-        return (
-            db.session.query(cls)
-            .filter(
+        if "q" in request.args and "order_by" in request.args.get("q"):
+            return db.session.query(cls).filter(
                 distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
             )
-            .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
-        )
+        else:
+            return (
+                db.session.query(cls)
+                .filter(
+                    distance(user_loc, (Shelter.latitude, Shelter.longitude))
+                    <= max_dist
+                )
+                .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
+            )
 
 
 shelter_includes = ["id", "name", "mission", "adoption_policy"]

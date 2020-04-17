@@ -1,15 +1,1 @@
-{
-    "filters": [
-        {
-            "name": "dist",
-            "op": "le",
-            "val": 5
-        }
-    ],
-    "order_by": [
-        {
-            "field": "primary_dog_breed_name",
-            "direction": "asc"
-        }
-    ]
-}
+{"filters":[{"name":"name","op":"in","val":["Poodle"]}]}

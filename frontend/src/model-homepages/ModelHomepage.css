@@ -77,6 +77,11 @@
     height: 50px;
 }
 
+.filters h5{
+    color: #581730;
+    margin-bottom: 0px !important;
+}
+
 .selectButton > div {
     background-color: coral;
 }
@@ -94,6 +99,10 @@
     outline: none !important;
 }
 
+.css-10ku62j {
+    color:white !important;
+}
+
 .filters h5{
     color: #581730;
     margin-bottom: 0px !important;
@@ -102,6 +111,11 @@
 .filters .btn-primary {
     background-color: #966a7d;
     border-color: #966a7d;
+}
+
+.filters .submit {
+    background-color: #581730;
+    border-color: #581730;
 }
 
 .btn-primary {
@@ -164,16 +178,6 @@ input:focus {
 
 /* Cards */
 
-.cards-container {
-    height: 100%;
-    width: 100%;
-    margin-right: 5%;
-}
-
-.cards{
-    display: -moz-inline-grid;
-    grid-auto-rows: 1fr;
-}
 
 .single-card {
     display: inline-block;

@@ -3,7 +3,6 @@ import Pets4meApiService from './Pets4meApiService';
 import ModelInstanceService from './ModelInstanceService'
 import { Pet } from '../../models/Pet';
 import { ObjectsPage } from '../../models/ObjectsPage';
-import { PetsFiltersData, sampleFilterData } from '../../models/PetsFiltersData'
 
 export class Pets4mePetsService implements ModelInstanceService<Pet> {
   private endpoint: string = 'pets'
@@ -13,19 +12,12 @@ export class Pets4mePetsService implements ModelInstanceService<Pet> {
     this.pets4meApiService = new Pets4meApiService()
   }
 
-  getModelPageOfInstances(pageNumber: number, search: string = ''): Promise<ObjectsPage<Pet>> {
-    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<Pet>>(this.endpoint, { page: pageNumber, search: search })
+  getModelPageOfInstances(pageNumber: number, search: string = '', filterString: string = ''): Promise<ObjectsPage<Pet>> {
+    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<Pet>>(this.endpoint, { page: pageNumber, search: search }, filterString)
   }
 
   getInstanceById(id: string): Promise<Pet> {
     return this.pets4meApiService.fetchJsonAsObject<Pet>(`${this.endpoint}/${id}`, { })
-  }
-
-
-  getPetMetadata(): Promise<PetsFiltersData> {
-    return new Promise(function(response) {
-      response(sampleFilterData);
-    });
   }
 }
 

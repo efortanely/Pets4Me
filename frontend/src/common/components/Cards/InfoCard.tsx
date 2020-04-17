@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../../static/logo.png';
+import Highlighter from 'react-highlight-words'
+import './InfoCards.css'
 
-export interface InfoCardProps<T> { info: T }
+export interface InfoCardProps<T> { info: T, searchWords: string[] }
 
 abstract class InfoCard<T> extends React.Component<InfoCardProps<T>> {
   static defaultProps = {
@@ -11,8 +13,11 @@ abstract class InfoCard<T> extends React.Component<InfoCardProps<T>> {
 
   lineBreakFragment = (text: string, i: number) => {
    return <React.Fragment key={`${this.getHeader()}-${i}`}>
-    {text}
-    <br />
+      <Highlighter
+        highlightClassName="highlight"
+        searchWords={this.props.searchWords}
+        textToHighlight={text} />
+      <br />
     </React.Fragment>
   }
 
@@ -31,7 +36,10 @@ abstract class InfoCard<T> extends React.Component<InfoCardProps<T>> {
                 <img className='card-image' src={image_src} alt={`${this.getHeader()}`}></img>
                 <div className='card-text'>
                     <h3>
-                        {this.getHeader()}
+                    <Highlighter
+                      highlightClassName="highlight"
+                      searchWords={this.props.searchWords}
+                      textToHighlight={this.getHeader()} />
                     </h3>
                     {this.getOtherInfo().map(this.lineBreakFragment)}
                 </div>
