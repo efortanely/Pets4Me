@@ -210,13 +210,21 @@ class Pet(db.Model):
         else:
             user_loc = (30.286, -97.736)  # GDC
 
-        return (
-            query.join(cls.shelter_ref)
-            .filter(
-                distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+        if "q" in request.args and "order_by" in request.args.get("q"):
+            return (
+                query.join(cls.shelter_ref)
+                .filter(
+                    distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+                )
             )
-            .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
-        )
+        else:
+            return (
+                query.join(cls.shelter_ref)
+                .filter(
+                    distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+                )
+                .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
+            )
 
 
 pet_includes = [
@@ -480,13 +488,21 @@ class Shelter(db.Model):
         else:
             user_loc = (30.286, -97.736)  # GDC
 
-        return (
-            db.session.query(cls)
-            .filter(
-                distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+        if "q" in request.args and "order_by" in request.args.get("q"):
+            return (
+                db.session.query(cls)
+                .filter(
+                    distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+                )
             )
-            .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
-        )
+        else:
+            return (
+                db.session.query(cls)
+                .filter(
+                    distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+                )
+                .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
+            )
 
 
 shelter_includes = ["id", "name", "mission", "adoption_policy"]
@@ -505,16 +521,19 @@ def setup_config(app):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 
+def apply_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
+
+
 def setup(app):
     db.init_app(app)
     db.app = app
 
-
     def enable_cors(*_t, **_d):
         @after_this_request
         def apply_headers(response):
-            response.headers["Access-Control-Allow-Origin"] = "*"
-            return response
+            return apply_cors_headers(response)
 
     preprocessors = {"GET_SINGLE": [enable_cors], "GET_MANY": [enable_cors]}
 
@@ -556,10 +575,16 @@ def setup(app):
         results_per_page=12,
     )
 
-    @app.route('/api/filter')
+    @app.route("/api/filter")
     def filter_info():
+        @after_this_request
+        def apply_headers(response):
+            return apply_cors_headers(response)
+
         def listify(c):
-            return sorted([i[0] for i in c if len(i)>0 and i[0] is not None and i[0] != ""])
+            return sorted(
+                [i[0] for i in c if len(i) > 0 and i[0] is not None and i[0] != ""]
+            )
 
         def itemify(c):
             c = list(c)
@@ -568,45 +593,85 @@ def setup(app):
             return None
 
         def unique_letter(ul):
-            return sorted(list(set([l[0].upper() for l in ul if len(l)>0])))
+            return sorted(list(set([l[0].upper() for l in ul if len(l) > 0])))
 
-        unique_dog_breeds     = listify(db.session.query(DogBreed.name).distinct())
-        unique_cat_breeds     = listify(db.session.query(CatBreed.name).distinct())
-        unique_colors         = listify(db.session.query(Pet.color).distinct())
-        unique_size           = listify(db.session.query(Pet.size).distinct())
-        unique_age            = listify(db.session.query(Pet.age).distinct())
+        unique_dog_breeds = listify(db.session.query(DogBreed.name).distinct())
+        unique_cat_breeds = listify(db.session.query(CatBreed.name).distinct())
+        unique_colors = listify(db.session.query(Pet.color).distinct())
+        unique_size = listify(db.session.query(Pet.size).distinct())
+        unique_age = listify(db.session.query(Pet.age).distinct())
         # Dog Breeds
-        unique_breed_groups   = listify(db.session.query(DogBreed.breed_group).distinct())
-        min_max_dog_life_span = itemify(db.session.query(func.min(DogBreed.life_span_low), func.max(DogBreed.life_span_high)))
-        min_max_height        = itemify(db.session.query(func.min(DogBreed.height_imperial_low), func.max(DogBreed.height_imperial_high)))
-        min_max_weight        = itemify(db.session.query(func.min(DogBreed.weight_imperial_low), func.max(DogBreed.weight_imperial_high)))
+        unique_breed_groups = listify(db.session.query(DogBreed.breed_group).distinct())
+        min_max_dog_life_span = itemify(
+            db.session.query(
+                func.min(DogBreed.life_span_low), func.max(DogBreed.life_span_high)
+            )
+        )
+        min_max_height = itemify(
+            db.session.query(
+                func.min(DogBreed.height_imperial_low),
+                func.max(DogBreed.height_imperial_high),
+            )
+        )
+        min_max_weight = itemify(
+            db.session.query(
+                func.min(DogBreed.weight_imperial_low),
+                func.max(DogBreed.weight_imperial_high),
+            )
+        )
         # Cat Breeds
-        min_max_cat_life_span = itemify(db.session.query(func.min(CatBreed.life_span_low), func.max(CatBreed.life_span_high)))
+        min_max_cat_life_span = itemify(
+            db.session.query(
+                func.min(CatBreed.life_span_low), func.max(CatBreed.life_span_high)
+            )
+        )
         # Shelters
-        cities                = listify(db.session.query(Shelter.city).distinct())
-        states                = listify(db.session.query(Shelter.state).distinct())
-        max_num_pets          = listify(db.session.query(func.count(Pet.id)).join(Pet, Shelter.pets).group_by(Shelter.id).all())
+        cities = listify(db.session.query(Shelter.city).distinct())
+        states = listify(db.session.query(Shelter.state).distinct())
+        max_num_pets = listify(
+            db.session.query(func.count(Pet.id))
+            .join(Pet, Shelter.pets)
+            .group_by(Shelter.id)
+            .all()
+        )
         if len(max_num_pets):
             max_num_pets = max(max_num_pets)
         else:
             max_num_pets = None
 
-        return jsonify({"pets":       {"dog_breeds"     :unique_dog_breeds,
-                                       "cat_breeds"     :unique_cat_breeds,
-                                       "colors"         :unique_colors,
-                                       "sizes"          :unique_size,
-                                       "ages"           :unique_age,
-                                       "max_distance"   :300},
-                        "dog_breeds": {"dog_breeds"     :unique_dog_breeds,
-                                       "unique_letters" :unique_letter(unique_dog_breeds),
-                                       "breed_groups"   :unique_breed_groups,
-                                       "life_span"      :{"min":min_max_dog_life_span[0],"max":min_max_dog_life_span[1]},
-                                       "height_span"    :{"min":min_max_height[0],"max":min_max_height[1]},
-                                       "weight_span"    :{"min":min_max_weight[0],"max":min_max_weight[1]}},
-                        "cat_breeds": {"cat_breeds"     :unique_cat_breeds,
-                                       "unique_letters" :unique_letter(unique_cat_breeds),
-                                       "life_span"      :{"min":min_max_dog_life_span[0],"max":min_max_dog_life_span[1]}},
-                        "shelters":   {"cities"         :cities,
-                                       "states"         :states,
-                                       "num_pets"       :max_num_pets},
-                      })
+        return jsonify(
+            {
+                "pets": {
+                    "dog_breeds": unique_dog_breeds,
+                    "cat_breeds": unique_cat_breeds,
+                    "colors": unique_colors,
+                    "sizes": unique_size,
+                    "ages": unique_age,
+                    "max_distance": 300,
+                },
+                "dog_breeds": {
+                    "dog_breeds": unique_dog_breeds,
+                    "unique_letters": unique_letter(unique_dog_breeds),
+                    "breed_groups": unique_breed_groups,
+                    "life_span": {
+                        "min": min_max_dog_life_span[0],
+                        "max": min_max_dog_life_span[1],
+                    },
+                    "height_span": {"min": min_max_height[0], "max": min_max_height[1]},
+                    "weight_span": {"min": min_max_weight[0], "max": min_max_weight[1]},
+                },
+                "cat_breeds": {
+                    "cat_breeds": unique_cat_breeds,
+                    "unique_letters": unique_letter(unique_cat_breeds),
+                    "life_span": {
+                        "min": min_max_dog_life_span[0],
+                        "max": min_max_dog_life_span[1],
+                    },
+                },
+                "shelters": {
+                    "cities": cities,
+                    "states": states,
+                    "num_pets": max_num_pets,
+                },
+            }
+        )

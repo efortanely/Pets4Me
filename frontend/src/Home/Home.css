@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 20px 50px 30px 50px;
+  margin: 5% 0px 5% 0px ;
 }
 
 .Logo img{
@@ -17,6 +17,12 @@
   font-family: 'Quicksand', sans-serif;
   font-size: 40px;
   font-weight: bold;
+}
+
+.form-control {
+  box-shadow: none !important;
+  color: #D3D3D3;
+  border: 1px solid #D3D3D3;
 }
 
 ul{
@@ -106,16 +112,21 @@ li{
 
 .Logo{
   position: absolute;
+  flex-direction: row;
   justify-content: flex-start;
-  margin: 30px 50px 30px 50px;
+  padding: 5% 0px 5% 0px ;
 }
 
 .Logo img{
-  width: 12%;
+  width: 30%;
 }
 
 .Logo h1{
   font-size: 25px;
+}
+
+.form-group {
+  padding: 5% 0px 5% 0px;
 }
 
 ul{

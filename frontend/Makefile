@@ -4,7 +4,7 @@ update:
 
 test:
 	npm run s-test
-	npx newman run https://www.getpostman.com/collections/4e9773806d80a3de47a6
+	npx newman run https://www.postman.com/collections/bd58e1f7fa355ce678df
 
 run:
 	REACT_APP_USE_LOCAL_BACKEND=1 npm run dev
