@@ -5,8 +5,8 @@ import Paginator from "../Paginator";
 import './InfoCards.css'
 import { isNullOrUndefined } from "util";
 
-interface InfoCardsProps { pageNumber: number, filterString: string }
-interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean}
+interface InfoCardsProps { pageNumber: number, filterString: string, searchWords: string[] }
+interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean }
 
 abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsState<T>> {
   static defaultProps = {
