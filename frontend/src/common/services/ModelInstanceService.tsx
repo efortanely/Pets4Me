@@ -1,7 +1,7 @@
 import { ObjectsPage as ModelPage } from '../../models/ObjectsPage';
 
 interface ModelInstanceService<T> {
-  getModelPageOfInstances(pageNumber: number, search?: string): Promise<ModelPage<T>>
+  getModelPageOfInstances(pageNumber: number, search?: string, filterString?: string): Promise<ModelPage<T>>
   getInstanceById(id: string): Promise<T>
 }
 

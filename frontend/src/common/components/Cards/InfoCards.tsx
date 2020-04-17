@@ -2,13 +2,16 @@ import React from "react";
 import { ObjectsPage } from "../../../models/ObjectsPage";
 import Spinner from "react-bootstrap/Spinner";
 import Paginator from "../Paginator";
+import './InfoCards.css'
+import { isNullOrUndefined } from "util";
 
-interface InfoCardsProps { pageNumber: number }
-interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean }
+interface InfoCardsProps { pageNumber: number, filterString: string }
+interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean}
 
 abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsState<T>> {
   static defaultProps = {
-    pageNumber: 1
+    pageNumber: 1,
+    filters: ''
   }
 
   constructor(props: InfoCardsProps) {
@@ -37,11 +40,16 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
         .catch(console.log)
   }
 
+  noResults() {
+    return <h5>No results found for selected filters.</h5>
+  }
+
   render() {
     return (
       <div className='cards'>
-        {this.state.loading ? <Spinner animation='border'><span className='sr-only'>Loading...</span></Spinner> : this.state.page.objects.map(this.createInfoCard) }
-        <Paginator active={this.state.pageNumber} numPages={this.state.page.total_pages} pathName={this.getPathName()} onPageChange={this.onPageChange}/>
+        {this.state.loading ? <Spinner animation='border'><span className='sr-only'>Loading...</span></Spinner> : (!isNullOrUndefined(this.state.page?.objects) && this.state.page.objects.map(this.createInfoCard)) }
+        {!isNullOrUndefined(this.state.page?.objects) && this.state.page.objects.length !== 0 && <Paginator active={this.state.pageNumber} numPages={this.state.page.total_pages} pathName={this.getPathName()} onPageChange={this.onPageChange}/>}
+        {(isNullOrUndefined(this.state.page?.objects) || this.state.page.objects.length === 0) && this.noResults()}
       </div>
     )
   }

@@ -12,8 +12,8 @@ export class Pets4meDogBreedsService implements ModelInstanceService<DogBreed> {
     this.pets4meApiService = new Pets4meApiService()
   }
 
-  getModelPageOfInstances(pageNumber: number, search=''): Promise<ObjectsPage<DogBreed>> {
-    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<DogBreed>>(this.endpoint, { page: pageNumber })
+  getModelPageOfInstances(pageNumber: number, search: string ='', filterString: string = ''): Promise<ObjectsPage<DogBreed>> {
+    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<DogBreed>>(this.endpoint, { page: pageNumber, search: search }, filterString)
   }
 
   getInstanceById(id: string): Promise<DogBreed> {

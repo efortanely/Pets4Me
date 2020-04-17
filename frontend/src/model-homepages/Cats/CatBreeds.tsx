@@ -3,28 +3,70 @@ import CatBreedsFilters from './CatBreedsFilters'
 import '../ModelHomepage.css';
 import CatBreedsInfoCards from './CatBreedsInfoCards';
 import MediaQuery from 'react-responsive';
-import { sampleFilterData } from '../../models/CatBreedsFiltersData'
+import { CatBreedsFiltersData, catSampleFilterData } from '../../models/CatBreedsFiltersData';
+import Spinner from "react-bootstrap/Spinner";
+import Pets4meApiService from '../../common/services/Pets4meApiService';
 
-function CatBreeds() {
-  return (
-    <div className='model-homepage'>
-      <MediaQuery query="(max-width: 949px)">
-        <div className='model-homepage-content'>
-          <CatBreedsFilters {...sampleFilterData}/>
-          <CatBreedsInfoCards />
-        </div>
-      </MediaQuery>
+interface CatBreedsState {
+  filterString: string,
+  filterOptions: CatBreedsFiltersData, 
+  loading: boolean
+}
 
-      <MediaQuery query="(min-width: 950px)">
-        <div className='model-homepage-content'>
-          <CatBreedsFilters {...sampleFilterData}/>
-          <div className='model-homepage-content-col'>
-            <div className='cards-container'>
-              <CatBreedsInfoCards />
+export class CatBreeds extends React.Component<{}, CatBreedsState> {
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      filterString: '',
+      filterOptions: catSampleFilterData,
+      loading: true
+    }
+    this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
+  }
+
+  public handleFilterUpdate(filters: string): void {
+    this.setState({filterString: filters});
+  }
+
+  componentDidMount() {
+    let apiService = new Pets4meApiService();
+    this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
+    apiService.getFilterOptions()
+        .then((response: any) => {
+          let filtersData: CatBreedsFiltersData = {
+            breeds: response.cat_breeds.cat_breeds,
+            name_initials: response.cat_breeds.unique_letters,
+            lifespan_max: response.cat_breeds.life_span.max,
+            lifespan_min: response.cat_breeds.life_span.min,
+            updateFilters: this.handleFilterUpdate
+          }
+          this.setState({filterOptions: filtersData, loading: false});
+        })
+        .catch(console.log)
+  }
+
+  render() {
+    return (
+      <div className='model-homepage'>
+        <MediaQuery query="(max-width: 949px)">
+          <div className='model-homepage-content'>
+            {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> }
+            
+            <CatBreedsInfoCards filterString={this.state.filterString}/>
+          </div>
+        </MediaQuery>
+
+        <MediaQuery query="(min-width: 950px)">
+          <div className='model-homepage-content'>
+          {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> }
+            <div className='model-homepage-content-col'>
+              <div className='cards-container'>
+                <CatBreedsInfoCards filterString={this.state.filterString}/>
+              </div>
             </div>
           </div>
-        </div>
-      </MediaQuery>
-    </div>
-  );
+        </MediaQuery>
+      </div>
+    );
+  }
 } export default CatBreeds;

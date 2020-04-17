@@ -8,10 +8,16 @@ import ModelInstanceService from '../../common/services/ModelInstanceService';
 
 class SheltersInfoCards extends InfoCards<Shelter> {
     static contextType = Pets4meSheltersServiceContext
-    
+
+    componentDidUpdate(prevProps: any) {
+        if (this.props.filterString !== prevProps.filterString) {
+            this.onPageChange(1);
+        }
+    }
+
     fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<Shelter>> => {
-        const pets4meSheltersService: ModelInstanceService<Shelter> = this.context
-        return pets4meSheltersService.getModelPageOfInstances(pageNumber)
+        const pets4meSheltersService: ModelInstanceService<Shelter> = this.context;
+        return pets4meSheltersService.getModelPageOfInstances(pageNumber, undefined, this.props.filterString);
     }
 
     createInfoCard = (o: Shelter, key: any): JSX.Element => {
@@ -21,6 +27,4 @@ class SheltersInfoCards extends InfoCards<Shelter> {
     getPathName = (): string =>  {
         return '/shelters'
     }
-}
-
-export default SheltersInfoCards
+} export default SheltersInfoCards;

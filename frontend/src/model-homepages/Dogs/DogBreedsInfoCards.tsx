@@ -8,10 +8,16 @@ import ModelInstanceService from '../../common/services/ModelInstanceService';
 
 class DogBreedsInfoCards extends InfoCards<DogBreed> {
     static contextType = Pets4meDogBreedsServiceContext
+
+    componentDidUpdate(prevProps: any) {
+        if (this.props.filterString !== prevProps.filterString) {
+            this.onPageChange(1);
+        }
+    }
     
     fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<DogBreed>> => {
         const pets4meDogBreedService: ModelInstanceService<DogBreed> = this.context
-        return pets4meDogBreedService.getModelPageOfInstances(pageNumber)
+        return pets4meDogBreedService.getModelPageOfInstances(pageNumber, undefined, this.props.filterString)
     }
 
     createInfoCard = (o: DogBreed, key: any): JSX.Element => {

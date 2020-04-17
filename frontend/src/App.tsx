@@ -11,7 +11,6 @@ import DogBreedInstancePage from './model-instancepages/Breeds/DogBreedInstanceP
 import PetInstancePage from './model-instancepages/Pets/PetInstancePage'
 import CatBreedInstancePage from './model-instancepages/Breeds/CatBreedInstancePage'
 import ShelterInstancePage from './model-instancepages/Shelters/ShelterInstancePage'
-
 import './App.css';
 
 function App() {
@@ -26,18 +25,18 @@ function App() {
           </Route>
           <Route path="/dog-breeds/:breed_id" component={DogBreedInstancePage} />
           <Route path="/dog-breeds">
-            <DogBreeds />
+            <DogBreeds/>
           </Route>
           <Route path="/cat-breeds/:breed_id" component={CatBreedInstancePage} />
           <Route path="/cat-breeds">
-            <CatBreeds />
+            <CatBreeds/>
           </Route>
           <Route path="/shelters/:shelter_id" component={ShelterInstancePage} />
           <Route path="/shelters">
-            <Shelters />
+            <Shelters/>
           </Route>
           <Route path="/about">
-            <About />
+            <About/>
           </Route>
           <Route path="/">
             <Home />
