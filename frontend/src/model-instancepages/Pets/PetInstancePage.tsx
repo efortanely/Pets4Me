@@ -8,6 +8,7 @@ import logo from '../../static/logo.png';
 import ImageGallery from 'react-image-gallery';
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
+import { isNullOrUndefined } from 'util';
 
 
 type PetProps = { pet: Pet, match: match }
@@ -78,6 +79,12 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
     }
   }
 
+  genericEmpty(value: string): string {
+    if (isNullOrUndefined(value) || value.length === 0)
+      return "None specified."
+    return value;
+  }
+
   render() {
     let pet: Pet = this.state.pet
     return (
@@ -85,14 +92,14 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
       {this.getPhoto(pet.photos)}
         <div className='instancepage-text'>
           <h1 id='name'>{pet.name}</h1>
-          <p id='species'>Species: {pet.species}</p>
-          <p id='gender'>Gender: {pet.gender}</p>
-          <p id='color'>Color: {pet.color}</p>
-          <p id='age'>Age: {pet.age}</p>
-          <p id='size'>Size: {pet.size}</p>
+          <p id='species'>Species: {this.genericEmpty(pet.species)}</p>
+          <p id='gender'>Gender: {this.genericEmpty(pet.gender)}</p>
+          <p id='color'>Color: {this.genericEmpty(pet.color)}</p>
+          <p id='age'>Age: {this.genericEmpty(pet.age)}</p>
+          <p id='size'>Size: {this.genericEmpty(pet.size)}</p>
           <p id='primary-breed'>Primary breed: {this.getLinkedUrl(pet.primary_breed, this.getBreedType(), 'Breed')}</p>
           <p id='secondary-breed'>Secondary breed: {this.getLinkedUrl(pet.secondary_breed, this.getBreedType(), 'Breed')}</p>
-          <p id='description'>Description: {pet.description}</p>
+          <p id='description'>Description: {this.genericEmpty(pet.description)}</p>
           <p id='shelter'>Shelter this pet is located at: {this.getLinkedUrl(pet.shelter, 'shelters', 'Shelter')}</p>
           <p id='url'>More info: <a href={pet.url}>{pet.url}</a></p>
         </div>

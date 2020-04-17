@@ -38,4 +38,5 @@ interface AllPetsDictionary {
 interface ShelterPet {
   id: number
   species: string
+  name: string
 }
