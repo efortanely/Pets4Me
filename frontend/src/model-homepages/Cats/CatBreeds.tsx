@@ -10,11 +10,6 @@ function CatBreeds() {
     <div className='model-homepage'>
       <MediaQuery query="(max-width: 949px)">
         <div className='model-homepage-content'>
-          <form>
-              <label>
-                  <input type="text" name="global-search" placeholder='Search' />
-              </label>
-          </form>
           <CatBreedsFilters {...sampleFilterData}/>
           <CatBreedsInfoCards />
         </div>
@@ -24,13 +19,6 @@ function CatBreeds() {
         <div className='model-homepage-content'>
           <CatBreedsFilters {...sampleFilterData}/>
           <div className='model-homepage-content-col'>
-            <div className='sliders'>
-              <form>
-                <label>
-                    <input type="text" name="global-search" placeholder='Search' />
-                </label>
-              </form>
-            </div>
             <div className='cards-container'>
               <CatBreedsInfoCards />
             </div>
