@@ -6,6 +6,7 @@ import PetsInfoCards from './PetsInfoCards';
 import Pets4meApiService from '../../common/services/Pets4meApiService'
 import Spinner from "react-bootstrap/Spinner";
 import { PetsFiltersData, petSampleFilterData } from '../../models/PetsFiltersData'
+import { RouteComponentProps } from 'react-router-dom';
 
 interface PetsState {
   filterString: string,
@@ -13,9 +14,9 @@ interface PetsState {
   loading: boolean
 }
 
-export class Pets extends React.Component<{}, PetsState> {
+export class Pets extends React.Component<RouteComponentProps, PetsState> {
 
-  constructor(props: any) {
+  constructor(props: RouteComponentProps) {
     super(props)
     this.state = {
       filterString: '',
@@ -55,7 +56,7 @@ export class Pets extends React.Component<{}, PetsState> {
           <div className='model-homepage-content'>
             {this.state.loading ? <Spinner animation='border'></Spinner> :<PetsFilters {...this.state.filterOptions}/> }
             <div className='cards-container'>
-              <PetsInfoCards filterString={this.state.filterString}/>
+              <PetsInfoCards {...this.props} filterString={this.state.filterString}/>
             </div>
           </div>
         </MediaQuery>
@@ -65,7 +66,7 @@ export class Pets extends React.Component<{}, PetsState> {
           {this.state.loading ? <Spinner animation='border'></Spinner> :<PetsFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>
               <div className='cards-container'>
-                <PetsInfoCards filterString={this.state.filterString}/>
+                <PetsInfoCards {...this.props} filterString={this.state.filterString}/>
               </div>
             </div>
           </div>

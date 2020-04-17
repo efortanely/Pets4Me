@@ -4,7 +4,7 @@ import logo from '../../../static/logo.png';
 
 class PetCard extends InfoCard<Pet> {
   getHeader(): string {
-    return this.props.info.name
+    return htmlDecode(this.props.info.name)
   }
   getLinkPathname(): string {
     return `/pets/${this.props.info.id}`
@@ -27,6 +27,12 @@ class PetCard extends InfoCard<Pet> {
 
     return otherInfo
   }
+}
+
+function htmlDecode(input: string): string {
+  var e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue!;
 }
 
 export default PetCard

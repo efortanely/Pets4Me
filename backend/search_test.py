@@ -146,7 +146,7 @@ class MyUnitTests(TestCase):
         response = json.loads(response.data)
         self.assertEqual(response.get("num_results", None), 0)
         self.assertIn("objects", response)
-        self.assertEqual(len(response["objects"]), 0) 
+        self.assertEqual(len(response["objects"]), 0)
 
     # author Robert
     def test_pet_one(self):
@@ -177,7 +177,7 @@ class MyUnitTests(TestCase):
         response = json.loads(response.data)
         self.assertEqual(response.get("num_results", None), 0)
         self.assertIn("objects", response)
-        self.assertEqual(len(response["objects"]), 0) 
+        self.assertEqual(len(response["objects"]), 0)
 
     # author Robert
     def test_cat_breed_one(self):
@@ -208,7 +208,7 @@ class MyUnitTests(TestCase):
         response = json.loads(response.data)
         self.assertEqual(response.get("num_results", None), 0)
         self.assertIn("objects", response)
-        self.assertEqual(len(response["objects"]), 0) 
+        self.assertEqual(len(response["objects"]), 0)
 
     # author Robert
     def test_dog_breed_one(self):
@@ -239,7 +239,7 @@ class MyUnitTests(TestCase):
         response = json.loads(response.data)
         self.assertEqual(response.get("num_results", None), 0)
         self.assertIn("objects", response)
-        self.assertEqual(len(response["objects"]), 0) 
+        self.assertEqual(len(response["objects"]), 0)
 
     # author Robert
     def test_shelter_one(self):
@@ -260,6 +260,7 @@ class MyUnitTests(TestCase):
         self.assertEqual(response.get("num_results", None), 2)
         self.assertIn("objects", response)
         self.assertEqual(len(response["objects"]), 2)
+
 
 if __name__ == "__main__":
     main()

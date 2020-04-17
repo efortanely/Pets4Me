@@ -12,6 +12,7 @@ import PetInstancePage from './model-instancepages/Pets/PetInstancePage'
 import CatBreedInstancePage from './model-instancepages/Breeds/CatBreedInstancePage'
 import ShelterInstancePage from './model-instancepages/Shelters/ShelterInstancePage'
 import './App.css';
+import SearchResults from './Search/SearchResults';
 
 function App() {
   return (
@@ -20,27 +21,16 @@ function App() {
         <Navbar/>
         <Switch>
           <Route path="/pets/:pet_id" component={PetInstancePage} />
-          <Route path="/pets">
-            <Pets />
-          </Route>
+          <Route path="/pets" component={Pets} />
           <Route path="/dog-breeds/:breed_id" component={DogBreedInstancePage} />
-          <Route path="/dog-breeds">
-            <DogBreeds/>
-          </Route>
+          <Route path="/dog-breeds" component={DogBreeds} />
           <Route path="/cat-breeds/:breed_id" component={CatBreedInstancePage} />
-          <Route path="/cat-breeds">
-            <CatBreeds/>
-          </Route>
+          <Route path="/cat-breeds" component={CatBreeds} />
           <Route path="/shelters/:shelter_id" component={ShelterInstancePage} />
-          <Route path="/shelters">
-            <Shelters/>
-          </Route>
-          <Route path="/about">
-            <About/>
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
+          <Route path="/shelters" component={Shelters} />
+          <Route path="/about" component={About} />
+          <Route path="/search-results" component={SearchResults} />
+          <Route path="/" component={Home} />
         </Switch>
       </div>
     </Router>

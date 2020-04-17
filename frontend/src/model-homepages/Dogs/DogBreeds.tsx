@@ -6,6 +6,7 @@ import DogBreedsInfoCards from './DogBreedsInfoCards';
 import { DogBreedsFiltersData, dogSampleFilterData } from '../../models/DogBreedsFiltersData'
 import Spinner from "react-bootstrap/Spinner";
 import Pets4meApiService from '../../common/services/Pets4meApiService';
+import { RouteComponentProps } from 'react-router-dom';
 
 interface DogBreedsState {
   filterString: string,
@@ -13,9 +14,9 @@ interface DogBreedsState {
   loading: boolean
 }
 
-export class DogBreeds extends React.Component<{}, DogBreedsState> {
+export class DogBreeds extends React.Component<RouteComponentProps, DogBreedsState> {
 
-  constructor(props: any) {
+  constructor(props: RouteComponentProps) {
     super(props)
     this.state = {
       filterString: '',
@@ -59,7 +60,7 @@ export class DogBreeds extends React.Component<{}, DogBreedsState> {
           <div className='model-homepage-content'>
             {this.state.loading ? <Spinner animation='border'></Spinner> : <DogBreedsFilters {...this.state.filterOptions}/> }
             <div className='cards-container'>
-              <DogBreedsInfoCards filterString={this.state.filterString}/>
+              <DogBreedsInfoCards {...this.props} filterString={this.state.filterString}/>
             </div>
           </div>
         </MediaQuery>
@@ -69,7 +70,7 @@ export class DogBreeds extends React.Component<{}, DogBreedsState> {
           {this.state.loading ? <Spinner animation='border'></Spinner> : <DogBreedsFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>
               <div className='cards-container'>
-                <DogBreedsInfoCards filterString={this.state.filterString} />
+                <DogBreedsInfoCards {...this.props} filterString={this.state.filterString} />
               </div>
             </div>
           </div>

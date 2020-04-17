@@ -13,7 +13,7 @@ export class Pets4meCatBreedsService implements ModelInstanceService<CatBreed> {
   }
 
   getModelPageOfInstances(pageNumber: number, search: string = '',  filterString: string = ''): Promise<ObjectsPage<CatBreed>> {
-    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<CatBreed>>(this.endpoint, { page: pageNumber, q: search }, filterString)
+    return this.pets4meApiService.fetchJsonAsObject<ObjectsPage<CatBreed>>(this.endpoint, { page: pageNumber, search: search }, filterString)
   }
 
   getInstanceById(id: string): Promise<CatBreed> {

@@ -178,16 +178,6 @@ input:focus {
 
 /* Cards */
 
-.cards-container {
-    height: 100%;
-    width: 100%;
-    margin-right: 5%;
-}
-
-.cards{
-    display: -moz-inline-grid;
-    grid-auto-rows: 1fr;
-}
 
 .single-card {
     display: inline-block;

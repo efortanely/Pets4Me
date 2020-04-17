@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { Builder, By } from 'selenium-webdriver'
 import firefox from 'selenium-webdriver/firefox'
 
-
 describe('GuiTests', () => {
   let firefoxOptions = new firefox.Options()
 
