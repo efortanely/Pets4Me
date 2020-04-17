@@ -2,14 +2,16 @@ import 'jsdom-global/register'
 import React from 'react'
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
-import { DogBreed } from '../../../models/dog-breed';
+import { DogBreed } from '../../../models/DogBreed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 import { ObjectsPage } from '../../../models/ObjectsPage';
 import DogBreedsInfoCards from '../../../model-homepages/Dogs/DogBreedsInfoCards';
-import { Pets4meDogBreedsService } from '../../../common/services/pets4me-dog-breeds-service';
-import DogBreedsService from '../../../common/services/dog-breeds-service';
+import { Pets4meDogBreedsService } from '../../../common/services/Pets4meDogBreedsService';
+import DogBreedsService from '../../../common/services/DogBreedsService';
+import ModelInstanceService from '../../../common/services/ModelInstanceService';
+import { MemoryRouter, withRouter } from 'react-router-dom';
 chai.use(sinonChai)
 
 const itemsPerPage = 12
@@ -22,10 +24,10 @@ describe('<DogBreedsInfoCards />', () => {
 
   function mountWithPage(page: ObjectsPage<DogBreed>, pageNumber: number = 1) {
     let testDogBreedsService = new Pets4meDogBreedsService()
-    testDogBreedsService.getDogBreeds = (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
-    DogBreedsInfoCards.contextType = React.createContext<DogBreedsService>(testDogBreedsService)
-
-    return mount(<DogBreedsInfoCards />)
+    testDogBreedsService.getModelPageOfInstances = (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
+    DogBreedsInfoCards.contextType = React.createContext<ModelInstanceService<DogBreed>>(testDogBreedsService)
+    
+    return mount(<MemoryRouter>{withRouter(DogBreedsInfoCards)}</MemoryRouter>)
   }
 
   function makeDummyPageFunction(page: ObjectsPage<DogBreed>): (pageNumber?: number) => Promise<ObjectsPage<DogBreed>> {

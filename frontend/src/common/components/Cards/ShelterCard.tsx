@@ -1,24 +1,18 @@
-import React from 'react';
-import { InfoCard } from './InfoCard';
-import { Link } from 'react-router-dom';
+import InfoCard from './InfoCard';
 import logo from '../../../static/logo.png';
-import { Shelter, Photos } from '../../../models/shelter';
+import { Shelter, Photos } from '../../../models/Shelter';
 
-interface ShelterCardProps { shelter: Shelter }
-
-class ShelterCard extends React.Component<ShelterCardProps> {  
-  render() {
-    return (
-      <Link to={{
-        pathname: `/shelters/${this.props.shelter.id}`,
-        state: { shelter: this.props.shelter }
-        }}>
-        <InfoCard image_src={this.getPhoto(this.props.shelter.photos)} header={this.props.shelter.name} other_info={this.getOtherInfo()} />
-      </Link>
-    )
+class ShelterCard extends InfoCard<Shelter> {
+  getHeader(): string {
+    return this.props.info.name
   }
 
-  getPhoto = (photos: Photos): string => {
+  getLinkPathname(): string {
+    return `/shelters/${this.props.info.id}`
+  }
+
+  getImageSrc = (): string => {
+    let photos: Photos = this.props.info.photos
     if (photos?.full && photos.full[0])
       return photos.full[0]
     if (photos?.small && photos.small[0])
@@ -26,10 +20,29 @@ class ShelterCard extends React.Component<ShelterCardProps> {
     return logo
   }
 
+  getPhoneNumber = (): string => {
+    if (!this.props.info.contact?.phone_number)
+      return "No phone number given"
+    return this.props.info.contact.phone_number;
+  }
+
+  getEmail = (): string => {
+    if (!this.props.info.contact?.email)
+      return "No email given"
+    return this.props.info.contact.email;
+  }
+
+  petOrPets(length: number) {
+    if (length === 1) 
+      return "pet"
+    return "pets"
+  }
+
   getOtherInfo = (): string[] => {
+    let petCount = Object.keys(this.props.info.all_pets || {}).length;
     let otherInfo: string[] = []
-    otherInfo.push(this.props.shelter.address.city)
-    otherInfo.push(`${Object.keys(this.props.shelter.all_pets || {}).length} pets availible`)
+    otherInfo.push(`${this.props.info.address.city}, ${this.props.info.address.state} • ${petCount} ${this.petOrPets(petCount)} available`)
+    otherInfo.push(`${this.getPhoneNumber()} • ${this.getEmail()}`)
     return otherInfo
   }
 }

@@ -1,24 +1,17 @@
-import React from "react";
-import { Pet, Photos } from '../../../models/pet';
-import { Link } from "react-router-dom";
-import { InfoCard } from "./InfoCard";
+import { Pet, Photos } from '../../../models/Pet';
+import InfoCard from "./InfoCard";
 import logo from '../../../static/logo.png';
 
-interface PetCardProps { pet: Pet }
-
-class PetCard extends React.Component<PetCardProps> {
-  render() {
-    return (
-      <Link to={{
-        pathname: `/pets/${this.props.pet.id}`,
-        state: { pet: this.props.pet }
-        }}>
-        <InfoCard image_src={this.getPhoto(this.props.pet.photos)} header={this.props.pet.name} other_info={this.getOtherInfo()} />
-      </Link>
-    )
+class PetCard extends InfoCard<Pet> {
+  getHeader(): string {
+    return htmlDecode(this.props.info.name)
+  }
+  getLinkPathname(): string {
+    return `/pets/${this.props.info.id}`
   }
 
-  getPhoto = (photos: Photos): string => {
+  getImageSrc(): string {
+    let photos: Photos = this.props.info.photos
     if (photos?.full && photos.full[0])
       return photos.full[0]
     if (photos?.small && photos.small[0])
@@ -28,16 +21,18 @@ class PetCard extends React.Component<PetCardProps> {
 
   getOtherInfo = (): string[] => {
     let otherInfo: string[] = []
-    otherInfo.push(this.props.pet.species)
-    otherInfo.push(this.props.pet.primary_breed.name)
-    otherInfo.push(this.props.pet.gender)
-    otherInfo.push(this.props.pet.size)
-    otherInfo.push(`Age: ${this.props.pet.age}`)
-    otherInfo.push(this.props.pet.color)
-    otherInfo.push(this.props.pet.shelter.name)
+    otherInfo.push(this.props.info.primary_breed.name ? this.props.info.primary_breed.name : "Unknown breed")
+    otherInfo.push(`${this.props.info.size} • ${this.props.info.gender} • ${this.props.info.age}`)
+    otherInfo.push(this.props.info.shelter.name)
 
     return otherInfo
   }
+}
+
+function htmlDecode(input: string): string {
+  var e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue!;
 }
 
 export default PetCard

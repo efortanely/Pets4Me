@@ -1,16 +1,12 @@
-.mapContainer {
-    max-height: 75%;
-}
-
-.mapboxgl-marker {
-    position: absolute;
-    top: 0;
-    left: 0;
-    will-change: transform;
-}
-
 .error {
     color: #990000;
-    text-align: center;
     font-size: 75%;
+}
+
+h5{
+    color: #581730;
+}
+
+.mapboxgl-popup-content {
+    padding: 5px !important;
 }

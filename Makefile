@@ -11,10 +11,10 @@ test: frontend-test backend-test
 	./test-counter.sh
 
 update-backend:
-	cd backend/ && $(MAKE) update-deps
+	cd backend/ && $(MAKE) update
 
 update-frontend:
-	cd frontend/ && $(MAKE) update-deps
+	cd frontend/ && $(MAKE) update
 
 frontend-test:
 	cd frontend/ && $(MAKE) test

@@ -1,28 +1,32 @@
-import React from 'react';
-import { InfoCard } from './InfoCard';
-import { DogBreed } from '../../../models/dog-breed';
-import { Link } from 'react-router-dom';
-import logo from '../../../static/logo.png';
 
-interface DogBreedCardProps { breed: DogBreed }
+import InfoCard from './InfoCard';
+import { DogBreed } from '../../../models/DogBreed';
 
-export class DogBreedCard extends React.Component<DogBreedCardProps> {  
-  render() {
-    return (
-      <Link to={{
-        pathname: `/dog-breeds/${this.props.breed.id}`,
-        state: { breed: this.props.breed }
-        }}>
-        <InfoCard image_src={this.props.breed.photo || logo} header={this.props.breed.name} other_info={this.getOtherInfo()} />
-      </Link>
-    )
+export class DogBreedCard extends InfoCard<DogBreed> {
+  getHeader = (): string => {
+    return this.props.info.name
+  }
+  
+  getLinkPathname = (): string => {
+    return `/dog-breeds/${this.props.info.id}`
+  }
+
+  getImageSrc = (): string => {
+    return this.props.info.photo
+  }
+
+  getLifespan(): string {
+    if (this.props.info.life_span.low === this.props.info.life_span.high) {
+      return `Average lifespan: ${this.props.info.life_span.high} years`;
+    }
+    return `Average lifespan: ${this.props.info.life_span.low} - ${this.props.info.life_span.high} years`;
   }
 
   getOtherInfo = (): string[] => {
     let otherInfo: string[] = []
-    otherInfo.push(this.props.breed.temperament)
-    otherInfo.push(`Bred for: ${this.props.breed.bred_for}`)
-    otherInfo.push(this.props.breed.breed_group)
+    otherInfo.push(this.props.info.breed_group ? `Breed group: ${this.props.info.breed_group}` : "Breed group: unknown")
+    otherInfo.push(`${this.props.info.height_imperial.low} - ${this.props.info.height_imperial.high}" tall • ${this.props.info.weight_imperial.low} - ${this.props.info.weight_imperial.high} lbs.`)
+    otherInfo.push(`${this.getLifespan()}`)
     return otherInfo
   }
 }

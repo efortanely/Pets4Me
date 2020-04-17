@@ -1,5 +1,5 @@
 import React from 'react';
-import { RepositoryStatistics } from './components/repository-statistics'
+import { RepositoryStatistics } from './components/RepositoryStatistics'
 import andrew from '../static/andrew.png'
 import rosemary from '../static/rosemary.jpeg'
 import connor from '../static/connor.jpg'
@@ -9,7 +9,6 @@ import robert from '../static/robert.png'
 import petfinder from '../static/petfinder.jpg'
 import dogapi from '../static/thedogapi.png'
 import catapi from '../static/thecatapi.png'
-import pixabay from '../static/pixabay.png'
 import ts from '../static/tools/ts.png'
 import reactlogo from '../static/tools/react.png'
 import marvel from '../static/tools/marvelapp.png'
@@ -22,25 +21,25 @@ import mocha from '../static/mocha.png'
 import mapbox from '../static/mapbox.png'
 import selenium from '../static/selenium.png'
 
-import { Member } from './components/member'
+import { Member } from './components/Member'
 import ToolDoor from './components/ToolDoor'
 import TestCounts from './test-count.json'
 import './About.css';
 
 function About() {
     const andrew_role = "Backend/DB Developer"
-    const rosemary_role = "Backend/DB Developer"
+    const rosemary_role = "Full-stack Developer"
     const connor_role = "Frontend Developer"
-    const dean_role = "Frontend/Backend Developer"
+    const dean_role = "Frontend Developer"
     const cristian_role = "Frontend Developer"
     const robert_role = "Backend/DB Developer"
 
-    const andrew_bio = "I'm a senior in Computer Science at UT Austin originally from Houston and before that Denver.  I have interests in machine learning and data science.  My hobbies at the moment include hiking, board games, and rock climbing."
-    const rosemary_bio = "I'm a senior Computer Science/Studio Art major at UT Austin. My technical interests include machine learning and full-stack web development. I like to spend my free time working on side projects and making art."
-    const connor_bio = "Senior Computer Science major at UT Austin. I enjoy full-stack web development and do research with human-support robots. My hobbies are gaming and working as a radio DJ for KVRX."
-    const dean_bio = "cool guy, bad at bios 😎"
-    const cristian_bio = "I'm a junior studying Computer Science at UT. I'm interested in cyber security and game development. I'm originally from San Antonio with roots in New Orleans, so I love good food, especially breakfast tacos."
-    const robert_bio = "I'm a senior Computer Science major at UT Austin. I am primarily intrested in systems and theory. I like to spend my free time doing personal projects, and singing in the Colligium Musicum choir as a bass."
+    const andrew_bio = "Senior in Computer Science at UT Austin. I have interests in machine learning and data science. My hobbies include hiking, board games, and rock climbing. Worked on migrating the Database and setting up search querying and filter endpoint."
+    const rosemary_bio = "I'm a senior Computer Science/Studio Art major at UT Austin. I created the back-end schema and much of the API, as well as worked on the front-end JSX and CSS. My hobbies include working on side projects and making art."
+    const connor_bio = "Senior Computer Science major at UT Austin. Created front-end search framework and dynamic info cards/pages. My hobbies are gaming and working as a radio DJ for KVRX."
+    const dean_bio = "cool guy, bad at bios. Created frontend filtering and sorting framework, as well as the Map component on shelter pages."
+    const cristian_bio = "Junior Computer Science major at UT Austin. My hobbies are gaming and skateboarding. Worked on filtering/sorting query construction and development of filter/sorting pipeline in the frontend."
+    const robert_bio = "I'm a senior CS major. I am primarily interested in systems and theory. I sang in the Colligium Musicum choir as a bass, but now I'm stuck at home. Backend dev. Worked on searching in the backend, local Docker support, and researched SQL/Flask."
 
     return(
       <div>  
@@ -99,18 +98,6 @@ function About() {
             <div className="door">
               <div className="text">
                 <a href="https://thecatapi.com">The Cat API</a>
-                <p></p>
-              </div>
-            </div>
-          </div>
-
-          <div className="data-source">
-            <div className="rect">
-              <img className="pixabay" src={pixabay} alt="The Pixabay logo"></img>
-            </div>
-            <div className="door">
-              <div className="text">
-                <a href="https://pixabay.com/">Pixabay</a>
                 <p></p>
               </div>
             </div>
