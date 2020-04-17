@@ -211,17 +211,15 @@ class Pet(db.Model):
             user_loc = (30.286, -97.736)  # GDC
 
         if "q" in request.args and "order_by" in request.args.get("q"):
-            return (
-                query.join(cls.shelter_ref)
-                .filter(
-                    distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
-                )
+            return query.join(cls.shelter_ref).filter(
+                distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
             )
         else:
             return (
                 query.join(cls.shelter_ref)
                 .filter(
-                    distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+                    distance(user_loc, (Shelter.latitude, Shelter.longitude))
+                    <= max_dist
                 )
                 .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
             )
@@ -489,17 +487,15 @@ class Shelter(db.Model):
             user_loc = (30.286, -97.736)  # GDC
 
         if "q" in request.args and "order_by" in request.args.get("q"):
-            return (
-                db.session.query(cls)
-                .filter(
-                    distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
-                )
+            return db.session.query(cls).filter(
+                distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
             )
         else:
             return (
                 db.session.query(cls)
                 .filter(
-                    distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+                    distance(user_loc, (Shelter.latitude, Shelter.longitude))
+                    <= max_dist
                 )
                 .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
             )
