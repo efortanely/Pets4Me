@@ -9,7 +9,7 @@ class ShelterCard extends InfoCard<Shelter> {
 
   getLinkPathname(): string {
     return `/shelters/${this.props.info.id}`
-  }  
+  }
 
   getImageSrc = (): string => {
     let photos: Photos = this.props.info.photos
@@ -20,10 +20,29 @@ class ShelterCard extends InfoCard<Shelter> {
     return logo
   }
 
+  getPhoneNumber = (): string => {
+    if (!this.props.info.contact?.phone_number)
+      return "No phone number given"
+    return this.props.info.contact.phone_number;
+  }
+
+  getEmail = (): string => {
+    if (!this.props.info.contact?.email)
+      return "No email given"
+    return this.props.info.contact.email;
+  }
+
+  petOrPets(length: number) {
+    if (length === 1) 
+      return "pet"
+    return "pets"
+  }
+
   getOtherInfo = (): string[] => {
+    let petCount = Object.keys(this.props.info.all_pets || {}).length;
     let otherInfo: string[] = []
-    otherInfo.push(`${this.props.info.address.city}, ${this.props.info.address.state}`)
-    otherInfo.push(`${Object.keys(this.props.info.all_pets || {}).length} pets available`)
+    otherInfo.push(`${this.props.info.address.city}, ${this.props.info.address.state} • ${petCount} ${this.petOrPets(petCount)} available`)
+    otherInfo.push(`${this.getPhoneNumber()} • ${this.getEmail()}`)
     return otherInfo
   }
 }

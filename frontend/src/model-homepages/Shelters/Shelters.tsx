@@ -1,6 +1,6 @@
 import React from 'react';
 import SheltersFilters from './SheltersFilters'
-import SheltersCards from './SheltersCards';
+import SheltersInfoCards from './SheltersInfoCards';
 import '../ModelHomepage.css';
 import MediaQuery from 'react-responsive';
 import { sampleFilterData } from '../../models/SheltersFiltersData'
@@ -17,7 +17,7 @@ function Shelters() {
           </form>
           <SheltersFilters {...sampleFilterData}/>
           <div className='cards-container'>
-            <SheltersCards />
+            <SheltersInfoCards />
           </div>
         </div>
       </MediaQuery>
@@ -34,7 +34,7 @@ function Shelters() {
               </form>
             </div>
             <div className='cards-container'>
-              <SheltersCards />
+              <SheltersInfoCards />
             </div>
           </div>
         </div>
