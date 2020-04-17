@@ -10,11 +10,6 @@ function Pets() {
     <div className='model-homepage'>
       <MediaQuery query="(max-width: 949px)">
         <div className='model-homepage-content'>
-          <form>
-              <label>
-                  <input type="text" name="global-search" placeholder='Search' />
-              </label>
-          </form>
           <PetsFilters {...sampleFilterData}/>
           <div className='cards-container'>
             <PetsInfoCards />
@@ -26,13 +21,6 @@ function Pets() {
         <div className='model-homepage-content'>
           <PetsFilters {...sampleFilterData}/>
           <div className='model-homepage-content-col'>
-            <div className='sliders'>
-              <form>
-                <label>
-                    <input type="text" name="global-search" placeholder='Search' />
-                </label>
-              </form>
-            </div>
             <div className='cards-container'>
               <PetsInfoCards />
             </div>
