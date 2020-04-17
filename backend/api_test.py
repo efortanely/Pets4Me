@@ -1,10 +1,9 @@
 from unittest import main, TestCase
-from app import create_app
+from test_app import app
 from extensions.pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
 import json
 import time
 
-app = create_app("test_app")
 
 
 class MyUnitTests(TestCase):

@@ -165,8 +165,9 @@ run `make drun` as many times as you want.
 
 ### Testing with docker
 
-Use `make dtest`. This uses a temporary container to run the tests that is
-separate from any container you've created with `make dcreate` etc.
+Use `make dtest`. This uses a container you created with make `make dcreate`
+etc. Do __NOT__ use `make dcreate-remote`, or you'll end up wiping the real
+database and putting our garbage test data in it instead.
 
 ### Formatting
 

@@ -31,7 +31,7 @@ dupdate:
 	@docker run -it --rm -v $(PWD):/home/backend/workspace pets4me/backend ./update.sh
 
 dtest:
-	@docker run -it --env-file ../../pets4me-secret/.env-docker --rm -v $(PWD):/home/backend/workspace pets4me/backend ./run-tests.sh
+	@docker exec -it backend ./run-tests.sh
 
 dfmt:
 	@docker run -it --rm -v $(PWD):/home/backend/workspace pets4me/backend ./envrun.sh black --exclude env .
