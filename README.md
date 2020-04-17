@@ -43,7 +43,7 @@ Our goal is to make finding a new furry friend as easy as possible. Explore the 
     * Estimated Time to Completion: 30 hrs
     * Actual Time to Completion:35 hrs
 
-Git SHA: 8808b921b316f708c6cd909c9d97cd955aec6f66
+Git SHA: 84351f57ca24509de55b1d7e833690449b65cf0d
 
 Phase One Project Leader: Connor Sheehan
 Phase Two Project Leader: Dean Torkelson
