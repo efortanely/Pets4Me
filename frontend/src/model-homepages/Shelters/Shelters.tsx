@@ -6,6 +6,7 @@ import MediaQuery from 'react-responsive';
 import Pets4meApiService from '../../common/services/Pets4meApiService'
 import Spinner from "react-bootstrap/Spinner";
 import { SheltersFiltersData, shelterSampleFilterData } from '../../models/SheltersFiltersData'
+import { RouteComponentProps } from 'react-router-dom';
 
 interface SheltersState {
   filterString: string,
@@ -13,9 +14,9 @@ interface SheltersState {
   loading: boolean
 }
 
-export class Shelters extends React.Component<{}, SheltersState> {
+export class Shelters extends React.Component<RouteComponentProps, SheltersState> {
 
-  constructor(props: any) {
+  constructor(props: RouteComponentProps) {
     super(props)
     this.state = {
       filterString: '',
@@ -54,7 +55,7 @@ export class Shelters extends React.Component<{}, SheltersState> {
           <div className='model-homepage-content'>
             {this.state.loading ? <Spinner animation='border'></Spinner> : <SheltersFilters {...this.state.filterOptions}/> }
             <div className='cards-container'>
-              <SheltersInfoCards filterString={this.state.filterString}/>
+              <SheltersInfoCards {...this.props} filterString={this.state.filterString}/>
             </div>
           </div>
         </MediaQuery>
@@ -64,7 +65,7 @@ export class Shelters extends React.Component<{}, SheltersState> {
             {this.state.loading ? <Spinner animation='border'></Spinner> : <SheltersFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>
               <div className='cards-container'>
-                <SheltersInfoCards filterString={this.state.filterString}/>
+                <SheltersInfoCards {...this.props} filterString={this.state.filterString}/>
               </div>
             </div>
           </div>
