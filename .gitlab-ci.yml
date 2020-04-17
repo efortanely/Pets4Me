@@ -3,7 +3,7 @@ before_script:
     - uname -a
 
 frontend:
-    image: node:13
+    image: pets4me/frontend
     script:
     - cd frontend/
     - npm install --user

@@ -50,7 +50,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "s-test": "mocha './src/test/**/*.spec.*' --recursive --require ./mocha-init.js",
-    "watch": "mocha ./src/test/* ./src/test/**/* -name '*spec.*' --require ./mocha-init.js -w"
+    "g-test": "mocha './src/test/guitest.tsx' --require ./mocha-init.js --timeout 20000",
+    "watch": "mocha './src/test/**/*.spec.*' --recursive --require ./mocha-init.js -w"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,12 +70,15 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-regenerator": "^7.8.7",
+    "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
     "@babel/register": "^7.9.0",
     "@types/mocha": "^7.0.2",
     "@types/react-responsive": "^8.0.2",
+    "@types/selenium-webdriver": "^4.0.9",
     "@types/react-router-dom": "^5.1.4",
     "@types/sinon": "^7.5.2",
     "@types/sinon-chai": "^3.2.3",
@@ -83,11 +87,13 @@
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "geckodriver": "^1.19.1",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "16.2.1",
     "jsdom-global": "3.0.2",
     "react-addons-test-utils": "^15.6.2",
     "react-responsive": "^8.0.3",
+    "selenium-webdriver": "^4.0.0-alpha.7",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0"
   },
@@ -98,7 +104,9 @@
       "@babel/preset-typescript"
     ],
     "plugins": [
-      "transform-class-properties"
+      "transform-class-properties",
+      "@babel/plugin-transform-regenerator",
+      "@babel/plugin-transform-runtime"
     ]
   }
 }
