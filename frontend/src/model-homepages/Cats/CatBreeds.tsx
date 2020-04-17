@@ -6,6 +6,7 @@ import MediaQuery from 'react-responsive';
 import { CatBreedsFiltersData, catSampleFilterData } from '../../models/CatBreedsFiltersData';
 import Spinner from "react-bootstrap/Spinner";
 import Pets4meApiService from '../../common/services/Pets4meApiService';
+import { RouteComponentProps } from 'react-router-dom';
 
 interface CatBreedsState {
   filterString: string,
@@ -13,8 +14,8 @@ interface CatBreedsState {
   loading: boolean
 }
 
-export class CatBreeds extends React.Component<{}, CatBreedsState> {
-  constructor(props: any) {
+export class CatBreeds extends React.Component<RouteComponentProps, CatBreedsState> {
+  constructor(props: RouteComponentProps) {
     super(props)
     this.state = {
       filterString: '',
@@ -50,9 +51,8 @@ export class CatBreeds extends React.Component<{}, CatBreedsState> {
       <div className='model-homepage'>
         <MediaQuery query="(max-width: 949px)">
           <div className='model-homepage-content'>
-            {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> }
-            
-            <CatBreedsInfoCards filterString={this.state.filterString}/>
+            {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> } 
+            <CatBreedsInfoCards {...this.props} filterString={this.state.filterString}/>
           </div>
         </MediaQuery>
 
@@ -61,7 +61,7 @@ export class CatBreeds extends React.Component<{}, CatBreedsState> {
           {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>
               <div className='cards-container'>
-                <CatBreedsInfoCards filterString={this.state.filterString}/>
+                <CatBreedsInfoCards {...this.props} filterString={this.state.filterString}/>
               </div>
             </div>
           </div>

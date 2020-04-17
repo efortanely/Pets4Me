@@ -25,10 +25,10 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   }
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-      let selectValue: string = this.getFormValueFromEvent(event, this.selectId)
-      let inputValue : string = this.getFormValueFromEvent(event, this.inputId)
-      this.props.history.push(`${this.optionsToRoute(selectValue)}?search=${encodeURIComponent(inputValue)}`)
-      event.preventDefault()
+    let selectValue: string = this.getFormValueFromEvent(event, this.selectId)
+    let inputValue : string = this.getFormValueFromEvent(event, this.inputId)
+    this.props.history.push(`${this.optionsToRoute(selectValue)}?search=${encodeURIComponent(inputValue)}`)
+    event.preventDefault()
   }
 
   optionsToRoute = (option: string): string => {
@@ -43,7 +43,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   }
 
   getFormValueFromEvent(event: React.FormEvent<HTMLFormElement>, itemName: string): string {
-      return (event.currentTarget.elements.namedItem(itemName) as HTMLSelectElement).value
+    return (event.currentTarget.elements.namedItem(itemName) as HTMLSelectElement).value
   }
 
   render() {
