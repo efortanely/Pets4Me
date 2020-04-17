@@ -21,7 +21,7 @@ class DogBreedsInfoCards extends InfoCards<DogBreed> {
     }
 
     createInfoCard = (o: DogBreed, key: any): JSX.Element => {
-        return <DogBreedCard key={`pet-card-${key}`} info={o} />
+        return <DogBreedCard searchWords={this.props.searchWords} key={`pet-card-${key}`} info={o} />
     }
 
     getPathName = (): string =>  {
