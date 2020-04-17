@@ -40,11 +40,18 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   }
 
   getDisplayShelterAddress = (shelter: Shelter) => {
-    let address = (shelter.address?.address1 + " " || "") + (shelter.address?.address2 + ", " || "") + (shelter.address?.city + ", "|| "") + (shelter.address?.state + " " || "") + (shelter.address?.postcode || "");
+    let address = this.formatData(shelter.address?.address1, " ") + this.formatData(shelter.address?.address2, ", ") + this.formatData(shelter.address?.city, ", ") 
+      + this.formatData(shelter.address?.state, ", ") + this.formatData(shelter.address?.postcode, " ") + this.formatData(shelter.address?.country, "");
     if (address.length === 0) {
       return "Address info not available."
     }
     return address;
+  }
+
+  formatData(value: any, spacer: string) {
+    if (value)
+      return value + spacer;
+    return "";
   }
 
   getApiShelterAddress = (shelter: Shelter) => {
@@ -57,6 +64,11 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
       return <Link to={route}>{text}</Link> as JSX.Element;
     }
     return <span>{text}: Unknown.</span>
+  }
+
+  getPetUrl = (id: number, name: string): JSX.Element => {
+    let route = `/pets/${id}`;
+    return <Link to={route}>{name}</Link> as JSX.Element;
   }
 
   getPhoto = (photos: Photos): JSX.Element => {
@@ -83,9 +95,22 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
     }
   }
 
+  getContact(): string {
+    if (this.state.shelter?.contact?.email || this.state.shelter?.contact?.phone_number)
+      return `${this.formatData(this.state.shelter.contact?.email, ", ")}${this.formatData(this.state.shelter.contact?.phone_number, "")}`
+    return "No contact info provided."
+  }
+
+  genericEmpty(value: any): string {
+    if (value)
+      return value;
+    return "Not specified."
+  }
+
   render() {
     let shelter: Shelter = this.state.shelter
     let allPets = Object.values(shelter.all_pets || {})
+    console.log(allPets)
     return (
       <div className='model-instancepage'>
         <div className='instancepage-image'>
@@ -96,12 +121,12 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
         </div>
         <div className='instancepage-text'>
           <h1 id='name'>{shelter.name}</h1>
-          <p id='address'>Address: {this.getDisplayShelterAddress(shelter)}, {shelter.address?.country}</p>
-          <p id='contact'>Contact: {shelter.contact?.email}, {shelter.contact?.phone_number}</p>
-          <p id='adoption-policy'>Adoption Policy: {shelter.adoption_policy}</p>
-          <p id='mission'>Mission: {shelter.mission}</p>
-          <p id='distance'>Distance: {shelter.distance}</p>
-          <p id='num-pets'>Top pet: {allPets.length > 0 ? this.getLinkedUrl(allPets[0].id, 'pets', allPets[0].species)  : 'None'}</p>
+          <p id='address'>Address: {this.getDisplayShelterAddress(shelter)}</p>
+          <p id='contact'>Contact: {this.getContact()}</p>
+          <p id='adoption-policy'>Adoption Policy: {this.genericEmpty(shelter.adoption_policy)}</p>
+          <p id='mission'>Mission: {this.genericEmpty(shelter.mission)}</p>
+          <p id='distance'>Distance: {this.genericEmpty(shelter.distance)}</p>
+          <p id='num-pets'>Top pet: {allPets.length > 0 ? this.getPetUrl(allPets[0].id, allPets[0].name) : 'None'}</p>
           <p id='top-dog-breed-id'>{this.getLinkedUrl(shelter.top_dog_breed_id, 'dog-breeds', "Top dog breed")}</p>
           <p id='top-cat-breed-id'>{this.getLinkedUrl(shelter.top_cat_breed_id, 'cat-breeds', "Top cat breed")}</p>
         </div>

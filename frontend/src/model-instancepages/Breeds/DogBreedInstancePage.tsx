@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image'
 import '../ModelInstancepage.css'
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import { isNullOrUndefined } from 'util';
 
 type DogBreedProps = { breed: DogBreed, match: match }
 type DogBreedState = { breed: DogBreed }
@@ -59,6 +60,12 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
     return elements;
   }
 
+  genericEmpty(value: string): string {
+    if (isNullOrUndefined(value) || value.length === 0)
+      return "Not specified."
+    return value;
+  }
+
   render() {
     let breed: DogBreed = this.state.breed
     return (
@@ -66,12 +73,12 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
         <Image className='instancepage-image' src={breed.photo} rounded />
           <div className='instancepage-text'>
             <h1 id='name'>{breed.name}</h1>
-            <p id='group'>Group: {breed.breed_group}</p>
+            <p id='group'>Group: {this.genericEmpty(breed.breed_group)}</p>
             <p id='life-span'>Life span: {breed.life_span?.low} - {breed.life_span?.high} yr.</p>
             <p id='height'>Height range: {breed.height_imperial?.low} - {breed.height_imperial?.high} in.</p>
             <p id='weight'>Weight range: {breed.weight_imperial?.low} - {breed.weight_imperial?.high} lb.</p>
-            <p id='temperament'>Temperament: {breed.temperament}</p>
-            <p id='bred-for'>Bred for: {breed.bred_for}</p>
+            <p id='temperament'>Temperament: {this.genericEmpty(breed.temperament)}</p>
+            <p id='bred-for'>Bred for: {this.genericEmpty(breed.bred_for)}</p>
             <p id='pets-with-breed'>Dogs with this breed: {this.getLinkedUrl(breed.dog_ids, 'pets')}</p>
             <p id='shelters-with-breed'>Local shelters with breed: {this.getLinkedUrl(breed.local_shelters_with_breed, 'shelters')}</p>
           </div>
