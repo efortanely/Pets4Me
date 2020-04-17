@@ -9,9 +9,15 @@ import { Pet } from '../../models/Pet';
 class PetsInfoCards extends InfoCards<Pet> {
     static contextType = Pets4mePetsServiceContext
     
+    componentDidUpdate(prevProps: any) {
+        if (this.props.filterString !== prevProps.filterString) {
+            this.onPageChange(1);
+        }
+    }
+
     fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<Pet>> => {
         const pets4mePetsService: ModelInstanceService<Pet> = this.context
-        return pets4mePetsService.getModelPageOfInstances(pageNumber)
+        return pets4mePetsService.getModelPageOfInstances(pageNumber, undefined, this.props.filterString)
     }
 
     createInfoCard = (o: Pet, key: any): JSX.Element => {
