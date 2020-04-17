@@ -427,7 +427,7 @@ footer a{
 
 /* Desktop View */
 
-@media screen and (min-width: 950px){
+@media screen and (min-width: 1350px){
 
 .members{
   max-width: 600px;

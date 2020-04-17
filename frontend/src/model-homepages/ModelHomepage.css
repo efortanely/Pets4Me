@@ -263,7 +263,7 @@ a.single-card:hover {
     }
 }
 
-@media screen and (min-width: 950px){
+@media screen and (min-width: 1350px){
     .model-homepage-content {
         flex-direction: row;
     }
