@@ -11,6 +11,7 @@ export interface CatBreed {
     photo: string;
     cat_ids: any[];
     local_shelters_with_breed: any[];
+    video_url : string;
 }
 
 export interface LifeSpan {

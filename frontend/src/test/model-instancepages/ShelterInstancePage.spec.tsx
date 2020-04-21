@@ -139,13 +139,4 @@ describe('<ShelterInstancePage/>', () => {
 
     expect(getShelterSpy).to.have.been.calledWith(`${testShelter.id}`)
   })
-
-  // author Connor
-  it('should GET shelter on component mount if different shelter supplied in props than url param', () => {
-    let getShelterSpy = spyOnSheltersService(testShelter)
-    let urlShelterId = testShelter.id + 1
-    mountWithShelter(testShelter, `${urlShelterId}`)
-
-    expect(getShelterSpy).to.have.been.calledWith(`${urlShelterId}`)
-  })
 })

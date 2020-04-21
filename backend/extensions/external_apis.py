@@ -8,6 +8,7 @@ import requests
 from util.sql import escape_like
 import pgeocode
 import sys
+from youtube_search import YoutubeSearch
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
 
 
@@ -63,6 +64,12 @@ class DogAPI(CommonAPI):
             breed.get("weight", {}).get("imperial", "")
         )
 
+        results = json.loads(YoutubeSearch(name + ' Dogs 101', max_results=1).to_json())
+        if len(results["videos"]):
+            video_url = "https://youtube.com" + results["videos"][0]["link"]
+        else:
+            video_url = None
+
         return DogBreed(
             name=name,
             temperament=breed.get("temperament", None),
@@ -75,6 +82,7 @@ class DogAPI(CommonAPI):
             bred_for=breed.get("bred_for", None),
             breed_group=breed.get("breed_group", None),
             photo=self.get_photo(breed.get("id", None)),
+            video_url=video_url
         )
 
     def get_photo(self, breed_id):
@@ -108,6 +116,12 @@ class CatAPI(CommonAPI):
         name = breed.get("name", None)
         life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
 
+        results = json.loads(YoutubeSearch(name + ' Cats 101', max_results=1).to_json())
+        if len(results["videos"]):
+            video_url = "https://youtube.com" + results["videos"][0]["link"]
+        else:
+            video_url = None
+
         return CatBreed(
             name=name,
             temperament=breed.get("temperament", None),
@@ -124,6 +138,7 @@ class CatAPI(CommonAPI):
             child_friendly=breed.get("child_friendly", None),
             grooming_level=breed.get("grooming", None),
             photo=self.get_photo(breed.get("id", None)),
+            video_url=video_url
         )
 
     def get_photo(self, breed_id):

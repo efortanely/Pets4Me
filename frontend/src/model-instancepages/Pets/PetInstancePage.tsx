@@ -3,13 +3,11 @@ import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService'
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 import { Pet, BackendEntity, Photos } from '../../models/Pet';
 import { match, Link } from 'react-router-dom';
-import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
-import ImageGallery from 'react-image-gallery';
+import ImageCarousel from '../../common/components/ImageCarousel';
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import { isNullOrUndefined } from 'util';
-
 
 type PetProps = { pet: Pet, match: match }
 type PetState = { pet: Pet }
@@ -19,6 +17,8 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   static defaultProps = {
     pet: { } as Pet
   }
+
+  mouse: boolean = false
 
   constructor(props: PetProps) {
     super(props)
@@ -55,16 +55,13 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   getPhoto = (photos: Photos): JSX.Element => {
     if (photos?.full && photos.full[0]){
       const images = photos.full.map(photo => {
-        return {original: photo}
+        return {photo: photo}
       });
 
-      return <div className='instancepage-image'>
-                <ImageGallery items={images} autoPlay={true}/>
-              </div>
-    }
-    else {
+      return <ImageCarousel items={images} />
+    }else {
       return <div>
-              <Image className='instancepage-image' src={logo} rounded />
+              <ImageCarousel items={[{photo: logo}]} />
               <p>Uh-oh! No image is available for this pet.</p>
             </div>
     }

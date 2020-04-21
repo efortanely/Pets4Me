@@ -42,6 +42,7 @@
     "react-scripts": "3.4.0",
     "react-select": "^3.1.0",
     "react-ultimate-pagination-bootstrap-4": "^1.1.0",
+    "react-youtube": "^7.11.1",
     "serve": "^11.3.0",
     "typescript": "^3.7.5"
   },
@@ -51,7 +52,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "s-test": "mocha './src/test/**/*.spec.*' --recursive --require ./mocha-init.js",
+    "s-test": "mocha './src/test/**/*.spec.*' --recursive --require ./mocha-init.js --exit",
     "g-test": "mocha './src/test/guitest.tsx' --require ./mocha-init.js --timeout 20000",
     "watch": "mocha './src/test/**/*.spec.*' --recursive --require ./mocha-init.js -w"
   },
@@ -80,11 +81,12 @@
     "@babel/register": "^7.9.0",
     "@types/mocha": "^7.0.2",
     "@types/react-responsive": "^8.0.2",
-    "@types/selenium-webdriver": "^4.0.9",
     "@types/react-router-dom": "^5.1.4",
+    "@types/selenium-webdriver": "^4.0.9",
     "@types/sinon": "^7.5.2",
     "@types/sinon-chai": "^3.2.3",
     "babel-loader": "^8.0.6",
+    "babel-plugin-inline-import-data-uri": "^1.0.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
@@ -107,6 +109,7 @@
     ],
     "plugins": [
       "transform-class-properties",
+      "inline-import-data-uri",
       "@babel/plugin-transform-regenerator",
       "@babel/plugin-transform-runtime"
     ]

@@ -1,14 +1,16 @@
 import React from 'react'
 import Pets4meDogBreedsServiceContext from '../../common/services/Pets4meDogBreedsService';
 import { DogBreed } from '../../models/DogBreed';
-import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
-import Image from 'react-bootstrap/Image'
+import logo from '../../static/logo.png';
 import '../ModelInstancepage.css'
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import ImageCarousel from '../../common/components/ImageCarousel';
 import { isNullOrUndefined } from 'util';
+import { RouteComponentProps } from 'react-router-dom';
 
-type DogBreedProps = { breed: DogBreed, match: match }
+
+interface DogBreedProps extends Partial<RouteComponentProps> { breed: DogBreed }
 type DogBreedState = { breed: DogBreed }
 
 class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState> {
@@ -38,12 +40,23 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
   }
 
   componentDidMount() {
-    const { breed_id } = this.props.match.params as any
+    const { breed_id } = this.props.match?.params as any
     if(this.getCurrentBreedId() !== breed_id) {
       this.fetchDogBreed(breed_id)
         .then(this.updateDogBreed)
         .catch(console.log)
     }
+  }
+
+  getMedia = (photo : string, video_url : string): JSX.Element => {
+    if (isNullOrUndefined(photo)) {
+      photo = logo
+    }
+    if (isNullOrUndefined(video_url)){
+      video_url = "https://www.youtube.com/watch?v=ASxkyQKZE4k"
+    }
+
+    return <ImageCarousel items={[{photo: photo}, {video: video_url}]} />
   }
 
   getLinkedUrl = (ids: number[], type: string): JSX.Element[] => {
@@ -70,7 +83,7 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
     let breed: DogBreed = this.state.breed
     return (
       <div className='model-instancepage'>
-        <Image className='instancepage-image' src={breed.photo} rounded />
+          { this.getMedia(breed.photo, breed.video_url) }
           <div className='instancepage-text'>
             <h1 id='name'>{breed.name}</h1>
             <p id='group'>Group: {this.genericEmpty(breed.breed_group)}</p>

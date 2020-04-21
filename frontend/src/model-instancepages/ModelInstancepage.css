@@ -7,19 +7,24 @@
     padding-left: 10px;
 }
 
-.instancepage-image {
-    border-radius: 5px;
-    flex-grow: 3;
-    flex-direction: row;
-}
-
 .image-gallery {
     width: 90%;
     margin: 0 auto;
     margin-bottom: 20px;
 }
 
-.instancepage-image p {
+iframe{
+    margin: 0 auto;
+    display: block;
+    width: 90%;
+    height: 360px;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
     color: #581730;
     text-align: center;
 }
@@ -49,12 +54,19 @@
         flex-direction: row;
     }
 
-    .instancepage-image {
-        max-width: 500px;
-        flex-direction: column;
+    .instancepage-imagevideo{
+        padding-right: 10px;
     }
 
     .image-gallery{
-        width: 480px;
+        width: 640px;
+    }
+
+    h1 {
+        text-align: left;
+    }
+    
+    .instancepage-text p{
+        text-align: left;
     }
 }

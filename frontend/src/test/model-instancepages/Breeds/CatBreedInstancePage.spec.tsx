@@ -62,7 +62,8 @@ describe('<CatBreedInstancePage/>', () => {
       grooming_level: 2,
       cat_ids: [2, 3],
       local_shelters_with_breed: [1],
-      photo: ''
+      photo: '',
+      video_url: ''
     }
 
     elements = {
@@ -130,14 +131,5 @@ describe('<CatBreedInstancePage/>', () => {
     mountWithBreed(emptyBreed, `${testBreed.id}`)
 
     expect(getCatBreedSpy).to.have.been.calledWith(`${testBreed.id}`)
-  })
-
-  // author Connor
-  it('should GET breed on component mount if different breed supplied in props than url param', () => {
-    let getCatBreedSpy = spyOnCatBreedsService(testBreed)
-    let urlBreedId = testBreed.id + 1
-    mountWithBreed(testBreed, `${urlBreedId}`)
-
-    expect(getCatBreedSpy).to.have.been.calledWith(`${urlBreedId}`)
   })
 })
