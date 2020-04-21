@@ -56,7 +56,7 @@ export class DogBreeds extends React.Component<RouteComponentProps, DogBreedsSta
   render() {
     return (
       <div className='model-homepage'>
-        <MediaQuery query="(max-width: 949px)">
+        <MediaQuery query="(max-width: 1349px)">
           <div className='model-homepage-content'>
             {this.state.loading ? <Spinner animation='border'></Spinner> : <DogBreedsFilters {...this.state.filterOptions}/> }
             <div className='cards-container'>
@@ -65,7 +65,7 @@ export class DogBreeds extends React.Component<RouteComponentProps, DogBreedsSta
           </div>
         </MediaQuery>
 
-        <MediaQuery query="(min-width: 950px)">
+        <MediaQuery query="(min-width: 1350px)">
           <div className='model-homepage-content'>
           {this.state.loading ? <Spinner animation='border'></Spinner> : <DogBreedsFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>

@@ -52,7 +52,7 @@ export class Pets extends React.Component<RouteComponentProps, PetsState> {
   render() {
     return (
       <div className='model-homepage'>
-        <MediaQuery query="(max-width: 949px)">
+        <MediaQuery query="(max-width: 1349px)">
           <div className='model-homepage-content'>
             {this.state.loading ? <Spinner animation='border'></Spinner> :<PetsFilters {...this.state.filterOptions}/> }
             <div className='cards-container'>
@@ -61,7 +61,7 @@ export class Pets extends React.Component<RouteComponentProps, PetsState> {
           </div>
         </MediaQuery>
 
-        <MediaQuery query="(min-width: 950px)">
+        <MediaQuery query="(min-width: 1350px)">
           <div className='model-homepage-content'>
           {this.state.loading ? <Spinner animation='border'></Spinner> :<PetsFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>

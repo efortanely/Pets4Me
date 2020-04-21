@@ -49,7 +49,7 @@ p {
     color: #FAA851;
 }
 
-@media screen and (min-width: 950px){
+@media screen and (min-width: 1350px){
     .model-instancepage {
         flex-direction: row;
     }

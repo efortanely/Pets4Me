@@ -1,5 +1,9 @@
 /* Mobile View */
 
+.navbar{
+  flex-direction: column;
+}
+
 .Logo{
   display: flex;
   flex-direction: row;
@@ -17,6 +21,11 @@
   font-family: 'Quicksand', sans-serif;
   font-size: 40px;
   font-weight: bold;
+}
+
+.form-group{
+  width: 90vw;
+  margin: 0 auto;
 }
 
 .form-control {
@@ -41,9 +50,8 @@ li{
 .nav-link{
   color: #581730;
   font-weight: bold;
-  font-size: 2vw;
+  font-size: min(2vw, 15px);
   margin-left: 8px;
-  margin-right: 8px;
 }
 
 .shapeOne{
@@ -108,13 +116,19 @@ li{
 
 /* Desktop View */
 
-@media screen and (min-width: 950px){
+@media screen and (min-width: 1350px){
+
+.navbar{
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
 
 .Logo{
-  position: absolute;
-  flex-direction: row;
-  justify-content: flex-start;
-  padding: 5% 0px 5% 0px ;
+  align-self: flex-start;
+  width: 250px;
 }
 
 .Logo img{
@@ -127,16 +141,17 @@ li{
 
 .form-group {
   padding: 5% 0px 5% 0px;
+  width: 100%;
+  flex-grow: 1;
+}
+
+nav{
+  flex-grow: 2;
 }
 
 ul{
-  position: relative;
   justify-content: flex-end;
-  margin-right: 70px;
-}
-
-li{
-  margin-top: 30px;
+  margin-right: 20px;
 }
 
 .nav-link{
