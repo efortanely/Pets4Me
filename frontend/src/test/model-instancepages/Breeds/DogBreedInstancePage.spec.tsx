@@ -8,7 +8,6 @@ import { DogBreed } from '../../../models/DogBreed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
-import DogBreedsService from '../../../common/services/DogBreedsService';
 import { MemoryRouter } from 'react-router-dom';
 import ModelInstanceService from '../../../common/services/ModelInstanceService';
 chai.use(sinonChai)
@@ -35,7 +34,7 @@ describe('<DogBreedInstancePage />', () => {
     return mount(<MemoryRouter><DogBreedInstancePage
       breed={breed}
       match={{params: { breed_id: `${breed_id}` }, isExact: true, path: "", url: ""}}
-    /></MemoryRouter>)
+      /></MemoryRouter>)
   }
 
   function shallowWithBreed(breed: DogBreed, breed_id: string = `${breed.id}`) {
@@ -50,7 +49,7 @@ describe('<DogBreedInstancePage />', () => {
     if(testComponent) {
       testComponent = testComponent.unmount()
     }
-    
+
     testBreed = {
       id: 1,
       name: 'foo',
@@ -62,7 +61,8 @@ describe('<DogBreedInstancePage />', () => {
       bred_for: 'barfoo',
       dog_ids: [1, 2],
       local_shelters_with_breed: [1],
-      photo: ''
+      photo: '',
+      video_url: ''
     }
 
     elements = {
@@ -87,10 +87,7 @@ describe('<DogBreedInstancePage />', () => {
   // author Connor
   it('should not crash when DogBreed is undefined', () => {
     spyOnDogBreedsService(testBreed)
-    let testPage = mount(<DogBreedInstancePage
-      breed={undefined}
-      match={{params: { breed_id: `${testBreed.id}` }, isExact: true, path: "", url: ""}}
-    />)
+    let testPage = mountWithBreed({} as DogBreed, '1')
 
     expect(testPage.html()).to.exist
   })
@@ -108,6 +105,8 @@ describe('<DogBreedInstancePage />', () => {
   it('should render all details', () => {
 
     shallowWithBreed(testBreed)
+
+    console.log(testComponent)
 
     expect(elements.name().text()).to.include(testBreed.name)
     expect(elements.group().text()).to.include(testBreed.breed_group)
@@ -130,14 +129,5 @@ describe('<DogBreedInstancePage />', () => {
     mountWithBreed(emptyBreed, `${testBreed.id}`)
 
     expect(getDogBreedSpy).to.have.been.calledWith(`${testBreed.id}`)
-  })
-
-  // author connor
-  it('should GET breed on component mount if different breed supplied in props than url param', () => {
-    let getDogBreedSpy = spyOnDogBreedsService(testBreed)
-    let urlBreedId = testBreed.id + 1
-    mountWithBreed(testBreed, `${urlBreedId}`)
-
-    expect(getDogBreedSpy).to.have.been.calledWith(`${urlBreedId}`)
   })
 })

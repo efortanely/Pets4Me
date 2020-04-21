@@ -8,7 +8,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import ModelInstanceService from "../../services/ModelInstanceService";
 
-interface InfoCardsProps extends RouteComponentProps { pageNumber: number, filterString: string, itemsPerPage: number }
+interface InfoCardsProps extends Partial<RouteComponentProps> { pageNumber: number, filterString: string, itemsPerPage: number }
 interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean, searchParams: URLSearchParams }
 
 abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsState<T>> {
@@ -24,7 +24,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
         pageNumber: props.pageNumber,
         page: { objects: [] as T[], total_pages: 0} as ObjectsPage<T>,
         loading: true,
-        searchParams: new URLSearchParams(this.props.location.search)
+        searchParams: new URLSearchParams(this.props.location?.search)
     }
     this.props.history?.listen((location) => {
       this.setState({ searchParams: new URLSearchParams(location.search), pageNumber: 1 }, () => this.onPageChange(1))
@@ -90,7 +90,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
   abstract createInfoCard(o: T, key: any): JSX.Element
 
   getPathName = (): string => {
-    return this.props.history.location.pathname
+    return this.props.history?.location.pathname || '/'
   }
 }
 

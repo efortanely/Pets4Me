@@ -1,11 +1,11 @@
 import React from 'react'
 import Pets4meCatBreedsServiceContext from '../../common/services/Pets4meCatBreedsService';
 import { CatBreed } from '../../models/CatBreed';
-import Image from 'react-bootstrap/Image'
 import logo from '../../static/logo.png';
 import { match } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import ImageCarousel from '../../common/components/ImageCarousel';
 import { isNullOrUndefined } from 'util';
 
 type CatBreedProps = { breed: CatBreed, match: match }
@@ -46,13 +46,15 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
     }
   }
 
-  getPhoto = (photo : string): JSX.Element => {
-    if (photo != null)
-      return <Image className='instancepage-image' src={photo} rounded />
-    return <div>
-      <Image className='instancepage-image' src={logo} rounded />
-      <p>Uh-oh! No image is available for this pet.</p>
-    </div>
+  getMedia = (photo : string, video_url : string): JSX.Element => {
+    if (isNullOrUndefined(photo)) {
+      photo = logo
+    }
+    if (isNullOrUndefined(video_url)){
+      video_url = "https://www.youtube.com/watch?v=nM4Kb2QxPBw"
+    }
+
+    return <ImageCarousel items={[{photo: photo}, {video: video_url}]} />
   }
 
   getLinkedUrl = (ids: number[], type: string): JSX.Element[] => {
@@ -94,7 +96,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
     let breed: CatBreed = this.state.breed
     return (
     <div className='model-instancepage'>
-      { this.getPhoto(breed.photo) }
+      { this.getMedia(breed.photo, breed.video_url) }
         <div className='instancepage-text'>
           <h1 id='name'>{breed.name}</h1>
           <p id='alt-names'>Alternate Names: {!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified." : breed.alt_names}</p>

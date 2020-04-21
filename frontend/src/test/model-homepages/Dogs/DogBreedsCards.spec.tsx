@@ -9,7 +9,6 @@ import sinonChai from 'sinon-chai'
 import { ObjectsPage } from '../../../models/ObjectsPage';
 import DogBreedsInfoCards from '../../../model-homepages/Dogs/DogBreedsInfoCards';
 import { Pets4meDogBreedsService } from '../../../common/services/Pets4meDogBreedsService';
-import DogBreedsService from '../../../common/services/DogBreedsService';
 import ModelInstanceService from '../../../common/services/ModelInstanceService';
 import { MemoryRouter, withRouter } from 'react-router-dom';
 chai.use(sinonChai)
@@ -27,7 +26,7 @@ describe('<DogBreedsInfoCards />', () => {
     testDogBreedsService.getModelPageOfInstances = (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
     DogBreedsInfoCards.contextType = React.createContext<ModelInstanceService<DogBreed>>(testDogBreedsService)
     
-    return mount(<MemoryRouter>{withRouter(DogBreedsInfoCards)}</MemoryRouter>)
+    return mount(<MemoryRouter><DogBreedsInfoCards /></MemoryRouter>)
   }
 
   function makeDummyPageFunction(page: ObjectsPage<DogBreed>): (pageNumber?: number) => Promise<ObjectsPage<DogBreed>> {

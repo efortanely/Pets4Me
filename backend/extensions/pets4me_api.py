@@ -253,6 +253,7 @@ class DogBreed(db.Model):
     bred_for = Column(String(1000))
     breed_group = Column(String(100))
     photo = Column(String(500))
+    video_url = Column(String(500))
 
     str_params = [
         name,
@@ -298,7 +299,7 @@ class DogBreed(db.Model):
         return db.session.query(cls)
 
 
-dog_breed_includes = ["id", "name", "temperament", "bred_for", "breed_group", "photo"]
+dog_breed_includes = ["id", "name", "temperament", "bred_for", "breed_group", "photo", "video_url"]
 dog_breed_methods = [
     "life_span",
     "height_imperial",
@@ -325,6 +326,7 @@ class CatBreed(db.Model):
     # 1-5
     grooming_level = Column(Integer)
     photo = Column(String(500))
+    video_url = Column(String(500))
 
     str_params = [
         name,
@@ -372,6 +374,7 @@ cat_breed_includes = [
     "child_friendly",
     "grooming_level",
     "photo",
+    "video_url"
 ]
 cat_breed_methods = ["life_span", "cat_ids", "shelters_with_breed"]
 

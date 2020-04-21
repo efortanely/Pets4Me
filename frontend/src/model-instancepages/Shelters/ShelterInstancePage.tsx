@@ -2,13 +2,12 @@ import React from 'react'
 import Pets4meSheltersServiceContext from '../../common/services/Pets4meSheltersService';
 import { Shelter, Photos } from '../../models/Shelter';
 import { match, Link } from 'react-router-dom'
-import Image from 'react-bootstrap/Image';
 import logo from '../../static/logo.png';
-import ImageGallery from 'react-image-gallery';
 import MapMedia from '../../common/components/MapMedia'
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import ImageCarousel from '../../common/components/ImageCarousel';
 
 type ShelterProps = { shelter: Shelter, match: match }
 type ShelterState = { shelter: Shelter }
@@ -74,14 +73,14 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   getPhoto = (photos: Photos): JSX.Element => {
     if (photos?.full && photos.full[0]){
       const images = photos.full.map(photo => {
-        return {original: photo}
+        return {photo: photo}
       });
 
-      return <ImageGallery items={images} />
-    } else {
+      return <ImageCarousel items={images} />
+    }else {
       return <div>
-              <Image src={logo} rounded />
-              <p>Uh-oh! No image is available for this Shelter.</p>
+              <ImageCarousel items={[{photo: logo}]} />
+              <p>Uh-oh! No image is available for this shelter.</p>
             </div>
     }
   }
