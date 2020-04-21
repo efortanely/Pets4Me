@@ -11,6 +11,8 @@ from sqlalchemy import (
     and_,
     func,
     create_engine,
+    case,
+    select,
 )
 from functools import reduce
 from sqlalchemy.dialects.postgresql import ARRAY as Array
@@ -196,6 +198,56 @@ class Pet(db.Model):
                 elif dir == "desc":
                     query = query.join(cls.secondary_cat_breed).order_by(
                         CatBreed.name.desc()
+                    )
+            elif sort == "age":
+                if dir == "asc":
+                    query = query.order_by(
+                        case(
+                            [
+                                (cls.age == "Baby", "0"),
+                                (cls.age == "Young", "1"),
+                                (cls.age == "Adult", "2"),
+                                (cls.age == "Senior", "3"),
+                            ],
+                            else_="4",
+                        )
+                    )
+                elif dir == "desc":
+                    query = query.order_by(
+                        case(
+                            [
+                                (cls.age == "Baby", "0"),
+                                (cls.age == "Young", "1"),
+                                (cls.age == "Adult", "2"),
+                                (cls.age == "Senior", "3"),
+                            ],
+                            else_="4",
+                        ).desc()
+                    )
+            elif sort == "size":
+                if dir == "asc":
+                    query = query.order_by(
+                        case(
+                            [
+                                (cls.size == "Small", "0"),
+                                (cls.size == "Medium", "1"),
+                                (cls.size == "Large", "2"),
+                                (cls.size == "Extra Large", "3"),
+                            ],
+                            else_="4",
+                        )
+                    )
+                elif dir == "desc":
+                    query = query.order_by(
+                        case(
+                            [
+                                (cls.size == "Small", "0"),
+                                (cls.size == "Medium", "1"),
+                                (cls.size == "Large", "2"),
+                                (cls.size == "Extra Large", "3"),
+                            ],
+                            else_="4",
+                        ).desc()
                     )
 
         if "max_dist" in request.args:
