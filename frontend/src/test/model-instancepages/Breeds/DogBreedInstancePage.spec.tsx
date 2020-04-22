@@ -3,13 +3,13 @@ import React from 'react'
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
 import DogBreedInstancePage from '../../../model-instancepages/Breeds/DogBreedInstancePage'
-import { Pets4meDogBreedsService } from '../../../common/services/Pets4meDogBreedsService';
 import { DogBreed } from '../../../models/DogBreed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 import { MemoryRouter } from 'react-router-dom';
 import ModelInstanceService from '../../../common/services/ModelInstanceService';
+import { mockModelInstanceService } from '../../TestMocks';
 chai.use(sinonChai)
 
 
@@ -19,15 +19,12 @@ describe('<DogBreedInstancePage />', () => {
   let elements: any
   const emptyBreed = { } as DogBreed
 
-  function spyOnDogBreedsService(breed: DogBreed) {
-    let testPets4meDogBreedsService = new Pets4meDogBreedsService()
-    let getDogBreedSpy = spy((breed_id: string) => new Promise<DogBreed>(() => breed))
-    testPets4meDogBreedsService.getInstanceById = getDogBreedSpy
+  function spyOnDogBreedsService(breed?: DogBreed) {
+    let testDogBreedsService: ModelInstanceService<DogBreed> = mockModelInstanceService<DogBreed>(breed)
 
-    let testContext = React.createContext<ModelInstanceService<DogBreed>>(testPets4meDogBreedsService)
-    DogBreedInstancePage.contextType = testContext
+    DogBreedInstancePage.providers.dogBreedsService = testDogBreedsService
 
-    return getDogBreedSpy
+    return testDogBreedsService
   }
 
   function mountWithBreed(breed: DogBreed, breed_id: string = `${breed.id}`) {
@@ -86,7 +83,7 @@ describe('<DogBreedInstancePage />', () => {
 
   // author Connor
   it('should not crash when DogBreed is undefined', () => {
-    spyOnDogBreedsService(testBreed)
+    spyOnDogBreedsService(undefined)
     let testPage = mountWithBreed({} as DogBreed, '1')
 
     expect(testPage.html()).to.exist
@@ -105,8 +102,6 @@ describe('<DogBreedInstancePage />', () => {
   it('should render all details', () => {
 
     shallowWithBreed(testBreed)
-
-    console.log(testComponent)
 
     expect(elements.name().text()).to.include(testBreed.name)
     expect(elements.group().text()).to.include(testBreed.breed_group)
@@ -128,6 +123,6 @@ describe('<DogBreedInstancePage />', () => {
 
     mountWithBreed(emptyBreed, `${testBreed.id}`)
 
-    expect(getDogBreedSpy).to.have.been.calledWith(`${testBreed.id}`)
+    expect(getDogBreedSpy.getInstanceById).to.have.been.calledWith(`${testBreed.id}`)
   })
 })

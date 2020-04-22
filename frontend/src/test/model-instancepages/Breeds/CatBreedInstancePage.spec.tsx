@@ -3,13 +3,13 @@ import React from 'react'
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
 import CatBreedInstancePage from '../../../model-instancepages/Breeds/CatBreedInstancePage'
-import { Pets4meCatBreedsService } from '../../../common/services/Pets4meCatBreedsService';
 import { CatBreed } from '../../../models/CatBreed';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 import { MemoryRouter } from 'react-router-dom';
 import ModelInstanceService from '../../../common/services/ModelInstanceService';
+import { mockModelInstanceService } from '../../TestMocks';
 chai.use(sinonChai)
 
 
@@ -20,14 +20,11 @@ describe('<CatBreedInstancePage/>', () => {
   const emptyBreed = { } as CatBreed
 
   function spyOnCatBreedsService(breed: CatBreed) {
-    let testPets4meCatBreedsService = new Pets4meCatBreedsService()
-    let getCatBreedSpy = spy((breed_id: string) => new Promise<CatBreed>(() => breed))
-    testPets4meCatBreedsService.getInstanceById = getCatBreedSpy
+    let testCatBreedsService: ModelInstanceService<CatBreed> = mockModelInstanceService<CatBreed>(breed)
 
-    let testContext = React.createContext<ModelInstanceService<CatBreed>>(testPets4meCatBreedsService)
-    CatBreedInstancePage.contextType = testContext
+    CatBreedInstancePage.providers.catBreedService = testCatBreedsService
 
-    return getCatBreedSpy
+    return testCatBreedsService
   }
 
   function mountWithBreed(breed: CatBreed, breed_id: string = `${breed.id}`) {
@@ -130,6 +127,6 @@ describe('<CatBreedInstancePage/>', () => {
 
     mountWithBreed(emptyBreed, `${testBreed.id}`)
 
-    expect(getCatBreedSpy).to.have.been.calledWith(`${testBreed.id}`)
+    expect(getCatBreedSpy.getInstanceById).to.have.been.calledWith(`${testBreed.id}`)
   })
 })

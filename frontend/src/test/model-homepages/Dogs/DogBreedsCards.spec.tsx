@@ -1,42 +1,31 @@
 import 'jsdom-global/register'
 import React from 'react'
-import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
+import { configure, mount, ShallowWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
 import { DogBreed } from '../../../models/DogBreed';
 import Adapter from 'enzyme-adapter-react-16';
-import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 import { ObjectsPage } from '../../../models/ObjectsPage';
 import DogBreedsInfoCards from '../../../model-homepages/Dogs/DogBreedsInfoCards';
-import { Pets4meDogBreedsService } from '../../../common/services/Pets4meDogBreedsService';
 import ModelInstanceService from '../../../common/services/ModelInstanceService';
-import { MemoryRouter, withRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
+import { mockModelInstanceService } from '../../TestMocks';
 chai.use(sinonChai)
 
-const itemsPerPage = 12
 
 describe('<DogBreedsInfoCards />', () => {
   let testComponent: ShallowWrapper
-  let testBreed: DogBreed
   let testBreedPage: ObjectsPage<DogBreed>
-  let elements: any
 
-  function mountWithPage(page: ObjectsPage<DogBreed>, pageNumber: number = 1) {
-    let testDogBreedsService = new Pets4meDogBreedsService()
-    testDogBreedsService.getModelPageOfInstances = (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
-    DogBreedsInfoCards.contextType = React.createContext<ModelInstanceService<DogBreed>>(testDogBreedsService)
+  function mountWithPage(page: ObjectsPage<DogBreed>) {
+    let testDogBreedsService: ModelInstanceService<DogBreed> = mockModelInstanceService<DogBreed>(undefined, page)
+
+    DogBreedsInfoCards.providers.dogBreedsService = testDogBreedsService
     
     return mount(<MemoryRouter><DogBreedsInfoCards /></MemoryRouter>)
   }
 
-  function makeDummyPageFunction(page: ObjectsPage<DogBreed>): (pageNumber?: number) => Promise<ObjectsPage<DogBreed>> {
-    return (pageNumber?: number) => new Promise<ObjectsPage<DogBreed>>(()=> page)
-  }
 
-  function addBreedToTestPage(breed: DogBreed) {
-    testBreedPage.objects.push(breed)
-    testBreedPage.num_results += 1
-  }
 
   beforeEach(() => {
     configure({ adapter: new Adapter() });
@@ -44,19 +33,6 @@ describe('<DogBreedsInfoCards />', () => {
       testComponent = testComponent.unmount()
     }
     
-    testBreed = {
-      id: 1,
-      name: 'foo',
-      breed_group: 'bar',
-      life_span: {low: 5, high: 6},
-      height_imperial: {low: 7, high: 11},
-      weight_imperial: {low: 4, high: 20},
-      temperament: 'foobar',
-      bred_for: 'barfoo',
-      dog_ids: [1, 2],
-      local_shelters_with_breed: [1],
-      photo: ''
-    }
 
     testBreedPage = {
       num_results: 0,
@@ -65,8 +41,6 @@ describe('<DogBreedsInfoCards />', () => {
       total_pages: 1
     }
 
-    elements = {
-    }
 
   })
   

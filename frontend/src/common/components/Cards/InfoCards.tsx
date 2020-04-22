@@ -83,9 +83,11 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
   }
 
   fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<T>> => {
-    const modelInstanceService: ModelInstanceService<T> = this.context
+    const modelInstanceService: ModelInstanceService<T> = this.getModelInstanceService()
     return modelInstanceService.getModelPageOfInstances(pageNumber, this.getSearchParam(), this.props.filterString)
   }
+
+  abstract getModelInstanceService(): ModelInstanceService<T>
 
   abstract createInfoCard(o: T, key: any): JSX.Element
 
