@@ -17,7 +17,6 @@ export function _onReady(event: { target: { pauseVideo: () => void; }; }) {
 
 const ImageCarousel: React.FunctionComponent<ImageCarouselProps> = (props: ImageCarouselProps) => {
   const items: ReactImageGalleryItem[] = props.items.map(item => {
-    console.log(Object.keys(item))
     if("photo" in item){
       return {original: item["photo"]} as ReactImageGalleryItem
     }else if("video" in item){

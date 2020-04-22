@@ -1,5 +1,5 @@
 import React from 'react'
-import Pets4meSheltersServiceContext from '../../common/services/Pets4meSheltersService';
+import Pets4meSheltersService from '../../common/services/Pets4meSheltersService';
 import { Shelter, Photos } from '../../models/Shelter';
 import { match, Link } from 'react-router-dom'
 import logo from '../../static/logo.png';
@@ -9,11 +9,15 @@ import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 import ImageCarousel from '../../common/components/ImageCarousel';
 
-type ShelterProps = { shelter: Shelter, match: match }
-type ShelterState = { shelter: Shelter }
+interface ShelterProps { shelter: Shelter, match: match }
+interface ShelterState { shelter: Shelter }
+interface ShelterProviders { sheltersService: ModelInstanceService<Shelter> }
 
 class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
-  static contextType = Pets4meSheltersServiceContext
+  static providers: ShelterProviders = { 
+    sheltersService: Pets4meSheltersService 
+  }
+  
   static defaultProps = {
     shelter: { } as Shelter
   }
@@ -26,7 +30,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   }
 
   fetchShelter = (shelter_id: string): Promise<Shelter> => {
-    const pets4meShelterService: ModelInstanceService<Shelter> = this.context
+    const pets4meShelterService: ModelInstanceService<Shelter> = ShelterInstancePage.providers.sheltersService
     return pets4meShelterService.getInstanceById(shelter_id)
   }
 
@@ -109,7 +113,6 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   render() {
     let shelter: Shelter = this.state.shelter
     let allPets = Object.values(shelter.all_pets || {})
-    console.log(allPets)
     return (
       <div className='model-instancepage'>
         <div className='instancepage-image'>

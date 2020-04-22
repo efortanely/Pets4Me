@@ -1,5 +1,5 @@
 import React from 'react'
-import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService';
+import Pets4mePetsService from '../../common/services/Pets4mePetsService';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 import { Pet, BackendEntity, Photos } from '../../models/Pet';
 import { match, Link } from 'react-router-dom';
@@ -8,12 +8,17 @@ import ImageCarousel from '../../common/components/ImageCarousel';
 import '../ModelInstancepage.css'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import { isNullOrUndefined } from 'util';
+import '../ModelInstancepage.css'
+import Pets4meSheltersService from '../../common/services/Pets4meSheltersService';
+import { Shelter } from '../../models/Shelter';
 
-type PetProps = { pet: Pet, match: match }
-type PetState = { pet: Pet }
+interface PetProps { pet: Pet, match: match }
+interface PetState { pet: Pet }
+interface PetInstancePageProviders { petsService: ModelInstanceService<Pet>, sheltersService: ModelInstanceService<Shelter>}
 
 class PetInstancePage extends React.Component<PetProps, PetState> {
-  static contextType = Pets4mePetsServiceContext
+  static providers: PetInstancePageProviders = { petsService: Pets4mePetsService, sheltersService: Pets4meSheltersService }
+
   static defaultProps = {
     pet: { } as Pet
   }
@@ -28,7 +33,7 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
   }
 
   fetchPet = (pet_id: string): Promise<Pet> => {
-    const pets4mePetsService: ModelInstanceService<Pet> = this.context
+    const pets4mePetsService = PetInstancePage.providers.petsService
     return pets4mePetsService.getInstanceById(pet_id)
   }
 

@@ -1,10 +1,9 @@
-import React from 'react'
 import Pets4meApiService from './Pets4meApiService';
 import { DogBreed } from '../../models/DogBreed';
 import { ObjectsPage } from '../../models/ObjectsPage';
 import ModelInstanceService from './ModelInstanceService';
 
-export class Pets4meDogBreedsService implements ModelInstanceService<DogBreed> {
+class Pets4meDogBreedsServiceImpl implements ModelInstanceService<DogBreed> {
   private endpoint: string = 'dog_breeds'
   pets4meApiService: Pets4meApiService
 
@@ -21,8 +20,6 @@ export class Pets4meDogBreedsService implements ModelInstanceService<DogBreed> {
   }
 }
 
-const pets4meDogBreedsService: Pets4meDogBreedsService = new Pets4meDogBreedsService()
+const Pets4meDogBreedsService: ModelInstanceService<DogBreed> = new Pets4meDogBreedsServiceImpl()
 
-const Pets4meDogBreedsServiceContext = React.createContext<ModelInstanceService<DogBreed>>(pets4meDogBreedsService)
-
-export default Pets4meDogBreedsServiceContext
+export default Pets4meDogBreedsService

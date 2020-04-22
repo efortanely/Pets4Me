@@ -1,11 +1,18 @@
 import React from 'react';
 import CatBreedCard from '../../common/components/Cards/CatBreedCard';
 import { CatBreed } from '../../models/CatBreed';
-import Pets4meCatBreedsServiceContext from '../../common/services/Pets4meCatBreedsService';
+import Pets4meCatBreedsService from '../../common/services/Pets4meCatBreedsService';
 import InfoCards from '../../common/components/Cards/InfoCards';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
+
+interface CatBreedsInfoCardsProviders { catBreedService: ModelInstanceService<CatBreed> }
 
 class CatBreedsInfoCards extends InfoCards<CatBreed> {
-    static contextType = Pets4meCatBreedsServiceContext
+    static providers: CatBreedsInfoCardsProviders = { catBreedService: Pets4meCatBreedsService }
+
+    getModelInstanceService = (): ModelInstanceService<CatBreed> => {
+        return CatBreedsInfoCards.providers.catBreedService
+    }
 
     componentDidUpdate(prevProps: any) {
         if (this.props.filterString !== prevProps.filterString) {

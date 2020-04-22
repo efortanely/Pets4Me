@@ -1,10 +1,20 @@
 import React from 'react';
 import InfoCards from '../../common/components/Cards/InfoCards';
-import Pets4meSheltersServiceContext from '../../common/services/Pets4meSheltersService';
+import Pets4meSheltersService from '../../common/services/Pets4meSheltersService';
 import { Shelter } from '../../models/Shelter';
 import ShelterCard from '../../common/components/Cards/ShelterCard';
+import ModelInstanceService from '../../common/services/ModelInstanceService';
+
+interface SheltersInfoCardsProviders { sheltersService: ModelInstanceService<Shelter> }
+
 class SheltersInfoCards extends InfoCards<Shelter> {
-    static contextType = Pets4meSheltersServiceContext
+    static providers: SheltersInfoCardsProviders = {
+        sheltersService: Pets4meSheltersService
+    }
+
+    getModelInstanceService = (): ModelInstanceService<Shelter> => {
+        return Pets4meSheltersService
+    }
 
     componentDidUpdate(prevProps: any) {
         if (this.props.filterString !== prevProps.filterString) {

@@ -1,10 +1,9 @@
-import React from 'react'
 import Pets4meApiService from './Pets4meApiService';
 import { Shelter } from '../../models/Shelter';
 import { ObjectsPage } from '../../models/ObjectsPage';
 import ModelInstanceService from './ModelInstanceService';
 
-export class Pets4meSheltersService implements ModelInstanceService<Shelter> {
+class Pets4meSheltersServiceImpl implements ModelInstanceService<Shelter> {
   private endpoint: string = 'shelters'
   pets4meApiService: Pets4meApiService
 
@@ -21,8 +20,6 @@ export class Pets4meSheltersService implements ModelInstanceService<Shelter> {
   }
 }
 
-const pets4meSheltersService: Pets4meSheltersService = new Pets4meSheltersService()
+const Pets4meSheltersService: ModelInstanceService<Shelter> = new Pets4meSheltersServiceImpl()
 
-const Pets4meSheltersServiceContext = React.createContext<ModelInstanceService<Shelter>>(pets4meSheltersService)
-
-export default Pets4meSheltersServiceContext
+export default Pets4meSheltersService

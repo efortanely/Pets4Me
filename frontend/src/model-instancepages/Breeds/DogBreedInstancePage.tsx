@@ -1,5 +1,5 @@
 import React from 'react'
-import Pets4meDogBreedsServiceContext from '../../common/services/Pets4meDogBreedsService';
+import Pets4meDogBreedsService from '../../common/services/Pets4meDogBreedsService';
 import { DogBreed } from '../../models/DogBreed';
 import { Link } from 'react-router-dom';
 import logo from '../../static/logo.png';
@@ -9,12 +9,15 @@ import ImageCarousel from '../../common/components/ImageCarousel';
 import { isNullOrUndefined } from 'util';
 import { RouteComponentProps } from 'react-router-dom';
 
-
 interface DogBreedProps extends Partial<RouteComponentProps> { breed: DogBreed }
-type DogBreedState = { breed: DogBreed }
+interface DogBreedState { breed: DogBreed }
+interface DogBreedProviders { dogBreedsService: ModelInstanceService<DogBreed> }
 
 class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState> {
-  static contextType = Pets4meDogBreedsServiceContext
+  static providers: DogBreedProviders = { 
+    dogBreedsService: Pets4meDogBreedsService
+  }
+
   static defaultProps = {
     breed: { } as DogBreed
   }
@@ -27,7 +30,7 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
   }
 
   fetchDogBreed = (breed_id: string): Promise<DogBreed> => {
-    const pets4meDogBreedService: ModelInstanceService<DogBreed> = this.context
+    const pets4meDogBreedService: ModelInstanceService<DogBreed> = DogBreedInstancePage.providers.dogBreedsService
     return pets4meDogBreedService.getInstanceById(breed_id)
   }
 

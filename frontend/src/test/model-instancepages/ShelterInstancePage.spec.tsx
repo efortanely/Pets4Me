@@ -3,7 +3,6 @@ import React from 'react';
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import chai, { expect } from 'chai';
 import ShelterInstancePage from '../../model-instancepages/Shelters/ShelterInstancePage';
-import { Pets4meSheltersService } from '../../common/services/Pets4meSheltersService';
 import { Shelter } from '../../models/Shelter';
 import Adapter from 'enzyme-adapter-react-16';
 import sinon from 'sinon'
@@ -12,6 +11,8 @@ import sinonChai from 'sinon-chai';
 import { MemoryRouter } from 'react-router-dom';
 import * as MapMedia from '../../common/components/MapMedia';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import { ObjectsPage } from '../../models/ObjectsPage';
+import { mockModelInstanceService } from '../TestMocks';
 chai.use(sinonChai)
 
 describe('<ShelterInstancePage/>', () => {
@@ -25,14 +26,11 @@ describe('<ShelterInstancePage/>', () => {
   })
 
   function spyOnSheltersService(shelter: Shelter) {
-    let testPets4meSheltersService = new Pets4meSheltersService()
-    let getShelterSpy = spy((shelter_id: string) => new Promise<Shelter>(() => shelter))
-    testPets4meSheltersService.getInstanceById = getShelterSpy
+    let testSheltersService: ModelInstanceService<Shelter> = mockModelInstanceService<Shelter>(shelter)
 
-    let testContext = React.createContext<ModelInstanceService<Shelter>>(testPets4meSheltersService)
-    ShelterInstancePage.contextType = testContext
+    ShelterInstancePage.providers.sheltersService = testSheltersService
 
-    return getShelterSpy
+    return testSheltersService
   }
 
   function mountWithShelter(shelter: Shelter, shelter_id: string = `${shelter.id}`) {
@@ -61,7 +59,7 @@ describe('<ShelterInstancePage/>', () => {
       address: {"country": "US","state":"CA", "postcode":91301, "address1": "29525 Agoura Road", "address2":"", "city":"Agoura"},
       contact: {"email":"foo@bar.bar", "phone_number":"123-456-7890"},
       photos: {full:[],small:[]},
-      all_pets: {"0":{"species": "Cat", id:1},"1":{"species": "Dog", id:2}},
+      all_pets: {"0":{ name: "bob", species: "Cat", id:1}, "1":{name: "Alice", species: "Dog", id:2}},
       distance: 1,
       adoption_policy: 'bar',
       mission: 'mar',
@@ -137,6 +135,6 @@ describe('<ShelterInstancePage/>', () => {
 
     mountWithShelter(emptyShelter, `${testShelter.id}`)
 
-    expect(getShelterSpy).to.have.been.calledWith(`${testShelter.id}`)
+    expect(getShelterSpy.getInstanceById).to.have.been.calledWith(`${testShelter.id}`)
   })
 })

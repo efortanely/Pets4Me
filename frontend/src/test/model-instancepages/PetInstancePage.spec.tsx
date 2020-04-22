@@ -2,14 +2,15 @@ import 'jsdom-global/register'
 import React from 'react'
 import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
-import PetInstancePage from '../../model-instancepages/Pets/PetInstancePage'
-import { Pets4mePetsService } from '../../common/services/Pets4mePetsService';
 import { Pet, BackendEntity, Photos } from '../../models/Pet';
 import Adapter from 'enzyme-adapter-react-16';
 import { spy } from 'sinon'
 import sinonChai from 'sinon-chai'
 import { MemoryRouter } from 'react-router-dom';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import { Shelter } from '../../models/Shelter';
+import PetInstancePage from '../../model-instancepages/Pets/PetInstancePage';
+import { mockModelInstanceService } from '../TestMocks';
 chai.use(sinonChai)
 
 
@@ -19,15 +20,21 @@ describe('<PetInstancePage/>', () => {
   let elements: any
   const emptyPet = { } as Pet
 
-  function spyOnPetsService(pet: Pet) {
-    let testPets4mePetsService = new Pets4mePetsService()
-    let getPetsSpy = spy((pet_id: string) => new Promise<Pet>(() => pet))
-    testPets4mePetsService.getInstanceById = getPetsSpy
+  function spyOnSheltersService(shelter?: Shelter) {
+    let testSheltersService = mockModelInstanceService<Shelter>(shelter)
 
-    let testContext = React.createContext<ModelInstanceService<Pet>>(testPets4mePetsService)
-    PetInstancePage.contextType = testContext
+    PetInstancePage.providers.sheltersService = testSheltersService
 
-    return getPetsSpy
+    return testSheltersService
+  }
+
+
+  function spyOnPetsService(pet?: Pet) {
+    let testPetsService = mockModelInstanceService<Pet>(pet)
+
+    PetInstancePage.providers.petsService = testPetsService
+
+    return testPetsService
   }
 
   function mountWithPet(pet: Pet, pet_id: string = `${pet.id}`) {
@@ -92,7 +99,7 @@ describe('<PetInstancePage/>', () => {
 
   // author: Dean
   it('should not crash when Pet is undefined', () => {
-    spyOnPetsService(testPet)
+    spyOnPetsService(undefined)
     let testPage = mount(<PetInstancePage
       pet={undefined}
       match={{params: { pet: `${testPet.id}` }, isExact: true, path: "", url: ""}}
@@ -134,7 +141,7 @@ describe('<PetInstancePage/>', () => {
 
     mountWithPet(emptyPet, `${testPet.id}`)
 
-    expect(getPetsSpy).to.have.been.calledWith(`${testPet.id}`)
+    expect(getPetsSpy.getInstanceById).to.have.been.calledWith(`${testPet.id}`)
   })
 
   // author Dean
@@ -143,6 +150,6 @@ describe('<PetInstancePage/>', () => {
     let urlPetId = testPet.id + 1
     mountWithPet(testPet, `${urlPetId}`)
 
-    expect(getPetsSpy).to.have.been.calledWith(`${urlPetId}`)
+    expect(getPetsSpy.getInstanceById).to.have.been.calledWith(`${urlPetId}`)
   })
 })
