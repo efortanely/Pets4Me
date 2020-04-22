@@ -13,6 +13,7 @@ from sqlalchemy import (
     create_engine,
     case,
     select,
+    text,
 )
 from functools import reduce
 from sqlalchemy.dialects.postgresql import ARRAY as Array
@@ -48,16 +49,44 @@ def searchable_query(class_query):
         search = request.args.get("search")
         if search:
             search = escape_like(search.strip())
-            q_or = reduce(
-                or_,
-                (
-                    p.ilike("%" + w + "%", escape="\\")
-                    for w in search.split()
-                    for p in cls.str_params
-                ),
-            )
+            words = search.split()
+            patterns = ["%" + w + "%" for w in words]
+            if patterns:
+                q_or = None
+                if hasattr(cls, "str_params"):
+                    args = (
+                        or_,
+                        (
+                            s.ilike(p, escape="\\")
+                            for p in patterns
+                            for s in cls.str_params
+                        ),
+                    )
+                    if q_or is not None:
+                        args = args + (q_or,)
+                    q_or = reduce(*args)
+                if hasattr(cls, "searchable_str_arrays"):
+                    #array_labels = (db.session.query(func.unnest(array).label("array")) for array in cls.searchable_str_arrays)
+                    unnest_subqueries = (db.session.query(func.unnest(array).label("element")).subquery() for array in cls.searchable_str_arrays)
+                    args = (
+                        or_,
+                        (
+                            func.exists(db.session.query(unnest).filter(reduce(or_, (unnest.c.element.ilike(p, escape="\\") for p in patterns))).as_scalar())
+                            for unnest in unnest_subqueries
+                        ),
+                    )
+                    if q_or is not None:
+                        args = args + (q_or,)
+                    q_or = reduce(*args)
 
-            return query.filter(q_or)
+                if q_or is not None:
+                    query = query.filter(q_or)
+
+                #print("=====")
+                #print(str(query))
+                #print("=====")
+
+                return query
 
         return query
 
@@ -383,6 +412,10 @@ class CatBreed(db.Model):
     str_params = [
         name,
         temperament,
+    ]
+
+    searchable_str_arrays = [
+        alt_names
     ]
 
     def life_span(self):

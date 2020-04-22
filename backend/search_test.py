@@ -88,7 +88,7 @@ class MyUnitTests(TestCase):
                 temperament="Active, Curious, Easy Going, Playful, Calm",
                 life_span_low=15,
                 life_span_high=17,
-                alt_names=["Domestic Shorthair"],
+                alt_names=["Domestic Shorthair", "Stuartkind", "Cool Name 1"],
                 indoor=0,
                 dog_friendly=5,
                 child_friendly=4,
@@ -100,7 +100,7 @@ class MyUnitTests(TestCase):
                 temperament="Lazy, Unintrested, Hard Going, Boring, Mad",
                 life_span_low=15,
                 life_span_high=17,
-                alt_names=["Domestic Longhair"],
+                alt_names=["Domestic Longhair", "Silly Name 1", "Silly Name 2"],
                 indoor=0,
                 dog_friendly=5,
                 child_friendly=4,
@@ -196,6 +196,37 @@ class MyUnitTests(TestCase):
         self.assertEqual(response.status_code, 200)
         response = json.loads(response.data)
         self.assertEqual(response.get("num_results", None), 2)
+        self.assertIn("objects", response)
+        self.assertEqual(len(response["objects"]), 2)
+
+    # author Robert
+    def test_cat_breed_array1(self):
+        response = self.app.get("/api/cat_breeds?search=stuart")
+        self.assertEqual(response.status_code, 200)
+        response = json.loads(response.data)
+        self.assertEqual(response.get("num_results", None), 1, str(response))
+        self.assertIn("objects", response)
+        self.assertEqual(len(response["objects"]), 1)
+        shorthair = response["objects"][0]
+        self.assertEqual(longhair.get("name", None), "American Shorthair")
+
+    # author Robert
+    def test_cat_breed_array2(self):
+        response = self.app.get("/api/cat_breeds?search=silly boi")
+        self.assertEqual(response.status_code, 200)
+        response = json.loads(response.data)
+        self.assertEqual(response.get("num_results", None), 1, str(response))
+        self.assertIn("objects", response)
+        self.assertEqual(len(response["objects"]), 1)
+        longhair = response["objects"][0]
+        self.assertEqual(longhair.get("name", None), "American Longhair")
+
+    # author Robert
+    def test_cat_breed_array3(self):
+        response = self.app.get("/api/cat_breeds?search=domestic")
+        self.assertEqual(response.status_code, 200)
+        response = json.loads(response.data)
+        self.assertEqual(response.get("num_results", None), 2, str(response))
         self.assertIn("objects", response)
         self.assertEqual(len(response["objects"]), 2)
 
