@@ -4,3 +4,4 @@ frontend/build
 backend/env/
 backend/geckodriver.log
 **/__pycache__/
+scratch*
