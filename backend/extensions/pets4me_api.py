@@ -67,7 +67,7 @@ def searchable_query(class_query):
                     q_or = reduce(*args)
                 if hasattr(cls, "searchable_str_arrays"):
                     #array_labels = (db.session.query(func.unnest(array).label("array")) for array in cls.searchable_str_arrays)
-                    unnest_subqueries = (db.session.query(func.unnest(array).label("element")).subquery() for array in cls.searchable_str_arrays)
+                    unnest_subqueries = (db.session.query().from_statement(text("SELECT unnest(cat_breed.alt_names) AS element")).subquery() for array in cls.searchable_str_arrays)
                     args = (
                         or_,
                         (
@@ -82,9 +82,9 @@ def searchable_query(class_query):
                 if q_or is not None:
                     query = query.filter(q_or)
 
-                #print("=====")
-                #print(str(query))
-                #print("=====")
+                print("=====")
+                print(str(query))
+                print("=====")
 
                 return query
 
