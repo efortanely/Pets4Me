@@ -8,6 +8,10 @@ import ModelInstanceService from '../../common/services/ModelInstanceService';
 import ImageCarousel from '../../common/components/ImageCarousel';
 import { isNullOrUndefined } from 'util';
 import { RouteComponentProps } from 'react-router-dom';
+import MediaQuery from 'react-responsive';
+import { Row, Col, Container } from 'react-bootstrap';
+import SheltersInfoCarousel from '../../common/components/Cards/SheltersInfoCarousel';
+import PetsInfoCarousel from '../../common/components/Cards/PetsInfoCarousel';
 
 interface DogBreedProps extends Partial<RouteComponentProps> { breed: DogBreed }
 interface DogBreedState { breed: DogBreed }
@@ -19,7 +23,7 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
   }
 
   static defaultProps = {
-    breed: { } as DogBreed
+    breed: { shelters_with_breed: [] as number[], dog_ids: [] as number[] } as DogBreed
   }
   
   constructor(props: DogBreedProps) {
@@ -40,6 +44,29 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
 
   getCurrentBreedId = (): string => {
     return `${this.state.breed.id}`
+  }
+
+  getAttributes = (height_imperial: { low: React.ReactNode; high: React.ReactNode; }, weight_imperial: { low: React.ReactNode; high: React.ReactNode; }, life_span: { low: React.ReactNode; high: React.ReactNode; }, bred_for: string): JSX.Element => {
+    return <Container>
+        <Row className="attributes">
+          <Col className="height">
+            <p>Height</p>
+            <h4 id="height">{height_imperial?.low} - {height_imperial?.high} in.</h4>
+          </Col>
+          <Col className="weight">
+            <p>Weight</p>
+            <h4 id="weight">{weight_imperial?.low} - {weight_imperial?.high} lb.</h4>
+          </Col>
+          <Col className="life-span">
+            <p>Life Span</p>
+            <h4 id="life-span">{life_span?.low} - {life_span?.high} yr.</h4>
+          </Col>
+          <Col className="bred-for">
+            <p>Bred For</p>
+            <h4 id="bred-for">{this.genericEmpty(bred_for)}</h4>
+          </Col>
+        </Row>
+      </Container>
   }
 
   componentDidMount() {
@@ -78,26 +105,89 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
 
   genericEmpty(value: string): string {
     if (isNullOrUndefined(value) || value.length === 0)
-      return "Not specified."
+      return "Unknown"
     return value;
   }
 
   render() {
     let breed: DogBreed = this.state.breed
+
     return (
       <div className='model-instancepage'>
-          { this.getMedia(breed.photo, breed.video_url) }
-          <div className='instancepage-text'>
+        <MediaQuery className="mobile" query="(max-width: 1349px)">
+          <div className="instancepage-header">
             <h1 id='name'>{breed.name}</h1>
-            <p id='group'>Group: {this.genericEmpty(breed.breed_group)}</p>
-            <p id='life-span'>Life span: {breed.life_span?.low} - {breed.life_span?.high} yr.</p>
-            <p id='height'>Height range: {breed.height_imperial?.low} - {breed.height_imperial?.high} in.</p>
-            <p id='weight'>Weight range: {breed.weight_imperial?.low} - {breed.weight_imperial?.high} lb.</p>
-            <p id='temperament'>Temperament: {this.genericEmpty(breed.temperament)}</p>
-            <p id='bred-for'>Bred for: {this.genericEmpty(breed.bred_for)}</p>
-            <p id='pets-with-breed'>Dogs with this breed: {this.getLinkedUrl(breed.dog_ids, 'pets')}</p>
-            <p id='shelters-with-breed'>Local shelters with breed: {this.getLinkedUrl(breed.local_shelters_with_breed, 'shelters')}</p>
+            <p id="group">{this.genericEmpty(breed.breed_group)? this.genericEmpty(breed.breed_group) : ""}</p>
           </div>
+  
+          { this.getMedia(breed.photo, breed.video_url) }
+          {this.getAttributes(breed.height_imperial, breed.weight_imperial, breed.life_span, breed.bred_for)}
+          
+          <div className="temperament">
+            <h2>Temperament</h2>
+            <p id="temperament">{this.genericEmpty(breed.temperament)}</p>
+          </div>
+
+          <h2 className="cards-headers">Available Dogs</h2>
+          {
+            this.state.breed.dog_ids?.length === 0 ? <p className="cards">No dogs available</p> :
+            <PetsInfoCarousel itemIds={breed.dog_ids} />
+          }
+          <br/>
+          <h2 className="cards-headers">Shelters with {breed.name}s</h2>
+          {
+            this.state.breed.shelters_with_breed?.length === 0 ? <p className="cards">No shelters found</p> :
+            <SheltersInfoCarousel itemIds={breed.shelters_with_breed} />
+          }
+        </MediaQuery>
+        <MediaQuery className="desktop" query="(min-width: 1350px)">
+          <Row className="media-and-text">
+            <Col md="auto" className="photo-and-map">
+              { this.getMedia(breed.photo, breed.video_url) }
+            </Col>
+
+            <Col>
+            <div className="instancepage-header">
+              <h1 id='name'>{breed.name}</h1>
+              <p id="group">{this.genericEmpty(breed.breed_group)? this.genericEmpty(breed.breed_group) : ""}</p>
+            </div>
+
+            {this.getAttributes(breed.height_imperial, breed.weight_imperial, breed.life_span, breed.bred_for)}
+
+            <div className="temperament">
+              <h2>Temperament</h2>
+              <p id="temperament">{this.genericEmpty(breed.temperament)}</p>
+            </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Row>
+                <h2 className="cards-headers">Available Dogs</h2>
+              </Row>
+              <Row>
+              {
+                this.state.breed.dog_ids?.length === 0 ? <p className="cards">No dogs available</p> :
+                <PetsInfoCarousel itemIds={breed.dog_ids} />
+              }
+              </Row>
+            </Col>
+            <Col xs={1}>
+            </Col>
+            <Col>
+              <Row>
+                <h2 className="cards-headers">Shelters with {breed.name}s</h2>
+              </Row>
+              <Row>
+                {
+                this.state.breed.shelters_with_breed?.length === 0 ? <p className="cards">No shelters found</p> :
+                 <SheltersInfoCarousel itemIds={breed.shelters_with_breed} />
+                }
+              </Row>
+            </Col>
+          </Row>
+        </MediaQuery>
+        
         </div>
     )
   }

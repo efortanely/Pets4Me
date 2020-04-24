@@ -2,11 +2,11 @@ import React from "react";
 import { ObjectsPage } from "../../../models/ObjectsPage";
 import Spinner from "react-bootstrap/Spinner";
 import Paginator from "../Paginator";
-import './InfoCards.css'
 import { isNullOrUndefined } from "util";
 import { RouteComponentProps } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import ModelInstanceService from "../../services/ModelInstanceService";
+import './InfoCards.css'
 
 interface InfoCardsProps extends Partial<RouteComponentProps> { pageNumber: number, filterString: string, itemsPerPage: number }
 interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean, searchParams: URLSearchParams }

@@ -7,6 +7,11 @@ import { Link } from 'react-router-dom';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 import ImageCarousel from '../../common/components/ImageCarousel';
 import { isNullOrUndefined } from 'util';
+import MediaQuery from 'react-responsive';
+import { Container, Col, Row } from 'react-bootstrap';
+import StarRatingComponent from 'react-star-rating-component';
+import PetsInfoCarousel from '../../common/components/Cards/PetsInfoCarousel';
+import SheltersInfoCarousel from '../../common/components/Cards/SheltersInfoCarousel';
 
 interface CatBreedProps { breed: CatBreed, match: match }
 interface CatBreedState { breed: CatBreed }
@@ -16,7 +21,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
   static providers: CatBreedProviders = { catBreedService: Pets4meCatBreedsService }
 
   static defaultProps = {
-    breed: { } as CatBreed
+    breed: { shelters_with_breed: [] as number[], cat_ids: [] as number[] } as CatBreed
   }
 
   constructor(props: CatBreedProps) {
@@ -37,6 +42,45 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
 
   getCurrentBreedId = (): string => {
     return `${this.state.breed.id}`
+  }
+
+  getStars = (rating: number): JSX.Element => {
+    return <StarRatingComponent 
+      name="star" 
+      starCount={5}
+      value={rating}
+      starColor={"#581730"}
+      emptyStarColor={"#dfdbdd"}
+    />
+  }
+
+  getAttributes = (life_span: { low: React.ReactNode; high: React.ReactNode; }, child_friendly: number, dog_friendly: any, grooming_level: any): JSX.Element => {
+    return <Container>
+        <Row className="attributes">
+          <Col className="life-span">
+            <p>Life Span</p>
+            <h4>{life_span?.low} - {life_span?.high} yr.</h4>
+          </Col>
+          <Col className="child-friendly">
+            <p>Child Friendly</p>
+            <Row>
+                {this.getStars(child_friendly)}
+            </Row>
+          </Col>
+          <Col className="dog-friendly">
+            <p>Dog Friendly</p>
+            <Row>
+                {this.getStars(dog_friendly)}
+            </Row>
+          </Col>
+          <Col className="grooming-level">
+            <p>Grooming</p>
+            <Row>
+                {this.getStars(grooming_level)}
+            </Row>
+          </Col>
+        </Row>
+      </Container>
   }
 
   componentDidMount() {
@@ -96,22 +140,95 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
 
   render() {
     let breed: CatBreed = this.state.breed
+
     return (
-    <div className='model-instancepage'>
-      { this.getMedia(breed.photo, breed.video_url) }
-        <div className='instancepage-text'>
-          <h1 id='name'>{breed.name}</h1>
-          <p id='alt-names'>Alternate Names: {!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified." : breed.alt_names}</p>
-          <p id='temperament'>Temperament: {this.genericEmpty(breed.temperament)}</p>
-          <p id='life-span'>Life span: {breed.life_span?.low} - {breed.life_span?.high} yr.</p>
-          <p id='indoor'>Indoor or Outdoor: {breed.indoor ? "Indoor" : "Outdoor"}</p>
-          <p id='dog-friendly'>Dog Friendly: {this.printFriendliness(breed.dog_friendly)}</p>
-          <p id='child-friendly'>Child Friendly: {this.printFriendliness(breed.child_friendly)}</p>
-          <p id='grooming-level'>Grooming Level: {breed.grooming_level}/5</p>
-          <p id='pets-with-breed'>Cats with this breed: {this.getLinkedUrl(breed.cat_ids, 'pets')}</p>
-          <p id='shelters-with-breed'>Local shelters with breed: {this.getLinkedUrl(breed.local_shelters_with_breed, 'shelters')}</p>
+      <div className='model-instancepage'>
+        <MediaQuery className="mobile" query="(max-width: 1349px)">
+          <div className="instancepage-header">
+            <h1 id='name'>{breed.name}</h1>
+            <p id="indoor">{breed.indoor ? "Indoor" : "Outdoor"} cat</p>
+          </div>
+  
+          { this.getMedia(breed.photo, breed.video_url) }
+          {this.getAttributes(breed.life_span, breed.child_friendly, breed.dog_friendly, breed.grooming_level)}
+          
+          <div className="alternate-names">
+            <h2>Alternate Names</h2>
+            <p id='alt-names'>{!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified" : breed.alt_names}</p>
+          </div>
+
+          <div className="temperament">
+            <h2>Temperament</h2>
+            <p id="temperament">{this.genericEmpty(breed.temperament)}</p>
+          </div>
+
+          <h2 className="cards-headers">Available Cats</h2>
+          {
+            this.state.breed.cat_ids?.length === 0 ? <p className="cards">No cats available</p> :
+            <PetsInfoCarousel itemIds={breed.cat_ids} />
+          }
+          <br/>
+          <h2 className="cards-headers">Shelters with {breed.name}s</h2>
+          {
+            this.state.breed.shelters_with_breed?.length === 0 ? <p className="cards">No shelters found</p> :
+            <SheltersInfoCarousel itemIds={breed.shelters_with_breed} />
+          }
+        </MediaQuery>
+        <MediaQuery className="desktop" query="(min-width: 1350px)">
+          <Row className="media-and-text">
+            <Col md="auto" className="photo-and-map">
+              { this.getMedia(breed.photo, breed.video_url) }
+            </Col>
+
+            <Col>
+            <div className="instancepage-header">
+              <h1 id='name'>{breed.name}</h1>
+              <p id="indoor">{breed.indoor ? "Indoor" : "Outdoor"} cat</p>
+            </div>
+
+            {this.getAttributes(breed.life_span, breed.child_friendly, breed.dog_friendly, breed.grooming_level)}
+
+            <div className="alternate-names">
+              <h2>Alternate Names</h2>
+              <p id='alt-names'>{!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified" : breed.alt_names}</p>
+            </div>
+
+            <div className="temperament">
+              <h2>Temperament</h2>
+              <p id="temperament">{this.genericEmpty(breed.temperament)}</p>
+            </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Row>
+                <h2 className="cards-headers">Available Cats</h2>
+              </Row>
+              <Row>
+                {
+                  this.state.breed.cat_ids?.length === 0 ? <p className="cards">No cats available</p> :
+                  <PetsInfoCarousel itemIds={breed.cat_ids} />
+                }
+              </Row>
+            </Col>
+            <Col>
+            </Col>
+            <Col>
+              <Row>
+                <h2 className="cards-headers">Shelters with {breed.name}s</h2>
+              </Row>
+              <Row>
+                {
+                  this.state.breed.shelters_with_breed?.length === 0 ? <p className="cards">No shelters found</p> :
+                  <SheltersInfoCarousel itemIds={breed.shelters_with_breed} />
+                }
+              </Row>
+            </Col>
+          </Row>
+  
+        </MediaQuery>
+        
         </div>
-      </div>
     )
   }
 }

@@ -16,7 +16,8 @@ chai.use(sinonChai)
 describe('<DogBreedInstancePage />', () => {
   let testComponent: ShallowWrapper
   let testBreed: DogBreed
-  let elements: any
+  let mobile_elements: any
+  let desktop_elements: any
   const emptyBreed = { } as DogBreed
 
   function spyOnDogBreedsService(breed?: DogBreed) {
@@ -57,21 +58,32 @@ describe('<DogBreedInstancePage />', () => {
       temperament: 'foobar',
       bred_for: 'barfoo',
       dog_ids: [1, 2],
-      local_shelters_with_breed: [1],
+      shelters_with_breed: [1],
       photo: '',
       video_url: ''
     }
 
-    elements = {
-      name: () => testComponent.find('#name'),
-      group: () => testComponent.find('#group'),
-      lifeSpan: () => testComponent.find('#life-span'),
-      height: () => testComponent.find('#height'),
-      weight: () => testComponent.find('#weight'),
-      temperament: () => testComponent.find('#temperament'),
-      bredFor: () => testComponent.find('#bred-for'),
-      petsWithBreed: () => testComponent.find('#pets-with-breed'),
-      sheltersWithBreed: () => testComponent.find('#shelters-with-breed')
+    let mobileComponent = () => testComponent.find('.mobile')
+    let desktopComponent = () => testComponent.find('.desktop')
+
+    mobile_elements = {
+      name: () => mobileComponent().find('#name'),
+      group: () => mobileComponent().find('#group'),
+      lifeSpan: () => mobileComponent().find('#life-span'),
+      height: () => mobileComponent().find('#height'),
+      weight: () => mobileComponent().find('#weight'),
+      temperament: () => mobileComponent().find('#temperament'),
+      bredFor: () => mobileComponent().find('#bred-for')
+    }
+
+    desktop_elements = {
+      name: () => desktopComponent().find('#name'),
+      group: () => desktopComponent().find('#group'),
+      lifeSpan: () => desktopComponent().find('#life-span'),
+      height: () => desktopComponent().find('#height'),
+      weight: () => desktopComponent().find('#weight'),
+      temperament: () => desktopComponent().find('#temperament'),
+      bredFor: () => desktopComponent().find('#bred-for')
     }
   })
 
@@ -99,22 +111,35 @@ describe('<DogBreedInstancePage />', () => {
   })
 
   // author Connor
-  it('should render all details', () => {
-
+  it('should render all details on mobile', () => {
     shallowWithBreed(testBreed)
 
-    expect(elements.name().text()).to.include(testBreed.name)
-    expect(elements.group().text()).to.include(testBreed.breed_group)
-    expect(elements.lifeSpan().text()).to.include(testBreed.life_span.low)
+    expect(mobile_elements.name().text()).to.include(testBreed.name)
+    expect(mobile_elements.group().text()).to.include(testBreed.breed_group)
+    expect(mobile_elements.lifeSpan().text()).to.include(testBreed.life_span.low)
         .and.to.include(testBreed.life_span.high)
-    expect(elements.height().text()).to.include(testBreed.height_imperial.low)
+    expect(mobile_elements.height().text()).to.include(testBreed.height_imperial.low)
         .and.to.include(testBreed.height_imperial.high)
-    expect(elements.weight().text()).to.include(testBreed.weight_imperial.low)
+    expect(mobile_elements.weight().text()).to.include(testBreed.weight_imperial.low)
         .and.to.include(testBreed.weight_imperial.high)
-    expect(elements.temperament().text()).to.include(testBreed.temperament)
-    expect(elements.bredFor().text()).to.include(testBreed.bred_for)
-    expect(elements.petsWithBreed().text()).to.include(testBreed.dog_ids.length)
-    expect(elements.sheltersWithBreed().text()).to.include(testBreed.local_shelters_with_breed.length)
+    expect(mobile_elements.temperament().text()).to.include(testBreed.temperament)
+    expect(mobile_elements.bredFor().text()).to.include(testBreed.bred_for)
+  })
+
+  // author Rosemary
+  it('should render all details on desktop', () => {
+    shallowWithBreed(testBreed)
+
+    expect(desktop_elements.name().text()).to.include(testBreed.name)
+    expect(desktop_elements.group().text()).to.include(testBreed.breed_group)
+    expect(desktop_elements.lifeSpan().text()).to.include(testBreed.life_span.low)
+        .and.to.include(testBreed.life_span.high)
+    expect(desktop_elements.height().text()).to.include(testBreed.height_imperial.low)
+        .and.to.include(testBreed.height_imperial.high)
+    expect(desktop_elements.weight().text()).to.include(testBreed.weight_imperial.low)
+        .and.to.include(testBreed.weight_imperial.high)
+    expect(desktop_elements.temperament().text()).to.include(testBreed.temperament)
+    expect(desktop_elements.bredFor().text()).to.include(testBreed.bred_for)
   })
 
   // author Connor

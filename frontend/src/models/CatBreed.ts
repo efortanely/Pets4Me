@@ -10,7 +10,7 @@ export interface CatBreed {
     grooming_level: number;
     photo: string;
     cat_ids: any[];
-    local_shelters_with_breed: any[];
+    shelters_with_breed: any[];
     video_url : string;
 }
 
