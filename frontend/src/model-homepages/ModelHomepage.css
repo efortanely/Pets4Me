@@ -82,8 +82,25 @@
     margin-bottom: 0px !important;
 }
 
-.selectButton > div {
-    background-color: coral;
+.model-homepage-content-col {
+    text-align: center;
+    display: grid;
+    width: 100%;
+}
+
+.spinner-border {
+    margin: 25px;
+    height: 3rem !important;
+    width: 3rem !important;
+}
+
+.cards-container {
+    text-align: center;
+}
+
+.cards-container h3 h5 {
+    text-align: left !important;
+    margin-left: 0;
 }
 
 .css-2b097c-container{

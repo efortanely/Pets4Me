@@ -55,20 +55,20 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
   }
 
   noResults() {
-    return <h5>No results found for selected filters.</h5>
+    return <h5 className='left-align'>No results found for selected filters.</h5>
   }
 
   render() {
     return (
       <Container fluid>
         {
-        this.state.loading ? <Spinner animation='border'><span className='sr-only'>Loading...</span></Spinner> : 
+        this.state.loading ? <Spinner animation='border'><span className='sr-only'>Loading</span></Spinner> : 
         (<div>
-          <h3>{this.state.page.num_results} results</h3>
+          <h3 className='left-align'>{this.state.page.num_results} results</h3>
         { this.getInfoCards() }
         </div>)}
         {!isNullOrUndefined(this.state.page?.objects) && this.state.page.objects.length !== 0 && <Paginator active={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages * this.pagesPerObjectPage(), 1)} pathName={this.getPathName()} onPageChange={this.onPageChange}/>}
-        {(isNullOrUndefined(this.state.page?.objects) || this.state.page.objects.length === 0) && this.noResults()}
+        {(isNullOrUndefined(this.state.page?.objects) || this.state.page.objects.length === 0) && !this.state.loading && this.noResults()}
       </Container>
     )
   }
