@@ -11,6 +11,10 @@
     padding-right: 2px !important;
 }
 
+.info-card-col .card-image {
+    height: 200px;
+}
+
 @media screen and (min-width: 1350px){
     .info-card-col .single-card {
         max-width: 100%;
