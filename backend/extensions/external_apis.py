@@ -9,8 +9,9 @@ from util.sql import escape_like
 import pgeocode
 import sys
 from youtube_search import YoutubeSearch
+from html import unescape
+from html.parser import HTMLParser
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
-
 
 class CommonAPI:
     def __init__(self, base_url):
@@ -190,7 +191,7 @@ def extract_photos(photos):
     return (list(small), list(full))
 
 
-def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
+def parse_pet(animal, shelter, dog_breed_map, cat_breed_map, unescape):
     photos_small, photos_full = extract_photos(animal.get("photos", []))
 
     primary_dog_breed = None
@@ -215,6 +216,10 @@ def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
             if secondary_str is not None:
                 secondary_cat_breed = cat_breed_map[secondary_str]
 
+    description = animal.get("description", None)
+    if description:
+        description = unescape(description)
+
     return Pet(
         name=animal.get("name", None),
         species=animal.get("species", None),
@@ -231,16 +236,22 @@ def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
         photos_full=photos_full,
         color=animal.get("colors", {}).get("primary", None),
         age=animal.get("age", None),
-        description=animal.get("description", None),
+        description=description,
         url=animal.get("url", None),
     )
 
 
-def parse_shelter(shelter, nomi):
+def parse_shelter(shelter, nomi, unescape):
     address = shelter.get("address", {})
     policy_dict = shelter.get("adoption", {})
     photos_small, photos_full = extract_photos(shelter.get("photos", []))
     postcode = address.get("postcode", None)
+    mission = shelter.get("mission_statement", None)
+    adoption_policy = shelter.get("policy", None)
+    if mission:
+        mission = unescape(mission)
+    if adoption_policy:
+        adoption_policy = unescape(adoption_policy) 
 
     if postcode:
         geo_data = nomi.query_postal_code(postcode)
@@ -263,8 +274,8 @@ def parse_shelter(shelter, nomi):
         photos_full=photos_full,
         email=shelter.get("email", None),
         phone_number=shelter.get("phone", None),
-        mission=shelter.get("mission_statement", None),
-        adoption_policy=policy_dict.get("policy", policy_dict.get("url", None)),
+        mission=mission,
+        adoption_policy=adoption_policy,
         latitude=latitude,
         longitude=longitude,
         has_cats=0,
@@ -285,6 +296,7 @@ class PetAPI(OAuthAPI):
         self.shelter_cache = {}
         self.reset_requests()
         self.nomi = pgeocode.Nominatim("us")
+        self.unescape = HTMLParser().unescape
 
     def reset_requests(self):
         self.requests = 0
@@ -413,7 +425,7 @@ class PetAPI(OAuthAPI):
                     shelter.has_dogs = 1
             else:
                 shelter = None
-            animals.append(parse_pet(animal, shelter, dog_breed_map, cat_breed_map))
+            animals.append(parse_pet(animal, shelter, dog_breed_map, cat_breed_map, self.unescape))
         return animals
 
     def get_shelter(self, pf_id):
@@ -423,7 +435,7 @@ class PetAPI(OAuthAPI):
                 sys.exit("Error: " + response["title"])
 
             self.shelter_cache[pf_id] = parse_shelter(
-                response["organization"], self.nomi
+                response["organization"], self.nomi, self.unescape
             )
 
         return self.shelter_cache[pf_id]
@@ -434,5 +446,5 @@ class PetAPI(OAuthAPI):
         )
         shelters = []
         for shelter in shelter_generator:
-            shelters.append(parse_shelter(shelter, self.nomi))
+            shelters.append(parse_shelter(shelter, self.nomi, self.unescape))
         return shelters
