@@ -13,3 +13,7 @@ h3 {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+h3{
+    color: #581730;
+}

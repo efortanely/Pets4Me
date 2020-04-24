@@ -17,7 +17,8 @@ chai.use(sinonChai)
 describe('<PetInstancePage/>', () => {
   let testComponent: ShallowWrapper
   let testPet: Pet
-  let elements: any
+  let mobile_elements: any
+  let desktop_elements: any
   const emptyPet = { } as Pet
 
   function spyOnSheltersService(shelter?: Shelter) {
@@ -70,24 +71,36 @@ describe('<PetInstancePage/>', () => {
       name: 'She',
       photos: {full:[], small: []} as Photos,
       primary_breed: testEntity,
+      secondary_breed: testEntity,
       shelter: testEntity,
       size: 'all-encompassing',
       species: 'SUPERMASSIVE',
       url: 'http://example.net/'
     } as Pet;
 
-    elements = {
-      age: () => testComponent.find('#age'),
-      color: () => testComponent.find('#color'),
-      description: () => testComponent.find('#description'),
-      name: () => testComponent.find('#name'),
-      photos: () => testComponent.find('#photos'),
-      primary_breed: () => testComponent.find('#primary-breed'),
-      secondary_breed: () => testComponent.find('#secondary-breed'),
-      shelter: () => testComponent.find('#shelter'),
-      size: () => testComponent.find('#size'),
-      species: () => testComponent.find('#species'),
-      url: () => testComponent.find('#url')
+    let mobileComponent = () => testComponent.find('.mobile')
+    let desktopComponent = () => testComponent.find('.desktop')
+
+    mobile_elements = {
+      age: () => mobileComponent().find('.age'),
+      breed: () => mobileComponent().find('#breed-header'),
+      color: () => mobileComponent().find('.color'),
+      description: () => mobileComponent().find('.about'),
+      name: () => mobileComponent().find('#name'),
+      photos: () => mobileComponent().find('#photos'),
+      shelter: () => mobileComponent().find('.shelter-name-for-testing'),
+      size: () => mobileComponent().find('.size'),
+    }
+
+    desktop_elements = {
+      age: () => desktopComponent().find('.age'),
+      breed: () => desktopComponent().find('#breed-header'),
+      color: () => desktopComponent().find('.color'),
+      description: () => desktopComponent().find('.about'),
+      name: () => desktopComponent().find('#name'),
+      photos: () => desktopComponent().find('#photos'),
+      shelter: () => desktopComponent().find('.shelter-name-for-testing'),
+      size: () => desktopComponent().find('.size'),
     }
   })
 
@@ -118,21 +131,33 @@ describe('<PetInstancePage/>', () => {
   })
 
   // author: Dean
-  it('should render all details', () => {
-
+  it('should render all details on mobile', () => {
     shallowWithPet(testPet)
 
-    expect(elements.age().text()).to.include(testPet.age)
-    expect(elements.color().text()).to.include(testPet.color)
-    expect(elements.description().text()).to.include(testPet.description)
-    expect(elements.name().text()).to.include(testPet.name)
-    expect(elements.photos()).to.be.empty
-    expect(elements.primary_breed().text()).to.include(testPet.primary_breed.name)
-    expect(elements.secondary_breed().text()).to.include('Breed unknown.')
-    expect(elements.shelter().text()).to.include(testPet.shelter.name)
-    expect(elements.size().text()).to.include(testPet.size)
-    expect(elements.species().text()).to.include(testPet.species)
-    expect(elements.url().text()).to.include(testPet.url)
+    expect(mobile_elements.age().text()).to.include(testPet.age)
+    expect(mobile_elements.color().text()).to.include(testPet.color)
+    expect(mobile_elements.description().text()).to.include(testPet.description)
+    expect(mobile_elements.name().text()).to.include(testPet.name)
+    expect(mobile_elements.breed().text()).to.include(testPet.primary_breed.name)
+    expect(mobile_elements.breed().text()).to.include(testPet.secondary_breed.name)
+    expect(mobile_elements.photos()).to.be.empty
+    expect(mobile_elements.shelter().text()).to.include(testPet.shelter.name)
+    expect(mobile_elements.size().text()).to.include(testPet.size)
+  })
+
+  // author: Rosemary
+  it('should render all details on desktop', () => {
+    shallowWithPet(testPet)
+
+    expect(desktop_elements.age().text()).to.include(testPet.age)
+    expect(desktop_elements.color().text()).to.include(testPet.color)
+    expect(desktop_elements.description().text()).to.include(testPet.description)
+    expect(desktop_elements.name().text()).to.include(testPet.name)
+    expect(desktop_elements.breed().text()).to.include(testPet.primary_breed.name)
+    expect(desktop_elements.breed().text()).to.include(testPet.secondary_breed.name)
+    expect(desktop_elements.photos()).to.be.empty
+    expect(desktop_elements.shelter().text()).to.include(testPet.shelter.name)
+    expect(desktop_elements.size().text()).to.include(testPet.size)
   })
 
   // author: Dean

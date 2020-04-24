@@ -185,7 +185,6 @@ input:focus {
     padding: 5px;
     margin: 10px;
     border-radius: 5px;
-    width: 45%;
 }
 
 a.single-card,
@@ -203,6 +202,7 @@ a.single-card:hover {
     margin-bottom: 5px;
     width: 100%;
 }
+
 .card-text h3{
     font-size: 20px;
 }

@@ -54,6 +54,10 @@ li{
   margin-left: 8px;
 }
 
+.nav-link:hover{
+  color: #528C8B;
+}
+
 .shapeOne{
   width: 100vw;
   position: absolute;

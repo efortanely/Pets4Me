@@ -8,7 +8,7 @@ export interface InfoCardProps<T> { info: T, searchWords: string[] }
 
 abstract class InfoCard<T> extends React.Component<InfoCardProps<T>> {
   static defaultProps = {
-    other_info: []
+    searchWords: []
   }
 
   lineBreakFragment = (text: string, i: number) => {

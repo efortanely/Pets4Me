@@ -18,7 +18,8 @@ chai.use(sinonChai)
 describe('<ShelterInstancePage/>', () => {
   let testComponent: ShallowWrapper
   let testShelter: Shelter
-  let elements: any
+  let mobile_elements: any
+  let desktop_elements: any
   const emptyShelter = { } as Shelter
 
   before( () => {
@@ -67,16 +68,25 @@ describe('<ShelterInstancePage/>', () => {
       top_dog_breed_id: 2
     }
 
-    elements = {
-      name: () => testComponent.find('#name'),
-      address: () => testComponent.find('#address'),
-      contact: () => testComponent.find('#contact'),
-      adoption_policy: () => testComponent.find('#adoption-policy'),
-      mission: () => testComponent.find('#mission'),
-      distance: () => testComponent.find('#distance'),
-      num_pets: () => testComponent.find('#num-pets'),
-      top_dog_breed_id: () => testComponent.find('#top-dog-breed-id'),
-      top_cat_breed_id: () => testComponent.find('#top-cat-breed-id'),
+    let mobileComponent = () => testComponent.find('.mobile')
+    let desktopComponent = () => testComponent.find('.desktop')
+
+    mobile_elements = {
+      name: () => mobileComponent().find('#name'),
+      address: () => mobileComponent().find('#address'),
+      email: () => mobileComponent().find('#email'),
+      phone_number: () => mobileComponent().find('#phone-number'),
+      adoption_policy: () => mobileComponent().find('#adoption-policy'),
+      mission: () => mobileComponent().find('#mission')
+    }
+
+    desktop_elements = {
+      name: () => desktopComponent().find('#name'),
+      address: () => desktopComponent().find('#address'),
+      email: () => desktopComponent().find('#email'),
+      phone_number: () => desktopComponent().find('#phone-number'),
+      adoption_policy: () => desktopComponent().find('#adoption-policy'),
+      mission: () => desktopComponent().find('#mission')
     }
   })
 
@@ -107,26 +117,35 @@ describe('<ShelterInstancePage/>', () => {
   })
 
   // author Andrew
-  it('should render all details', () => {
-
+  it('should render all details on mobile', () => {
     shallowWithShelter(testShelter)
 
-    expect(elements.name().text()).to.include(testShelter.name)
-    expect(elements.address().text()).to.include(testShelter.address.address1)
+    expect(mobile_elements.name().text()).to.include(testShelter.name)
+    expect(mobile_elements.address().text()).to.include(testShelter.address.address1)
         .and.to.include(testShelter.address.address2)
         .and.to.include(testShelter.address.postcode)
         .and.to.include(testShelter.address.city)
         .and.to.include(testShelter.address.state)
-        .and.to.include(testShelter.address.country)
-    expect(elements.contact().text()).to.include(testShelter.contact.email)
-        .and.to.include(testShelter.contact.phone_number)
-    expect(elements.adoption_policy().text()).to.include(testShelter.adoption_policy)
-    expect(elements.mission().text()).to.include(testShelter.mission)
-    expect(elements.distance().text()).to.include(testShelter.distance)
-    // expect(elements.num_pets()).to.include(Object.values(testShelter.all_pets)[0].id)
-    // expect(elements.num_pets().text()).to.include(Object.values(testShelter.all_pets)[0].species)
-    // expect(elements.top_dog_breed_id().Li()).to.include(testShelter.top_dog_breed_id)
-    // expect(elements.top_cat_breed_id().text()).to.include(testShelter.top_cat_breed_id)
+    expect(mobile_elements.email().text()).to.include(testShelter.contact.email)
+    expect(mobile_elements.phone_number().text()).to.include(testShelter.contact.phone_number)
+    expect(mobile_elements.adoption_policy().text()).to.include(testShelter.adoption_policy)
+    expect(mobile_elements.mission().text()).to.include(testShelter.mission)
+  })
+
+  // author Rosemary
+  it('should render all details on desktop', () => {
+    shallowWithShelter(testShelter)
+
+    expect(desktop_elements.name().text()).to.include(testShelter.name)
+    expect(desktop_elements.address().text()).to.include(testShelter.address.address1)
+        .and.to.include(testShelter.address.address2)
+        .and.to.include(testShelter.address.postcode)
+        .and.to.include(testShelter.address.city)
+        .and.to.include(testShelter.address.state)
+    expect(desktop_elements.email().text()).to.include(testShelter.contact.email)
+    expect(desktop_elements.phone_number().text()).to.include(testShelter.contact.phone_number)
+    expect(desktop_elements.adoption_policy().text()).to.include(testShelter.adoption_policy)
+    expect(desktop_elements.mission().text()).to.include(testShelter.mission)
   })
 
   // author Andrew

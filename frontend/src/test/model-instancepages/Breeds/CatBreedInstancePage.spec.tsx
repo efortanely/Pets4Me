@@ -16,7 +16,8 @@ chai.use(sinonChai)
 describe('<CatBreedInstancePage/>', () => {
   let testComponent: ShallowWrapper
   let testBreed: CatBreed
-  let elements: any
+  let mobile_elements: any
+  let desktop_elements: any
   const emptyBreed = { } as CatBreed
 
   function spyOnCatBreedsService(breed: CatBreed) {
@@ -58,22 +59,28 @@ describe('<CatBreedInstancePage/>', () => {
       child_friendly: 1,
       grooming_level: 2,
       cat_ids: [2, 3],
-      local_shelters_with_breed: [1],
+      shelters_with_breed: [1],
       photo: '',
       video_url: ''
     }
 
-    elements = {
-      name: () => testComponent.find('#name'),
-      alt_names: () => testComponent.find('#alt-names'),
-      temperament: () => testComponent.find('#temperament'),
-      lifeSpan: () => testComponent.find('#life-span'),
-      indoor: () => testComponent.find('#indoor'),
-      dog_friendly: () => testComponent.find('#dog-friendly'),
-      child_friendly: () => testComponent.find('#child-friendly'),
-      grooming_level: () => testComponent.find('#grooming-level'),
-      petsWithBreed: () => testComponent.find('#pets-with-breed'),
-      sheltersWithBreed: () => testComponent.find('#shelters-with-breed')
+    let mobileComponent = () => testComponent.find('.mobile')
+    let desktopComponent = () => testComponent.find('.desktop')
+
+    mobile_elements = {
+      name: () => mobileComponent().find('#name'),
+      alt_names: () => mobileComponent().find('#alt-names'),
+      temperament: () => mobileComponent().find('#temperament'),
+      lifeSpan: () => mobileComponent().find('.life-span'),
+      indoor: () => mobileComponent().find('#indoor')
+    }
+
+    desktop_elements = {
+      name: () => desktopComponent().find('#name'),
+      alt_names: () => desktopComponent().find('#alt-names'),
+      temperament: () => desktopComponent().find('#temperament'),
+      lifeSpan: () => desktopComponent().find('.life-span'),
+      indoor: () => desktopComponent().find('#indoor')
     }
   })
 
@@ -104,21 +111,27 @@ describe('<CatBreedInstancePage/>', () => {
   })
 
   // author Cristian
-  it('should render all details', () => {
-
+  it('should render all details on mobile', () => {
     shallowWithBreed(testBreed)
 
-    expect(elements.name().text()).to.include(testBreed.name)
-    expect(elements.alt_names().text()).to.include(testBreed.alt_names)
-    expect(elements.temperament().text()).to.include(testBreed.temperament)
-    expect(elements.lifeSpan().text()).to.include(testBreed.life_span.low)
+    expect(mobile_elements.name().text()).to.include(testBreed.name)
+    expect(mobile_elements.alt_names().text()).to.include(testBreed.alt_names)
+    expect(mobile_elements.temperament().text()).to.include(testBreed.temperament)
+    expect(mobile_elements.lifeSpan().text()).to.include(testBreed.life_span.low)
         .and.to.include(testBreed.life_span.high)
-    expect(elements.indoor().text()).to.include('Indoor')
-    expect(elements.dog_friendly().text()).to.include('No')
-    expect(elements.child_friendly().text()).to.include('No')
-    expect(elements.grooming_level().text()).to.include(testBreed.grooming_level)
-    expect(elements.petsWithBreed().text()).to.include(testBreed.cat_ids.length)
-    expect(elements.sheltersWithBreed().text()).to.include(testBreed.local_shelters_with_breed.length)
+    expect(mobile_elements.indoor().text()).to.include('Indoor')
+  })
+
+  // author Rosemary
+  it('should render all details on desktop', () => {
+    shallowWithBreed(testBreed)
+
+    expect(desktop_elements.name().text()).to.include(testBreed.name)
+    expect(desktop_elements.alt_names().text()).to.include(testBreed.alt_names)
+    expect(desktop_elements.temperament().text()).to.include(testBreed.temperament)
+    expect(desktop_elements.lifeSpan().text()).to.include(testBreed.life_span.low)
+        .and.to.include(testBreed.life_span.high)
+    expect(desktop_elements.indoor().text()).to.include('Indoor')
   })
 
   // author Cristian
