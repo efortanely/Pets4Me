@@ -9,11 +9,14 @@ h5 {
 }
 
 h3 {
+    color: #581730;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-h3{
+.left-align {
+    text-align: left;
+    margin-left: 0;
     color: #581730;
 }
