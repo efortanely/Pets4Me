@@ -80,6 +80,7 @@
 .filters h5{
     color: #581730;
     margin-bottom: 0px !important;
+    margin-left: 0px !important;
 }
 
 .model-homepage-content-col {
@@ -118,11 +119,6 @@
 
 .css-10ku62j {
     color:white !important;
-}
-
-.filters h5{
-    color: #581730;
-    margin-bottom: 0px !important;
 }
 
 .filters .btn-primary {
