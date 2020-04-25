@@ -327,9 +327,9 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                     })}
                 />
                 <ThemeProvider theme={sliderTheme}>
-                    <h5>Distance (less than)</h5>
+                    <h5>Max distance (mi.)</h5>
                     <Slider
-                        defaultValue={250} max={this.props.max_distance} valueLabelDisplay='auto'
+                        defaultValue={250} max={this.props.max_distance} valueLabelDisplay='auto' valueLabelFormat={x => (x === this.props.max_distance ? "Any" : x)}
                         onChange={(event: any, value: any) => this.setState({ distanceMax: value })}
                     />
                 </ThemeProvider>
