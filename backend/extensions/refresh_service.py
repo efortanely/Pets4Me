@@ -24,15 +24,13 @@ def refresh():
 
         print("Getting dog breeds...")
         commit_all(dog_api.get_breeds())
-        dog_breeds_map, new_breeds = pet_api.get_dog_breeds(dog_api)
-        commit_all(new_breeds)
 
         print("Getting cat breeds...")
         commit_all(cat_api.get_breeds())
-        cat_breeds_map, new_breeds = pet_api.get_cat_breeds(cat_api)
-        commit_all(new_breeds)
 
         print("Getting pets and shelters...")
+        dog_breeds_map = pet_api.get_dog_breeds(dog_api)
+        cat_breeds_map = pet_api.get_cat_breeds(cat_api)
         commit_all(pet_api.get_animals(dog_breeds_map, cat_breeds_map, pages=10))
         # Getting pets already gives us 201 shelters
         # We can leave this out for now

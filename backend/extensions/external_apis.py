@@ -103,9 +103,14 @@ class DogAPI(CommonAPI):
         breeds_response = self.get("/v1/breeds")
         breeds_response_data = json.loads(breeds_response)
         breeds = []
+        names = set()
 
         for breed in breeds_response_data:
-            breeds.append(self.parse_dog_breed(breed))
+            name = breed.get("name", "")
+            if name and name not in names:
+                breeds.append(self.parse_dog_breed(breed))
+                names.add(name)
+
         return breeds
 
 
@@ -159,9 +164,13 @@ class CatAPI(CommonAPI):
         breeds_response = self.get("/v1/breeds")
         breeds_response_data = json.loads(breeds_response)
         breeds = []
+        names = set()
 
         for breed in breeds_response_data:
-            breeds.append(self.parse_cat_breed(breed))
+            name = breed.get("name", "")
+            if name and name not in names:
+                breeds.append(self.parse_cat_breed(breed))
+                names.add(name)
         return breeds
 
 
@@ -247,7 +256,7 @@ def parse_shelter(shelter, nomi, unescape):
     photos_small, photos_full = extract_photos(shelter.get("photos", []))
     postcode = address.get("postcode", None)
     mission = shelter.get("mission_statement", None)
-    adoption_policy = shelter.get("policy", None)
+    adoption_policy = policy_dict.get("policy", policy_dict.get("url", None))
     if mission:
         mission = unescape(mission)
     if adoption_policy:
@@ -336,7 +345,6 @@ class PetAPI(OAuthAPI):
 
     def get_dog_breeds(self, dog_api):
         breed_map = {}
-        new_breeds = []
         response = json.loads(self.get("/v2/types/Dog/breeds"))
         if "status" in response and response["status"] != 200:
             sys.exit("Error: " + response["title"])
@@ -357,16 +365,14 @@ class PetAPI(OAuthAPI):
 
                 breed = dog_api.find_breed(breed_str)
                 if breed is not None:
-                    new_breeds.append(breed)
                     break
 
             breed_map[long_breed] = breed
 
-        return (breed_map, new_breeds)
+        return breed_map
 
     def get_cat_breeds(self, cat_api):
         breed_map = {}
-        new_breeds = []
         response = json.loads(self.get("/v2/types/Cat/breeds"))
         if "status" in response and response["status"] != 200:
             sys.exit("Error: " + response["title"])
@@ -401,12 +407,11 @@ class PetAPI(OAuthAPI):
 
                 breed = cat_api.find_breed(breed_str)
                 if breed is not None:
-                    new_breeds.append(breed)
                     break
 
             breed_map[long_breed] = breed
 
-        return (breed_map, new_breeds)
+        return breed_map
 
     def get_animals(self, dog_breed_map, cat_breed_map, pages=1, limit=100):
         animal_generator = self.get_paginated_data(
