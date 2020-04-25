@@ -41,9 +41,12 @@ export class RepositoryStatistics extends React.Component<RepositoryStatisticsPr
   }
 
   getCommitCount(gitlabApiService: GitlabApiService) {
-    gitlabApiService.getCommits()
+    gitlabApiService.getAllCommits()
     .then(res => {
-      let count = (res as Commit[]).length
+      let count = res
+      .filter((commit) => !commit.title.toLowerCase().includes('merge branch'))
+      .length
+
       this.setState({ commitCount: count })
     })
   }
