@@ -3,7 +3,7 @@ import ReactMapboxGl, { Layer, Popup, Marker } from 'react-mapbox-gl';
 import "./MapMedia.css"
 import "./mapbox-gl.css"
 
-interface MapMediaProps { 
+interface MapMediaProps {
   address: string;
   postcode: number;
   country: string;
@@ -41,8 +41,9 @@ class MapMedia extends React.Component<MapMediaProps, MapMediaState> {
   componentDidUpdate(prevProps: MapMediaProps) {
     if (this.props !== prevProps) {
       let address = this.props.address.replace(/[, ]/g, '+')
+      let proxy = 'https://cors-anywhere.herokuapp.com/'
       let nominatimUrl = "https://nominatim.openstreetmap.org/?q="+address+"&format=json&limit=1";
-      fetch(nominatimUrl, {
+      fetch(proxy + nominatimUrl, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -69,7 +70,8 @@ class MapMedia extends React.Component<MapMediaProps, MapMediaState> {
   getPostcodeData() {
     let address = (this.props.postcode + " " + this.props.country).replace(/[, ]/g, '+')
     let nominatimUrl = "https://nominatim.openstreetmap.org/?q="+address+"&format=json&limit=1";
-    fetch(nominatimUrl, {
+    let proxy = 'https://cors-anywhere.herokuapp.com/'
+    fetch(proxy + nominatimUrl, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
