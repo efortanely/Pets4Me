@@ -41,6 +41,8 @@ function About() {
     const cristian_bio = "Junior Computer Science major at UT Austin. My hobbies are gaming and skateboarding. Worked on filtering/sorting query construction and development of filter/sorting pipeline in the frontend."
     const robert_bio = "I'm a senior CS major. I am primarily interested in systems and theory. I sang in the Colligium Musicum choir as a bass, but now I'm stuck at home. Backend dev. Worked on searching in the backend, local Docker support, and researched SQL/Flask."
 
+    const rosemary_postman_test_count = 9
+
     return(
       <div>  
         <div className="about-header">
@@ -55,7 +57,7 @@ function About() {
   
         <div className="members">
           <Member img={andrew} name="Andrew Cramer" role={andrew_role} bio={andrew_bio} author_name={["Andrew Cramer", "Andrew"]} gitlab_id="acramer" tests={TestCounts.Andrew}/>
-          <Member img={rosemary} name="Rosemary Fortanely" role={rosemary_role} bio={rosemary_bio} author_name={["Rosemary Fortanely", "Rosemary", "codesmary"]} gitlab_id="codesmary" tests={TestCounts.Rosemary}/>
+          <Member img={rosemary} name="Rosemary Fortanely" role={rosemary_role} bio={rosemary_bio} author_name={["Rosemary Fortanely", "Rosemary", "codesmary"]} gitlab_id="codesmary" tests={rosemary_postman_test_count + TestCounts.Rosemary}/>
           <Member img={connor} name="Connor Sheehan" role={connor_role} bio={connor_bio} author_name={["Connor Sheehan", "connor6321", "Connor"]} gitlab_id="connor6321" tests={TestCounts.Connor}/>
           <Member img={dean} name="Dean Torkelson" role={dean_role} bio={dean_bio} author_name={["Dean Torkelson", "deantorkelson", "Dean"]} gitlab_id="deantorkelson" tests={TestCounts.Dean}/>
           <Member img={cristian} name="Cristian Garza" role={cristian_role} bio={cristian_bio} author_name={["Cristian Garza", "Cristian"]} gitlab_id="CristianGarza" tests={TestCounts.Cristian}/>
