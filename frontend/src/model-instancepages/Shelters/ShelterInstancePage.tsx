@@ -1,5 +1,4 @@
 import React from 'react'
-import Pets4meSheltersService from '../../common/services/Pets4meSheltersService';
 import { Shelter, Photos } from '../../models/Shelter';
 import { match, Link } from 'react-router-dom'
 import logo from '../../static/logo.png';
@@ -13,11 +12,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { DogBreed } from '../../models/DogBreed';
 import { CatBreed } from '../../models/CatBreed';
-import Pets4meDogBreedsService from '../../common/services/Pets4meDogBreedsService';
-import Pets4meCatBreedsService from '../../common/services/Pets4meCatBreedsService';
 import '../ModelInstancepage.css'
 import PetsInfoCarousel from '../../common/components/Cards/PetsInfoCarousel';
 import { isNullOrUndefined } from 'util';
+import { Pets4meSheltersService, Pets4meDogBreedsService, Pets4meCatBreedsService } from '../../common/services/Pets4meModelInstanceService';
 
 interface ShelterProps { shelter: Shelter, dogBreed: DogBreed, catBreed: CatBreed, match: match }
 interface ShelterState { shelter: Shelter, dogBreed: DogBreed, catBreed: CatBreed }
@@ -29,7 +27,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   }
   
   static defaultProps = {
-    shelter: {  } as Shelter,
+    shelter: { } as Shelter,
     dogBreed: { } as DogBreed,
     catBreed: { } as CatBreed
   }

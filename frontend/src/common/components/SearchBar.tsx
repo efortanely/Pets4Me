@@ -48,7 +48,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form className="searchbar" onSubmit={this.handleSubmit}>
         <Form.Group>
           <Form.Row>
             <Col xs={6}>

@@ -1,5 +1,4 @@
 import React from 'react'
-import Pets4meCatBreedsService from '../../common/services/Pets4meCatBreedsService';
 import { CatBreed } from '../../models/CatBreed';
 import logo from '../../static/logo.png';
 import { match } from 'react-router-dom'
@@ -12,6 +11,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
 import PetsInfoCarousel from '../../common/components/Cards/PetsInfoCarousel';
 import SheltersInfoCarousel from '../../common/components/Cards/SheltersInfoCarousel';
+import { Pets4meCatBreedsService } from '../../common/services/Pets4meModelInstanceService';
 
 interface CatBreedProps { breed: CatBreed, match: match }
 interface CatBreedState { breed: CatBreed }

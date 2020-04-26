@@ -19,7 +19,7 @@ class ApiService {
     return `${this.api_url}/${path}?${queryString}${preBuiltQuery}`
   }
 
-  fetchJsonAsObject<T>(path: string, params: any, preBuiltQuery: string = ''): Promise<T> {
+  fetchJsonAsObject<T>(path: string, params: any = {}, preBuiltQuery: string = ''): Promise<T> {
     return fetch(this.buildUrl(path, params, preBuiltQuery))
         .then(res => res.json() as Promise<T>)
   }
