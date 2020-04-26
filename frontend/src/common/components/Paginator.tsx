@@ -1,7 +1,7 @@
 import React from 'react'
 import UltimatePaginationBootstrap4 from 'react-ultimate-pagination-bootstrap-4'
 
-interface PaginatorProps { active: number, numPages: number, pathName: string, onPageChange: (page: number) => any}
+interface PaginatorProps { initialActive: number, numPages: number, pathName: string, onPageChange: (page: number) => any}
 interface PaginatorState { active: number }
 
 class Paginator extends React.Component<PaginatorProps, PaginatorState> {
@@ -22,7 +22,7 @@ class Paginator extends React.Component<PaginatorProps, PaginatorState> {
 
   componentDidMount() {
     this.setState({
-      active: this.props.active
+      active: this.props.initialActive
     })
   }
   

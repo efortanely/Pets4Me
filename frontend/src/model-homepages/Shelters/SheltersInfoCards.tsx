@@ -16,12 +16,6 @@ class SheltersInfoCards extends InfoCards<Shelter> {
         return Pets4meSheltersService
     }
 
-    componentDidUpdate(prevProps: any) {
-        if (this.props.filterString !== prevProps.filterString) {
-            this.onPageChange(1);
-        }
-    }
-
     createInfoCard = (o: Shelter, key: any): JSX.Element => {
         return <ShelterCard searchWords={Array.from(this.state.searchParams.values())} key={`shelter-card-${key}`} info={o} addToCompare={this.addToCompare} />
     }

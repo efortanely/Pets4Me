@@ -14,12 +14,6 @@ class DogBreedsInfoCards extends InfoCards<DogBreed> {
         return DogBreedsInfoCards.providers.dogBreedsService
     }
 
-    componentDidUpdate(prevProps: any) {
-        if (this.props.filterString !== prevProps.filterString) {
-            this.onPageChange(1);
-        }
-    }
-
     createInfoCard = (o: DogBreed, key: any): JSX.Element => {
         return <DogBreedCard searchWords={Array.from(this.state.searchParams.values())} key={`pet-card-${key}`} info={o} addToCompare={this.addToCompare} />
     }
