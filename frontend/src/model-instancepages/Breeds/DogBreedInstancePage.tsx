@@ -1,5 +1,4 @@
 import React from 'react'
-import Pets4meDogBreedsService from '../../common/services/Pets4meDogBreedsService';
 import { DogBreed } from '../../models/DogBreed';
 import { Link } from 'react-router-dom';
 import logo from '../../static/logo.png';
@@ -12,6 +11,7 @@ import MediaQuery from 'react-responsive';
 import { Row, Col, Container } from 'react-bootstrap';
 import SheltersInfoCarousel from '../../common/components/Cards/SheltersInfoCarousel';
 import PetsInfoCarousel from '../../common/components/Cards/PetsInfoCarousel';
+import { Pets4meDogBreedsService } from '../../common/services/Pets4meModelInstanceService';
 
 interface DogBreedProps extends Partial<RouteComponentProps> { breed: DogBreed }
 interface DogBreedState { breed: DogBreed }

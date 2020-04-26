@@ -1,7 +1,7 @@
 import React from 'react';
 import CatBreedCard from '../../common/components/Cards/CatBreedCard';
 import { CatBreed } from '../../models/CatBreed';
-import Pets4meCatBreedsService from '../../common/services/Pets4meCatBreedsService';
+import { Pets4meCatBreedsService } from '../../common/services/Pets4meModelInstanceService';
 import InfoCards from '../../common/components/Cards/InfoCards';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 

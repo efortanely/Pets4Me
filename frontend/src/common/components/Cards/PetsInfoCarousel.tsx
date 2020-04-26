@@ -3,7 +3,7 @@ import ModelInstanceService from '../../services/ModelInstanceService';
 import InfoCard from "./InfoCard";
 import { Pet } from "../../../models/Pet";
 import PetCard from "./PetCard";
-import Pets4mePetsService from "../../services/Pets4mePetsService";
+import { Pets4mePetsService } from "../../services/Pets4meModelInstanceService";
 
 interface PetsInfoCarouselProviders { petsService: ModelInstanceService<Pet> }
 

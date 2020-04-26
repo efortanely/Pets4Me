@@ -1,9 +1,9 @@
 import InfoCarousel from "./InfoCarousel";
 import { Shelter } from "../../../models/Shelter";
 import ModelInstanceService from '../../services/ModelInstanceService';
-import Pets4meSheltersService from "../../services/Pets4meSheltersService";
 import ShelterCard from './ShelterCard';
 import InfoCard from "./InfoCard";
+import { Pets4meSheltersService } from '../../services/Pets4meModelInstanceService';
 
 interface SheltersInfoCarouselProviders { sheltersService: ModelInstanceService<Shelter> }
 

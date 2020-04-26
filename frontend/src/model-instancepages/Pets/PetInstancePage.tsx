@@ -1,5 +1,4 @@
 import React from 'react'
-import Pets4mePetsService from '../../common/services/Pets4mePetsService';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 import { Pet, BackendEntity, Photos } from '../../models/Pet';
 import { match } from 'react-router-dom';
@@ -13,9 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Container, Col, Row } from 'react-bootstrap';
 import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import MediaQuery from 'react-responsive';
-import Pets4meSheltersService from '../../common/services/Pets4meSheltersService';
 import { Shelter } from '../../models/Shelter';
 import '../ModelInstancepage.css'
+import { Pets4mePetsService, Pets4meSheltersService } from '../../common/services/Pets4meModelInstanceService';
 
 interface PetProps { pet: Pet, shelter: Shelter, match: match }
 interface PetState { pet: Pet, shelter: Shelter }
