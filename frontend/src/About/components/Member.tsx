@@ -22,16 +22,18 @@ export class Member extends React.Component<MemberProps, MemberState> {
 
   componentDidMount() {
     const gitlabApiService: GitlabApiService = this.context
-    gitlabApiService.getCommits()
+    gitlabApiService.getAllCommits()
       .then(res => this.countCommits(res))
 
     gitlabApiService.getIssuesByAssignee(this.props.gitlab_id)
       .then(res => this.setState({ issueCount: res.length }))
   }
 
-  countCommits(contributors: Commit[]) {
-    let count: number = contributors.filter((value) => this.props.author_name.some(name => name === value.author_name))
-    .length
+  countCommits(commits: Commit[]) {
+    let count: number = commits.filter(
+      (commit) => this.props.author_name.some(name => name === commit.author_name) &&
+        !commit.title.toLowerCase().includes('merge branch')
+      ).length
     
     this.setState({ commitCount: count })
   }

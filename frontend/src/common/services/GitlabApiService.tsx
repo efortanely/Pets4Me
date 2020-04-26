@@ -16,8 +16,17 @@ export class GitlabApiService extends ApiService{
     return this.fetchJsonAsObject<IssuesStatistics>('issues_statistics', { scope: 'all' })
   }
 
-  getCommits(): Promise<Commit[]> {
-    return this.fetchJsonAsObject<Commit[]>('repository/commits', { ref_name: 'dev', 'per_page': 100 })
+  async getAllCommits(): Promise<Commit[]> {
+    let res: Commit[] = []
+    let commits: Commit[] = []
+    let pageNumber: number = 1
+    do {
+      res = await this.fetchJsonAsObject<Commit[]>('repository/commits', { ref_name: 'dev', per_page: 100, page: pageNumber })
+      commits.push(...res)
+      pageNumber++
+    } while(res.length > 0)
+    
+    return Promise.resolve(commits)
   }
 
   getContributors(): Promise<Contributor[]> {
