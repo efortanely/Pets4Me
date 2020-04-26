@@ -247,7 +247,7 @@ def parse_shelter(shelter, nomi, unescape):
     photos_small, photos_full = extract_photos(shelter.get("photos", []))
     postcode = address.get("postcode", None)
     mission = shelter.get("mission_statement", None)
-    adoption_policy = shelter.get("policy", None)
+    adoption_policy = policy_dict.get("policy", policy_dict.get("url", None))
     if mission:
         mission = unescape(mission)
     if adoption_policy:
