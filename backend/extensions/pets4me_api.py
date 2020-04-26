@@ -226,7 +226,7 @@ class DogBreed(db.Model):
                     Pet.secondary_dog_breed_id == self.id,
                 )
             )
-            .all()
+            .distinct()
         )
 
         return [shelter[0] for shelter in shelters]
@@ -296,7 +296,7 @@ class CatBreed(db.Model):
                     Pet.secondary_cat_breed_id == self.id,
                 )
             )
-            .all()
+            .distinct()
         )
 
         return [shelter[0] for shelter in shelters]

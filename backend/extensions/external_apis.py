@@ -13,6 +13,7 @@ from html import unescape
 from html.parser import HTMLParser
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
 
+
 class CommonAPI:
     def __init__(self, base_url):
         self.base_url = base_url
@@ -97,7 +98,16 @@ class DogAPI(CommonAPI):
 
     def find_breed(self, query):
         result = json.loads(self.get(f"/v1/breeds/search?q={query}"))
-        return self.parse_dog_breed(result[0]) if len(result) > 0 else None
+        if len(result) == 0:
+            return None
+        else:
+            name = result[0].get("name", None)
+            matching_dog = (
+                db.session.query(DogBreed)
+                .filter(DogBreed.name.ilike(escape_like(name), escape="\\"))
+                .first()
+            )
+            return matching_dog
 
     def get_breeds(self):
         breeds_response = self.get("/v1/breeds")
@@ -158,7 +168,16 @@ class CatAPI(CommonAPI):
 
     def find_breed(self, query):
         result = json.loads(self.get(f"/v1/breeds/search?q={query}"))
-        return self.parse_cat_breed(result[0]) if len(result) > 0 else None
+        if len(result) == 0:
+            return None
+        else:
+            name = result[0].get("name", None)
+            matching_cat = (
+                db.session.query(CatBreed)
+                .filter(CatBreed.name.ilike(escape_like(name), escape="\\"))
+                .first()
+            )
+            return matching_cat
 
     def get_breeds(self):
         breeds_response = self.get("/v1/breeds")
@@ -260,7 +279,7 @@ def parse_shelter(shelter, nomi, unescape):
     if mission:
         mission = unescape(mission)
     if adoption_policy:
-        adoption_policy = unescape(adoption_policy) 
+        adoption_policy = unescape(adoption_policy)
 
     if postcode:
         geo_data = nomi.query_postal_code(postcode)
@@ -430,7 +449,9 @@ class PetAPI(OAuthAPI):
                     shelter.has_dogs = 1
             else:
                 shelter = None
-            animals.append(parse_pet(animal, shelter, dog_breed_map, cat_breed_map, self.unescape))
+            animals.append(
+                parse_pet(animal, shelter, dog_breed_map, cat_breed_map, self.unescape)
+            )
         return animals
 
     def get_shelter(self, pf_id):
