@@ -1,40 +1,40 @@
 /* Mobile View */
 
-.navbar{
+.navbar {
   flex-direction: column;
 }
 
-.Logo{
+.Logo {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 5% 0px 5% 0px ;
+  margin: 5% 0px 5% 0px;
 }
 
-.Logo img{
+.Logo img {
   width: 40%;
 }
 
-.Logo h1{
+.Logo h1 {
   margin: auto 0 auto 10px;
-  color: #FAA851;
-  font-family: 'Quicksand', sans-serif;
+  color: #faa851;
+  font-family: "Quicksand", sans-serif;
   font-size: 40px;
   font-weight: bold;
 }
 
-.form-group{
+.form-group {
   width: 90vw;
   margin: 0 auto;
 }
 
 .form-control {
   box-shadow: none !important;
-  color: #D3D3D3;
-  border: 1px solid #D3D3D3;
+  color: #d3d3d3;
+  border: 1px solid #d3d3d3;
 }
 
-ul{
+ul {
   list-style: none;
   display: flex;
   flex-direction: row;
@@ -43,28 +43,28 @@ ul{
   padding: 0px;
 }
 
-li{
+li {
   text-decoration: none;
 }
 
-.nav-link{
+.nav-link {
   color: #581730;
   font-weight: bold;
   font-size: min(2vw, 15px);
   margin-left: 8px;
 }
 
-.nav-link:hover{
-  color: #528C8B;
+.nav-link:hover {
+  color: #528c8b;
 }
 
-.shapeOne{
+.shapeOne {
   width: 100vw;
   position: absolute;
   z-index: 0;
 }
 
-.personOne{
+.personOne {
   position: relative;
   z-index: 1;
   width: 23vw;
@@ -72,7 +72,7 @@ li{
   margin-left: 50px;
 }
 
-.personTwo{
+.personTwo {
   position: relative;
   z-index: 1;
   width: 30vw;
@@ -80,34 +80,34 @@ li{
   margin-top: 30vw;
 }
 
-.shapeTwo{
+.shapeTwo {
   width: 0px;
 }
 
-.frontPageInfo h1{
+.frontPageInfo h1 {
   text-align: center;
   padding-top: 60px;
   font-weight: bold;
   color: #581730;
 }
 
-.frontPageInfo h2{
+.frontPageInfo h2 {
   text-align: center;
-  color: #FAA851;
+  color: #faa851;
   margin-top: -5px;
 }
 
-.frontPageInfo p{
+.frontPageInfo p {
   text-align: center;
   width: 65%;
   margin: 0 auto;
   margin-top: 15px;
   line-height: 18px;
   font-size: 15px;
-  color: #528C8B;
+  color: #528c8b;
 }
 
-.frontPageInfo .paw{
+.frontPageInfo .paw {
   display: flex;
   justify-content: center;
   margin: 0 auto;
@@ -117,101 +117,98 @@ li{
 
 /* End Mobile View */
 
-
 /* Desktop View */
 
-@media screen and (min-width: 1350px){
+@media screen and (min-width: 1350px) {
+  .navbar {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
 
-.navbar{
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: nowrap;
-}
+  .Logo {
+    align-self: flex-start;
+    width: 250px;
+  }
 
-.Logo{
-  align-self: flex-start;
-  width: 250px;
-}
+  .Logo img {
+    width: 30%;
+  }
 
-.Logo img{
-  width: 30%;
-}
+  .Logo h1 {
+    font-size: 25px;
+  }
 
-.Logo h1{
-  font-size: 25px;
-}
+  .form-group {
+    width: 100%;
+    flex-grow: 1;
+  }
 
-.form-group {
-  width: 100%;
-  flex-grow: 1;
-}
+  .searchbar > form-group {
+    padding: 5% 0px 5% 0px;
+  }
 
-.searchbar > form-group {
-  padding: 5% 0px 5% 0px;
-}
+  nav {
+    flex-grow: 2;
+  }
 
-nav{
-  flex-grow: 2;
-}
+  ul {
+    justify-content: flex-end;
+    margin-right: 20px;
+  }
 
-ul{
-  justify-content: flex-end;
-  margin-right: 20px;
-}
+  .nav-link {
+    font-size: 12px;
+  }
 
-.nav-link{
-  font-size: 12px;
-}
+  .shapeOne {
+    width: 900px;
+    bottom: -40px;
+  }
 
-.shapeOne{
-  width: 900px;
-  bottom: -40px;
-}
+  .personOne {
+    width: 200px;
+    margin-top: 15px;
+    margin-left: 90px;
+  }
 
-.personOne{
-  width: 200px;
-  margin-top: 15px;
-  margin-left: 90px;
-}
+  .personTwo {
+    width: 300px;
+    margin-left: 100px;
+    margin-top: 300px;
+  }
 
-.personTwo{
-  width: 300px;
-  margin-left: 100px;
-  margin-top: 300px;
-}
+  .shapeTwo {
+    position: absolute;
+    width: 300px;
+    bottom: 0px;
+    left: 625px;
+  }
 
-.shapeTwo{
-  position: absolute;
-  width: 300px;
-  bottom: 0px;
-  left: 625px;
-}
+  .frontPageInfo {
+    position: absolute;
+    top: 130px;
+    right: 10vw;
+    display: flex;
+    flex-direction: column;
+  }
 
-.frontPageInfo{
-  position: absolute;
-  top: 130px;
-  right: 10vw;
-  display: flex;
-  flex-direction: column;
-}
+  .frontPageInfo h1 {
+    position: relative;
+    font-size: 3vw;
+  }
 
-.frontPageInfo h1{
-  position: relative;
-  font-size: 3vw;
-}
+  .frontPageInfo h2 {
+    position: relative;
+    font-size: 2.5vw;
+  }
 
-.frontPageInfo h2{
-  position: relative;
-  font-size: 2.5vw;
-}
-
-.frontPageInfo p{
-  position: relative;
-  width: 26vw;
-  font-size: 1.2vw;
-  line-height: 1.5vw;
-}
-
+  .frontPageInfo p {
+    position: relative;
+    width: 26vw;
+    font-size: 1.2vw;
+    line-height: 1.5vw;
+  }
 }

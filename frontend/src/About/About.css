@@ -1,32 +1,32 @@
 /* Mobile View */
 
-.about-header{
+.about-header {
   display: flex;
   justify-content: center;
 }
 
-.about-header h2{
+.about-header h2 {
   text-align: center;
   font-weight: bold;
   color: #581730;
 }
 
-.about-header h3{
+.about-header h3 {
   text-align: center;
   font-weight: bold;
-  color: #FAA851;
+  color: #faa851;
   margin-left: 10px;
   margin-bottom: 0px;
 }
 
-.about-header hr{
-  background-color: #FAA851;
+.about-header hr {
+  background-color: #faa851;
   margin-left: 10px;
   margin-top: 0px;
   height: 1px;
 }
 
-.about-p{
+.about-p {
   text-align: center;
   width: 73%;
   margin: 0 auto;
@@ -34,17 +34,17 @@
   margin-bottom: 30px;
   line-height: 18px;
   font-size: 15px;
-  color: #528C8B;
+  color: #528c8b;
   max-width: 500px;
 }
 
-.members{
+.members {
   text-align: center;
   max-width: 500px;
   margin: 0 auto;
 }
 
-.member{
+.member {
   display: inline-block;
   width: 170px;
   height: 285px;
@@ -52,75 +52,75 @@
   margin-bottom: 7px;
 }
 
-.member:nth-child(even){
+.member:nth-child(even) {
   margin-left: 7px;
 }
 
-.member .svg-1{
+.member .svg-1 {
   height: 110px;
 }
 
-.member .top-rect{
+.member .top-rect {
   transform: scale(170, 110);
-  fill: #F8C99A;
+  fill: #f8c99a;
 }
 
-.member .svg-2{
+.member .svg-2 {
   height: 175px;
 }
 
-.member .bottom-rect{
+.member .bottom-rect {
   transform: scale(170, 175);
-  fill: #FCEDE7;
+  fill: #fcede7;
 }
 
-.member img{
+.member img {
   width: 130px;
   height: 130px;
   border-radius: 50%;
   margin-top: -390px;
 }
 
-.member .member-text{
+.member .member-text {
   margin-top: -135px;
   color: #581730;
 }
 
-.member .member-text h4{
+.member .member-text h4 {
   font-size: 15px;
   margin-bottom: 2px;
 }
 
-.member .member-text p{
+.member .member-text p {
   font-size: 12px;
   margin-bottom: 6px;
 }
 
-.member .door{
+.member .door {
   position: absolute;
   bottom: 0;
   right: 0;
   left: 100%;
-  background-color: #FCEDE7;
+  background-color: #fcede7;
   overflow: hidden;
   width: 0;
   height: 100%;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
-.member:hover .door{
+.member:hover .door {
   width: 100%;
   left: 0;
 }
 
-.member .text{
-  color: #528C8B;
+.member .text {
+  color: #528c8b;
   line-height: 18px;
   font-size: 15px;
   padding: 15px;
 }
 
-.member .circles{
+.member .circles {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -136,31 +136,31 @@
   color: white;
   line-height: 35px;
   text-align: center;
-  background: #528C8B;
+  background: #528c8b;
 }
 
-.member .circle:not(:first-child){
+.member .circle:not(:first-child) {
   margin-left: 7px;
 }
 
-.member .icons{
+.member .icons {
   margin-left: 3px;
 }
 
-.member .icon:not(:first-child){
+.member .icon:not(:first-child) {
   margin-left: 28px;
 }
 
-.repo-stats h3{
+.repo-stats h3 {
   text-align: center;
   font-weight: bold;
-  color: #FAA851;
+  color: #faa851;
   margin-top: 30px;
   margin-bottom: 20px;
   font-size: 20px;
 }
 
-.repo-stats .row{
+.repo-stats .row {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -176,21 +176,21 @@
   color: white;
   line-height: 40px;
   text-align: center;
-  background: #528C8B;
+  background: #528c8b;
 }
 
-.repo-stats .icon{
+.repo-stats .icon {
   margin-right: 10px;
 }
 
-.repo-stats p{
+.repo-stats p {
   color: #581730;
   font-size: 14px;
   margin-top: 10px;
   margin-left: 10px;
 }
 
-.data-sources{
+.data-sources {
   text-align: center;
   max-width: 500px;
   margin: 0 auto;
@@ -204,85 +204,85 @@
   margin-bottom: 7px;
 }
 
-.data-sources h3{
+.data-sources h3 {
   text-align: center;
   font-weight: bold;
-  color: #FAA851;
+  color: #faa851;
   margin-top: 30px;
   margin-bottom: 20px;
   font-size: 20px;
 }
 
-.data-source .rect{
+.data-source .rect {
   width: 170px;
   height: 170px;
-  background:#FCEDE7;
+  background: #fcede7;
 }
 
-.data-source:nth-child(odd) .rect{
+.data-source:nth-child(odd) .rect {
   margin-left: 7px;
 }
 
-.data-source img{
+.data-source img {
   height: 130px;
   position: relative;
   margin-top: 20px;
 }
 
-.data-source .cat{
+.data-source .cat {
   height: 100px;
   margin-top: 40px;
 }
 
-.data-source .door{
+.data-source .door {
   position: absolute;
   bottom: 0;
   right: 0;
   left: 100%;
-  background-color: #FCEDE7;
+  background-color: #fcede7;
   overflow: hidden;
   width: 0;
   height: 100%;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
-.data-source:hover .door{
+.data-source:hover .door {
   width: 90%;
   left: 10px;
 }
 
-.data-source .text{
+.data-source .text {
   padding: 15px;
 }
 
-.data-source .text a{
-  color: #FAA851;
+.data-source .text a {
+  color: #faa851;
   line-height: 18px;
   font-size: 20px;
 }
 
-.data-source .text p{
-  color: #528C8B;
+.data-source .text p {
+  color: #528c8b;
   line-height: 18px;
   font-size: 15px;
 }
 
-.tools h3{
+.tools h3 {
   text-align: center;
   font-weight: bold;
-  color: #FAA851;
+  color: #faa851;
   margin-top: 30px;
   margin-bottom: 20px;
   font-size: 20px;
 }
 
-.tools{
+.tools {
   text-align: center;
   max-width: 500px;
   margin: 0 auto;
 }
 
-.tool{
+.tool {
   position: relative;
   width: 170px;
   height: 170px;
@@ -290,72 +290,72 @@
   margin-bottom: 7px;
 }
 
-.tool .rect{
+.tool .rect {
   width: 170px;
   height: 170px;
-  background:#FCEDE7;
+  background: #fcede7;
 }
 
-.tool:nth-child(odd) .rect{
+.tool:nth-child(odd) .rect {
   margin-left: 7px;
 }
 
-.tool img{
+.tool img {
   height: 130px;
   position: relative;
   margin-top: 20px;
 }
 
-.tool .door{
+.tool .door {
   position: absolute;
   bottom: 0;
   right: 0;
   left: 100%;
-  background-color: #FCEDE7;
+  background-color: #fcede7;
   overflow: hidden;
   width: 0;
   height: 100%;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
-.tool:hover .door{
+.tool:hover .door {
   width: 90%;
   left: 10px;
 }
 
-.tool .text{
+.tool .text {
   padding: 15px;
 }
 
-.tool .text h5{
-  color: #FAA851;
+.tool .text h5 {
+  color: #faa851;
   line-height: 18px;
   font-size: 20px;
 }
 
-.tool .text p{
-  color: #528C8B;
+.tool .text p {
+  color: #528c8b;
   line-height: 18px;
   font-size: 15px;
 }
 
-.repo-api{
+.repo-api {
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
   margin-bottom: 20px;
 }
 
-.repo-api h3{
+.repo-api h3 {
   text-align: center;
   font-weight: bold;
-  color: #FAA851;
+  color: #faa851;
   margin-top: 30px;
   margin-bottom: 20px;
   font-size: 20px;
 }
 
-.repo-api-entity{
+.repo-api-entity {
   position: relative;
   width: 170px;
   height: 170px;
@@ -363,102 +363,99 @@
   margin-bottom: 7px;
 }
 
-.repo-api-entity .rect{
+.repo-api-entity .rect {
   width: 170px;
   height: 170px;
-  background:#FCEDE7;
+  background: #fcede7;
 }
 
-.repo-api-entity:nth-child(odd) .rect{
+.repo-api-entity:nth-child(odd) .rect {
   margin-left: 7px;
 }
 
-.repo-api-entity img{
+.repo-api-entity img {
   height: 130px;
   position: relative;
   margin-top: 20px;
 }
 
-.repo-api-entity .door{
+.repo-api-entity .door {
   position: absolute;
   bottom: 0;
   right: 0;
   left: 100%;
-  background-color: #FCEDE7;
+  background-color: #fcede7;
   overflow: hidden;
   width: 0;
   height: 100%;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
-.repo-api-entity:hover .door{
+.repo-api-entity:hover .door {
   width: 90%;
   left: 10px;
 }
 
-.repo-api-entity .text{
+.repo-api-entity .text {
   padding: 15px;
 }
 
-.repo-api-entity .text a{
-  color: #FAA851;
+.repo-api-entity .text a {
+  color: #faa851;
   line-height: 18px;
   font-size: 20px;
 }
 
-.repo-api-entity .text p{
-  color: #528C8B;
+.repo-api-entity .text p {
+  color: #528c8b;
   line-height: 18px;
   font-size: 15px;
 }
 
-footer{
+footer {
   text-align: center;
 }
 
-footer a{
-  color: #FAA851;
+footer a {
+  color: #faa851;
   line-height: 18px;
   font-size: 15px;
 }
 
 /* End Mobile View */
 
-
 /* Desktop View */
 
-@media screen and (min-width: 1350px){
+@media screen and (min-width: 1350px) {
+  .members {
+    max-width: 600px;
+  }
 
-.members{
-  max-width: 600px;
-}
+  .member:nth-child(3) {
+    margin-left: 7px;
+  }
 
-.member:nth-child(3){
-  margin-left: 7px;
-}
+  .member:nth-child(4) {
+    margin-left: 0px;
+  }
 
-.member:nth-child(4){
-  margin-left: 0px;
-}
+  .member:nth-child(5) {
+    margin-left: 7px;
+  }
 
-.member:nth-child(5){
-  margin-left: 7px;
-}
+  .tools {
+    max-width: 600px;
+  }
 
-.tools{
-  max-width: 600px;
-}
+  .tool:nth-child(even) .rect {
+    margin-left: 7px;
+  }
 
-.tool:nth-child(even) .rect{
-  margin-left: 7px;
-}
+  .tool:nth-child(3n + 2) .rect {
+    margin-left: 0px;
+  }
 
-.tool:nth-child(3n + 2) .rect{
-  margin-left: 0px;
-}
-
-.tool:nth-child(3n + 1) .rect{
-  margin-left: 14px;
-}
-
+  .tool:nth-child(3n + 1) .rect {
+    margin-left: 14px;
+  }
 }

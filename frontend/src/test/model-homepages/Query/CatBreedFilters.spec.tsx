@@ -1,14 +1,16 @@
-import 'jsdom-global/register'
-import React from 'react'
-import { mount } from 'enzyme';
-import chai, { expect } from 'chai'
-import sinonChai from 'sinon-chai'
-import { CatBreedsFilters, constructQuery } from '../../../model-homepages/Cats/CatBreedsFilters';
-import { CatBreedsFiltersData } from '../../../models/CatBreedsFiltersData'
-chai.use(sinonChai)
+import "jsdom-global/register";
+import React from "react";
+import { mount } from "enzyme";
+import chai, { expect } from "chai";
+import sinonChai from "sinon-chai";
+import {
+  CatBreedsFilters,
+  constructQuery,
+} from "../../../model-homepages/Cats/CatBreedsFilters";
+import { CatBreedsFiltersData } from "../../../models/CatBreedsFiltersData";
+chai.use(sinonChai);
 
-describe('<CatBreedsFilters />', () => {
-
+describe("<CatBreedsFilters />", () => {
   let testDefaultFilterState = {
     nameInitials: [],
     doorsiness: undefined,
@@ -18,27 +20,30 @@ describe('<CatBreedsFilters />', () => {
     minLifespan: 0,
     maxLifespan: 30,
     sortType: undefined,
-    sortDir: "desc"
-  }
+    sortDir: "desc",
+  };
 
   let expectedFilters = [
     {
-    "name": "life_span_low",
-    "op": "ge",
-    "val": 0
+      name: "life_span_low",
+      op: "ge",
+      val: 0,
     },
     {
-    "name": "life_span_high",
-    "op": "le",
-    "val": 30
-    }]
+      name: "life_span_high",
+      op: "le",
+      val: 30,
+    },
+  ];
 
   function mountWithPage(filterOptions: CatBreedsFiltersData) {
-    return mount(<CatBreedsFilters {...filterOptions}/>)
+    return mount(<CatBreedsFilters {...filterOptions} />);
   }
 
   // author Cristian
-  it('default call to the submit button with no options selected', () => {
-    expect(constructQuery([], testDefaultFilterState)).to.equal("q=" + JSON.stringify({"filters": expectedFilters}));
+  it("default call to the submit button with no options selected", () => {
+    expect(constructQuery([], testDefaultFilterState)).to.equal(
+      "q=" + JSON.stringify({ filters: expectedFilters })
+    );
   });
-})
+});

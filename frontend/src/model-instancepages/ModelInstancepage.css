@@ -1,172 +1,184 @@
 .model-instancepage {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-    margin-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.instancepage-header{
-    text-align: center;
+.instancepage-header {
+  text-align: center;
 }
 
-.instancepage-header a{
-    color: #528C8B;
-    text-decoration: underline;
+.instancepage-header a {
+  color: #528c8b;
+  text-decoration: underline;
 }
 
-.instancepage-header p{
-    color: #528C8B;
+.instancepage-header p {
+  color: #528c8b;
 }
 
-.instancepage-header a:hover{
-    color: #581730;
+.instancepage-header a:hover {
+  color: #581730;
 }
 
 .image-gallery {
-    width: 90%;
-    margin: 0 auto;
-    margin-bottom: 20px;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
-iframe{
-    margin: 0 auto;
-    display: block;
-    width: 90%;
-    height: 360px;
+iframe {
+  margin: 0 auto;
+  display: block;
+  width: 90%;
+  height: 360px;
 }
 
-p, h1, h2, h4{
-    color: #581730;
-    text-align: center;
+p,
+h1,
+h2,
+h4 {
+  color: #581730;
+  text-align: center;
 }
 
-.attributes h4{
-    color: #528C8B;
-    font-weight: bold;
+.attributes h4 {
+  color: #528c8b;
+  font-weight: bold;
 }
 
-.about h2{
-    font-size: x-large;
-    font-weight: bold;
+.about h2 {
+  font-size: x-large;
+  font-weight: bold;
 }
 
-.about h2, .about p{
-    text-align: left;
+.about h2,
+.about p {
+  text-align: left;
 }
 
-.temperament h2{
-    font-size: x-large;
-    font-weight: bold;
+.temperament h2 {
+  font-size: x-large;
+  font-weight: bold;
 }
 
-.temperament h2, .temperament p{
-    text-align: left;
+.temperament h2,
+.temperament p {
+  text-align: left;
 }
 
-.alternate-names h2{
-    font-size: x-large;
-    font-weight: bold;
+.alternate-names h2 {
+  font-size: x-large;
+  font-weight: bold;
 }
 
-.alternate-names h2, .alternate-names p{
-    text-align: left;
+.alternate-names h2,
+.alternate-names p {
+  text-align: left;
 }
 
-.adoption-policy h2{
-    font-size: x-large;
-    font-weight: bold;
+.adoption-policy h2 {
+  font-size: x-large;
+  font-weight: bold;
 }
 
-.adoption-policy h2, .adoption-policy p{
-    text-align: left;
+.adoption-policy h2,
+.adoption-policy p {
+  text-align: left;
 }
 
-.mission h2{
-    font-size: x-large;
-    font-weight: bold;
+.mission h2 {
+  font-size: x-large;
+  font-weight: bold;
 }
 
-.mission h2, .mission p{
-    text-align: left;
+.mission h2,
+.mission p {
+  text-align: left;
 }
 
-.cards-headers{
-    font-size: x-large;
-    font-weight: bold;
-    margin: 0 auto;
+.cards-headers {
+  font-size: x-large;
+  font-weight: bold;
+  margin: 0 auto;
 }
 
-.cards{
-    margin: 0 auto;
+.cards {
+  margin: 0 auto;
 }
 
-.dv-star-rating{
-    margin: 0 auto !important;
+.dv-star-rating {
+  margin: 0 auto !important;
 }
 
-.instancepage-button{
-    background-color: #FAA851 !important;
-    border-color: #FAA851 !important;
-    width: min(90%, 500px);
-    margin: 0 auto;
+.instancepage-button {
+  background-color: #faa851 !important;
+  border-color: #faa851 !important;
+  width: min(90%, 500px);
+  margin: 0 auto;
 }
 
-.shelter-name > *{
-    text-align: left;
-    color: #581730;
+.shelter-name > * {
+  text-align: left;
+  color: #581730;
 }
 
-.shelter-name h4{
-    margin-top: 20px;
-    font-weight: bold;
+.shelter-name h4 {
+  margin-top: 20px;
+  font-weight: bold;
 }
 
-.fa-map-marker-alt, .fa-envelope, .fa-phone{
-    margin-left: 20px;
-    margin-right: 10px;
+.fa-map-marker-alt,
+.fa-envelope,
+.fa-phone {
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
-.shelter-name p{
-    color: #528C8B;
-    font-weight: bold;
+.shelter-name p {
+  color: #528c8b;
+  font-weight: bold;
 }
 
 .mapMedia {
-    width: min(90%, 600px);
-    margin: 0 auto;
-    margin-bottom: 20px;
+  width: min(90%, 600px);
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
-.top-breed, .top-breed-id{
-    margin: 0 auto;
+.top-breed,
+.top-breed-id {
+  margin: 0 auto;
 }
 
-.top-breed-id a, .top-breed-id span{
-    color: #528C8B;
-    font-weight: bold;
-    font-size: larger;
+.top-breed-id a,
+.top-breed-id span {
+  color: #528c8b;
+  font-weight: bold;
+  font-size: larger;
 }
 
-.top-breed-id a{
-    text-decoration: underline;
+.top-breed-id a {
+  text-decoration: underline;
 }
 
-.top-breed-id a:hover{
-    color: #581730;
+.top-breed-id a:hover {
+  color: #581730;
 }
 
-@media screen and (min-width: 1350px){
-    .photo-and-map > *{
-        width: 700px;
-    }
+@media screen and (min-width: 1350px) {
+  .photo-and-map > * {
+    width: 700px;
+  }
 
-    .instancepage-header > *{
-        text-align: left;
-    }
+  .instancepage-header > * {
+    text-align: left;
+  }
 
-    .instancepage-button{
-        width: 500px
-    }
+  .instancepage-button {
+    width: 500px;
+  }
 }

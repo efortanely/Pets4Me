@@ -1,12 +1,12 @@
 .error {
-    color: #990000;
-    font-size: 75%;
+  color: #990000;
+  font-size: 75%;
 }
 
-h5{
-    color: #581730;
+h5 {
+  color: #581730;
 }
 
 .mapboxgl-popup-content {
-    padding: 5px !important;
+  padding: 5px !important;
 }

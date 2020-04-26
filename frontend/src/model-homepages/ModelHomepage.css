@@ -1,203 +1,205 @@
 .page-heading {
-    padding-left: 15%;
-    padding-bottom: 20px;
-    font-weight: bold;
+  padding-left: 15%;
+  padding-bottom: 20px;
+  font-weight: bold;
 }
 
 .model-homepage-content {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .model-homepage {
-    padding: 10px;
+  padding: 10px;
 }
 
-.model-homepage-content label, .model-homepage-content input{
-    width: 100%;
-    outline: none;
+.model-homepage-content label,
+.model-homepage-content input {
+  width: 100%;
+  outline: none;
 }
 
-.model-homepage-content-col .sliders{
-    display: flex;
-    flex-direction: row;
+.model-homepage-content-col .sliders {
+  display: flex;
+  flex-direction: row;
 }
 
-.model-homepage-content-col .sliders> *{
-    margin-left: 20px;
-    margin-right: 20px;
+.model-homepage-content-col .sliders > * {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 /* Dropdown Menu */
 
 .filters > * {
-    flex-grow: 1;
-    width: 250px;
-    padding: 5px;
+  flex-grow: 1;
+  width: 250px;
+  padding: 5px;
 }
 
-.filters .dropdown{
-    width: 100%;
+.filters .dropdown {
+  width: 100%;
 }
 
-.filters .dropdown-toggle{
-    background-color: white !important;
-    border-color: #581730 !important;
-    color: #581730 !important;
-    text-align: left;
-    width: 100%;
+.filters .dropdown-toggle {
+  background-color: white !important;
+  border-color: #581730 !important;
+  color: #581730 !important;
+  text-align: left;
+  width: 100%;
 }
 
 .dropdown-toggle::after {
-    float: right;
-    transform: translateY(10px);
+  float: right;
+  transform: translateY(10px);
 }
 
-.filters .dropdown-toggle:focus{
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 140, 139, 255) !important;
+.filters .dropdown-toggle:focus {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset,
+    0 0 8px rgba(82, 140, 139, 255) !important;
 }
 
-.filters .dropdown-item:active{
-    background-color: #BFDEDD;
+.filters .dropdown-item:active {
+  background-color: #bfdedd;
 }
 
-.filters .dropdown-menu a{
-    color: #581730;
+.filters .dropdown-menu a {
+  color: #581730;
 }
 
-.filters form{
-    border-color: #581730;
+.filters form {
+  border-color: #581730;
 }
 
-.filters form input{
-    box-sizing: border-box;    
+.filters form input {
+  box-sizing: border-box;
 }
 
 .postcode {
-    height: 50px;
+  height: 50px;
 }
 
-.filters h5{
-    color: #581730;
-    margin-bottom: 0px !important;
-    margin-left: 0px !important;
+.filters h5 {
+  color: #581730;
+  margin-bottom: 0px !important;
+  margin-left: 0px !important;
 }
 
 .model-homepage-content-col {
-    text-align: center;
-    display: grid;
-    width: 100%;
+  text-align: center;
+  display: grid;
+  width: 100%;
 }
 
 .spinner-border {
-    margin: 25px;
-    height: 3rem !important;
-    width: 3rem !important;
+  margin: 25px;
+  height: 3rem !important;
+  width: 3rem !important;
 }
 
 .cards-container {
-    text-align: center;
+  text-align: center;
 }
 
 .cards-container h3 h5 {
-    text-align: left !important;
-    margin-left: 0;
+  text-align: left !important;
+  margin-left: 0;
 }
 
-.css-2b097c-container{
-    width: 100%;
+.css-2b097c-container {
+  width: 100%;
 }
 
-.css-14jk2my-container{
-    width: 100%;
+.css-14jk2my-container {
+  width: 100%;
 }
 
-.css-yk16xz-control:active{
-    box-shadow: none !important;
-    outline: none !important;
+.css-yk16xz-control:active {
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .css-10ku62j {
-    color:white !important;
+  color: white !important;
 }
 
 .filters .btn-primary {
-    background-color: #966a7d;
-    border-color: #966a7d;
+  background-color: #966a7d;
+  border-color: #966a7d;
 }
 
 .filters .submit {
-    background-color: #581730;
-    border-color: #581730;
+  background-color: #581730;
+  border-color: #581730;
 }
 
 .btn-primary {
-    background-color: #966a7d;
-    border-color: #966a7d;
-    width: 100%;
+  background-color: #966a7d;
+  border-color: #966a7d;
+  width: 100%;
 }
 
 .filters .active {
-    background-color: #581730 !important;
-    border-color: #641A34 !important;
+  background-color: #581730 !important;
+  border-color: #641a34 !important;
 }
 
 .btn-primary:hover {
-    background-color: #581730 !important;
-    box-shadow: 0 0 0 .25rem rgba(88, 23, 48, .5) !important;
-    border-color: #641A34 !important;
+  background-color: #581730 !important;
+  box-shadow: 0 0 0 0.25rem rgba(88, 23, 48, 0.5) !important;
+  border-color: #641a34 !important;
 }
 
 .btn-primary.focus {
-    box-shadow: 0 0 0 .25rem rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 1) !important;
 }
 
 .btn-primary:focus {
-    background-color: #581730 !important;
-    box-shadow: 0 0 0 .25rem rgba(88, 23, 48, .5) !important;
+  background-color: #581730 !important;
+  box-shadow: 0 0 0 0.25rem rgba(88, 23, 48, 0.5) !important;
 }
 
-.filters input[type=text], input[type=text]::placeholder{
-    color: #581730;
+.filters input[type="text"],
+input[type="text"]::placeholder {
+  color: #581730;
 }
 
-.filters input[type=text]::placeholder{
-    color: #84747B;
+.filters input[type="text"]::placeholder {
+  color: #84747b;
 }
 
-.filters input:focus{
-    outline-color: #528C8B;
+.filters input:focus {
+  outline-color: #528c8b;
 }
 
 .sort-button-group {
-    text-align: center !important;
-    width: 100%;
+  text-align: center !important;
+  width: 100%;
 }
 
 .sort-button-group > * {
-    z-index: 0 !important;
-    width: 100%;
+  z-index: 0 !important;
+  width: 100%;
 }
 
-.postcode{
-    width: 100%;
+.postcode {
+  width: 100%;
 }
 
 input:focus {
-    outline:none !important;
+  outline: none !important;
 }
 
 /* End Dropdown Menu */
 
 /* Cards */
 
-
 .single-card {
-    display: inline-block;
-    background-color: #966a7d;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 5px;
+  display: inline-block;
+  background-color: #966a7d;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
 }
 
 a.single-card,
@@ -206,32 +208,32 @@ a.single-card:hover {
 }
 
 .card-image {
-    border-color: #ffffff;
-    border-width: 3px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    width: 100%;
-    height: 200px;
-    object-fit: scale-down;
+  border-color: #ffffff;
+  border-width: 3px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 200px;
+  object-fit: scale-down;
 }
 
-.card-text h3{
-    font-size: 20px;
+.card-text h3 {
+  font-size: 20px;
 }
 
 .card-text {
-    background-color: #ffffff;
-    color: #591f34;
-    border-radius: 5px;
-    text-align: center;
-    padding: 5px;
-    font-size: 13px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  background-color: #ffffff;
+  color: #591f34;
+  border-radius: 5px;
+  text-align: center;
+  padding: 5px;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* End Cards */
@@ -239,81 +241,81 @@ a.single-card:hover {
 /* Pagination */
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.page-item a{
-    color: #581730 !important;
+.page-item a {
+  color: #581730 !important;
 }
 
-.page-item span{
-    color: #966a7d !important;
+.page-item span {
+  color: #966a7d !important;
 }
 
-.page-link:hover{
-    background-color: #bfd9d9 !important;
+.page-link:hover {
+  background-color: #bfd9d9 !important;
 }
 
-.page-item.active .page-link{
-    background-color: #bfd9d9 !important;
-    border-color: #966a7d !important;
-    color: #581730 !important;
+.page-item.active .page-link {
+  background-color: #bfd9d9 !important;
+  border-color: #966a7d !important;
+  color: #581730 !important;
 }
 
-.page-link{
-    border: 1px solid #966a7d !important;
+.page-link {
+  border: 1px solid #966a7d !important;
 }
 
-.page-item a:focus{
-    box-shadow: none !important;
+.page-item a:focus {
+  box-shadow: none !important;
 }
 
 /* End Pagination */
 
-@media screen and (min-width: 700px){
-    .single-card {
-        width: 30%;
-    }
+@media screen and (min-width: 700px) {
+  .single-card {
+    width: 30%;
+  }
 
-    .card-image {
-        height: 300px;
-    }
+  .card-image {
+    height: 300px;
+  }
 }
 
-@media screen and (min-width: 1350px){
-    .model-homepage-content {
-        flex-direction: row;
-    }
+@media screen and (min-width: 1350px) {
+  .model-homepage-content {
+    flex-direction: row;
+  }
 
-    .model-homepage-content-col{
-        display: flex;
-        flex-direction: column;
-    }
+  .model-homepage-content-col {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .model-homepage-content input[type=text] {
-        width: 200px;
-        margin-top: 10px;
-    }
+  .model-homepage-content input[type="text"] {
+    width: 200px;
+    margin-top: 10px;
+  }
 
-    .model-homepage-content-col .sliders .slider2{
-        width: 200px;
-    }
+  .model-homepage-content-col .sliders .slider2 {
+    width: 200px;
+  }
 
-    .filters > * {
-        text-align: left;
-    }
+  .filters > * {
+    text-align: left;
+  }
 
-    .filters .dropdown{
-        width: 300px;
-    }
+  .filters .dropdown {
+    width: 300px;
+  }
 
-    .filters .dropdown-toggle{
-        width: 100%;
-    }
+  .filters .dropdown-toggle {
+    width: 100%;
+  }
 
-    .single-card {
-        max-width: 350px;
-    }
+  .single-card {
+    max-width: 350px;
+  }
 }

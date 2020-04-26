@@ -1,22 +1,22 @@
 .highlight {
-    background-color: #FFE854;
-    padding: 0;
+  background-color: #ffe854;
+  padding: 0;
 }
 
 h5 {
-    color: #581730;
-    margin-left: 20px;
+  color: #581730;
+  margin-left: 20px;
 }
 
 h3 {
-    color: #581730;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  color: #581730;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .left-align {
-    text-align: left;
-    margin-left: 0;
-    color: #581730;
+  text-align: left;
+  margin-left: 0;
+  color: #581730;
 }

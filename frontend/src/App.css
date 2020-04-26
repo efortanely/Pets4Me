@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Quicksand&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 
-html{
-  margin:0;
-  padding:0;
+html {
+  margin: 0;
+  padding: 0;
   height: 100vh;
   max-height: 100vh;
 }
@@ -17,9 +17,9 @@ body > #root > div {
 }
 
 .App {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-a:hover{
+a:hover {
   text-decoration: none !important;
 }

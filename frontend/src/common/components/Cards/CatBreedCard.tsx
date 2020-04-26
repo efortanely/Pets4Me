@@ -1,36 +1,36 @@
-import InfoCard from './InfoCard';
-import { CatBreed } from '../../../models/CatBreed';
+import InfoCard from "./InfoCard";
+import { CatBreed } from "../../../models/CatBreed";
 
 class CatBreedCard extends InfoCard<CatBreed> {
   getHeader(): string {
-    return this.props.info.name
+    return this.props.info.name;
   }
 
   getLinkPathname(): string {
-    return `/cat-breeds/${this.props.info.id}`
+    return `/cat-breeds/${this.props.info.id}`;
   }
 
   getImageSrc(): string {
-    return this.props.info.photo
+    return this.props.info.photo;
   }
 
   getDogFriendliness(): string {
-    switch(this.props.info.dog_friendly){
+    switch (this.props.info.dog_friendly) {
       case 2: {
-        return 'A little dog-friendly';
+        return "A little dog-friendly";
       }
       case 3: {
-        return 'Somewhat dog-friendly';
+        return "Somewhat dog-friendly";
       }
       case 4: {
-        return 'Dog-friendly';
+        return "Dog-friendly";
       }
       case 5: {
-        return 'Very dog-friendly';
+        return "Very dog-friendly";
       }
       case 1:
       default:
-        return 'Not dog-friendly';
+        return "Not dog-friendly";
     }
   }
 
@@ -42,12 +42,20 @@ class CatBreedCard extends InfoCard<CatBreed> {
   }
 
   getOtherInfo = (): string[] => {
-    let otherInfo: string[] = []
-    otherInfo.push(this.props.info.alt_names.length > 0 ? `Alternate names: ${this.props.info.alt_names.join(', ')}` : 'No alternate names')
-    otherInfo.push(`${this.props.info.indoor ? 'Outdoor': 'Indoor'} • ${this.getDogFriendliness()}`)
-    otherInfo.push(`${this.getLifespan()}`)
-    return otherInfo
-  }
+    let otherInfo: string[] = [];
+    otherInfo.push(
+      this.props.info.alt_names.length > 0
+        ? `Alternate names: ${this.props.info.alt_names.join(", ")}`
+        : "No alternate names"
+    );
+    otherInfo.push(
+      `${
+        this.props.info.indoor ? "Outdoor" : "Indoor"
+      } • ${this.getDogFriendliness()}`
+    );
+    otherInfo.push(`${this.getLifespan()}`);
+    return otherInfo;
+  };
 }
 
-export default CatBreedCard
+export default CatBreedCard;
