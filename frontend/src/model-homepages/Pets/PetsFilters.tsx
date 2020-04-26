@@ -24,6 +24,7 @@ export const constructQuery = (selectedFilters: PetsFiltersState) => {
     let filters = []
     let order_by = []
     let query = "zip_code=78705&max_dist=" + selectedFilters.distanceMax
+
     if (selectedFilters.species) {
         filters.push({ "name": "species", "op": "eq", "val": selectedFilters.species })
         if (selectedFilters.primaryBreed.length > 0) {
@@ -36,21 +37,17 @@ export const constructQuery = (selectedFilters: PetsFiltersState) => {
         if (selectedFilters.secondaryBreed.length > 0) {
             // for multiple breeds - do we make it a list in the internal val, or is it a list of objects?
             if (selectedFilters.species === "Dog")
-                filters.push({ "name": "secondary_dog_breed", "op": "eq", "val": { "name": "name", "op": "in", "val": selectedFilters.secondaryBreed } })
+                filters.push({ "name": "secondary_dog_breed", "op": "has", "val": { "name": "name", "op": "in", "val": selectedFilters.secondaryBreed } })
             else if (selectedFilters.species === "Cat")
-                filters.push({ "name": "secondary_cat_breed", "op": "eq", "val": { "name": "name", "op": "in", "val": selectedFilters.secondaryBreed } })
+                filters.push({ "name": "secondary_cat_breed", "op": "has", "val": { "name": "name", "op": "in", "val": selectedFilters.secondaryBreed } })
         }
     }
     if (selectedFilters.gender)
         filters.push({ "name": "gender", "op": "eq", "val": selectedFilters.gender })
     if (selectedFilters.color.length > 0)
         filters.push({ "name": "color", "op": "in", "val": selectedFilters.color })
-    if (selectedFilters.size.length > 0)
-        filters.push({ "name": "size", "op": "in", "val": selectedFilters.size })
-    if (selectedFilters.age.length > 0)
-        filters.push({ "name": "age", "op": "in", "val": selectedFilters.age })
     if (selectedFilters.sortType && selectedFilters.sortType.length > 0) {
-        if (selectedFilters.sortType === "primary_dog_breed" || selectedFilters.sortType === "secondary_dog_breed")
+        if (selectedFilters.sortType === "primary_dog_breed" || selectedFilters.sortType === "secondary_dog_breed" || selectedFilters.sortType === "size" || selectedFilters.sortType === "age")
             query += `&sort=${selectedFilters.sortType}&dir=${selectedFilters.sortDir}`
         else
             order_by.push({ "field": selectedFilters.sortType, "direction": selectedFilters.sortDir })
