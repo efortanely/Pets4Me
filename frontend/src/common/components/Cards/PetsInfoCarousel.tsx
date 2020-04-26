@@ -1,6 +1,5 @@
 import InfoCarousel from "./InfoCarousel";
 import ModelInstanceService from '../../services/ModelInstanceService';
-import InfoCard from "./InfoCard";
 import { Pet } from "../../../models/Pet";
 import PetCard from "./PetCard";
 import { Pets4mePetsService } from "../../services/Pets4meModelInstanceService";
@@ -16,8 +15,8 @@ class PetsInfoCarousel extends InfoCarousel<Pet> {
     return PetsInfoCarousel.providers.petsService
   }
 
-  buildInfoCard(o: Pet): InfoCard<Pet> {
-    return new PetCard({ info: o, searchWords: [] })
+  buildInfoCard(o: Pet): JSX.Element {
+    return new PetCard({ info: o, searchWords: [], addToCompare: undefined }).getCompareInfo()
   }
 
 }

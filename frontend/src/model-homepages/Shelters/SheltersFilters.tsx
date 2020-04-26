@@ -185,7 +185,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                         onChange={(event: any, value: any) => this.setState({ distanceMax: value })}
                     />
                 </ThemeProvider>
-                <Button className="submit" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
+                <Button className="submit-button" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }

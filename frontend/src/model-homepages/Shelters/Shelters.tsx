@@ -52,7 +52,7 @@ export class Shelters extends React.Component<RouteComponentProps, SheltersState
     return (
       <div className='model-homepage'>
         <MediaQuery query="(max-width: 1349px)">
-          <div className='model-homepage-content'>
+          <div className='model-homepage-content' id='mainContent'>
             {this.state.loading ? <Spinner animation='border'></Spinner> : <SheltersFilters {...this.state.filterOptions}/> }
             <div className='cards-container'>
               <SheltersInfoCards {...this.props} filterString={this.state.filterString}/>
@@ -61,7 +61,7 @@ export class Shelters extends React.Component<RouteComponentProps, SheltersState
         </MediaQuery>
 
         <MediaQuery query="(min-width: 1350px)">
-          <div className='model-homepage-content'>
+          <div className='model-homepage-content' id='mainContent'>
             {this.state.loading ? <Spinner animation='border'></Spinner> : <SheltersFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>
               <div className='cards-container'>

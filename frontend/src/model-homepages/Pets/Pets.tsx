@@ -51,9 +51,9 @@ export class Pets extends React.Component<RouteComponentProps, PetsState> {
 
   render() {
     return (
-      <div className='model-homepage'>
+      <div className='model-homepage' >
         <MediaQuery query="(max-width: 1349px)">
-          <div className='model-homepage-content'>
+          <div className='model-homepage-content' id='mainContent'>
             {this.state.loading ? <Spinner animation='border'></Spinner> :<PetsFilters {...this.state.filterOptions}/> }
             <div className='cards-container'>
               <PetsInfoCards {...this.props} filterString={this.state.filterString}/>
@@ -62,7 +62,8 @@ export class Pets extends React.Component<RouteComponentProps, PetsState> {
         </MediaQuery>
 
         <MediaQuery query="(min-width: 1350px)">
-          <div className='model-homepage-content'>
+          <div className='model-homepage-content' id='mainContent'>
+          
           {this.state.loading ? <Spinner animation='border'></Spinner> :<PetsFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>
               <div className='cards-container'>

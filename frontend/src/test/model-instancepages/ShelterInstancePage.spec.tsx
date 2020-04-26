@@ -6,7 +6,6 @@ import ShelterInstancePage from '../../model-instancepages/Shelters/ShelterInsta
 import { Shelter } from '../../models/Shelter';
 import Adapter from 'enzyme-adapter-react-16';
 import sinon from 'sinon'
-import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 import { MemoryRouter } from 'react-router-dom';
 import * as MapMedia from '../../common/components/MapMedia';

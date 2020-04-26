@@ -216,7 +216,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>
-                <Button className="submit" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
+                <Button className="submit-button" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }

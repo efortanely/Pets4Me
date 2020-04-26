@@ -4,12 +4,14 @@ import { configure, mount, ShallowWrapper } from 'enzyme';
 import chai, { expect } from 'chai'
 import { DogBreed } from '../../../models/DogBreed';
 import Adapter from 'enzyme-adapter-react-16';
+import Modal from 'react-modal';
 import sinonChai from 'sinon-chai'
 import { ObjectsPage } from '../../../models/ObjectsPage';
 import DogBreedsInfoCards from '../../../model-homepages/Dogs/DogBreedsInfoCards';
 import ModelInstanceService from '../../../common/services/ModelInstanceService';
 import { MemoryRouter } from 'react-router-dom';
 import { mockModelInstanceService } from '../../TestMocks';
+import sinon from 'sinon'
 chai.use(sinonChai)
 
 
@@ -21,18 +23,16 @@ describe('<DogBreedsInfoCards />', () => {
     let testDogBreedsService: ModelInstanceService<DogBreed> = mockModelInstanceService<DogBreed>(undefined, page)
 
     DogBreedsInfoCards.providers.dogBreedsService = testDogBreedsService
+    let stub = sinon.stub(Modal)
     
-    return mount(<MemoryRouter><DogBreedsInfoCards /></MemoryRouter>)
+    return mount(<MemoryRouter><div id="mainContent"></div><DogBreedsInfoCards /></MemoryRouter>)
   }
-
-
 
   beforeEach(() => {
     configure({ adapter: new Adapter() });
     if(testComponent) {
       testComponent = testComponent.unmount()
     }
-    
 
     testBreedPage = {
       num_results: 0,
@@ -40,7 +40,6 @@ describe('<DogBreedsInfoCards />', () => {
       page: 1,
       total_pages: 1
     }
-
 
   })
   

@@ -30,6 +30,10 @@
 
 /* Dropdown Menu */
 
+.icon {
+    height: 20px;
+}
+
 .filters > * {
     flex-grow: 1;
     width: 250px;
@@ -121,40 +125,13 @@
     color:white !important;
 }
 
-.filters .btn-primary {
-    background-color: #966a7d;
-    border-color: #966a7d;
+.filters h5{
+    color: #581730;
+    margin-bottom: 0px !important;
 }
 
-.filters .submit {
-    background-color: #581730;
-    border-color: #581730;
-}
-
-.btn-primary {
-    background-color: #966a7d;
-    border-color: #966a7d;
+.submit-button {
     width: 100%;
-}
-
-.filters .active {
-    background-color: #581730 !important;
-    border-color: #641A34 !important;
-}
-
-.btn-primary:hover {
-    background-color: #581730 !important;
-    box-shadow: 0 0 0 .25rem rgba(88, 23, 48, .5) !important;
-    border-color: #641A34 !important;
-}
-
-.btn-primary.focus {
-    box-shadow: 0 0 0 .25rem rgba(255, 255, 255, 1) !important;
-}
-
-.btn-primary:focus {
-    background-color: #581730 !important;
-    box-shadow: 0 0 0 .25rem rgba(88, 23, 48, .5) !important;
 }
 
 .filters input[type=text], input[type=text]::placeholder{
@@ -187,6 +164,14 @@ input:focus {
     outline:none !important;
 }
 
+.results-compare{
+    padding-top: 10px;
+}
+
+.results-compare > *{
+    padding-right: 10px;
+}
+
 /* End Dropdown Menu */
 
 /* Cards */
@@ -198,6 +183,7 @@ input:focus {
     padding: 5px;
     margin: 10px;
     border-radius: 5px;
+    position: relative;
 }
 
 a.single-card,
