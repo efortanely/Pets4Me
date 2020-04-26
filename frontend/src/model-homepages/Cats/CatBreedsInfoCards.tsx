@@ -14,12 +14,6 @@ class CatBreedsInfoCards extends InfoCards<CatBreed> {
         return CatBreedsInfoCards.providers.catBreedService
     }
 
-    componentDidUpdate(prevProps: any) {
-        if (this.props.filterString !== prevProps.filterString) {
-            this.onPageChange(1);
-        }
-    }
-
     createInfoCard = (o: CatBreed, key: any): JSX.Element => {
         return <CatBreedCard searchWords={Array.from(this.state.searchParams.values())} key={`pet-card-${key}`} info={o} addToCompare={this.addToCompare} />
     }

@@ -36,7 +36,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
     this.closeModal = this.closeModal.bind(this);
     this.addToCompare = this.addToCompare.bind(this);
     this.props.history?.listen((location) => {
-      this.setState({ searchParams: new URLSearchParams(location.search), pageNumber: 1 }, () => this.onPageChange(1))
+      this.setState({ searchParams: new URLSearchParams(location.search), pageNumber: 1 }, () => this.loadPage(1))
     })
   }
 
@@ -47,11 +47,21 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
         .catch(console.log)
   }
 
+  componentDidUpdate(prevProps: any) {
+    if (this.props.filterString !== prevProps.filterString) {
+        this.loadPage(1)
+    }
+}
+
   updatePage = (newPage: ObjectsPage<T>) => {
     this.setState({ page: newPage, loading: false})
   }
 
   onPageChange = (pageNumber: number) => {
+    this.loadPage(pageNumber)
+  }
+
+  loadPage = (pageNumber: number) => {
     this.setState({ loading: true })
     this.fetchObjectsPage(pageNumber)
         .then(this.updatePage)
@@ -88,7 +98,8 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
     return (
       <Container fluid>
         {
-        this.state.loading ? <Spinner animation='border'><span className='sr-only'>Loading</span></Spinner> : 
+        this.state.loading ?
+        <Spinner animation='border'><span id='loading' className='sr-only'>Loading...</span></Spinner> :
         (<div>
           <div className='left-align'>
             <Row className="results-compare">
@@ -119,7 +130,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
           
           { this.getInfoCards() }
         </div>)}
-        {!isNullOrUndefined(this.state.page?.objects) && this.state.page.objects.length !== 0 && <Paginator active={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages, 1)} pathName={this.getPathName()} onPageChange={this.onPageChange}/>}
+        {!isNullOrUndefined(this.state.page?.objects) && this.state.page.objects.length !== 0 && <Paginator initialActive={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages, 1) } pathName={this.getPathName()} onPageChange={this.onPageChange} key={`${this.props.filterString}_${this.getSearchParam()}`}/>}
         {(isNullOrUndefined(this.state.page?.objects) || this.state.page.objects.length === 0) && !this.state.loading && this.noResults()}
       </Container>
     )
