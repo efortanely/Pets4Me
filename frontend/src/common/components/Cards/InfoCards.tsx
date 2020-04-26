@@ -43,11 +43,9 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
 
   onPageChange = (pageNumber: number) => {
     this.setState({ loading: true })
-    if (pageNumber * this.props.itemsPerPage > this.state.page.objects.length) {
-      this.fetchObjectsPage(pageNumber)
-          .then(this.updatePage)
-          .catch(console.log)
-    }
+    this.fetchObjectsPage(pageNumber)
+        .then(this.updatePage)
+        .catch(console.log)
   }
 
   getSearchParam = (): string => {
@@ -67,24 +65,24 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
           <h3 className='left-align'>{this.state.page.num_results} results</h3>
         { this.getInfoCards() }
         </div>)}
-        {!isNullOrUndefined(this.state.page?.objects) && this.state.page.objects.length !== 0 && <Paginator active={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages * this.pagesPerObjectPage(), 1)} pathName={this.getPathName()} onPageChange={this.onPageChange}/>}
+        {!isNullOrUndefined(this.state.page?.objects) && this.state.page.objects.length !== 0 && <Paginator active={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages, 1)} pathName={this.getPathName()} onPageChange={this.onPageChange}/>}
         {(isNullOrUndefined(this.state.page?.objects) || this.state.page.objects.length === 0) && !this.state.loading && this.noResults()}
       </Container>
     )
   }
 
   getInfoCards = (): JSX.Element[] => {
-    let startIndex: number = this.state.pageNumber % this.pagesPerObjectPage()
-    return this.state.page.objects.slice(startIndex, startIndex + this.props.itemsPerPage).map(this.createInfoCard)
-  }
-
-  pagesPerObjectPage = (): number => {
-    return Math.ceil(this.state.page.objects.length / this.props.itemsPerPage)
+    return this.state.page.objects.map(this.createInfoCard)
   }
 
   fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<T>> => {
     const modelInstanceService: ModelInstanceService<T> = this.getModelInstanceService()
-    return modelInstanceService.getModelPageOfInstances(pageNumber, this.getSearchParam(), this.props.filterString)
+    return modelInstanceService.getModelPageOfInstances(pageNumber, 
+      { 
+        resultsPerPage: this.props.itemsPerPage,
+        search: this.getSearchParam(), 
+        filterString: this.props.filterString
+      })
   }
 
   abstract getModelInstanceService(): ModelInstanceService<T>

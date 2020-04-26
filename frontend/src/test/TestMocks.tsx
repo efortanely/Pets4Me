@@ -5,6 +5,6 @@ import { ObjectsPage } from '../models/ObjectsPage';
 export function mockModelInstanceService<T>(o?: T, p?: ObjectsPage<T>): ModelInstanceService<T> {
   return {
     getInstanceById: spy((id: string) => new Promise<T>(() => o)),
-    getModelPageOfInstances: spy((pageNumber: number) => new Promise<ObjectsPage<T>>(() => p))
+    getModelPageOfInstances: spy((pageNumber: number, options?: any) => new Promise<ObjectsPage<T>>(() => p))
   }
 }

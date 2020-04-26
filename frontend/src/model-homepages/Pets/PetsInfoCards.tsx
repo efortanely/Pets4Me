@@ -1,9 +1,9 @@
 import React from 'react';
-import Pets4mePetsService from '../../common/services/Pets4mePetsService';
 import InfoCards from '../../common/components/Cards/InfoCards';
 import PetCard from '../../common/components/Cards/PetCard';
 import { Pet } from '../../models/Pet';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
+import { Pets4mePetsService } from '../../common/services/Pets4meModelInstanceService';
 
 interface PetsInfoCardsProviders { petsService: ModelInstanceService<Pet> }
 
