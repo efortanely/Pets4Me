@@ -16,7 +16,31 @@ h3 {
 }
 
 .left-align {
-    text-align: left;
+    text-align: left !important;
     margin-left: 0;
-    color: #581730;
+}
+
+.add-compare {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 0 2px 2px 2px !important;
+}
+
+.compare {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 33px;
+}
+
+.compare-button-text {
+    margin-bottom: 3px;
+}
+
+.icon {
+    height: 20px;
+}
+
+.header-button {
+    margin-right: 10px;
 }

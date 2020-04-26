@@ -171,7 +171,7 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
                     />
                 </ThemeProvider>
 
-                <Button className="submit" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
+                <Button className="submit-button" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }

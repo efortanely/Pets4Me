@@ -23,7 +23,7 @@ class SheltersInfoCards extends InfoCards<Shelter> {
     }
 
     createInfoCard = (o: Shelter, key: any): JSX.Element => {
-        return <ShelterCard searchWords={Array.from(this.state.searchParams.values())} key={`shelter-card-${key}`} info={o} />
+        return <ShelterCard searchWords={Array.from(this.state.searchParams.values())} key={`shelter-card-${key}`} info={o} addToCompare={this.addToCompare} />
     }
 }
 

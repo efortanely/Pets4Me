@@ -1,5 +1,4 @@
 import React from "react";
-import InfoCard from './InfoCard';
 import ModelInstanceService from '../../services/ModelInstanceService';
 import { Carousel, Col, Row } from 'react-bootstrap';
 import { Container } from "@material-ui/core";
@@ -7,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./InfoCarousel.css"
 
 interface InfoCarouselProps<T> { itemIds: (string | number)[], itemsPerSlide: number }
-interface InfoCarouselState<T> { cards: InfoCard<T>[]}
+interface InfoCarouselState<T> { cards: JSX.Element[]}
 
 abstract class InfoCarousel<T> extends React.Component<InfoCarouselProps<T>, InfoCarouselState<T>> {
   static defaultProps = {
@@ -45,14 +44,14 @@ abstract class InfoCarousel<T> extends React.Component<InfoCarouselProps<T>, Inf
     ids.forEach((id) => 
       modelInstanceService.getInstanceById(`${id}`)
       .then((res) => this.setState({ 
-        cards: ([] as InfoCard<T>[]).concat(this.state.cards, [this.buildInfoCard(res)]) 
+        cards: ([] as JSX.Element[]).concat(this.state.cards, [this.buildInfoCard(res)]) 
       }))
     )
   }
 
   buildSlides = (): JSX.Element[] => {
     let items: JSX.Element[] = []
-    let cards: InfoCard<T>[] = Array(...this.state.cards)
+    let cards: JSX.Element[] = Array(...this.state.cards)
     for(let i: number = 0; i < cards.length; i += this.props.itemsPerSlide) {
       let end = Math.min(i + this.props.itemsPerSlide, cards.length)
       items.push(this.buildSlide(cards.slice(i, end), i))
@@ -61,9 +60,9 @@ abstract class InfoCarousel<T> extends React.Component<InfoCarouselProps<T>, Inf
     return items
   }
 
-  buildSlide = (cards: InfoCard<T>[], index: number): JSX.Element => {
+  buildSlide = (cards: JSX.Element[], index: number): JSX.Element => {
     let elements: JSX.Element[] = cards.map<JSX.Element>((item, index): JSX.Element => 
-      <Col className="info-card-col" xs={3} key={`info-carousel-${index}`}>{item.render()}</Col>
+      <Col className="info-card-col" xs={3} key={`info-carousel-${index}`}>{item}</Col>
     )
     return (
       <Carousel.Item key={`info-carousel-slide-${index}`}>
@@ -78,7 +77,7 @@ abstract class InfoCarousel<T> extends React.Component<InfoCarouselProps<T>, Inf
 
   abstract getModelInstanceService(): ModelInstanceService<T>
 
-  abstract buildInfoCard(o: T): InfoCard<T>
+  abstract buildInfoCard(o: T): JSX.Element
 }
 
 export default InfoCarousel

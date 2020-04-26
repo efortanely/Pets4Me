@@ -5,7 +5,7 @@ import SearchBar from './SearchBar';
 
 function Navbar() {
     return(
-      <div className="navbar">
+      <div className="navbar" id='mainContent'>
         <a href="/">
           <div className="Logo">
             <img src={logo} alt="A logo featuring a dog and cat"></img>

@@ -21,7 +21,7 @@ class PetsInfoCards extends InfoCards<Pet> {
     }
 
     createInfoCard = (o: Pet, key: any): JSX.Element => {
-        return <PetCard searchWords={Array.from(this.state.searchParams.values())} key={`pet-card-${key}`} info={o} />
+        return <PetCard searchWords={Array.from(this.state.searchParams.values())} key={`pet-card-${key}`} info={o} addToCompare={this.addToCompare}/>
     }
 } 
 

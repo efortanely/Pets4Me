@@ -50,14 +50,14 @@ export class CatBreeds extends React.Component<RouteComponentProps, CatBreedsSta
     return (
       <div className='model-homepage'>
         <MediaQuery query="(max-width: 1349px)">
-          <div className='model-homepage-content'>
+          <div className='model-homepage-content' id='mainContent'>
             {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> } 
             <CatBreedsInfoCards {...this.props} filterString={this.state.filterString}/>
           </div>
         </MediaQuery>
 
         <MediaQuery query="(min-width: 1350px)">
-          <div className='model-homepage-content'>
+          <div className='model-homepage-content' id='mainContent'>
           {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> }
             <div className='model-homepage-content-col'>
               <div className='cards-container'>

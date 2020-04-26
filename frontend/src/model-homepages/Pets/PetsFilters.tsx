@@ -330,7 +330,7 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                         onChange={(event: any, value: any) => this.setState({ distanceMax: value })}
                     />
                 </ThemeProvider>
-                <Button className="submit" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
+                <Button className="submit-button" variant='primary' onClick={() => this.handleFilterUpdate()}>Submit</Button>
             </div>
         );
     }
