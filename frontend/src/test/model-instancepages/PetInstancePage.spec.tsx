@@ -17,6 +17,7 @@ chai.use(sinonChai)
 describe('<PetInstancePage/>', () => {
   let testComponent: ShallowWrapper
   let testPet: Pet
+  let fallbackPet: Pet
   let mobile_elements: any
   let desktop_elements: any
   const emptyPet = { } as Pet
@@ -60,7 +61,8 @@ describe('<PetInstancePage/>', () => {
 
     let testEntity = {
         id: 343,
-        name: 'entity'
+        name: 'entity',
+        fallback: 'fallback'
     } as BackendEntity;
     
     testPet = {
@@ -77,6 +79,9 @@ describe('<PetInstancePage/>', () => {
       species: 'SUPERMASSIVE',
       url: 'http://example.net/'
     } as Pet;
+
+    fallbackPet = { ...testPet };
+    fallbackPet.primary_breed = { fallback: 'fallback' } as BackendEntity;
 
     let mobileComponent = () => testComponent.find('.mobile')
     let desktopComponent = () => testComponent.find('.desktop')
@@ -158,6 +163,13 @@ describe('<PetInstancePage/>', () => {
     expect(desktop_elements.photos()).to.be.empty
     expect(desktop_elements.shelter().text()).to.include(testPet.shelter.name)
     expect(desktop_elements.size().text()).to.include(testPet.size)
+  })
+
+  // author: Robert
+  it('should render all details on desktop', () => {
+    shallowWithPet(fallbackPet)
+
+    expect(desktop_elements.breed().text()).to.include(fallbackPet.primary_breed.fallback)
   })
 
   // author: Dean

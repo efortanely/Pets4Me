@@ -86,6 +86,9 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
       let route = `/${type}/${backendEntity.id}`;
       return <a href={route}>{backendEntity.name}</a>;
     }
+    if (backendEntity?.fallback) {
+      return <span>{backendEntity.fallback}</span>;
+    }
     return <span>{readable} unknown.</span>
   }
   
