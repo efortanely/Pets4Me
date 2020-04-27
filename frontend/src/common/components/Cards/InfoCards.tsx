@@ -41,7 +41,6 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
   }
 
   componentDidMount() {
-    Modal.setAppElement('#mainContent')
     this.fetchObjectsPage(this.props.pageNumber)
         .then(this.updatePage)
         .catch(console.log)
@@ -87,6 +86,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
   }
 
   openModal() {
+    Modal.setAppElement('#mainContent')
     this.setState({modalIsOpen: true});
   }
 
