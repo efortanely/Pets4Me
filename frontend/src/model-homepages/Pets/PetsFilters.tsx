@@ -123,7 +123,7 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
         if (!this.state.species) {
             return "Please select a species first."
         } else {
-            return `Select a ${importance} ${this.state.species} species...`
+            return `Select a ${importance} ${this.state.species.toLocaleLowerCase()} breed...`
         }
     }
 
