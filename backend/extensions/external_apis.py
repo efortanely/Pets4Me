@@ -295,6 +295,9 @@ class PetAPI(OAuthAPI):
             token_url="/v2/oauth2/token",
         )
         self.shelter_cache = {}
+        self.manual_cat_breed_mappings = {
+            "Domestic Short Hair": "American Shorthair"
+        }
         self.reset_requests()
         self.nomi = pgeocode.Nominatim("us")
         self.unescape = HTMLParser().unescape
@@ -389,6 +392,8 @@ class PetAPI(OAuthAPI):
             long_breed = b["name"]
             breed = None
             for breed_str in re.split(r"\s*[/\\]\s*", long_breed):
+                if breed_str in self.manual_cat_breed_mappings:
+                    breed_str = self.manual_cat_breed_mappings[breed_str]
                 breed = (
                     db.session.query(CatBreed)
                     .filter(CatBreed.name.ilike(escape_like(breed_str), escape="\\"))
