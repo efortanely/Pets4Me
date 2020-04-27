@@ -6,6 +6,7 @@ export interface Photos {
 export interface BackendEntity {
     id: number;
     name: string;
+    fallback: string;
 }
 
 export interface Pet {

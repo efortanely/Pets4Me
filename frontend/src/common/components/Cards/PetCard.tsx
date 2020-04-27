@@ -21,7 +21,13 @@ class PetCard extends InfoCard<Pet> {
 
   getOtherInfo = (): string[] => {
     let otherInfo: string[] = []
-    otherInfo.push(this.props.info.primary_breed.name ? this.props.info.primary_breed.name : "Unknown breed")
+    if (this.props.info.primary_breed.name) {
+      otherInfo.push(this.props.info.primary_breed.name)
+    } else if (this.props.info.primary_breed.fallback) {
+      otherInfo.push(this.props.info.primary_breed.fallback)
+    } else {
+      otherInfo.push("Unknown breed")
+    }
     otherInfo.push(`${this.props.info.size} • ${this.props.info.gender} • ${this.props.info.age}`)
     otherInfo.push(this.props.info.shelter.name)
 
