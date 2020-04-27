@@ -213,13 +213,9 @@ class DogBreed(db.Model):
         return [dog.id for dog in self.dogs]
 
     def shelters_with_breed(self):
-        primary = alias(DogBreed)
-        secondary = alias(DogBreed)
         shelters = (
             db.session.query(Shelter.id)
             .join(Pet, Shelter.pets)
-            .join(primary, Pet.primary_dog_breed)
-            .join(secondary, Pet.secondary_dog_breed)
             .filter(
                 or_(
                     Pet.primary_dog_breed_id == self.id,
@@ -284,13 +280,9 @@ class CatBreed(db.Model):
         return [cat.id for cat in self.cats]
 
     def shelters_with_breed(self):
-        primary = alias(CatBreed)
-        secondary = alias(CatBreed)
         shelters = (
             db.session.query(Shelter.id)
             .join(Pet, Shelter.pets)
-            .join(primary, Pet.primary_cat_breed)
-            .join(secondary, Pet.secondary_cat_breed)
             .filter(
                 or_(
                     Pet.primary_cat_breed_id == self.id,
