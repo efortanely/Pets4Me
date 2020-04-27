@@ -13,6 +13,7 @@ from html import unescape
 from html.parser import HTMLParser
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
 
+
 class CommonAPI:
     def __init__(self, base_url):
         self.base_url = base_url
@@ -251,7 +252,7 @@ def parse_shelter(shelter, nomi, unescape):
     if mission:
         mission = unescape(mission)
     if adoption_policy:
-        adoption_policy = unescape(adoption_policy) 
+        adoption_policy = unescape(adoption_policy)
 
     if postcode:
         geo_data = nomi.query_postal_code(postcode)
@@ -357,6 +358,17 @@ class PetAPI(OAuthAPI):
 
                 breed = dog_api.find_breed(breed_str)
                 if breed is not None:
+                    # Since the API does not search for an exact match, there is a
+                    # chance this breed is already in the database
+                    new_name = breed.name
+                    existing_breed = (
+                        db.session.query(DogBreed)
+                        .filter(DogBreed.name.ilike(escape_like(new_name), escape="\\"))
+                        .first()
+                    )
+                    if existing_breed is not None:
+                        breed = existing_breed
+                        break
                     new_breeds.append(breed)
                     break
 
@@ -401,6 +413,17 @@ class PetAPI(OAuthAPI):
 
                 breed = cat_api.find_breed(breed_str)
                 if breed is not None:
+                    # Since the API does not search for an exact match, there is a
+                    # chance this breed is already in the database
+                    new_name = breed.name
+                    existing_breed = (
+                        db.session.query(CatBreed)
+                        .filter(CatBreed.name.ilike(escape_like(new_name), escape="\\"))
+                        .first()
+                    )
+                    if existing_breed is not None:
+                        breed = existing_breed
+                        break
                     new_breeds.append(breed)
                     break
 
@@ -425,7 +448,9 @@ class PetAPI(OAuthAPI):
                     shelter.has_dogs = 1
             else:
                 shelter = None
-            animals.append(parse_pet(animal, shelter, dog_breed_map, cat_breed_map, self.unescape))
+            animals.append(
+                parse_pet(animal, shelter, dog_breed_map, cat_breed_map, self.unescape)
+            )
         return animals
 
     def get_shelter(self, pf_id):
