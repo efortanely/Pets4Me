@@ -226,6 +226,7 @@ class DogBreed(db.Model):
                     Pet.secondary_dog_breed_id == self.id,
                 )
             )
+            .distinct()
             .all()
         )
 
@@ -296,6 +297,7 @@ class CatBreed(db.Model):
                     Pet.secondary_cat_breed_id == self.id,
                 )
             )
+            .distinct()
             .all()
         )
 
