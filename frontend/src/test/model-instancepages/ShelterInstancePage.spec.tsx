@@ -8,7 +8,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai';
 import { MemoryRouter } from 'react-router-dom';
-import * as MapMedia from '../../common/components/MapMedia';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 import { ObjectsPage } from '../../models/ObjectsPage';
 import { mockModelInstanceService } from '../TestMocks';
@@ -20,10 +19,6 @@ describe('<ShelterInstancePage/>', () => {
   let mobile_elements: any
   let desktop_elements: any
   const emptyShelter = { } as Shelter
-
-  before( () => {
-    sinon.stub(MapMedia, "default").returns(<div></div>);
-  })
 
   function spyOnSheltersService(shelter: Shelter) {
     let testSheltersService: ModelInstanceService<Shelter> = mockModelInstanceService<Shelter>(shelter)

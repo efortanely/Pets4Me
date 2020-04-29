@@ -6,7 +6,6 @@ import logo from '../../static/logo.png';
 import ImageCarousel from '../../common/components/ImageCarousel';
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import { isNullOrUndefined } from 'util';
-import MapMedia from '../../common/components/MapMedia';
 import innerText from 'react-innertext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Container, Col, Row } from 'react-bootstrap';
@@ -15,6 +14,7 @@ import MediaQuery from 'react-responsive';
 import { Shelter } from '../../models/Shelter';
 import '../ModelInstancepage.css'
 import { Pets4mePetsService, Pets4meSheltersService } from '../../common/services/Pets4meModelInstanceService';
+import { MapMedia } from '../../common/components/MapMedia';
 
 interface PetProps { pet: Pet, shelter: Shelter, match: match }
 interface PetState { pet: Pet, shelter: Shelter }
@@ -98,10 +98,6 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
       return <Button className="instancepage-button" href={route}>More About {backendEntity.name}</Button>;
     }
     return <div></div>
-  }
-
-  getApiShelterAddress = (shelter: Shelter) => {
-    return (shelter.address?.address1 + " " || "") + (shelter.address?.city + " "|| "") + (shelter.address?.state + " " || "") + (shelter.address?.postcode || "");
   }
 
   getPhoto = (photos: Photos): JSX.Element => {
@@ -205,9 +201,7 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
           </Row>
         </div>
 
-        <div className="mapMedia">
-          <MapMedia address={this.getApiShelterAddress(shelter)} postcode={shelter.address?.postcode} country={shelter.address?.country}/>
-        </div>
+        <MapMedia shelter={shelter}/>
 
         {this.getShelterButton(pet.shelter)}
       </MediaQuery>
@@ -251,9 +245,7 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
               </Row>
             </div>
 
-              <div className="mapMedia">
-                <MapMedia address={this.getApiShelterAddress(shelter)} postcode={shelter.address?.postcode} country={shelter.address?.country}/>
-              </div>
+            <MapMedia shelter={shelter}/>
             </Col>
           </Row>
 

@@ -134,7 +134,7 @@ p, h1, h2, h4{
 }
 
 .mapMedia {
-    width: min(90%, 600px);
+    width: min(90%, 800px);
     margin: 0 auto;
     margin-bottom: 20px;
 }

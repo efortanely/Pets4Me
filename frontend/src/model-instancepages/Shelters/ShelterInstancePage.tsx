@@ -2,7 +2,6 @@ import React from 'react'
 import { Shelter, Photos } from '../../models/Shelter';
 import { match, Link } from 'react-router-dom'
 import logo from '../../static/logo.png';
-import MapMedia from '../../common/components/MapMedia'
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import ModelInstanceService from '../../common/services/ModelInstanceService';
 import ImageCarousel from '../../common/components/ImageCarousel';
@@ -16,6 +15,7 @@ import '../ModelInstancepage.css'
 import PetsInfoCarousel from '../../common/components/Cards/PetsInfoCarousel';
 import { isNullOrUndefined } from 'util';
 import { Pets4meSheltersService, Pets4meDogBreedsService, Pets4meCatBreedsService } from '../../common/services/Pets4meModelInstanceService';
+import { MapMedia } from '../../common/components/MapMedia';
 
 interface ShelterProps { shelter: Shelter, dogBreed: DogBreed, catBreed: CatBreed, match: match }
 interface ShelterState { shelter: Shelter, dogBreed: DogBreed, catBreed: CatBreed }
@@ -119,10 +119,6 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
     if (value)
       return value + spacer;
     return "";
-  }
-
-  getApiShelterAddress = (shelter: Shelter) => {
-    return (shelter.address?.address1 + " " || "") + (shelter.address?.city + " "|| "") + (shelter.address?.state + " " || "") + (shelter.address?.postcode || "");
   }
   
   getTopBreeds = (shelter: Shelter, dogBreed: DogBreed, catBreed: CatBreed) => {
@@ -229,9 +225,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
   
           {this.getPhoto(shelter.photos)}
   
-          <div className="mapMedia">
-            <MapMedia address={this.getApiShelterAddress(shelter)} postcode={shelter?.address?.postcode} country={shelter?.address?.country}/>
-          </div>
+          <MapMedia shelter={shelter}/>
 
           {this.getTopBreeds(shelter, dogBreed, catBreed)}
 
@@ -255,9 +249,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
           <Row className="media-and-text">
             <Col md="auto" className="photo-and-map">
               {this.getPhoto(shelter.photos)}
-              <div className="mapMedia">
-                <MapMedia address={this.getApiShelterAddress(shelter)} postcode={shelter?.address?.postcode} country={shelter?.address?.country}/>
-              </div>
+              <MapMedia shelter={shelter}/>
             </Col>
 
             <Col>

@@ -18,7 +18,7 @@ import material_ui from '../static/tools/material-ui.png'
 import gitlab from '../static/gitlab.jpg'
 import postman from '../static/postman.png'
 import mocha from '../static/mocha.png'
-import mapbox from '../static/mapbox.png'
+import google_maps from '../static/tools/google-maps.png'
 import selenium from '../static/selenium.png'
 
 import { Member } from './components/Member'
@@ -37,7 +37,7 @@ function About() {
     const andrew_bio = "Senior in Computer Science at UT Austin. I have interests in machine learning and data science. My hobbies include hiking, board games, and rock climbing. Worked on migrating the Database and setting up search querying and filter endpoint."
     const rosemary_bio = "I'm a senior Computer Science/Studio Art major at UT Austin. I created the back-end schema and much of the API, as well as worked on the front-end JSX and CSS. My hobbies include working on side projects and making art."
     const connor_bio = "Senior Computer Science major at UT Austin. Created front-end search framework and dynamic info cards/pages. My hobbies are gaming and working as a radio DJ for KVRX."
-    const dean_bio = "cool guy, bad at bios. Created frontend filtering and sorting framework, as well as the Map component on shelter pages."
+    const dean_bio = "cool guy, bad at bios. Created frontend filtering and sorting framework, as well as comparison functionality."
     const cristian_bio = "Junior Computer Science major at UT Austin. My hobbies are gaming and skateboarding. Worked on filtering/sorting query construction and development of filter/sorting pipeline in the frontend."
     const robert_bio = "I'm a senior CS major. I am primarily interested in systems and theory. I sang in the Colligium Musicum choir as a bass, but now I'm stuck at home. Backend dev. Worked on searching in the backend, local Docker support, and researched SQL/Flask."
 
@@ -116,7 +116,7 @@ function About() {
           <ToolDoor img={react_bootstrap} title="React Bootstrap" desc="We used these front-end tools to display information in a presentable format."/>
           <ToolDoor img={material_ui} title="Material UI" desc="We used these front-end tools to add otherwise complicated components to our site with ease."/>
           <ToolDoor img={mocha} title="Mocha" desc="We used Mocha to test our frontend components."/>
-          <ToolDoor img={mapbox} title="Mapbox" desc="Mapbox was used to show the location of a shelter on the map."/>
+          <ToolDoor img={google_maps} title="Google Maps" desc="The Google Maps Embed API was used to show the location of a shelter on the map."/>
           <ToolDoor img={selenium} title="Selenium" desc="We used Selenium to test our GUI."/>
         </div>
   
