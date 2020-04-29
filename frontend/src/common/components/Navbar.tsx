@@ -33,6 +33,9 @@ function Navbar() {
             <li>
               <Link className="nav-link" to="/about">ABOUT</Link>
             </li>
+            <li>
+              <Link className="nav-link" to="/visualizations">VISUALIZATIONS</Link>
+            </li>
           </ul>
         </nav>
       </div>
