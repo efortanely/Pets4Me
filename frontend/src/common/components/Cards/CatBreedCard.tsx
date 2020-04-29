@@ -44,7 +44,7 @@ class CatBreedCard extends InfoCard<CatBreed> {
   getOtherInfo = (): string[] => {
     let otherInfo: string[] = []
     otherInfo.push(this.props.info.alt_names.length > 0 ? `Alternate names: ${this.props.info.alt_names.join(', ')}` : 'No alternate names')
-    otherInfo.push(`${this.props.info.indoor ? 'Outdoor': 'Indoor'} • ${this.getDogFriendliness()}`)
+    otherInfo.push(`${this.props.info.indoor ? 'Indoor': 'Outdoor'} • ${this.getDogFriendliness()}`)
     otherInfo.push(`${this.getLifespan()}`)
     return otherInfo
   }

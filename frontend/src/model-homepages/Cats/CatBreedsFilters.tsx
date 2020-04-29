@@ -33,9 +33,9 @@ const customStyles = {
       filters.push({ "name": "name", "op": "in", "val": listOfBreeds})
   }
     if (selectedFilters.doorsiness){
-      let val = 1
+      let val = 0
       if (selectedFilters.doorsiness === "Indoor")
-        val = 0
+        val = 1
       filters.push({ "name": "indoor", "op": "eq", "val": val})
     }
     if (selectedFilters.dogLevel > 0)
