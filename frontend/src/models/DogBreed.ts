@@ -11,6 +11,7 @@ export interface DogBreed {
   shelters_with_breed: number[],
   photo: string
   video_url: string
+  description: string
 }
 
 interface Span {
