@@ -12,6 +12,7 @@ from youtube_search import YoutubeSearch
 from html import unescape
 from html.parser import HTMLParser
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
+import wikipedia
 
 
 class CommonAPI:
@@ -55,8 +56,9 @@ def parse_range(range_str):
 class DogAPI(CommonAPI):
     def __init__(self):
         super().__init__("https://api.thedogapi.com")
+        self.unescape = HTMLParser().unescape
 
-    def parse_dog_breed(self, breed):
+    def parse_dog_breed(self, breed, unescape):
         name = breed.get("name", None)
         life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
         height_imperial_low, height_imperial_high = parse_range(
@@ -72,6 +74,22 @@ class DogAPI(CommonAPI):
         else:
             video_url = None
 
+        try:
+            description = unescape(
+                re.match("([\S ]+\n{0,2})+\n==", wikipedia.page(name + " dog").content)
+                .group(0)[:-2]
+                .strip()
+            )
+        except:
+            try:
+                description = unescape(
+                    re.match("([\S ]+\n{0,2})+\n==", wikipedia.page(name).content)
+                    .group(0)[:-2]
+                    .strip()
+                )
+            except:
+                description = None
+
         return DogBreed(
             name=name,
             temperament=breed.get("temperament", None),
@@ -85,6 +103,7 @@ class DogAPI(CommonAPI):
             breed_group=breed.get("breed_group", None),
             photo=self.get_photo(breed.get("id", None)),
             video_url=video_url,
+            description=description,
         )
 
     def get_photo(self, breed_id):
@@ -98,7 +117,9 @@ class DogAPI(CommonAPI):
 
     def find_breed(self, query):
         result = json.loads(self.get(f"/v1/breeds/search?q={query}"))
-        return self.parse_dog_breed(result[0]) if len(result) > 0 else None
+        return (
+            self.parse_dog_breed(result[0], self.unescape) if len(result) > 0 else None
+        )
 
     def get_breeds(self):
         breeds_response = self.get("/v1/breeds")
@@ -106,15 +127,16 @@ class DogAPI(CommonAPI):
         breeds = []
 
         for breed in breeds_response_data:
-            breeds.append(self.parse_dog_breed(breed))
+            breeds.append(self.parse_dog_breed(breed, self.unescape))
         return breeds
 
 
 class CatAPI(CommonAPI):
     def __init__(self):
         super().__init__("https://api.thecatapi.com")
+        self.unescape = HTMLParser().unescape
 
-    def parse_cat_breed(self, breed):
+    def parse_cat_breed(self, breed, unescape):
         name = breed.get("name", None)
         life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
 
@@ -123,6 +145,22 @@ class CatAPI(CommonAPI):
             video_url = "https://youtube.com" + results["videos"][0]["link"]
         else:
             video_url = None
+
+        try:
+            description = unescape(
+                re.match("([\S ]+\n{0,2})+\n==", wikipedia.page(name + " cat").content)
+                .group(0)[:-2]
+                .strip()
+            )
+        except:
+            try:
+                description = unescape(
+                    re.match("([\S ]+\n{0,2})+\n==", wikipedia.page(name).content)
+                    .group(0)[:-2]
+                    .strip()
+                )
+            except:
+                description = None
 
         return CatBreed(
             name=name,
@@ -141,6 +179,7 @@ class CatAPI(CommonAPI):
             grooming_level=breed.get("grooming", None),
             photo=self.get_photo(breed.get("id", None)),
             video_url=video_url,
+            description=description,
         )
 
     def get_photo(self, breed_id):
@@ -154,7 +193,9 @@ class CatAPI(CommonAPI):
 
     def find_breed(self, query):
         result = json.loads(self.get(f"/v1/breeds/search?q={query}"))
-        return self.parse_cat_breed(result[0]) if len(result) > 0 else None
+        return (
+            self.parse_cat_breed(result[0], self.unescape) if len(result) > 0 else None
+        )
 
     def get_breeds(self):
         breeds_response = self.get("/v1/breeds")
@@ -162,7 +203,7 @@ class CatAPI(CommonAPI):
         breeds = []
 
         for breed in breeds_response_data:
-            breeds.append(self.parse_cat_breed(breed))
+            breeds.append(self.parse_cat_breed(breed, self.unescape))
         return breeds
 
 
@@ -295,9 +336,7 @@ class PetAPI(OAuthAPI):
             token_url="/v2/oauth2/token",
         )
         self.shelter_cache = {}
-        self.manual_cat_breed_mappings = {
-            "Domestic Short Hair": "American Shorthair"
-        }
+        self.manual_cat_breed_mappings = {"Domestic Short Hair": "American Shorthair"}
         self.reset_requests()
         self.nomi = pgeocode.Nominatim("us")
         self.unescape = HTMLParser().unescape

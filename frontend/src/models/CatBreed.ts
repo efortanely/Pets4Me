@@ -12,6 +12,7 @@ export interface CatBreed {
     cat_ids: any[];
     shelters_with_breed: any[];
     video_url : string;
+    description: string;
 }
 
 export interface LifeSpan {

@@ -123,6 +123,11 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
           { this.getMedia(breed.photo, breed.video_url) }
           {this.getAttributes(breed.height_imperial, breed.weight_imperial, breed.life_span, breed.bred_for)}
           
+          <div className="about">
+            <h2>About</h2>
+            <p id="about">{this.genericEmpty(breed.description)}</p>
+          </div>
+
           <div className="temperament">
             <h2>Temperament</h2>
             <p id="temperament">{this.genericEmpty(breed.temperament)}</p>
@@ -153,6 +158,11 @@ class DogBreedInstancePage extends React.Component<DogBreedProps, DogBreedState>
             </div>
 
             {this.getAttributes(breed.height_imperial, breed.weight_imperial, breed.life_span, breed.bred_for)}
+            
+            <div className="about">
+              <h2>About</h2>
+              <p id="about">{this.genericEmpty(breed.description)}</p>
+            </div>
 
             <div className="temperament">
               <h2>Temperament</h2>

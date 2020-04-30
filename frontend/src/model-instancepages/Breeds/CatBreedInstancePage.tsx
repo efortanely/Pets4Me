@@ -119,7 +119,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
 
   genericEmpty(value: string): string {
     if (isNullOrUndefined(value) || value.length === 0)
-      return "None specified."
+      return "Unknown"
     return value;
   }
 
@@ -152,6 +152,11 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
           { this.getMedia(breed.photo, breed.video_url) }
           {this.getAttributes(breed.life_span, breed.child_friendly, breed.dog_friendly, breed.grooming_level)}
           
+          <div className="about">
+            <h2>About</h2>
+            <p id="about">{this.genericEmpty(breed.description)}</p>
+          </div>
+
           <div className="alternate-names">
             <h2>Alternate Names</h2>
             <p id='alt-names'>{!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified" : breed.alt_names}</p>
@@ -187,6 +192,11 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
             </div>
 
             {this.getAttributes(breed.life_span, breed.child_friendly, breed.dog_friendly, breed.grooming_level)}
+
+            <div className="about">
+              <h2>About</h2>
+              <p id="about">{this.genericEmpty(breed.description)}</p>
+            </div>
 
             <div className="alternate-names">
               <h2>Alternate Names</h2>

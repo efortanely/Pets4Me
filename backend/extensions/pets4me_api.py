@@ -199,6 +199,7 @@ class DogBreed(db.Model):
     breed_group = Column(String(100))
     photo = Column(String(500))
     video_url = Column(String(500))
+    description = Column(String(5000))
 
     def life_span(self):
         return {"low": self.life_span_low, "high": self.life_span_high}
@@ -229,9 +230,7 @@ class DogBreed(db.Model):
         return [shelter[0] for shelter in shelters]
 
     @classmethod
-    @searchable_query(
-        name, temperament, bred_for, breed_group,
-    )
+    @searchable_query(name, temperament, bred_for, breed_group, description)
     def query(cls):
         return db.session.query(cls)
 
@@ -244,6 +243,7 @@ dog_breed_includes = [
     "breed_group",
     "photo",
     "video_url",
+    "description",
 ]
 dog_breed_methods = [
     "life_span",
@@ -272,6 +272,7 @@ class CatBreed(db.Model):
     grooming_level = Column(Integer)
     photo = Column(String(500))
     video_url = Column(String(500))
+    description = Column(String(5000))
 
     def life_span(self):
         return {"low": self.life_span_low, "high": self.life_span_high}
@@ -296,7 +297,7 @@ class CatBreed(db.Model):
         return [shelter[0] for shelter in shelters]
 
     @classmethod
-    @searchable_query(name, temperament)
+    @searchable_query(name, temperament, description)
     def query(cls):
         return db.session.query(cls)
 
@@ -312,6 +313,7 @@ cat_breed_includes = [
     "grooming_level",
     "photo",
     "video_url",
+    "description",
 ]
 cat_breed_methods = ["life_span", "cat_ids", "shelters_with_breed"]
 
@@ -588,8 +590,8 @@ def setup(app):
                     "cat_breeds": unique_cat_breeds,
                     "unique_letters": unique_letter(unique_cat_breeds),
                     "life_span": {
-                        "min": min_max_dog_life_span[0],
-                        "max": min_max_dog_life_span[1],
+                        "min": min_max_cat_life_span[0],
+                        "max": min_max_cat_life_span[1],
                     },
                 },
                 "shelters": {

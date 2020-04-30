@@ -60,7 +60,8 @@ describe('<DogBreedInstancePage />', () => {
       dog_ids: [1, 2],
       shelters_with_breed: [1],
       photo: '',
-      video_url: ''
+      video_url: '',
+      description: "I'm a good dog breed."
     }
 
     let mobileComponent = () => testComponent.find('.mobile')
@@ -73,7 +74,8 @@ describe('<DogBreedInstancePage />', () => {
       height: () => mobileComponent().find('#height'),
       weight: () => mobileComponent().find('#weight'),
       temperament: () => mobileComponent().find('#temperament'),
-      bredFor: () => mobileComponent().find('#bred-for')
+      bredFor: () => mobileComponent().find('#bred-for'),
+      about: () => mobileComponent().find("#about")
     }
 
     desktop_elements = {
@@ -83,7 +85,8 @@ describe('<DogBreedInstancePage />', () => {
       height: () => desktopComponent().find('#height'),
       weight: () => desktopComponent().find('#weight'),
       temperament: () => desktopComponent().find('#temperament'),
-      bredFor: () => desktopComponent().find('#bred-for')
+      bredFor: () => desktopComponent().find('#bred-for'),
+      about: () => mobileComponent().find("#about")
     }
   })
 
@@ -124,6 +127,7 @@ describe('<DogBreedInstancePage />', () => {
         .and.to.include(testBreed.weight_imperial.high)
     expect(mobile_elements.temperament().text()).to.include(testBreed.temperament)
     expect(mobile_elements.bredFor().text()).to.include(testBreed.bred_for)
+    expect(mobile_elements.about().text()).to.include(testBreed.description)
   })
 
   // author Rosemary
@@ -140,6 +144,7 @@ describe('<DogBreedInstancePage />', () => {
         .and.to.include(testBreed.weight_imperial.high)
     expect(desktop_elements.temperament().text()).to.include(testBreed.temperament)
     expect(desktop_elements.bredFor().text()).to.include(testBreed.bred_for)
+    expect(desktop_elements.about().text()).to.include(testBreed.description)
   })
 
   // author Connor

@@ -61,7 +61,8 @@ describe('<CatBreedInstancePage/>', () => {
       cat_ids: [2, 3],
       shelters_with_breed: [1],
       photo: '',
-      video_url: ''
+      video_url: '',
+      description: "I'm a good cat breed."
     }
 
     let mobileComponent = () => testComponent.find('.mobile')
@@ -72,7 +73,8 @@ describe('<CatBreedInstancePage/>', () => {
       alt_names: () => mobileComponent().find('#alt-names'),
       temperament: () => mobileComponent().find('#temperament'),
       lifeSpan: () => mobileComponent().find('.life-span'),
-      indoor: () => mobileComponent().find('#indoor')
+      indoor: () => mobileComponent().find('#indoor'),
+      about: () => mobileComponent().find("#about")
     }
 
     desktop_elements = {
@@ -80,7 +82,8 @@ describe('<CatBreedInstancePage/>', () => {
       alt_names: () => desktopComponent().find('#alt-names'),
       temperament: () => desktopComponent().find('#temperament'),
       lifeSpan: () => desktopComponent().find('.life-span'),
-      indoor: () => desktopComponent().find('#indoor')
+      indoor: () => desktopComponent().find('#indoor'),
+      about: () => mobileComponent().find("#about")
     }
   })
 
@@ -120,6 +123,7 @@ describe('<CatBreedInstancePage/>', () => {
     expect(mobile_elements.lifeSpan().text()).to.include(testBreed.life_span.low)
         .and.to.include(testBreed.life_span.high)
     expect(mobile_elements.indoor().text()).to.include('Indoor')
+    expect(mobile_elements.about().text()).to.include(testBreed.description)
   })
 
   // author Rosemary
@@ -132,6 +136,7 @@ describe('<CatBreedInstancePage/>', () => {
     expect(desktop_elements.lifeSpan().text()).to.include(testBreed.life_span.low)
         .and.to.include(testBreed.life_span.high)
     expect(desktop_elements.indoor().text()).to.include('Indoor')
+    expect(desktop_elements.about().text()).to.include(testBreed.description)
   })
 
   // author Cristian
