@@ -12,7 +12,6 @@ import PetInstancePage from './model-instancepages/Pets/PetInstancePage'
 import CatBreedInstancePage from './model-instancepages/Breeds/CatBreedInstancePage'
 import ShelterInstancePage from './model-instancepages/Shelters/ShelterInstancePage'
 import SearchResults from './Search/SearchResults';
-import Visualizations from './Visualizations/Visualizations';
 import './App.css';
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
           <Route path="/shelters/:shelter_id" component={ShelterInstancePage} />
           <Route path="/shelters" component={Shelters} />
           <Route path="/about" component={About} />
-          <Route path="/visualizations" component={Visualizations} />
           <Route path="/search-results" component={SearchResults} />
           <Route path="/" component={Home} />
         </Switch>

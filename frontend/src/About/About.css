@@ -412,8 +412,72 @@
   font-size: 15px;
 }
 
+/* Visualizations */
+
+.viz h3{
+  text-align: center;
+  font-weight: bold;
+  color: #FAA851;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.viz a{
+  color: #581730;
+  text-decoration: underline;
+}
+
+.viz a:hover{
+  color: #FAA851;
+}
+
+.viz img {
+  margin: 10px;
+  border-color: #FCEDE7;
+}
+
+.video {
+  width: 100%;
+  margin-left: 10px;
+  border: 20px solid #FCEDE7;
+}
+
+.viz {
+  margin: 10px;
+}
+
+.main-img {
+  width: 100%;
+}
+
+.bordered {
+  border: 20px solid #581730;
+}
+
+.viz h6 {
+  color: #581730;
+  text-align: center;
+}
+
+.stacked-img img {
+  width: 100%;
+}
+
+.image-section {
+  width: min(70%, 700px);
+  margin: 0 auto;
+}
+
+.reduced {
+  width: 100%;
+}
+
+/* End visualizations */
+
 footer{
   text-align: center;
+  color: #581730;
 }
 
 footer a{
@@ -422,43 +486,73 @@ footer a{
   font-size: 15px;
 }
 
+footer a:hover{
+  color: #581730;
+}
+
 /* End Mobile View */
 
 
 /* Desktop View */
 
 @media screen and (min-width: 1350px){
+  .members{
+    max-width: 600px;
+  }
 
-.members{
-  max-width: 600px;
-}
+  .member:nth-child(3){
+    margin-left: 7px;
+  }
 
-.member:nth-child(3){
-  margin-left: 7px;
-}
+  .member:nth-child(4){
+    margin-left: 0px;
+  }
 
-.member:nth-child(4){
-  margin-left: 0px;
-}
+  .member:nth-child(5){
+    margin-left: 7px;
+  }
 
-.member:nth-child(5){
-  margin-left: 7px;
-}
+  .tools{
+    max-width: 600px;
+  }
 
-.tools{
-  max-width: 600px;
-}
+  .tool:nth-child(even) .rect{
+    margin-left: 7px;
+  }
 
-.tool:nth-child(even) .rect{
-  margin-left: 7px;
-}
+  .tool:nth-child(3n + 2) .rect{
+    margin-left: 0px;
+  }
 
-.tool:nth-child(3n + 2) .rect{
-  margin-left: 0px;
-}
+  .tool:nth-child(3n + 1) .rect{
+    margin-left: 14px;
+  }
 
-.tool:nth-child(3n + 1) .rect{
-  margin-left: 14px;
-}
+  .main-img {
+    width: 50%;
+  }
 
+  .stacked-img img {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image-section {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+  }
+
+  .image-section > img {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+  }
+
+  .reduced {
+    width: 70%;
+    height: 70%;
+  }
 }
