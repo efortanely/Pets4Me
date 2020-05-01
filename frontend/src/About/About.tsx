@@ -20,11 +20,21 @@ import postman from '../static/postman.png'
 import mocha from '../static/mocha.png'
 import google_maps from '../static/tools/google-maps.png'
 import selenium from '../static/selenium.png'
-
 import { Member } from './components/Member'
 import ToolDoor from './components/ToolDoor'
 import TestCounts from './test-count.json'
+import dogInstances from '../static/visualizations/chart.png'
+import catInstances from '../static/visualizations/chart_cats.png'
+import shelterPetCount from '../static/visualizations/chart_shelters.png'
+import safety from '../static/crashsafe_viz/safety.png'
+import safetyOverTime from '../static/crashsafe_viz/safety_over_time.png'
+import safetyToUserRatings from '../static/crashsafe_viz/safety_to_user_ratings.png'
+import Youtube from 'react-youtube';
 import './About.css';
+
+function _onReady(event: { target: { pauseVideo: () => void; }; }) {
+  event.target.pauseVideo();
+  }
 
 function About() {
     const andrew_role = "Backend/DB Developer"
@@ -144,10 +154,38 @@ function About() {
             </div>
           </div>
         </div>
+          <div className='viz'>
+            <h3>Pets4Me Visualizations</h3>
+            <div className='image-section'>
+                <img className='main-img bordered reduced' src={dogInstances} alt='graph of dog counts'></img>
+                <span className='stacked-img'>
+                    <img className='bordered' src={catInstances} alt='graph of cat counts'></img>
+                    <img className='bordered' src={shelterPetCount} alt='graph of animals pet shelter'></img>
+                    <Youtube className='video' videoId={'YurILnm6w_o'} onReady={_onReady} />
+                </span>
+            </div>
+            <h3>
+                <a href='https://crashsafe.me/'>CrashSafe</a> Visualizations
+            </h3>
+
+            <div className='image-section'>
+                <img className='main-img bordered reduced' src={safety} alt='graph of brand safety ratings'></img>
+                <span className='stacked-img'>
+                    <img className='bordered' src={safetyOverTime} alt='safety ratings over time'></img>
+                    <img className='bordered' src={safetyToUserRatings} alt='graph comparing safety ratings to user ratings for brand'></img>
+                </span>
+            </div>
+
+          </div>
 
         <footer>
-          <a href="https://www.freepik.com/free-photos-vectors/people">People vector created by freepik - www.freepik.com</a>
+          Graphs and charts created with <a href="https://d3js.org/">D3</a>
+          <br/>
+          Git visualization created with <a href="https://gource.io/">Gource</a> 
+          <br/>
+          People vector created by freepik - <a href="https://www.freepik.com/free-photos-vectors/people">www.freepik.com</a>
         </footer>
+        <br/>
   
       </div>
     );
