@@ -51,7 +51,7 @@ describe('<CatBreedInstancePage/>', () => {
     testBreed = {
       id: 1,
       name: 'foo',
-      alt_names: ['bar'],
+      alt_names: ['bar', 'foo'],
       temperament: 'epic B)',
       life_span: {low: 10, high: 12},
       indoor: 1,
@@ -118,7 +118,7 @@ describe('<CatBreedInstancePage/>', () => {
     shallowWithBreed(testBreed)
 
     expect(mobile_elements.name().text()).to.include(testBreed.name)
-    expect(mobile_elements.alt_names().text()).to.include(testBreed.alt_names)
+    expect(mobile_elements.alt_names().text()).to.include(testBreed.alt_names.join(', '))
     expect(mobile_elements.temperament().text()).to.include(testBreed.temperament)
     expect(mobile_elements.lifeSpan().text()).to.include(testBreed.life_span.low)
         .and.to.include(testBreed.life_span.high)
@@ -131,7 +131,7 @@ describe('<CatBreedInstancePage/>', () => {
     shallowWithBreed(testBreed)
 
     expect(desktop_elements.name().text()).to.include(testBreed.name)
-    expect(desktop_elements.alt_names().text()).to.include(testBreed.alt_names)
+    expect(desktop_elements.alt_names().text()).to.include(testBreed.alt_names.join(', '))
     expect(desktop_elements.temperament().text()).to.include(testBreed.temperament)
     expect(desktop_elements.lifeSpan().text()).to.include(testBreed.life_span.low)
         .and.to.include(testBreed.life_span.high)
