@@ -15,7 +15,7 @@
     height: 200px;
 }
 
-@media screen and (min-width: 1350px){
+@media screen and (min-width: 1300px){
     .info-card-col .single-card {
         max-width: 100%;
     }

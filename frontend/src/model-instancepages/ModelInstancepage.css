@@ -157,7 +157,7 @@ p, h1, h2, h4{
     color: #581730;
 }
 
-@media screen and (min-width: 1350px){
+@media screen and (min-width: 1300px){
     .photo-and-map > *{
         width: 700px;
     }

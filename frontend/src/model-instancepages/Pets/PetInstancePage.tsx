@@ -18,7 +18,7 @@ import { MapMedia } from '../../common/components/MapMedia';
 
 interface PetProps { pet: Pet, shelter: Shelter, match: match }
 interface PetState { pet: Pet, shelter: Shelter }
-interface PetInstancePageProviders { petsService: ModelInstanceService<Pet>, sheltersService: ModelInstanceService<Shelter>}
+interface PetInstancePageProviders { petsService: ModelInstanceService<Pet>, sheltersService: ModelInstanceService<Shelter> }
 
 class PetInstancePage extends React.Component<PetProps, PetState> {
   static providers: PetInstancePageProviders = { petsService: Pets4mePetsService, sheltersService: Pets4meSheltersService }
@@ -27,8 +27,6 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
     pet: { } as Pet,
     shelter: { } as Shelter
   }
-
-  mouse: boolean = false
 
   constructor(props: PetProps) {
     super(props)
@@ -164,7 +162,7 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
 
     return (
     <div className='model-instancepage'>
-      <MediaQuery className="mobile" query="(max-width: 1349px)">
+      <MediaQuery className="mobile" query="(max-width: 1299px)">
         <div className="instancepage-header">
           <h1 id='name'>{pet.name}</h1>
           {this.getBreedHeader(pet.primary_breed, pet.secondary_breed)}
@@ -205,7 +203,7 @@ class PetInstancePage extends React.Component<PetProps, PetState> {
 
         {this.getShelterButton(pet.shelter)}
       </MediaQuery>
-      <MediaQuery className="desktop" query="(min-width: 1350px)">
+      <MediaQuery className="desktop" query="(min-width: 1300px)">
         <Col>
           <Row className="media-and-text">
             <Col md="auto" className="photo-and-map">

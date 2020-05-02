@@ -495,7 +495,8 @@ footer a:hover{
 
 /* Desktop View */
 
-@media screen and (min-width: 1350px){
+@media screen and (min-width: 1300px) {
+
   .members{
     max-width: 600px;
   }

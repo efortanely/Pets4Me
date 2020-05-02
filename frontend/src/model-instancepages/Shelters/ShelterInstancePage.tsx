@@ -217,7 +217,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
     
     return (
       <div className='model-instancepage'>
-        <MediaQuery className="mobile" query="(max-width: 1349px)">
+        <MediaQuery className="mobile" query="(max-width: 1299px)">
           <div className="instancepage-header">
             <h1 id='name'>{shelter.name}</h1>
             {this.getShelterHeader(shelter)}
@@ -245,7 +245,7 @@ class ShelterInstancePage extends React.Component<ShelterProps, ShelterState> {
             <PetsInfoCarousel itemIds={all_pets_ids} />
           }
         </MediaQuery>
-        <MediaQuery className="desktop" query="(min-width: 1350px)">
+        <MediaQuery className="desktop" query="(min-width: 1300px)">
           <Row className="media-and-text">
             <Col md="auto" className="photo-and-map">
               {this.getPhoto(shelter.photos)}

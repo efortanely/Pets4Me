@@ -2,11 +2,11 @@ import React from 'react';
 import SheltersFilters from './SheltersFilters'
 import SheltersInfoCards from './SheltersInfoCards';
 import '../ModelHomepage.css';
-import MediaQuery from 'react-responsive';
 import Pets4meApiService from '../../common/services/Pets4meApiService'
 import Spinner from "react-bootstrap/Spinner";
 import { SheltersFiltersData, shelterSampleFilterData } from '../../models/SheltersFiltersData'
 import { RouteComponentProps } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 
 interface SheltersState {
   filterString: string,
@@ -51,25 +51,17 @@ export class Shelters extends React.Component<RouteComponentProps, SheltersState
   render() {
     return (
       <div className='model-homepage'>
-        <MediaQuery query="(max-width: 1349px)">
-          <div className='model-homepage-content' id='mainContent'>
-            {this.state.loading ? <Spinner animation='border'></Spinner> : <SheltersFilters {...this.state.filterOptions}/> }
-            <div className='cards-container'>
-              <SheltersInfoCards {...this.props} filterString={this.state.filterString}/>
-            </div>
-          </div>
-        </MediaQuery>
-
-        <MediaQuery query="(min-width: 1350px)">
-          <div className='model-homepage-content' id='mainContent'>
-            {this.state.loading ? <Spinner animation='border'></Spinner> : <SheltersFilters {...this.state.filterOptions}/> }
-            <div className='model-homepage-content-col'>
-              <div className='cards-container'>
-                <SheltersInfoCards {...this.props} filterString={this.state.filterString}/>
-              </div>
-            </div>
-          </div>
-        </MediaQuery>
+            <Container fluid id='mainContent'>
+              <Row>
+                <Col bsPrefix="col-static col-fill">
+                  {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
+                    <SheltersFilters {...this.state.filterOptions}/> }
+                </Col>
+                <Col className='cards-container'  bsPrefix="col-custom-10 col-fill">
+                  <SheltersInfoCards {...this.props} filterString={this.state.filterString} />
+                </Col>
+              </Row>
+            </Container>
       </div>
     );
   }
