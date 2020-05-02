@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import compare from '../../../static/compare.png'
 import Highlighter from 'react-highlight-words'
 import './InfoCards.css'
+import { isNullOrUndefined } from 'util';
 
 export interface InfoCardProps<T> { info: T, searchWords: string[], addToCompare: any }
 
@@ -25,7 +26,7 @@ abstract class InfoCard<T> extends React.Component<InfoCardProps<T>> {
 
   getCompareInfo(): JSX.Element {
     let image_src = this.getImageSrc()
-    if (image_src === '') {
+    if (isNullOrUndefined(image_src)) {
       image_src = logo
     }
     return (
@@ -54,7 +55,7 @@ abstract class InfoCard<T> extends React.Component<InfoCardProps<T>> {
   render() {
     let pathname = this.getLinkPathname()
     let image_src = this.getImageSrc()
-    if (image_src === '') {
+    if (isNullOrUndefined(image_src)) {
       image_src = logo
     }
     return (

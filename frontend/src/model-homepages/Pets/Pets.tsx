@@ -1,12 +1,12 @@
 import React from 'react';
 import PetsFilters from './PetsFilters';
-import MediaQuery from 'react-responsive';
 import '../ModelHomepage.css';
 import PetsInfoCards from './PetsInfoCards';
 import Pets4meApiService from '../../common/services/Pets4meApiService'
 import Spinner from "react-bootstrap/Spinner";
 import { PetsFiltersData, petSampleFilterData } from '../../models/PetsFiltersData'
 import { RouteComponentProps } from 'react-router-dom';
+import { Container, Col, Row } from 'react-bootstrap';
 
 interface PetsState {
   filterString: string,
@@ -51,28 +51,19 @@ export class Pets extends React.Component<RouteComponentProps, PetsState> {
 
   render() {
     return (
-      <div className='model-homepage' >
-        <MediaQuery query="(max-width: 1349px)">
-          <div className='model-homepage-content' id='mainContent'>
-            {this.state.loading ? <Spinner animation='border'></Spinner> :<PetsFilters {...this.state.filterOptions}/> }
-            <div className='cards-container'>
-              <PetsInfoCards {...this.props} filterString={this.state.filterString}/>
-            </div>
-          </div>
-        </MediaQuery>
-
-        <MediaQuery query="(min-width: 1350px)">
-          <div className='model-homepage-content' id='mainContent'>
-          
-          {this.state.loading ? <Spinner animation='border'></Spinner> :<PetsFilters {...this.state.filterOptions}/> }
-            <div className='model-homepage-content-col'>
-              <div className='cards-container'>
-                <PetsInfoCards {...this.props} filterString={this.state.filterString}/>
-              </div>
-            </div>
-          </div>
-        </MediaQuery>
+      <div className='model-homepage' id='mainContent'>
+        <Container fluid>
+          <Row>
+            <Col bsPrefix="col-static col-fill">
+              {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
+                <PetsFilters {...this.state.filterOptions}/> }
+            </Col>
+            <Col className='cards-container'  bsPrefix="col-custom-10 col-fill">
+              <PetsInfoCards {...this.props} filterString={this.state.filterString} />
+            </Col>
+          </Row>
+        </Container>
       </div>
-    );
+    )
   }
 } export default Pets;

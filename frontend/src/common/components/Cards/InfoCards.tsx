@@ -103,7 +103,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
         (<div>
           <div className='left-align'>
             <Row className="results-compare">
-              <h3>{this.state.page.num_results} results</h3>
+              { this.getNumResults() }
               <Button className="compare submit left-align" variant='primary' onClick={() => this.openModal()}>
                 <div className='compare-button-text'>
                   <img className='icon' src={compare} alt='venn diagram'></img>
@@ -127,16 +127,27 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
             </Modal>
           </div>
           <div>{''}</div>
-          
+  
           { this.getInfoCards() }
         </div>)}
-        {!isNullOrUndefined(this.state.page?.objects) && this.state.page.objects.length !== 0 && <Paginator initialActive={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages, 1) } pathName={this.getPathName()} onPageChange={this.onPageChange} key={`${this.props.filterString}_${this.getSearchParam()}`}/>}
-        {(isNullOrUndefined(this.state.page?.objects) || this.state.page.objects.length === 0) && !this.state.loading && this.noResults()}
+        {!isNullOrUndefined(this.state.page.objects) && this.state.page.objects.length !== 0 && <Paginator initialActive={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages, 1)} pathName={this.getPathName()} onPageChange={this.onPageChange}/>}
       </Container>
     )
   }
 
+  getNumResults = (): JSX.Element => {
+    if((isNullOrUndefined(this.state.page.objects) || this.state.page.objects.length === 0) && !this.state.loading){
+      return this.noResults() 
+    }
+
+    return this.state.loading ? <div></div> : <h3 className='left-align'>{this.state.page.num_results} results</h3>
+  }
+
   getInfoCards = (): JSX.Element[] => {
+    if(this.state.loading) {
+      return [<Spinner animation='border'><span className='sr-only'>Loading</span></Spinner>]
+    }
+    
     return this.state.page.objects.map(this.createInfoCard)
   }
 

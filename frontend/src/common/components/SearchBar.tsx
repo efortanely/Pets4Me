@@ -51,13 +51,13 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
       <Form className="searchbar" onSubmit={this.handleSubmit}>
         <Form.Group>
           <Form.Row>
-            <Col xs={6}>
+            <Col xs="auto">
               <Form.Label srOnly>Search options</Form.Label>
               <Form.Control id={this.selectId} size="lg" as="select" onChange={this.updateSearchOption}>
                 {SearchBar.options.map((option, i) => <option className="select-option" key={`${option}-${i}`}>{option}</option>)}
               </Form.Control>
             </Col>
-            <Col xs={6}>
+            <Col>
               <Form.Label srOnly>{"Search placeholder"}</Form.Label>
               <Form.Control id={this.inputId} size="lg" type="text" placeholder={`Search ${this.state.searchOption}...`} />
             </Col>

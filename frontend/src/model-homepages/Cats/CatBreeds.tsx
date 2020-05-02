@@ -2,11 +2,11 @@ import React from 'react';
 import CatBreedsFilters from './CatBreedsFilters'
 import '../ModelHomepage.css';
 import CatBreedsInfoCards from './CatBreedsInfoCards';
-import MediaQuery from 'react-responsive';
 import { CatBreedsFiltersData, catSampleFilterData } from '../../models/CatBreedsFiltersData';
 import Spinner from "react-bootstrap/Spinner";
 import Pets4meApiService from '../../common/services/Pets4meApiService';
 import { RouteComponentProps } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 
 interface CatBreedsState {
   filterString: string,
@@ -49,23 +49,17 @@ export class CatBreeds extends React.Component<RouteComponentProps, CatBreedsSta
   render() {
     return (
       <div className='model-homepage'>
-        <MediaQuery query="(max-width: 1349px)">
-          <div className='model-homepage-content' id='mainContent'>
-            {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> } 
-            <CatBreedsInfoCards {...this.props} filterString={this.state.filterString}/>
-          </div>
-        </MediaQuery>
-
-        <MediaQuery query="(min-width: 1350px)">
-          <div className='model-homepage-content' id='mainContent'>
-          {this.state.loading ? <Spinner animation='border'></Spinner> : <CatBreedsFilters {...this.state.filterOptions}/> }
-            <div className='model-homepage-content-col'>
-              <div className='cards-container'>
-                <CatBreedsInfoCards {...this.props} filterString={this.state.filterString}/>
-              </div>
-            </div>
-          </div>
-        </MediaQuery>
+        <Container fluid id='mainContent'>
+          <Row>
+            <Col bsPrefix="col-static col-fill">
+              {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
+                <CatBreedsFilters {...this.state.filterOptions}/> }
+            </Col>
+            <Col className='cards-container'  bsPrefix="col-custom-10 col-fill">
+              <CatBreedsInfoCards {...this.props} filterString={this.state.filterString} />
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

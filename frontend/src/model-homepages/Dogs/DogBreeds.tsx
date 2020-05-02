@@ -1,12 +1,12 @@
 import React from 'react';
 import DogBreedsFilters from './DogBreedsFilters'
-import MediaQuery from 'react-responsive';
 import '../ModelHomepage.css';
 import DogBreedsInfoCards from './DogBreedsInfoCards';
 import { DogBreedsFiltersData, dogSampleFilterData } from '../../models/DogBreedsFiltersData'
 import Spinner from "react-bootstrap/Spinner";
 import Pets4meApiService from '../../common/services/Pets4meApiService';
 import { RouteComponentProps } from 'react-router-dom';
+import { Container, Col, Row } from 'react-bootstrap';
 
 interface DogBreedsState {
   filterString: string,
@@ -56,25 +56,17 @@ export class DogBreeds extends React.Component<RouteComponentProps, DogBreedsSta
   render() {
     return (
       <div className='model-homepage'>
-        <MediaQuery query="(max-width: 1349px)">
-          <div className='model-homepage-content' id='mainContent'>
-            {this.state.loading ? <Spinner animation='border'></Spinner> : <DogBreedsFilters {...this.state.filterOptions}/> }
-            <div className='cards-container'>
-              <DogBreedsInfoCards {...this.props} filterString={this.state.filterString}/>
-            </div>
-          </div>
-        </MediaQuery>
-
-        <MediaQuery query="(min-width: 1350px)">
-          <div className='model-homepage-content' id='mainContent'>
-          {this.state.loading ? <Spinner animation='border'></Spinner> : <DogBreedsFilters {...this.state.filterOptions}/> }
-            <div className='model-homepage-content-col'>
-              <div className='cards-container'>
-                <DogBreedsInfoCards {...this.props} filterString={this.state.filterString} />
-              </div>
-            </div>
-          </div>
-        </MediaQuery>
+            <Container fluid id='mainContent'>
+              <Row>
+                <Col bsPrefix="col-static col-fill">
+                  {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
+                    <DogBreedsFilters {...this.state.filterOptions}/> }
+                </Col>
+                <Col className='cards-container'  bsPrefix="col-custom-10 col-fill">
+                  <DogBreedsInfoCards {...this.props} filterString={this.state.filterString} />
+                </Col>
+              </Row>
+            </Container>
       </div>
     );
   }

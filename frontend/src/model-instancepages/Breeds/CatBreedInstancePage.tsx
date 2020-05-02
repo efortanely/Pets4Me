@@ -144,7 +144,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
 
     return (
       <div className='model-instancepage'>
-        <MediaQuery className="mobile" query="(max-width: 1349px)">
+        <MediaQuery className="mobile" query="(max-width: 1299px)">
           <div className="instancepage-header">
             <h1 id='name'>{breed.name}</h1>
             <p id="indoor">{breed.indoor ? "Indoor" : "Outdoor"} cat</p>
@@ -180,7 +180,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
             <SheltersInfoCarousel itemIds={breed.shelters_with_breed} />
           }
         </MediaQuery>
-        <MediaQuery className="desktop" query="(min-width: 1350px)">
+        <MediaQuery className="desktop" query="(min-width: 1300px)">
           <Row className="media-and-text">
             <Col md="auto" className="photo-and-map">
               { this.getMedia(breed.photo, breed.video_url) }
