@@ -49,6 +49,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
       name="star" 
       starCount={5}
       value={rating}
+      editing={false}
       starColor={"#581730"}
       emptyStarColor={"#dfdbdd"}
     />
@@ -159,7 +160,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
 
           <div className="alternate-names">
             <h2>Alternate Names</h2>
-            <p id='alt-names'>{!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified" : breed.alt_names}</p>
+            <p id='alt-names'>{!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified" : breed.alt_names.join(', ')}</p>
           </div>
 
           <div className="temperament">
@@ -200,7 +201,7 @@ class CatBreedInstancePage extends React.Component<CatBreedProps, CatBreedState>
 
             <div className="alternate-names">
               <h2>Alternate Names</h2>
-              <p id='alt-names'>{!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified" : breed.alt_names}</p>
+              <p id='alt-names'>{!breed.alt_names || breed.alt_names.length === 0 ? "No alternate names specified" : breed.alt_names.join(', ')}</p>
             </div>
 
             <div className="temperament">
