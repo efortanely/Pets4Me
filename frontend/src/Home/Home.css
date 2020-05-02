@@ -60,9 +60,10 @@ li{
 }
 
 .shapeOne{
-  width: 100vw;
+  width: 85vw;
   position: absolute;
   z-index: -1;
+  margin-top: 60px;
 }
 
 .personOne{
@@ -79,10 +80,6 @@ li{
   width: 30vw;
   margin-left: 15vw;
   margin-top: 30vw;
-}
-
-.shapeTwo{
-  width: 0px;
 }
 
 .frontPageInfo h1{
@@ -120,6 +117,18 @@ li{
 
 
 /* Desktop View */
+
+@media screen and (min-width: 700px){
+  .shapeOne{
+    margin-top: 70px;
+  }
+}
+
+@media screen and (min-width: 900px){
+  .shapeOne{
+    margin-top: 90px;
+  }
+}
 
 @media screen and (min-width: 1350px){
 
@@ -167,27 +176,20 @@ ul{
 }
 
 .shapeOne{
-  width: 900px;
-  bottom: -40px;
+  width: 850px;
+  margin-top: 150px;
 }
 
 .personOne{
   width: 200px;
-  margin-top: 15px;
-  margin-left: 90px;
+  margin-top: 50px;
+  margin-left: 130px;
 }
 
 .personTwo{
   width: 300px;
-  margin-left: 100px;
-  margin-top: 300px;
-}
-
-.shapeTwo{
-  position: absolute;
-  width: 300px;
-  bottom: 0px;
-  left: 625px;
+  margin-left: 120px;
+  margin-top: 350px;
 }
 
 .frontPageInfo{
