@@ -238,12 +238,12 @@ a.single-card:hover {
 /* Pagination */
 
 .pagination {
-    position: absolute;
     top: 100%;
     display: flex;
     justify-content: center;
     width: 100%;
     margin-left: -16px !important;    
+    padding-bottom: 1rem;
 }
 
 .page-item a{
@@ -290,6 +290,10 @@ a.single-card:hover {
         position: relative;
         flex: auto;
         width: 100%;
+    }
+
+    .results-compare {
+        justify-content: center;
     }
 }
 
