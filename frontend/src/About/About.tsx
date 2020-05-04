@@ -29,12 +29,8 @@ import shelterPetCount from '../static/visualizations/chart_shelters.png'
 import safety from '../static/crashsafe_viz/safety.png'
 import safetyOverTime from '../static/crashsafe_viz/safety_over_time.png'
 import safetyToUserRatings from '../static/crashsafe_viz/safety_to_user_ratings.png'
-import Youtube from 'react-youtube';
+import ImageCarousel from '../common/components/ImageCarousel';
 import './About.css';
-
-function _onReady(event: { target: { pauseVideo: () => void; }; }) {
-  event.target.pauseVideo();
-  }
 
 function About() {
     const andrew_role = "Backend/DB Developer"
@@ -156,26 +152,24 @@ function About() {
         </div>
           <div className='viz'>
             <h3>Pets4Me Visualizations</h3>
-            <div className='image-section'>
-                <img className='main-img bordered reduced' src={dogInstances} alt='graph of dog counts'></img>
-                <span className='stacked-img'>
-                    <img className='bordered' src={catInstances} alt='graph of cat counts'></img>
-                    <img className='bordered' src={shelterPetCount} alt='graph of animals pet shelter'></img>
-                    <Youtube className='video' videoId={'YurILnm6w_o'} onReady={_onReady} />
-                </span>
-            </div>
+            <ImageCarousel 
+              items={[
+                {photo: dogInstances}, 
+                {photo: catInstances}, 
+                {photo: shelterPetCount}, 
+                {video: "https://www.youtube.com/watch?v=YurILnm6w_o"}
+              ]} 
+            />
             <h3>
                 <a href='https://crashsafe.me/'>CrashSafe</a> Visualizations
             </h3>
-
-            <div className='image-section'>
-                <img className='main-img bordered reduced' src={safety} alt='graph of brand safety ratings'></img>
-                <span className='stacked-img'>
-                    <img className='bordered' src={safetyOverTime} alt='safety ratings over time'></img>
-                    <img className='bordered' src={safetyToUserRatings} alt='graph comparing safety ratings to user ratings for brand'></img>
-                </span>
-            </div>
-
+            <ImageCarousel 
+              items={[
+                {photo: safety}, 
+                {photo: safetyOverTime}, 
+                {photo: safetyToUserRatings}, 
+              ]} 
+            />
           </div>
 
         <footer>
