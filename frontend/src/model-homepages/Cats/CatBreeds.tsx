@@ -2,24 +2,29 @@ import React from 'react';
 import CatBreedsFilters from './CatBreedsFilters'
 import '../ModelHomepage.css';
 import CatBreedsInfoCards from './CatBreedsInfoCards';
-import { CatBreedsFiltersData, catSampleFilterData } from '../../models/CatBreedsFiltersData';
+import { CatBreedsFilterOptions } from '../../models/CatBreedsFilterOptions';
 import Spinner from "react-bootstrap/Spinner";
-import Pets4meApiService from '../../common/services/Pets4meApiService';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
+import FilterOptionsService from '../../common/services/FiltersService';
+import { Pets4meCatBreedsFilterOptionsService } from '../../common/services/Pets4MeFiltersService';
 
 interface CatBreedsState {
   filterString: string,
-  filterOptions: CatBreedsFiltersData, 
+  filterOptions: CatBreedsFilterOptions, 
   loading: boolean
 }
 
+interface CatBreedsProviders { catBreedsFilterOptionsService: FilterOptionsService<CatBreedsFilterOptions> }
+
 export class CatBreeds extends React.Component<RouteComponentProps, CatBreedsState> {
+  static providers: CatBreedsProviders = { catBreedsFilterOptionsService: Pets4meCatBreedsFilterOptionsService }
+  
   constructor(props: RouteComponentProps) {
     super(props)
     this.state = {
       filterString: '',
-      filterOptions: catSampleFilterData,
+      filterOptions: { } as CatBreedsFilterOptions,
       loading: true
     }
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
@@ -30,18 +35,12 @@ export class CatBreeds extends React.Component<RouteComponentProps, CatBreedsSta
   }
 
   componentDidMount() {
-    let apiService = new Pets4meApiService();
+    let catBreedsFilterOptionsService = CatBreeds.providers.catBreedsFilterOptionsService
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
-    apiService.getFilterOptions()
+    catBreedsFilterOptionsService.getFilterOptions()
         .then((response: any) => {
-          let filtersData: CatBreedsFiltersData = {
-            breeds: response.cat_breeds.cat_breeds,
-            name_initials: response.cat_breeds.unique_letters,
-            lifespan_max: response.cat_breeds.life_span.max,
-            lifespan_min: response.cat_breeds.life_span.min,
-            updateFilters: this.handleFilterUpdate
-          }
-          this.setState({filterOptions: filtersData, loading: false});
+          response.updateFilters = this.handleFilterUpdate
+          this.setState({filterOptions: response, loading: false});
         })
         .catch(console.log)
   }

@@ -1,11 +1,11 @@
 import React from 'react';
 import Slider from '@material-ui/core/Slider'
-import Select from 'react-select';
+import Select from 'react-select'
 import Button from 'react-bootstrap/Button'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Form from 'react-bootstrap/Form'
-import { SheltersFiltersData, SheltersFiltersState, defaultFilterState } from '../../models/SheltersFiltersData'
+import { SheltersFilterOptions, SheltersFiltersState, defaultFilterState } from '../../models/SheltersFilterOptions'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray, getPostcodeOrDefault } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
@@ -47,8 +47,7 @@ export const constructQuery = (selectedFilters: SheltersFiltersState) => {
     return query;
 }
 
-
-export class SheltersFilters extends React.Component<SheltersFiltersData, SheltersFiltersState> {
+export class SheltersFilters extends React.Component<SheltersFilterOptions, SheltersFiltersState> {
 
     public sortData: SelectItem[] = [
         { label: "Name", value: "name" },
@@ -61,7 +60,7 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
         { label: "Shelter has cats", value: "cats" },
         { label: "Shelter has dogs", value: "dogs" }] as SelectItem[];
 
-    constructor(props: SheltersFiltersData) {
+    constructor(props: SheltersFilterOptions) {
         super(props);
         selectifyDataArray(this.props.cities, this.cityData);
         selectifyDataArray(this.props.states, this.stateData);
