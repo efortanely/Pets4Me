@@ -10,7 +10,7 @@ import { isNullOrUndefined } from "util";
 import { ObjectsPage } from "../../../models/ObjectsPage";
 import { RouteComponentProps } from 'react-router-dom';
 import './InfoCards.css'
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 interface InfoCardsProps extends Partial<RouteComponentProps> { pageNumber: number, filterString: string, itemsPerPage: number }
 interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean, modalIsOpen: boolean, searchParams: URLSearchParams, cardsToCompare: JSX.Element[] }
@@ -99,18 +99,9 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
       <Container fluid>
         {
         this.state.loading ?
-        <Spinner animation='border'><span id='loading' className='sr-only'>Loading...</span></Spinner> :
-        (<div>
-          <div className='left-align'>
-            <Row className="results-compare">
-              { this.getNumResults() }
-              <Button className="compare submit left-align" variant='primary' onClick={() => this.openModal()}>
-                <div className='compare-button-text'>
-                  <img className='icon' src={compare} alt='venn diagram'></img>
-                  {`\tCompare selected cards`}
-                </div>
-              </Button>
-            </Row>
+        <Spinner animation='border'><span id='loading' className='sr-only'>Loading...</span></Spinner> : (
+          <div>
+            { this.getNumResults() }
             <Modal
               isOpen={this.state.modalIsOpen}
               onRequestClose={this.closeModal}
@@ -125,11 +116,10 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
               <div></div>
               {this.state.cardsToCompare}
             </Modal>
+            <div>{''}</div>
+            { this.getInfoCards() }
           </div>
-          <div>{''}</div>
-  
-          { this.getInfoCards() }
-        </div>)}
+        )}
         {!isNullOrUndefined(this.state.page.objects) && this.state.page.objects.length !== 0 && <Paginator initialActive={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages, 1)} pathName={this.getPathName()} onPageChange={this.onPageChange}/>}
       </Container>
     )
@@ -140,7 +130,22 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
       return this.noResults() 
     }
 
-    return this.state.loading ? <div></div> : <h3 className='left-align'>{this.state.page.num_results} results</h3>
+    return this.state.loading ? <div></div> : 
+    (
+      <Row className="results-compare">   
+        <Col xs="auto">
+          <h3 className='left-align'>{this.state.page.num_results} results</h3>
+        </Col>
+        <Col xs="auto">
+          <Button className="compare submit left-align" variant='primary' onClick={() => this.openModal()}>
+            <div className='compare-button-text'>
+              <img className='icon' src={compare} alt='venn diagram'></img>
+              {`\tCompare selected cards`}
+            </div>
+          </Button>
+        </Col>
+      </Row>
+    )
   }
 
   getInfoCards = (): JSX.Element[] => {
