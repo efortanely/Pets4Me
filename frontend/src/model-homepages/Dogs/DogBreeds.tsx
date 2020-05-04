@@ -56,17 +56,17 @@ export class DogBreeds extends React.Component<RouteComponentProps, DogBreedsSta
   render() {
     return (
       <div className='model-homepage'>
-            <Container fluid id='mainContent'>
-              <Row>
-                <Col bsPrefix="col-static col-fill">
-                  {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
-                    <DogBreedsFilters {...this.state.filterOptions}/> }
-                </Col>
-                <Col className='cards-container'  bsPrefix="col-custom-10 col-fill">
-                  <DogBreedsInfoCards {...this.props} filterString={this.state.filterString} />
-                </Col>
-              </Row>
-            </Container>
+        <Container fluid id='mainContent'>
+          <Row className="model-homepage-row">
+            <Col bsPrefix="col-static col-fill">
+              {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
+                <DogBreedsFilters {...this.state.filterOptions}/> }
+            </Col>
+            <Col className='cards-container'  bsPrefix="col-custom-10 col-fill">
+              <DogBreedsInfoCards {...this.props} filterString={this.state.filterString} />
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

@@ -52,7 +52,7 @@ export class Shelters extends React.Component<RouteComponentProps, SheltersState
     return (
       <div className='model-homepage'>
             <Container fluid id='mainContent'>
-              <Row>
+              <Row className="model-homepage-row">
                 <Col bsPrefix="col-static col-fill">
                   {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
                     <SheltersFilters {...this.state.filterOptions}/> }

@@ -50,7 +50,7 @@ export class CatBreeds extends React.Component<RouteComponentProps, CatBreedsSta
     return (
       <div className='model-homepage'>
         <Container fluid id='mainContent'>
-          <Row>
+          <Row className="model-homepage-row">
             <Col bsPrefix="col-static col-fill">
               {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
                 <CatBreedsFilters {...this.state.filterOptions}/> }
