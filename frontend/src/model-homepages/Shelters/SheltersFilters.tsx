@@ -7,7 +7,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Form from 'react-bootstrap/Form'
 import { SheltersFiltersData, SheltersFiltersState, defaultFilterState } from '../../models/SheltersFiltersData'
 import { ThemeProvider } from '@material-ui/core';
-import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
+import { sliderTheme, SelectItem, selectifyDataArray, getPostcodeOrDefault } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
 
 const customStyles = {
@@ -24,13 +24,11 @@ const customStyles = {
 export const constructQuery = (selectedFilters: SheltersFiltersState) => {
     let filters = []
     let order_by = []
-    let query = "zip_code=78705&max_dist=" + selectedFilters.distanceMax
+    let query = `zip_code=${getPostcodeOrDefault(selectedFilters.postcode)}&max_dist=${selectedFilters.distanceMax}`
     if (selectedFilters.city.length > 0)
         filters.push({ "name": "city", "op": "in", "val": selectedFilters.city })
     if (selectedFilters.state.length > 0)
         filters.push({ "name": "state", "op": "in", "val": selectedFilters.state })
-    if (selectedFilters.postcode && selectedFilters.postcode !== 0)
-        filters.push({ "name": "postcode", "op": "eq", "val": selectedFilters.postcode })
     if (selectedFilters.shelterWithSpecies === "dogs")
         filters.push({ "name": "has_dogs", "op": "eq", "val": 1 })
     if (selectedFilters.shelterWithSpecies === "cats")
@@ -154,12 +152,6 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                         },
                     })}
                 />
-                <Form className="postcode">
-                    <Form.Group controlId="postcode">
-                        <Form.Control type="number" placeholder="Enter a postcode..."
-                            onInput={(value: any) => this.setState({ postcode: value.target.value })} />
-                    </Form.Group>
-                </Form>
                 <Select options={this.speciesData} placeholder="Select a species..." isClearable={true}
                     onChange={(value: any) => this.setState({ shelterWithSpecies: value?.value })}
                     styles={customStyles}
@@ -178,8 +170,14 @@ export class SheltersFilters extends React.Component<SheltersFiltersData, Shelte
                         },
                     })}
                 />
+                <Form className="postcode">
+                    <Form.Group controlId="postcode">
+                        <Form.Control type="number" placeholder="Enter a postcode..."
+                            onInput={(value: any) => this.setState({ postcode: value.target.value })} />
+                    </Form.Group>
+                </Form>
                 <ThemeProvider theme={sliderTheme}>
-                    <h5>Max distance (mi.)</h5>
+                    <h5>Max distance from {getPostcodeOrDefault(this.state.postcode)} (mi.)</h5>
                     <Slider
                         defaultValue={this.props.max_distance} max={this.props.max_distance} valueLabelDisplay='auto' valueLabelFormat={x => (x === this.props.max_distance ? "Any" : x)}
                         onChange={(event: any, value: any) => this.setState({ distanceMax: value })}

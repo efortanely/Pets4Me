@@ -21,8 +21,6 @@ export const sliderTheme = createMuiTheme({
       }
   }});
 
-
-
 export function selectifyDataArray(data: string[], selectList: SelectItem[]): void {
   data.forEach((datum: string) => selectList.push({
       value: datum,
@@ -30,4 +28,8 @@ export function selectifyDataArray(data: string[], selectList: SelectItem[]): vo
   }));
 }
 
-
+export const getPostcodeOrDefault = (postcode: number) => {
+  if (postcode > 9999 && postcode < 100000) 
+      return postcode;
+  return 78705;
+}
