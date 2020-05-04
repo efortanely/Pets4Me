@@ -238,7 +238,6 @@ a.single-card:hover {
 /* Pagination */
 
 .pagination {
-    position: absolute;
     top: 100%;
     display: flex;
     justify-content: center;
