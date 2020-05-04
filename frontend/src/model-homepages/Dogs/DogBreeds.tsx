@@ -2,49 +2,38 @@ import React from 'react';
 import DogBreedsFilters from './DogBreedsFilters'
 import '../ModelHomepage.css';
 import DogBreedsInfoCards from './DogBreedsInfoCards';
-import { DogBreedsFiltersData, dogSampleFilterData } from '../../models/DogBreedsFiltersData'
-import Spinner from "react-bootstrap/Spinner";
-import Pets4meApiService from '../../common/services/Pets4meApiService';
+import { DogBreedsFilterOptions } from '../../models/DogBreedsFilterOptions'
 import { RouteComponentProps } from 'react-router-dom';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row, Spinner } from 'react-bootstrap';
+import FilterOptionsService from '../../common/services/FiltersService';
+import { Pets4meDogBreedsFilterOptionsService } from '../../common/services/Pets4MeFiltersService';
 
 interface DogBreedsState {
   filterString: string,
-  filterOptions: DogBreedsFiltersData, 
+  filterOptions: DogBreedsFilterOptions, 
   loading: boolean
 }
+interface DogBreedsProviders { dogBreedsFilterOptionsService: FilterOptionsService<DogBreedsFilterOptions> }
 
 export class DogBreeds extends React.Component<RouteComponentProps, DogBreedsState> {
-
+  static providers: DogBreedsProviders = { dogBreedsFilterOptionsService: Pets4meDogBreedsFilterOptionsService }
   constructor(props: RouteComponentProps) {
     super(props)
     this.state = {
       filterString: '',
-      filterOptions: dogSampleFilterData,
+      filterOptions: { } as DogBreedsFilterOptions,
       loading: true
     }
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
-    this.state.filterOptions.updateFilters = this.handleFilterUpdate;
   }
 
   componentDidMount() {
-    let apiService = new Pets4meApiService();
+    let filterOptionsService: FilterOptionsService<DogBreedsFilterOptions> = DogBreeds.providers.dogBreedsFilterOptionsService
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
-    apiService.getFilterOptions()
+    filterOptionsService.getFilterOptions()
         .then((response: any) => {
-          let filtersData: DogBreedsFiltersData = {
-            breed_group: response.dog_breeds.breed_groups,
-            breeds: response.dog_breeds.dog_breeds,
-            name_initials: response.dog_breeds.unique_letters,
-            max_height: response.dog_breeds.height_span.max,
-            min_height: response.dog_breeds.height_span.min,
-            max_weight: response.dog_breeds.weight_span.max,
-            min_weight: response.dog_breeds.weight_span.min,
-            lifespan_max: response.dog_breeds.life_span.max,
-            lifespan_min: response.dog_breeds.life_span.min,
-            updateFilters: this.handleFilterUpdate
-          }
-          this.setState({filterOptions: filtersData, loading: false});
+          response.updateFilters = this.handleFilterUpdate
+          this.setState({filterOptions: response, loading: false});
         })
         .catch(console.log)
   }

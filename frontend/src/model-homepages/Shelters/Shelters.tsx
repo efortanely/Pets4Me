@@ -2,25 +2,28 @@ import React from 'react';
 import SheltersFilters from './SheltersFilters'
 import SheltersInfoCards from './SheltersInfoCards';
 import '../ModelHomepage.css';
-import Pets4meApiService from '../../common/services/Pets4meApiService'
 import Spinner from "react-bootstrap/Spinner";
-import { SheltersFiltersData, shelterSampleFilterData } from '../../models/SheltersFiltersData'
+import { SheltersFilterOptions } from '../../models/SheltersFilterOptions'
 import { RouteComponentProps } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
+import FilterOptionsService from '../../common/services/FiltersService';
+import { Pets4meSheltersFilterOptionsService } from '../../common/services/Pets4MeFiltersService';
 
 interface SheltersState {
   filterString: string,
-  filterOptions: SheltersFiltersData, 
+  filterOptions: SheltersFilterOptions, 
   loading: boolean
 }
+interface SheltersProviders { sheltersFilterOptionsService: FilterOptionsService<SheltersFilterOptions> }
 
 export class Shelters extends React.Component<RouteComponentProps, SheltersState> {
+  static providers: SheltersProviders = { sheltersFilterOptionsService: Pets4meSheltersFilterOptionsService }
 
   constructor(props: RouteComponentProps) {
     super(props)
     this.state = {
       filterString: '',
-      filterOptions: shelterSampleFilterData,
+      filterOptions: {} as SheltersFilterOptions,
       loading: true
     }
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
@@ -32,20 +35,15 @@ export class Shelters extends React.Component<RouteComponentProps, SheltersState
   }
 
   componentDidMount() {
-    let apiService = new Pets4meApiService();
+    let filterOptionsService = Shelters.providers.sheltersFilterOptionsService
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
-    apiService.getFilterOptions()
-        .then((response: any) => {
-          let filtersData: SheltersFiltersData = {
-            cities: response.shelters.cities,
-            states: response.shelters.states,
-            max_pets: response.shelters.num_pets,
-            max_distance: 600,
-            updateFilters: this.handleFilterUpdate
-          }
-          this.setState({filterOptions: filtersData, loading: false});
-        })
-        .catch(console.log)
+    filterOptionsService.getFilterOptions()
+      .then((response: SheltersFilterOptions) => {
+        response.max_distance = 600
+        response.updateFilters = this.handleFilterUpdate
+        this.setState({filterOptions: response, loading: false});
+      })
+      .catch(console.log)
   }
 
   render() {

@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
 import { SheltersFilters, SheltersFiltersState, constructQuery } from '../../../model-homepages/Shelters/SheltersFilters';
-import { SheltersFiltersData } from '../../../models/SheltersFiltersData'
+import { SheltersFilterOptions } from '../../../models/SheltersFilterOptions'
 chai.use(sinonChai)
 
 describe('<SheltersFilters />', () => {
@@ -19,7 +19,7 @@ describe('<SheltersFilters />', () => {
       sortDir: "desc"
   }
 
-  function mountWithPage(filterOptions: SheltersFiltersData) {
+  function mountWithPage(filterOptions: SheltersFilterOptions) {
     return mount(<SheltersFilters {...filterOptions}/>)
   }
 

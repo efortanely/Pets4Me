@@ -1,11 +1,12 @@
-export interface PetsFiltersData {
-    dogBreeds: string[];
-    catBreeds: string[];
+import { FilterOptions } from './FiltersData';
+
+export interface PetsFilterOptions extends FilterOptions {
+    dog_breeds: string[];
+    cat_breeds: string[];
     colors: string[];
     sizes: string[]
     ages: string[];
     max_distance: number;
-    updateFilters: any;
 }
 
 export interface PetsFiltersState {
@@ -35,13 +36,3 @@ export let defaultFilterState = {
     sortType: undefined,
     sortDir: "desc"
 } as PetsFiltersState;
-
-export let petSampleFilterData = {
-    dogBreeds: ["Maltese", "Poodle"],
-    catBreeds: ["Domestic Shorthair", "Tabby"],
-    colors: ["Green", "Fuchsia"],
-    sizes: ["Small", "Medium", "Large"],
-    ages: ["Baby", "Puppy", "Adult"],
-    max_distance: 20,
-    updateFilters: (arg: any) => console.log("Filter callback not set!")
-}

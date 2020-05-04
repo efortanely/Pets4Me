@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
-import { DogBreedsFiltersData, DogBreedsFiltersState, defaultFilterState } from '../../models/DogBreedsFiltersData'
+import { DogBreedsFilterOptions, DogBreedsFiltersState, defaultFilterState } from '../../models/DogBreedsFilterOptions'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 
@@ -53,7 +53,7 @@ export const constructQuery = (breeds: string[], selectedFilters: DogBreedsFilte
     return query;
 }
 
-export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogBreedsFiltersState> {
+export class DogBreedsFilters extends React.Component<DogBreedsFilterOptions, DogBreedsFiltersState> {
 
     public sortData: SelectItem[] = [
         {label: "Name", value: "name"},
@@ -64,15 +64,15 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
     public nameInitials: SelectItem[] = [];
     public breedGroup: SelectItem[] = [];
 
-    constructor(props: DogBreedsFiltersData) {
+    constructor(props: DogBreedsFilterOptions) {
         super(props);
-        selectifyDataArray(this.props.name_initials, this.nameInitials);
-        selectifyDataArray(this.props.breed_group, this.breedGroup);
+        selectifyDataArray(this.props.unique_letters, this.nameInitials);
+        selectifyDataArray(this.props.breed_groups, this.breedGroup);
         this.state = defaultFilterState;
     }
 
     handleFilterUpdate() {
-        this.props.updateFilters(constructQuery(this.props.breeds, this.state));
+        this.props.updateFilters(constructQuery(this.props.dog_breeds, this.state));
     }
 
     render() {
@@ -153,20 +153,20 @@ export class DogBreedsFilters extends React.Component<DogBreedsFiltersData, DogB
                 <ThemeProvider theme={sliderTheme}>
                     <h5>Height (in.)</h5>
                     <Slider
-                        defaultValue={[this.props.min_height, this.props.max_height]} valueLabelDisplay='auto'
-                        min={this.props.min_height} max={this.props.max_height}
+                        defaultValue={[this.props.height_span.min, this.props.height_span.max]} valueLabelDisplay='auto'
+                        min={this.props.height_span.min} max={this.props.height_span.max}
                         onChange={(event: any, value: any) => this.setState({minHeight: value[0], maxHeight: value[1]})}
                     />
                     <h5>Weight (lb.)</h5>
                     <Slider
-                        defaultValue={[this.props.min_weight, this.props.max_weight]} valueLabelDisplay='auto'
-                        min={this.props.min_weight} max={this.props.max_weight}
+                        defaultValue={[this.props.weight_span.min, this.props.weight_span.max]} valueLabelDisplay='auto'
+                        min={this.props.weight_span.min} max={this.props.weight_span.max}
                         onChange={(event: any, value: any) => this.setState({minWeight: value[0], maxWeight: value[1]})}
                     />
                     <h5>Lifespan (years)</h5>
                     <Slider
-                        defaultValue={[this.props.lifespan_min, this.props.lifespan_max]} valueLabelDisplay='auto'
-                        min={this.props.lifespan_min} max={this.props.lifespan_max}
+                        defaultValue={[this.props.life_span.min, this.props.life_span.max]} valueLabelDisplay='auto'
+                        min={this.props.life_span.min} max={this.props.life_span.max}
                         onChange={(event: any, value: any) => this.setState({lifespanMin: value[0], lifespanMax: value[1]})}
                     />
                 </ThemeProvider>

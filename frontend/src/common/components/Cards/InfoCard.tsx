@@ -24,50 +24,25 @@ abstract class InfoCard<T> extends React.Component<InfoCardProps<T>> {
     </React.Fragment>
   }
 
-  getCompareInfo(): JSX.Element {
+  getCard(hasComparisonButton: boolean): JSX.Element {
     let image_src = this.getImageSrc()
+    
     if (isNullOrUndefined(image_src)) {
       image_src = logo
     }
-    return (
-      <div className='single-card' key={`${this.getHeader()}`}>
-        <Link to={{
-          pathname: `${this.getLinkPathname()}`,
-          state: { info: this.props.info }
-        }}>
-          <img className='card-image' src={image_src} alt={`${this.getHeader()}`}></img>
-        </Link>
-        <div className='card-text'>
-          <div>
-            <h3>
-              <Highlighter
-                highlightClassName="highlight"
-                searchWords={this.props.searchWords}
-                textToHighlight={this.getHeader()} />
-            </h3>
-          </div>
-          {this.getOtherInfo().map(this.lineBreakFragment)}
-        </div>
-      </div>
-    )
-  }
 
-  render() {
-    let pathname = this.getLinkPathname()
-    let image_src = this.getImageSrc()
-    if (isNullOrUndefined(image_src)) {
-      image_src = logo
-    }
     return (
       <div className='single-card'>
-        <Button className='add-compare' variant='primary' onClick={() => this.props.addToCompare(this.getCompareInfo())}>
+        {hasComparisonButton ?
+          <Button className='add-compare' variant='primary' onClick={() => this.props.addToCompare(this.getCompareInfo())}>
           <div>
             <img className='icon' src={compare} alt='venn diagram'></img>
             {'+'}
           </div>
-        </Button>
+        </Button> :
+        <div/>}
         <Link to={{
-          pathname: `${pathname}`,
+          pathname: `${this.getLinkPathname()}`,
           state: { info: this.props.info }
         }}>
           <img className='card-image' src={image_src} alt={`${this.getHeader()}`}></img>
@@ -88,6 +63,14 @@ abstract class InfoCard<T> extends React.Component<InfoCardProps<T>> {
         </Link>
       </div>
     )
+  }
+
+  getCompareInfo(): JSX.Element {
+    return this.getCard(false)
+  }
+
+  render() {
+    return this.getCard(true)
   }
 
   abstract getHeader(): string
