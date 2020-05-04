@@ -6,7 +6,8 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
 import { PetsFiltersData, PetsFiltersState, defaultFilterState } from '../../models/PetsFiltersData'
 import { ThemeProvider } from '@material-ui/core';
-import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
+import Form from 'react-bootstrap/Form'
+import { sliderTheme, SelectItem, selectifyDataArray, getPostcodeOrDefault } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
 
 const customStyles = {
@@ -23,7 +24,7 @@ const customStyles = {
 export const constructQuery = (selectedFilters: PetsFiltersState) => {
     let filters = []
     let order_by = []
-    let query = "zip_code=78705&max_dist=" + selectedFilters.distanceMax
+    let query = `zip_code=${getPostcodeOrDefault(selectedFilters.postcode)}&max_dist=${selectedFilters.distanceMax}`
 
     if (selectedFilters.species) {
         filters.push({ "name": "species", "op": "eq", "val": selectedFilters.species })
@@ -323,8 +324,14 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
                         },
                     })}
                 />
+                <Form className="postcode">
+                    <Form.Group controlId="postcode">
+                        <Form.Control type="number" placeholder="Enter a postcode..."
+                            onInput={(value: any) => this.setState({ postcode: value.target.value })} />
+                    </Form.Group>
+                </Form>
                 <ThemeProvider theme={sliderTheme}>
-                    <h5>Max distance (mi.)</h5>
+                    <h5>Max distance from {getPostcodeOrDefault(this.state.postcode)} (mi.)</h5>
                     <Slider
                         defaultValue={250} max={this.props.max_distance} valueLabelDisplay='auto' valueLabelFormat={x => (x === this.props.max_distance ? "Any" : x)}
                         onChange={(event: any, value: any) => this.setState({ distanceMax: value })}

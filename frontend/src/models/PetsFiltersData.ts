@@ -16,6 +16,7 @@ export interface PetsFiltersState {
     color: string[];
     size: string[];
     age: string[];
+    postcode: number;
     distanceMax: number;
     sortType: string | undefined;
     sortDir: string | undefined;
@@ -29,6 +30,7 @@ export let defaultFilterState = {
     color: [],
     size: [],
     age: [],
+    postcode: 0,
     distanceMax: 1000,
     sortType: undefined,
     sortDir: "desc"

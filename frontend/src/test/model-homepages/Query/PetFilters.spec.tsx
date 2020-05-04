@@ -1,10 +1,7 @@
 import 'jsdom-global/register'
-import React from 'react'
-import { mount } from 'enzyme';
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
-import { PetsFilters, PetsFiltersState, constructQuery } from '../../../model-homepages/Pets/PetsFilters';
-import { PetsFiltersData } from '../../../models/PetsFiltersData'
+import { constructQuery } from '../../../model-homepages/Pets/PetsFilters';
 chai.use(sinonChai)
 
 describe('<PetsFilters />', () => {
@@ -17,13 +14,10 @@ describe('<PetsFilters />', () => {
       color: [],
       size: [],
       age: [],
+      postcode: 0,
       distanceMax: 1000,
       sortType: "",
       sortDir: "desc"
-  }
-
-  function mountWithPage(filterOptions: PetsFiltersData) {
-    return mount(<PetsFilters {...filterOptions}/>)
   }
 
   // author Cristian
@@ -33,7 +27,7 @@ describe('<PetsFilters />', () => {
 
   // author Dean
   it('should put size filter in separate url param', () => {
-    let sizeFilterAsc = testDefaultFilterState;
+    let sizeFilterAsc = {...testDefaultFilterState};
     sizeFilterAsc.sortDir = "asc";
     sizeFilterAsc.sortType = "size";
     let query = constructQuery(sizeFilterAsc); 
@@ -43,11 +37,25 @@ describe('<PetsFilters />', () => {
 
   // author Dean
   it('should put age filter in separate url param', () => {
-    let ageFilterDesc = testDefaultFilterState;
+    let ageFilterDesc = {...testDefaultFilterState};
     ageFilterDesc.sortDir = "desc";
     ageFilterDesc.sortType = "age";
     let query = constructQuery(ageFilterDesc); 
     expect(query).to.contain("sort=age&dir=desc")
     expect(query).not.to.contain("order_by")
+  })
+
+  // author Dean
+  it('should use 78705 if bad postcode given', () => {
+    let badPostcode = testDefaultFilterState;
+    badPostcode.postcode = 5000;
+    expect(constructQuery(testDefaultFilterState)).to.equal("zip_code=78705&max_dist=1000");
+  })
+
+  // author Dean
+  it('should use user postcode if valid', () => {
+    let badPostcode = testDefaultFilterState;
+    badPostcode.postcode = 90210;
+    expect(constructQuery(testDefaultFilterState)).to.equal("zip_code=90210&max_dist=1000");
   })
 })
