@@ -8,10 +8,6 @@ class Pets4meApiService extends ApiService {
       super('https://api.pets4.me/api');
     }
   }
-
-  getFilterOptions() {
-    return this.fetchJsonAsObject<any>('filter', { })
-  }
 }
 
 export default Pets4meApiService

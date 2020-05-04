@@ -6,7 +6,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
-import { CatBreedsFiltersData, CatBreedsFiltersState, defaultFilterState } from '../../models/CatBreedsFiltersData';
+import { CatBreedsFilterOptions, CatBreedsFiltersState, defaultFilterState } from '../../models/CatBreedsFilterOptions';
 import '../ModelHomepage.css'
 
 const customStyles = {
@@ -61,7 +61,7 @@ const customStyles = {
   }
   
 
-export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatBreedsFiltersState> {
+export class CatBreedsFilters extends React.Component<CatBreedsFilterOptions, CatBreedsFiltersState> {
 
     public sortData: SelectItem[] = [
         {label: "Name", value: "name"},
@@ -82,9 +82,9 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
 
     public nameData: SelectItem[] = [];
 
-    constructor(props: CatBreedsFiltersData) {
+    constructor(props: CatBreedsFilterOptions) {
         super(props);
-        selectifyDataArray(this.props.name_initials, this.nameData);
+        selectifyDataArray(this.props.unique_letters, this.nameData);
         this.state = defaultFilterState;
     }
 
@@ -93,7 +93,7 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
     };
 
     handleFilterUpdate() {
-      this.props.updateFilters(constructQuery(this.props.breeds, this.state));
+      this.props.updateFilters(constructQuery(this.props.cat_breeds, this.state));
     }
 
     render() {
@@ -211,8 +211,8 @@ export class CatBreedsFilters extends React.Component<CatBreedsFiltersData, CatB
                 <ThemeProvider theme={sliderTheme}>
                     <h5>Lifespan (years)</h5>
                     <Slider
-                        defaultValue={[this.props.lifespan_min, this.props.lifespan_max]}
-                        min={this.props.lifespan_min} max={this.props.lifespan_max} valueLabelDisplay='auto'
+                        defaultValue={[this.props.life_span.min, this.props.life_span.max]}
+                        min={this.props.life_span.min} max={this.props.life_span.max} valueLabelDisplay='auto'
                         onChange={(event: any, value: any) => this.setState({minLifespan: value[0], maxLifespan: value[1]})}
                     />
                 </ThemeProvider>

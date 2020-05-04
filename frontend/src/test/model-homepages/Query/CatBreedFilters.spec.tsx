@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
 import { CatBreedsFilters, constructQuery } from '../../../model-homepages/Cats/CatBreedsFilters';
-import { CatBreedsFiltersData } from '../../../models/CatBreedsFiltersData'
+import { CatBreedsFilterOptions } from '../../../models/CatBreedsFilterOptions'
 chai.use(sinonChai)
 
 describe('<CatBreedsFilters />', () => {
@@ -33,7 +33,7 @@ describe('<CatBreedsFilters />', () => {
     "val": 30
     }]
 
-  function mountWithPage(filterOptions: CatBreedsFiltersData) {
+  function mountWithPage(filterOptions: CatBreedsFilterOptions) {
     return mount(<CatBreedsFilters {...filterOptions}/>)
   }
 

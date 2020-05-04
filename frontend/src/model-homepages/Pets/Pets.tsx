@@ -2,25 +2,28 @@ import React from 'react';
 import PetsFilters from './PetsFilters';
 import '../ModelHomepage.css';
 import PetsInfoCards from './PetsInfoCards';
-import Pets4meApiService from '../../common/services/Pets4meApiService'
 import Spinner from "react-bootstrap/Spinner";
-import { PetsFiltersData, petSampleFilterData } from '../../models/PetsFiltersData'
+import { PetsFilterOptions } from '../../models/PetsFilterOptions'
 import { RouteComponentProps } from 'react-router-dom';
 import { Container, Col, Row } from 'react-bootstrap';
+import { Pets4mePetsFilterOptionsService } from '../../common/services/Pets4MeFiltersService';
+import FilterOptionsService from '../../common/services/FiltersService';
 
 interface PetsState {
   filterString: string,
-  filterOptions: PetsFiltersData, 
+  filterOptions: PetsFilterOptions, 
   loading: boolean
 }
+interface PetsProviders { filterOptionsService: FilterOptionsService<PetsFilterOptions> }
 
 export class Pets extends React.Component<RouteComponentProps, PetsState> {
+  static providers: PetsProviders = { filterOptionsService: Pets4mePetsFilterOptionsService }
 
   constructor(props: RouteComponentProps) {
     super(props)
     this.state = {
       filterString: '',
-      filterOptions: petSampleFilterData,
+      filterOptions: {} as PetsFilterOptions,
       loading: true
     }
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
@@ -31,22 +34,14 @@ export class Pets extends React.Component<RouteComponentProps, PetsState> {
   }
 
   componentDidMount() {
-    let apiService = new Pets4meApiService();
+    const filterOptionsService: FilterOptionsService<PetsFilterOptions> = Pets.providers.filterOptionsService
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
-    apiService.getFilterOptions()
-        .then((response: any) => {
-          let filtersData: PetsFiltersData = {
-            ages: response.pets.ages,
-            catBreeds: response.pets.cat_breeds,
-            colors: response.pets.colors,
-            dogBreeds: response.pets.dog_breeds,
-            max_distance: response.pets.max_distance,
-            sizes: response.pets.sizes,
-            updateFilters: this.handleFilterUpdate
-          }
-          this.setState({filterOptions: filtersData, loading: false});
-        })
-        .catch(console.log)
+    filterOptionsService.getFilterOptions()
+    .then((response: PetsFilterOptions) => {
+      response.updateFilters = this.handleFilterUpdate
+      this.setState({filterOptions: response, loading: false});
+    })
+    .catch(console.log)
   }
 
   render() {

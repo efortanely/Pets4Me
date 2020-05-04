@@ -6,6 +6,7 @@ import { Pet } from '../../models/Pet';
 import { DogBreed } from '../../models/DogBreed';
 import { CatBreed } from '../../models/CatBreed';
 import { GetPageOptions } from './ModelInstanceService';
+import ApiService from './ApiService';
 
 const endpoints = {
   shelters: 'shelters',
@@ -16,7 +17,7 @@ const endpoints = {
 
 class Pets4meModelInstanceService<T> implements ModelInstanceService<T> {
   endpoint: string
-  pets4meApiService = new Pets4meApiService()
+  pets4meApiService: ApiService = new Pets4meApiService()
 
   constructor(endpoint: string) {
     this.endpoint = endpoint

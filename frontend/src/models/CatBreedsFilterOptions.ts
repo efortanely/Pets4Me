@@ -1,18 +1,10 @@
-export interface CatBreedsFiltersData {
-    name_initials: string[];
-    breeds: string[];
-    lifespan_min: number;
-    lifespan_max: number;
-    updateFilters: any;
-}
+import { FilterOptions } from './FiltersData'
 
-export let catSampleFilterData = {
-    name_initials: ["A", "B", "C"],
-    breeds: ["Beast of the night", "gary"],
-    lifespan_min: 6,
-    lifespan_max: 15,
-    updateFilters: (arg: any) => console.log("Filter callback not set!")
-} as CatBreedsFiltersData;
+export interface CatBreedsFilterOptions extends FilterOptions {
+    unique_letters: string[];
+    cat_breeds: string[];
+    life_span: { min: number, max: number };
+}
 
 export interface CatBreedsFiltersState {
     nameInitials: string[];

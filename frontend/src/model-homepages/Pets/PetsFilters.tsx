@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Slider from '@material-ui/core/Slider'
-import { PetsFiltersData, PetsFiltersState, defaultFilterState } from '../../models/PetsFiltersData'
+import { PetsFilterOptions, PetsFiltersState, defaultFilterState } from '../../models/PetsFilterOptions'
 import { ThemeProvider } from '@material-ui/core';
 import { sliderTheme, SelectItem, selectifyDataArray } from '../ModelHomepageUtils'
 import '../ModelHomepage.css'
@@ -69,7 +69,7 @@ export const constructQuery = (selectedFilters: PetsFiltersState) => {
     return query;
 }
 
-export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersState> {
+export class PetsFilters extends React.Component<PetsFilterOptions, PetsFiltersState> {
 
     public sortData: SelectItem[] = [
         { label: "Primary breed", value: "primary_dog_breed" },
@@ -91,10 +91,10 @@ export class PetsFilters extends React.Component<PetsFiltersData, PetsFiltersSta
     public sizeData: SelectItem[] = [];
     public ageData: SelectItem[] = [];
 
-    constructor(props: PetsFiltersData) {
+    constructor(props: PetsFilterOptions) {
         super(props);
-        selectifyDataArray(this.props.dogBreeds, this.dogBreedData);
-        selectifyDataArray(this.props.catBreeds, this.catBreedData);
+        selectifyDataArray(this.props.dog_breeds, this.dogBreedData);
+        selectifyDataArray(this.props.cat_breeds, this.catBreedData);
         selectifyDataArray(this.props.colors, this.colorData);
         selectifyDataArray(this.props.sizes, this.sizeData);
         selectifyDataArray(this.props.ages, this.ageData);
