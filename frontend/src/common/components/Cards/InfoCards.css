@@ -1,41 +1,41 @@
 .highlight {
-    background-color: #FFE854;
-    padding: 0;
+  background-color: #ffe854;
+  padding: 0;
 }
 
 h3 {
-    color: #581730;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  color: #581730;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .left-align {
-    text-align: left !important;
-    margin-left: 0;
+  text-align: left !important;
+  margin-left: 0;
 }
 
 .add-compare {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    padding: 0 2px 2px 2px !important;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 0 2px 2px 2px !important;
 }
 
 .compare {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    height: 33px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  height: 33px;
 }
 
 .compare-button-text {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 .icon {
-    height: 20px;
+  height: 20px;
 }
 
 .header-button {
-    margin-right: 10px;
+  margin-right: 10px;
 }

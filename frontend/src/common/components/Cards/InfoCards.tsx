@@ -1,178 +1,228 @@
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Paginator from "../Paginator";
-import Button from 'react-bootstrap/Button';
-import compare from '../../../static/compare.png'
+import Button from "react-bootstrap/Button";
+import compare from "../../../static/compare.png";
 import Container from "react-bootstrap/Container";
 import ModelInstanceService from "../../services/ModelInstanceService";
-import Modal from 'react-modal'
+import Modal from "react-modal";
 import { isNullOrUndefined } from "util";
 import { ObjectsPage } from "../../../models/ObjectsPage";
-import { RouteComponentProps } from 'react-router-dom';
-import './InfoCards.css'
+import { RouteComponentProps } from "react-router-dom";
+import "./InfoCards.css";
 import { Row, Col } from "react-bootstrap";
 
-interface InfoCardsProps extends Partial<RouteComponentProps> { pageNumber: number, filterString: string, itemsPerPage: number }
-interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean, modalIsOpen: boolean, searchParams: URLSearchParams, cardsToCompare: JSX.Element[] }
+interface InfoCardsProps extends Partial<RouteComponentProps> {
+  pageNumber: number;
+  filterString: string;
+  itemsPerPage: number;
+}
+interface InfoCardsState<T> {
+  pageNumber: number;
+  page: ObjectsPage<T>;
+  loading: boolean;
+  modalIsOpen: boolean;
+  searchParams: URLSearchParams;
+  cardsToCompare: JSX.Element[];
+}
 
-abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsState<T>> {
+abstract class InfoCards<T> extends React.Component<
+  InfoCardsProps,
+  InfoCardsState<T>
+> {
   static defaultProps = {
     pageNumber: 1,
     itemsPerPage: 12,
-    filterString: ''
-  }
+    filterString: "",
+  };
 
   constructor(props: InfoCardsProps) {
-    super(props)
+    super(props);
     this.state = {
-        pageNumber: props.pageNumber,
-        page: { objects: [] as T[], total_pages: 0} as ObjectsPage<T>,
-        loading: true,
-        modalIsOpen: false,
-        searchParams: new URLSearchParams(this.props.location?.search),
-        cardsToCompare: []
-    }
+      pageNumber: props.pageNumber,
+      page: { objects: [] as T[], total_pages: 0 } as ObjectsPage<T>,
+      loading: true,
+      modalIsOpen: false,
+      searchParams: new URLSearchParams(this.props.location?.search),
+      cardsToCompare: [],
+    };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.addToCompare = this.addToCompare.bind(this);
     this.props.history?.listen((location) => {
-      this.setState({ searchParams: new URLSearchParams(location.search), pageNumber: 1 }, () => this.loadPage(1))
-    })
+      this.setState(
+        { searchParams: new URLSearchParams(location.search), pageNumber: 1 },
+        () => this.loadPage(1)
+      );
+    });
   }
 
   componentDidMount() {
     this.fetchObjectsPage(this.props.pageNumber)
-        .then(this.updatePage)
-        .catch(console.log)
+      .then(this.updatePage)
+      .catch(console.log);
   }
 
   componentDidUpdate(prevProps: any) {
     if (this.props.filterString !== prevProps.filterString) {
-        this.loadPage(1)
+      this.loadPage(1);
     }
-}
+  }
 
   updatePage = (newPage: ObjectsPage<T>) => {
-    this.setState({ page: newPage, loading: false})
-  }
+    this.setState({ page: newPage, loading: false });
+  };
 
   onPageChange = (pageNumber: number) => {
-    this.loadPage(pageNumber)
-  }
+    this.loadPage(pageNumber);
+  };
 
   loadPage = (pageNumber: number) => {
-    this.setState({ loading: true })
-    this.fetchObjectsPage(pageNumber)
-        .then(this.updatePage)
-        .catch(console.log)
-  }
+    this.setState({ loading: true });
+    this.fetchObjectsPage(pageNumber).then(this.updatePage).catch(console.log);
+  };
 
   getSearchParam = (): string => {
-    return this.state.searchParams.get('search') || ''
-  }
+    return this.state.searchParams.get("search") || "";
+  };
 
   noResults() {
-    return <h5 className='left-align'>No results found for selected filters.</h5>
+    return (
+      <h5 className="left-align">No results found for selected filters.</h5>
+    );
   }
 
   addToCompare(card: JSX.Element) {
     let cards = this.state.cardsToCompare;
     cards.push(card);
-    this.setState({cardsToCompare: cards});
+    this.setState({ cardsToCompare: cards });
   }
 
   clearCompareCards() {
-    this.setState({cardsToCompare: []});
+    this.setState({ cardsToCompare: [] });
   }
 
   openModal() {
-    Modal.setAppElement('#mainContent')
-    this.setState({modalIsOpen: true});
+    Modal.setAppElement("#mainContent");
+    this.setState({ modalIsOpen: true });
   }
 
   closeModal() {
-    this.setState({modalIsOpen: false});
+    this.setState({ modalIsOpen: false });
   }
 
   render() {
     return (
-      <Container fluid className='cards-container'>
-        {
-        this.state.loading ?
-        <Spinner animation='border'><span id='loading' className='sr-only'>Loading...</span></Spinner> : (
+      <Container fluid className="cards-container">
+        {this.state.loading ? (
+          <Spinner animation="border">
+            <span id="loading" className="sr-only">
+              Loading...
+            </span>
+          </Spinner>
+        ) : (
           <div>
-            { this.getNumResults() }
+            {this.getNumResults()}
             <Modal
               isOpen={this.state.modalIsOpen}
               onRequestClose={this.closeModal}
               shouldCloseOnOverlayClick={true}
-              contentLabel="Info Card Comparison">
-              <Button className='header-button' variant='primary' onClick={() => this.closeModal()}>
+              contentLabel="Info Card Comparison"
+            >
+              <Button
+                className="header-button"
+                variant="primary"
+                onClick={() => this.closeModal()}
+              >
                 Close
               </Button>
-              <Button className='header-button' variant='primary' onClick={() => this.clearCompareCards()}>
+              <Button
+                className="header-button"
+                variant="primary"
+                onClick={() => this.clearCompareCards()}
+              >
                 Clear comparisons
               </Button>
               <div></div>
               {this.state.cardsToCompare}
             </Modal>
-            <div>{''}</div>
-            { this.getInfoCards() }
+            <div>{""}</div>
+            {this.getInfoCards()}
           </div>
         )}
-        {!isNullOrUndefined(this.state.page.objects) && this.state.page.objects.length !== 0 && <Paginator initialActive={this.state.pageNumber} numPages={ Math.max(this.state.page.total_pages, 1)} pathName={this.getPathName()} onPageChange={this.onPageChange}/>}
+        {!isNullOrUndefined(this.state.page.objects) &&
+          this.state.page.objects.length !== 0 && (
+            <Paginator
+              initialActive={this.state.pageNumber}
+              numPages={Math.max(this.state.page.total_pages, 1)}
+              pathName={this.getPathName()}
+              onPageChange={this.onPageChange}
+            />
+          )}
       </Container>
-    )
+    );
   }
 
   getNumResults = (): JSX.Element => {
-    if((isNullOrUndefined(this.state.page.objects) || this.state.page.objects.length === 0) && !this.state.loading){
-      return this.noResults() 
+    if (
+      (isNullOrUndefined(this.state.page.objects) ||
+        this.state.page.objects.length === 0) &&
+      !this.state.loading
+    ) {
+      return this.noResults();
     }
 
-    return this.state.loading ? <div></div> : 
-    (
-      <Row className="results-compare">   
+    return this.state.loading ? (
+      <div></div>
+    ) : (
+      <Row className="results-compare">
         <Col xs="auto">
-          <h3 className='left-align'>{this.state.page.num_results} results</h3>
+          <h3 className="left-align">{this.state.page.num_results} results</h3>
         </Col>
         <Col xs="auto">
-          <Button className="compare submit left-align" variant='primary' onClick={() => this.openModal()}>
-            <div className='compare-button-text'>
-              <img className='icon' src={compare} alt='venn diagram'></img>
+          <Button
+            className="compare submit left-align"
+            variant="primary"
+            onClick={() => this.openModal()}
+          >
+            <div className="compare-button-text">
+              <img className="icon" src={compare} alt="venn diagram"></img>
               {`\tCompare selected cards`}
             </div>
           </Button>
         </Col>
       </Row>
-    )
-  }
+    );
+  };
 
   getInfoCards = (): JSX.Element[] => {
-    if(this.state.loading) {
-      return [<Spinner animation='border'><span className='sr-only'>Loading</span></Spinner>]
+    if (this.state.loading) {
+      return [
+        <Spinner animation="border">
+          <span className="sr-only">Loading</span>
+        </Spinner>,
+      ];
     }
-    
-    return this.state.page.objects.map(this.createInfoCard)
-  }
+
+    return this.state.page.objects.map(this.createInfoCard);
+  };
 
   fetchObjectsPage = (pageNumber: number): Promise<ObjectsPage<T>> => {
-    const modelInstanceService: ModelInstanceService<T> = this.getModelInstanceService()
-    return modelInstanceService.getModelPageOfInstances(pageNumber, 
-      { 
-        resultsPerPage: this.props.itemsPerPage,
-        search: this.getSearchParam(), 
-        filterString: this.props.filterString
-      })
-  }
+    const modelInstanceService: ModelInstanceService<T> = this.getModelInstanceService();
+    return modelInstanceService.getModelPageOfInstances(pageNumber, {
+      resultsPerPage: this.props.itemsPerPage,
+      search: this.getSearchParam(),
+      filterString: this.props.filterString,
+    });
+  };
 
-  abstract getModelInstanceService(): ModelInstanceService<T>
+  abstract getModelInstanceService(): ModelInstanceService<T>;
 
-  abstract createInfoCard(o: T, key: any): JSX.Element
+  abstract createInfoCard(o: T, key: any): JSX.Element;
 
   getPathName = (): string => {
-    return this.props.history?.location.pathname || '/'
-  }
+    return this.props.history?.location.pathname || "/";
+  };
 }
 
-export default InfoCards
+export default InfoCards;

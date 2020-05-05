@@ -1,184 +1,188 @@
 .page-heading {
-    padding-left: 15%;
-    padding-bottom: 20px;
-    font-weight: bold;
+  padding-left: 15%;
+  padding-bottom: 20px;
+  font-weight: bold;
 }
 
 .model-homepage-content {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .model-homepage {
-    padding: 10px;
-    height: 100%;
+  padding: 10px;
+  height: 100%;
 }
 
-.model-homepage .container-fluid, .model-homepage-row {
-    height: 100%;
+.model-homepage .container-fluid,
+.model-homepage-row {
+  height: 100%;
 }
 
-.model-homepage-content label, .model-homepage-content input{
-    width: 100%;
-    outline: none;
+.model-homepage-content label,
+.model-homepage-content input {
+  width: 100%;
+  outline: none;
 }
 
-.model-homepage-content-col .sliders{
-    display: flex;
-    flex-direction: row;
+.model-homepage-content-col .sliders {
+  display: flex;
+  flex-direction: row;
 }
 
-.model-homepage-content-col .sliders> *{
-    margin-left: 20px;
-    margin-right: 20px;
+.model-homepage-content-col .sliders > * {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 /* Dropdown Menu */
 .filters {
-    padding-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 
 .icon {
-    height: 20px;
+  height: 20px;
 }
 
 .filters > * {
-    flex-grow: 1;
-    padding: 5px;
-    width: 100%;
+  flex-grow: 1;
+  padding: 5px;
+  width: 100%;
 }
 
-.filters .dropdown{
-    width: 100%;
+.filters .dropdown {
+  width: 100%;
 }
 
-.filters .dropdown-toggle{
-    background-color: white !important;
-    border-color: #581730 !important;
-    color: #581730 !important;
-    text-align: left;
-    width: 100%;
+.filters .dropdown-toggle {
+  background-color: white !important;
+  border-color: #581730 !important;
+  color: #581730 !important;
+  text-align: left;
+  width: 100%;
 }
 
 .dropdown-toggle::after {
-    float: right;
-    transform: translateY(10px);
+  float: right;
+  transform: translateY(10px);
 }
 
-.filters .dropdown-toggle:focus{
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 140, 139, 255) !important;
+.filters .dropdown-toggle:focus {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset,
+    0 0 8px rgba(82, 140, 139, 255) !important;
 }
 
-.filters .dropdown-item:active{
-    background-color: #BFDEDD;
+.filters .dropdown-item:active {
+  background-color: #bfdedd;
 }
 
-.filters .dropdown-menu a{
-    color: #581730;
+.filters .dropdown-menu a {
+  color: #581730;
 }
 
-.filters form{
-    border-color: #581730;
+.filters form {
+  border-color: #581730;
 }
 
-.filters form input{
-    box-sizing: border-box;    
+.filters form input {
+  box-sizing: border-box;
 }
 
 .postcode {
-    height: 50px;
+  height: 50px;
 }
 
-.filters h5{
-    color: #581730;
-    margin-bottom: 0px !important;
-    margin-left: 0px !important;
+.filters h5 {
+  color: #581730;
+  margin-bottom: 0px !important;
+  margin-left: 0px !important;
 }
 
 .model-homepage-content-col {
-    text-align: center;
-    display: grid;
-    width: 100%;
+  text-align: center;
+  display: grid;
+  width: 100%;
 }
 
 .spinner-border {
-    position: relative;
-    height: 3rem !important;
-    width: 3rem !important;
-    display: block !important;
-    top: 50%;
-    left: 50%;
-    margin-top: -1.5rem;
-    margin-left: -1.5rem;
+  position: relative;
+  height: 3rem !important;
+  width: 3rem !important;
+  display: block !important;
+  top: 50%;
+  left: 50%;
+  margin-top: -1.5rem;
+  margin-left: -1.5rem;
 }
 
 .cards-container h3 h5 {
-    text-align: left !important;
-    margin-left: 0;
+  text-align: left !important;
+  margin-left: 0;
 }
 
-.css-2b097c-container{
-    width: 100%;
+.css-2b097c-container {
+  width: 100%;
 }
 
-.css-14jk2my-container{
-    width: 100%;
+.css-14jk2my-container {
+  width: 100%;
 }
 
-.css-yk16xz-control:active{
-    box-shadow: none !important;
-    outline: none !important;
+.css-yk16xz-control:active {
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .css-10ku62j {
-    color:white !important;
+  color: white !important;
 }
 
-.filters h5{
-    color: #581730;
-    margin-bottom: 0px !important;
+.filters h5 {
+  color: #581730;
+  margin-bottom: 0px !important;
 }
 
 .submit-button {
-    width: 100%;
+  width: 100%;
 }
 
-.filters input[type=text], input[type=text]::placeholder{
-    color: #581730;
+.filters input[type="text"],
+input[type="text"]::placeholder {
+  color: #581730;
 }
 
-.filters input[type=text]::placeholder{
-    color: #84747B;
+.filters input[type="text"]::placeholder {
+  color: #84747b;
 }
 
-.filters input:focus{
-    outline-color: #528C8B;
+.filters input:focus {
+  outline-color: #528c8b;
 }
 
 .sort-button-group {
-    text-align: center !important;
-    width: 100%;
+  text-align: center !important;
+  width: 100%;
 }
 
 .sort-button-group > * {
-    z-index: 0 !important;
-    width: 100%;
+  z-index: 0 !important;
+  width: 100%;
 }
 
-.postcode{
-    width: 100%;
+.postcode {
+  width: 100%;
 }
 
 input:focus {
-    outline:none !important;
+  outline: none !important;
 }
 
-.results-compare{
-    padding-top: 10px;
+.results-compare {
+  padding-top: 10px;
 }
 
-.results-compare > *{
-    padding-right: 10px;
+.results-compare > * {
+  padding-right: 10px;
 }
 
 /* End Dropdown Menu */
@@ -186,18 +190,18 @@ input:focus {
 /* Cards */
 
 .cards-container {
-    text-align: center;
-    height: 100% !important;
+  text-align: center;
+  height: 100% !important;
 }
 
 .single-card {
-    display: inline-block;
-    background-color: #966a7d;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 5px;
-    position: relative;
-    width: 350px;
+  display: inline-block;
+  background-color: #966a7d;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+  position: relative;
+  width: 350px;
 }
 
 a.single-card,
@@ -206,32 +210,32 @@ a.single-card:hover {
 }
 
 .card-image {
-    border-color: #ffffff;
-    border-width: 3px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    width: 100%;
-    height: 200px;
-    object-fit: scale-down;
+  border-color: #ffffff;
+  border-width: 3px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 200px;
+  object-fit: scale-down;
 }
 
-.card-text h3{
-    font-size: 20px;
+.card-text h3 {
+  font-size: 20px;
 }
 
 .card-text {
-    background-color: #ffffff;
-    color: #591f34;
-    border-radius: 5px;
-    text-align: center;
-    padding: 5px;
-    font-size: 13px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  background-color: #ffffff;
+  color: #591f34;
+  border-radius: 5px;
+  text-align: center;
+  padding: 5px;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* End Cards */
@@ -239,123 +243,123 @@ a.single-card:hover {
 /* Pagination */
 
 .pagination {
-    top: 100%;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding-bottom: 1rem;
-    position: sticky;
+  top: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 1rem;
+  position: sticky;
 }
 
-.page-item a{
-    color: #581730 !important;
+.page-item a {
+  color: #581730 !important;
 }
 
-.page-item span{
-    color: #966a7d !important;
+.page-item span {
+  color: #966a7d !important;
 }
 
-.page-link:hover{
-    background-color: #bfd9d9 !important;
+.page-link:hover {
+  background-color: #bfd9d9 !important;
 }
 
-.page-item.active .page-link{
-    background-color: #bfd9d9 !important;
-    border-color: #966a7d !important;
-    color: #581730 !important;
+.page-item.active .page-link {
+  background-color: #bfd9d9 !important;
+  border-color: #966a7d !important;
+  color: #581730 !important;
 }
 
-.page-link{
-    border: 1px solid #966a7d !important;
+.page-link {
+  border: 1px solid #966a7d !important;
 }
 
-.page-item a:focus{
-    box-shadow: none !important;
+.page-item a:focus {
+  box-shadow: none !important;
 }
 
 /* End Pagination */
 
-@media screen and (min-width: 700px){
-    .single-card {
-        width: 40%;
-    }
+@media screen and (min-width: 700px) {
+  .single-card {
+    width: 40%;
+  }
 
-    .card-image {
-        height: 300px;
-    }
+  .card-image {
+    height: 300px;
+  }
 }
 
 /* Mobile View */
 @media screen and (max-width: 1299px) {
-    .col-fill {
-        position: relative;
-        flex: auto;
-        width: 100%;
-        height: fit-content;
-    }
+  .col-fill {
+    position: relative;
+    flex: auto;
+    width: 100%;
+    height: fit-content;
+  }
 
-    .results-compare {
-        justify-content: center;
-    }
+  .results-compare {
+    justify-content: center;
+  }
 }
 
-@media screen and (min-width: 1300px){
-    .model-homepage-content {
-        flex-direction: row;
-    }
+@media screen and (min-width: 1300px) {
+  .model-homepage-content {
+    flex-direction: row;
+  }
 
-    .model-homepage-content-col{
-        display: flex;
-        flex-direction: column;
-    }
+  .model-homepage-content-col {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .model-homepage-content input[type=text] {
-        width: 200px;
-        margin-top: 10px;
-    }
+  .model-homepage-content input[type="text"] {
+    width: 200px;
+    margin-top: 10px;
+  }
 
-    .model-homepage-content-col .sliders .slider2{
-        width: 200px;
-    }
+  .model-homepage-content-col .sliders .slider2 {
+    width: 200px;
+  }
 
-    .col-static {
-        position: relative;
-        max-width: "fit-content" !important;
-        min-width: "fit-content" !important;
-    }
+  .col-static {
+    position: relative;
+    max-width: "fit-content" !important;
+    min-width: "fit-content" !important;
+  }
 
-    .col-custom-10 {
-        position: relative;
-        flex: 0 0 80%;
-    }
+  .col-custom-10 {
+    position: relative;
+    flex: 0 0 80%;
+  }
 
-    .filters {
-        position: relative;
-        display: block;
-        width: 250px;
-        height: 50%;
-    }
+  .filters {
+    position: relative;
+    display: block;
+    width: 250px;
+    height: 50%;
+  }
 
-    .filters > * {
-        text-align: left;
-        width: 250px;
-    }
+  .filters > * {
+    text-align: left;
+    width: 250px;
+  }
 
-    .filters .dropdown{
-        width: 300px;
-    }
+  .filters .dropdown {
+    width: 300px;
+  }
 
-    .filters .dropdown-toggle{
-        width: 100%;
-    }
+  .filters .dropdown-toggle {
+    width: 100%;
+  }
 
-    .single-card {
-        max-width: 325px;
-        width: 30%;
-    }
+  .single-card {
+    max-width: 325px;
+    width: 30%;
+  }
 
-    .cards-container {
-        text-align: left;
-        height: 100% !important;
-    }
+  .cards-container {
+    text-align: left;
+    height: 100% !important;
+  }
 }
