@@ -53,7 +53,7 @@ export class Pets extends React.Component<RouteComponentProps, PetsState> {
               {this.state.loading ? <div className='filters'><Spinner animation='border'></Spinner></div> :
                 <PetsFilters {...this.state.filterOptions}/> }
             </Col>
-            <Col className='cards-container'  bsPrefix="col-custom-10 col-fill">
+            <Col bsPrefix="col-custom-10 col-fill">
               <PetsInfoCards {...this.props} filterString={this.state.filterString} />
             </Col>
           </Row>
