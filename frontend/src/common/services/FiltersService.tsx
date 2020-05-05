@@ -1,7 +1,7 @@
-import { FilterOptions } from '../../models/FiltersData';
+import { FilterOptions } from "../../models/FiltersData";
 
 interface FilterOptionsService<T extends FilterOptions> {
-  getFilterOptions(): Promise<T>
+  getFilterOptions(): Promise<T>;
 }
 
-export default FilterOptionsService
+export default FilterOptionsService;

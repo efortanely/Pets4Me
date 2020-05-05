@@ -1,3 +1,3 @@
 export interface FilterOptions {
-  updateFilters: any
+  updateFilters: any;
 }
