@@ -11,13 +11,13 @@ function SearchResults(props: RouteComponentProps) {
     <Container>
       <h1>Search Results</h1>
       <h2>Pets</h2>
-      <PetsInfoCards {...props} itemsPerPage={3}/>
+      <PetsInfoCards {...props} itemsPerPage={3} queryPrefix='pets-'/>
       <h2>Dog Breeds</h2>
-      <DogBreedsInfoCards {...props} itemsPerPage={3}/>
+      <DogBreedsInfoCards {...props} itemsPerPage={3} queryPrefix='dog-breeds-'/>
       <h2>Cat Breeds</h2>
-      <CatBreedsInfoCards {...props} itemsPerPage={3}/>
+      <CatBreedsInfoCards {...props} itemsPerPage={3} queryPrefix='cat-breeds-'/>
       <h2>Shelters</h2>
-      <SheltersInfoCards {...props} itemsPerPage={3}/>
+      <SheltersInfoCards {...props} itemsPerPage={3} queryPrefix='shelters-'/>
     </Container>
   )
 }

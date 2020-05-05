@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Col } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { updateOrAppendQuery } from "../useQuery";
 
 interface SearchBarProps extends RouteComponentProps { }
 interface SearchBarState { searchOption: string }
@@ -26,8 +27,15 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     let selectValue: string = this.getFormValueFromEvent(event, this.selectId)
-    let inputValue : string = this.getFormValueFromEvent(event, this.inputId)
-    this.props.history.push(`${this.optionsToRoute(selectValue)}?search=${encodeURIComponent(inputValue)}`)
+    let inputValue : string = encodeURIComponent(this.getFormValueFromEvent(event, this.inputId))
+    let route = this.optionsToRoute(selectValue)
+    if(route === this.props.location.pathname){
+      route = `${route}${updateOrAppendQuery(this.props.location.search, 'search', inputValue)}`
+    }
+    else {
+      route = `${route}?search=${inputValue}`
+    }
+    this.props.history.push(route)
     event.preventDefault()
   }
 

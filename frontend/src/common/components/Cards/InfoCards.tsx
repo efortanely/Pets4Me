@@ -11,15 +11,17 @@ import { ObjectsPage } from "../../../models/ObjectsPage";
 import { RouteComponentProps } from 'react-router-dom';
 import './InfoCards.css'
 import { Row } from "react-bootstrap";
+import { updateOrAppendQuery } from "../../useQuery";
 
-interface InfoCardsProps extends Partial<RouteComponentProps> { pageNumber: number, filterString: string, itemsPerPage: number }
+interface InfoCardsProps extends Partial<RouteComponentProps> { pageNumber: number, filterString: string, itemsPerPage: number, queryPrefix: string }
 interface InfoCardsState<T> { pageNumber: number, page: ObjectsPage<T>, loading: boolean, modalIsOpen: boolean, searchParams: URLSearchParams, cardsToCompare: JSX.Element[] }
 
 abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsState<T>> {
   static defaultProps = {
     pageNumber: 1,
     itemsPerPage: 12,
-    filterString: ''
+    filterString: '',
+    queryPrefix: ''
   }
 
   constructor(props: InfoCardsProps) {
@@ -41,6 +43,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
   }
 
   componentDidMount() {
+    this.setPageQuery(this.props.pageNumber)
     this.fetchObjectsPage(this.props.pageNumber)
         .then(this.updatePage)
         .catch(console.log)
@@ -57,7 +60,14 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
   }
 
   onPageChange = (pageNumber: number) => {
+    this.setPageQuery(pageNumber)
     this.loadPage(pageNumber)
+  }
+
+  setPageQuery = (pageNumber: number) => {
+    console.log(this.props.queryPrefix)
+    console.log(this.props.location?.search)
+    this.props.history?.push(`${this.props.location!.pathname}${updateOrAppendQuery(this.props.history.location!.search, `${this.props.queryPrefix}page`, `${pageNumber}`)}`)
   }
 
   loadPage = (pageNumber: number) => {
