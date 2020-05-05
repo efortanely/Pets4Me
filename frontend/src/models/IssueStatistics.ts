@@ -1,13 +1,13 @@
 export interface IssuesStatistics {
-  statistics: Statistics
+  statistics: Statistics;
 }
 
 export interface Statistics {
-  counts: Counts
+  counts: Counts;
 }
 
 export interface Counts {
-  all: number
-  closed: number
-  opened: number
+  all: number;
+  closed: number;
+  opened: number;
 }

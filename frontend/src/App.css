@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Quicksand&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 
-html{
-  margin:0;
-  padding:0;
+html {
+  margin: 0;
+  padding: 0;
   height: 100vh;
   max-height: 100vh;
 }
@@ -17,10 +17,10 @@ body > #root > div {
 }
 
 .App {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-a:hover{
+a:hover {
   text-decoration: none !important;
 }
 
@@ -41,20 +41,20 @@ a:hover{
 
 .filters .active {
   background-color: #581730 !important;
-  border-color: #641A34 !important;
+  border-color: #641a34 !important;
 }
 
 .btn-primary:hover {
   background-color: #581730 !important;
-  box-shadow: 0 0 0 .25rem rgba(88, 23, 48, .5) !important;
-  border-color: #641A34 !important;
+  box-shadow: 0 0 0 0.25rem rgba(88, 23, 48, 0.5) !important;
+  border-color: #641a34 !important;
 }
 
 .btn-primary.focus {
-  box-shadow: 0 0 0 .25rem rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 1) !important;
 }
 
 .btn-primary:focus {
   background-color: #581730 !important;
-  box-shadow: 0 0 0 .25rem rgba(88, 23, 48, .5) !important;
+  box-shadow: 0 0 0 0.25rem rgba(88, 23, 48, 0.5) !important;
 }
