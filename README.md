@@ -2,6 +2,7 @@
 Our goal is to make finding a new furry friend as easy as possible. Explore the best fit for your lifestyle with our dog and cat breed search engine, or jump right into discovering pets at your local shelters.
 
 ## Members
+
 * Andrew Cramer
     * EID: ac49725
     * Gitlab ID: acramer
@@ -13,41 +14,59 @@ Our goal is to make finding a new furry friend as easy as possible. Explore the 
     * EID: emf2283
     * Gitlab ID: codesmary
     * Estimated Time to Completion: 30 hrs
-    * Actual Time to Completion: 44 hrs
+    * Actual Time to Completion: 42 hrs
 
 
 * Connor Sheehan 
     * EID: cps2255
     * Gitlab ID: connor6321
     * Estimated Time to Completion: 30 hrs
-    * Actual Time to Completion: 34 hrs
+    * Actual Time to Completion: 32 hrs
 
 
 * Dean Torkelson
     * EID: dt24566
     * Gitlab ID: deantorkelson
     * Estimated Time to Completion: 30 hrs
-    * Actual Time to Completion: 33 hrs
+    * Actual Time to Completion: 35 hrs
 
 
 * Cristan Garza
     * EID: cg42574
     * Gitlab ID: CristianGarza
     * Estimated Time to Completion: 30 hrs
-    * Actual Time to Completion: 30 hrs
+    * Actual Time to Completion: 36 hrs
 
 
 * Robert Hrusecky
     * EID: reh3279
     * Gitlab ID: robert-hrusecky
     * Estimated Time to Completion: 30 hrs
-    * Actual Time to Completion:35 hrs
+    * Actual Time to Completion:31 hrs
 
-Git SHA: 84351f57ca24509de55b1d7e833690449b65cf0d
+## Project Info
+
+### Leaders
 
 Phase One Project Leader: Connor Sheehan
+
 Phase Two Project Leader: Dean Torkelson
+
 Phase Three Project Leader: Rosemary Fortanely
+
+Phase Four Project Leader: Robert Hrusecky
+
+
+### Test Locations
+
+Frontend tests are in `frontend/src/test/*.spec.tsx` files
+Selenium tests are in `frontend/src/test/guitest.tsx`
+Postman tests are in `backend/postman_api_test.json`
+Backend tests are in `backend/**/*_test.py files`
+
+### Other
+
+Git SHA: TODO: Will fill this in with final commit
 
 [API Docs](https://documenter.getpostman.com/view/10430017/SzYYzJDX?version=latest)
 
@@ -55,11 +74,7 @@ Phase Three Project Leader: Rosemary Fortanely
 
 [Pipelines](https://gitlab.com/acramer/pets4me/pipelines)
 
-Tests:
-    Frontend tests are in frontend/src/test/*.spec.tsx files
-    Selenium tests are in frontend/src/test/guitest.tsx
-    Postman tests are in backend/postman_api_test.json
-    Backend tests are in backend/extensions/*_test.py files
+[Presentation](https://www.youtube.com/watch?v=oE28pBfLF-0)
 
 ## Overall Setup
 
