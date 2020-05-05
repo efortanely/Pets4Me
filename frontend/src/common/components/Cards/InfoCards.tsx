@@ -96,7 +96,7 @@ abstract class InfoCards<T> extends React.Component<InfoCardsProps, InfoCardsSta
 
   render() {
     return (
-      <Container fluid>
+      <Container fluid className='cards-container'>
         {
         this.state.loading ?
         <Spinner animation='border'><span id='loading' className='sr-only'>Loading...</span></Spinner> : (
