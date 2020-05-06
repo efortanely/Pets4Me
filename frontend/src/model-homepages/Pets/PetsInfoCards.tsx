@@ -1,21 +1,33 @@
-import React from 'react';
-import Pets4mePetsServiceContext from '../../common/services/Pets4mePetsService';
-import InfoCards from '../../common/components/Cards/InfoCards';
-import PetCard from '../../common/components/Cards/PetCard';
-import { Pet } from '../../models/Pet';
+import React from "react";
+import InfoCards from "../../common/components/Cards/InfoCards";
+import PetCard from "../../common/components/Cards/PetCard";
+import { Pet } from "../../models/Pet";
+import ModelInstanceService from "../../common/services/ModelInstanceService";
+import { Pets4mePetsService } from "../../common/services/Pets4meModelInstanceService";
+
+interface PetsInfoCardsProviders {
+  petsService: ModelInstanceService<Pet>;
+}
 
 class PetsInfoCards extends InfoCards<Pet> {
-    static contextType = Pets4mePetsServiceContext
-    
-    componentDidUpdate(prevProps: any) {
-        if (this.props.filterString !== prevProps.filterString) {
-            this.onPageChange(1);
-        }
-    }
+  static providers: PetsInfoCardsProviders = {
+    petsService: Pets4mePetsService,
+  };
 
-    createInfoCard = (o: Pet, key: any): JSX.Element => {
-        return <PetCard searchWords={Array.from(this.state.searchParams.values())} key={`pet-card-${key}`} info={o} />
-    }
-} 
+  getModelInstanceService = (): ModelInstanceService<Pet> => {
+    return PetsInfoCards.providers.petsService;
+  };
 
-export default PetsInfoCards
+  createInfoCard = (o: Pet, key: any): JSX.Element => {
+    return (
+      <PetCard
+        searchWords={Array.from(this.state.searchParams.values())}
+        key={`pet-card-${key}`}
+        info={o}
+        addToCompare={this.addToCompare}
+      />
+    );
+  };
+}
+
+export default PetsInfoCards;

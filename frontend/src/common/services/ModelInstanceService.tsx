@@ -1,8 +1,17 @@
-import { ObjectsPage as ModelPage } from '../../models/ObjectsPage';
+import { ObjectsPage as ModelPage } from "../../models/ObjectsPage";
 
-interface ModelInstanceService<T> {
-  getModelPageOfInstances(pageNumber: number, search?: string, filterString?: string): Promise<ModelPage<T>>
-  getInstanceById(id: string): Promise<T>
+export interface GetPageOptions {
+  resultsPerPage?: number;
+  filterString?: string;
+  search?: string;
 }
 
-export default ModelInstanceService
+interface ModelInstanceService<T> {
+  getModelPageOfInstances(
+    pageNumber: number,
+    options?: GetPageOptions
+  ): Promise<ModelPage<T>>;
+  getInstanceById(id: string): Promise<T>;
+}
+
+export default ModelInstanceService;

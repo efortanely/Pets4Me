@@ -8,7 +8,11 @@ import requests
 from util.sql import escape_like
 import pgeocode
 import sys
+from youtube_search import YoutubeSearch
+from html import unescape
+from html.parser import HTMLParser
 from .pets4me_api import Pet, DogBreed, CatBreed, Shelter, db
+import wikipedia
 
 
 class CommonAPI:
@@ -52,8 +56,9 @@ def parse_range(range_str):
 class DogAPI(CommonAPI):
     def __init__(self):
         super().__init__("https://api.thedogapi.com")
+        self.unescape = HTMLParser().unescape
 
-    def parse_dog_breed(self, breed):
+    def parse_dog_breed(self, breed, unescape):
         name = breed.get("name", None)
         life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
         height_imperial_low, height_imperial_high = parse_range(
@@ -62,6 +67,28 @@ class DogAPI(CommonAPI):
         weight_imperial_low, weight_imperial_high = parse_range(
             breed.get("weight", {}).get("imperial", "")
         )
+
+        results = json.loads(YoutubeSearch(name + " Dogs 101", max_results=1).to_json())
+        if len(results["videos"]):
+            video_url = "https://youtube.com" + results["videos"][0]["link"]
+        else:
+            video_url = None
+
+        try:
+            description = unescape(
+                re.match("([\S ]+\n{0,2})+\n==", wikipedia.page(name + " dog").content)
+                .group(0)[:-2]
+                .strip()
+            )
+        except:
+            try:
+                description = unescape(
+                    re.match("([\S ]+\n{0,2})+\n==", wikipedia.page(name).content)
+                    .group(0)[:-2]
+                    .strip()
+                )
+            except:
+                description = None
 
         return DogBreed(
             name=name,
@@ -75,6 +102,8 @@ class DogAPI(CommonAPI):
             bred_for=breed.get("bred_for", None),
             breed_group=breed.get("breed_group", None),
             photo=self.get_photo(breed.get("id", None)),
+            video_url=video_url,
+            description=description,
         )
 
     def get_photo(self, breed_id):
@@ -88,7 +117,9 @@ class DogAPI(CommonAPI):
 
     def find_breed(self, query):
         result = json.loads(self.get(f"/v1/breeds/search?q={query}"))
-        return self.parse_dog_breed(result[0]) if len(result) > 0 else None
+        return (
+            self.parse_dog_breed(result[0], self.unescape) if len(result) > 0 else None
+        )
 
     def get_breeds(self):
         breeds_response = self.get("/v1/breeds")
@@ -96,17 +127,40 @@ class DogAPI(CommonAPI):
         breeds = []
 
         for breed in breeds_response_data:
-            breeds.append(self.parse_dog_breed(breed))
+            breeds.append(self.parse_dog_breed(breed, self.unescape))
         return breeds
 
 
 class CatAPI(CommonAPI):
     def __init__(self):
         super().__init__("https://api.thecatapi.com")
+        self.unescape = HTMLParser().unescape
 
-    def parse_cat_breed(self, breed):
+    def parse_cat_breed(self, breed, unescape):
         name = breed.get("name", None)
         life_span_low, life_span_high = parse_range(breed.get("life_span", ""))
+
+        results = json.loads(YoutubeSearch(name + " Cats 101", max_results=1).to_json())
+        if len(results["videos"]):
+            video_url = "https://youtube.com" + results["videos"][0]["link"]
+        else:
+            video_url = None
+
+        try:
+            description = unescape(
+                re.match("([\S ]+\n{0,2})+\n==", wikipedia.page(name + " cat").content)
+                .group(0)[:-2]
+                .strip()
+            )
+        except:
+            try:
+                description = unescape(
+                    re.match("([\S ]+\n{0,2})+\n==", wikipedia.page(name).content)
+                    .group(0)[:-2]
+                    .strip()
+                )
+            except:
+                description = None
 
         return CatBreed(
             name=name,
@@ -124,6 +178,8 @@ class CatAPI(CommonAPI):
             child_friendly=breed.get("child_friendly", None),
             grooming_level=breed.get("grooming", None),
             photo=self.get_photo(breed.get("id", None)),
+            video_url=video_url,
+            description=description,
         )
 
     def get_photo(self, breed_id):
@@ -137,7 +193,9 @@ class CatAPI(CommonAPI):
 
     def find_breed(self, query):
         result = json.loads(self.get(f"/v1/breeds/search?q={query}"))
-        return self.parse_cat_breed(result[0]) if len(result) > 0 else None
+        return (
+            self.parse_cat_breed(result[0], self.unescape) if len(result) > 0 else None
+        )
 
     def get_breeds(self):
         breeds_response = self.get("/v1/breeds")
@@ -145,7 +203,7 @@ class CatAPI(CommonAPI):
         breeds = []
 
         for breed in breeds_response_data:
-            breeds.append(self.parse_cat_breed(breed))
+            breeds.append(self.parse_cat_breed(breed, self.unescape))
         return breeds
 
 
@@ -175,7 +233,7 @@ def extract_photos(photos):
     return (list(small), list(full))
 
 
-def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
+def parse_pet(animal, shelter, dog_breed_map, cat_breed_map, unescape):
     photos_small, photos_full = extract_photos(animal.get("photos", []))
 
     primary_dog_breed = None
@@ -200,6 +258,10 @@ def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
             if secondary_str is not None:
                 secondary_cat_breed = cat_breed_map[secondary_str]
 
+    description = animal.get("description", None)
+    if description:
+        description = unescape(description)
+
     return Pet(
         name=animal.get("name", None),
         species=animal.get("species", None),
@@ -216,16 +278,22 @@ def parse_pet(animal, shelter, dog_breed_map, cat_breed_map):
         photos_full=photos_full,
         color=animal.get("colors", {}).get("primary", None),
         age=animal.get("age", None),
-        description=animal.get("description", None),
+        description=description,
         url=animal.get("url", None),
     )
 
 
-def parse_shelter(shelter, nomi):
+def parse_shelter(shelter, nomi, unescape):
     address = shelter.get("address", {})
     policy_dict = shelter.get("adoption", {})
     photos_small, photos_full = extract_photos(shelter.get("photos", []))
     postcode = address.get("postcode", None)
+    mission = shelter.get("mission_statement", None)
+    adoption_policy = policy_dict.get("policy", policy_dict.get("url", None))
+    if mission:
+        mission = unescape(mission)
+    if adoption_policy:
+        adoption_policy = unescape(adoption_policy)
 
     if postcode:
         geo_data = nomi.query_postal_code(postcode)
@@ -248,8 +316,8 @@ def parse_shelter(shelter, nomi):
         photos_full=photos_full,
         email=shelter.get("email", None),
         phone_number=shelter.get("phone", None),
-        mission=shelter.get("mission_statement", None),
-        adoption_policy=policy_dict.get("policy", policy_dict.get("url", None)),
+        mission=mission,
+        adoption_policy=adoption_policy,
         latitude=latitude,
         longitude=longitude,
         has_cats=0,
@@ -268,8 +336,10 @@ class PetAPI(OAuthAPI):
             token_url="/v2/oauth2/token",
         )
         self.shelter_cache = {}
+        self.manual_cat_breed_mappings = {"Domestic Short Hair": "American Shorthair"}
         self.reset_requests()
         self.nomi = pgeocode.Nominatim("us")
+        self.unescape = HTMLParser().unescape
 
     def reset_requests(self):
         self.requests = 0
@@ -330,6 +400,17 @@ class PetAPI(OAuthAPI):
 
                 breed = dog_api.find_breed(breed_str)
                 if breed is not None:
+                    # Since the API does not search for an exact match, there is a
+                    # chance this breed is already in the database
+                    new_name = breed.name
+                    existing_breed = (
+                        db.session.query(DogBreed)
+                        .filter(DogBreed.name.ilike(escape_like(new_name), escape="\\"))
+                        .first()
+                    )
+                    if existing_breed is not None:
+                        breed = existing_breed
+                        break
                     new_breeds.append(breed)
                     break
 
@@ -350,6 +431,8 @@ class PetAPI(OAuthAPI):
             long_breed = b["name"]
             breed = None
             for breed_str in re.split(r"\s*[/\\]\s*", long_breed):
+                if breed_str in self.manual_cat_breed_mappings:
+                    breed_str = self.manual_cat_breed_mappings[breed_str]
                 breed = (
                     db.session.query(CatBreed)
                     .filter(CatBreed.name.ilike(escape_like(breed_str), escape="\\"))
@@ -374,6 +457,17 @@ class PetAPI(OAuthAPI):
 
                 breed = cat_api.find_breed(breed_str)
                 if breed is not None:
+                    # Since the API does not search for an exact match, there is a
+                    # chance this breed is already in the database
+                    new_name = breed.name
+                    existing_breed = (
+                        db.session.query(CatBreed)
+                        .filter(CatBreed.name.ilike(escape_like(new_name), escape="\\"))
+                        .first()
+                    )
+                    if existing_breed is not None:
+                        breed = existing_breed
+                        break
                     new_breeds.append(breed)
                     break
 
@@ -398,7 +492,9 @@ class PetAPI(OAuthAPI):
                     shelter.has_dogs = 1
             else:
                 shelter = None
-            animals.append(parse_pet(animal, shelter, dog_breed_map, cat_breed_map))
+            animals.append(
+                parse_pet(animal, shelter, dog_breed_map, cat_breed_map, self.unescape)
+            )
         return animals
 
     def get_shelter(self, pf_id):
@@ -408,7 +504,7 @@ class PetAPI(OAuthAPI):
                 sys.exit("Error: " + response["title"])
 
             self.shelter_cache[pf_id] = parse_shelter(
-                response["organization"], self.nomi
+                response["organization"], self.nomi, self.unescape
             )
 
         return self.shelter_cache[pf_id]
@@ -419,5 +515,5 @@ class PetAPI(OAuthAPI):
         )
         shelters = []
         for shelter in shelter_generator:
-            shelters.append(parse_shelter(shelter, self.nomi))
+            shelters.append(parse_shelter(shelter, self.nomi, self.unescape))
         return shelters

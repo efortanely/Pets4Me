@@ -1,143 +1,195 @@
-import 'jsdom-global/register'
-import React from 'react'
-import { configure, mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
-import chai, { expect } from 'chai'
-import DogBreedInstancePage from '../../../model-instancepages/Breeds/DogBreedInstancePage'
-import { Pets4meDogBreedsService } from '../../../common/services/Pets4meDogBreedsService';
-import { DogBreed } from '../../../models/DogBreed';
-import Adapter from 'enzyme-adapter-react-16';
-import { spy } from 'sinon'
-import sinonChai from 'sinon-chai'
-import DogBreedsService from '../../../common/services/DogBreedsService';
-import { MemoryRouter } from 'react-router-dom';
-import ModelInstanceService from '../../../common/services/ModelInstanceService';
-chai.use(sinonChai)
+import "jsdom-global/register";
+import React from "react";
+import {
+  configure,
+  mount,
+  shallow,
+  ShallowWrapper,
+  ReactWrapper,
+} from "enzyme";
+import chai, { expect } from "chai";
+import DogBreedInstancePage from "../../../model-instancepages/Breeds/DogBreedInstancePage";
+import { DogBreed } from "../../../models/DogBreed";
+import Adapter from "enzyme-adapter-react-16";
+import { spy } from "sinon";
+import sinonChai from "sinon-chai";
+import { MemoryRouter } from "react-router-dom";
+import ModelInstanceService from "../../../common/services/ModelInstanceService";
+import { mockModelInstanceService } from "../../TestMocks";
+chai.use(sinonChai);
 
+describe("<DogBreedInstancePage />", () => {
+  let testComponent: ShallowWrapper;
+  let testBreed: DogBreed;
+  let mobile_elements: any;
+  let desktop_elements: any;
+  const emptyBreed = {} as DogBreed;
 
-describe('<DogBreedInstancePage />', () => {
-  let testComponent: ShallowWrapper
-  let testBreed: DogBreed
-  let elements: any
-  const emptyBreed = { } as DogBreed
+  function spyOnDogBreedsService(breed?: DogBreed) {
+    let testDogBreedsService: ModelInstanceService<DogBreed> = mockModelInstanceService<
+      DogBreed
+    >(breed);
 
-  function spyOnDogBreedsService(breed: DogBreed) {
-    let testPets4meDogBreedsService = new Pets4meDogBreedsService()
-    let getDogBreedSpy = spy((breed_id: string) => new Promise<DogBreed>(() => breed))
-    testPets4meDogBreedsService.getInstanceById = getDogBreedSpy
+    DogBreedInstancePage.providers.dogBreedsService = testDogBreedsService;
 
-    let testContext = React.createContext<ModelInstanceService<DogBreed>>(testPets4meDogBreedsService)
-    DogBreedInstancePage.contextType = testContext
-
-    return getDogBreedSpy
+    return testDogBreedsService;
   }
 
   function mountWithBreed(breed: DogBreed, breed_id: string = `${breed.id}`) {
-    return mount(<MemoryRouter><DogBreedInstancePage
-      breed={breed}
-      match={{params: { breed_id: `${breed_id}` }, isExact: true, path: "", url: ""}}
-    /></MemoryRouter>)
+    return mount(
+      <MemoryRouter>
+        <DogBreedInstancePage
+          breed={breed}
+          match={{
+            params: { breed_id: `${breed_id}` },
+            isExact: true,
+            path: "",
+            url: "",
+          }}
+        />
+      </MemoryRouter>
+    );
   }
 
   function shallowWithBreed(breed: DogBreed, breed_id: string = `${breed.id}`) {
-    testComponent = shallow(<DogBreedInstancePage
-      breed={breed}
-      match={{params: { breed_id: `${breed.id}` }, isExact: true, path: "", url: ""}}
-    />)
+    testComponent = shallow(
+      <DogBreedInstancePage
+        breed={breed}
+        match={{
+          params: { breed_id: `${breed.id}` },
+          isExact: true,
+          path: "",
+          url: "",
+        }}
+      />
+    );
   }
-  
+
   beforeEach(() => {
     configure({ adapter: new Adapter() });
-    if(testComponent) {
-      testComponent = testComponent.unmount()
+    if (testComponent) {
+      testComponent = testComponent.unmount();
     }
-    
+
     testBreed = {
       id: 1,
-      name: 'foo',
-      breed_group: 'bar',
-      life_span: {low: 5, high: 6},
-      height_imperial: {low: 7, high: 11},
-      weight_imperial: {low: 4, high: 20},
-      temperament: 'foobar',
-      bred_for: 'barfoo',
+      name: "foo",
+      breed_group: "bar",
+      life_span: { low: 5, high: 6 },
+      height_imperial: { low: 7, high: 11 },
+      weight_imperial: { low: 4, high: 20 },
+      temperament: "foobar",
+      bred_for: "barfoo",
       dog_ids: [1, 2],
-      local_shelters_with_breed: [1],
-      photo: ''
-    }
+      shelters_with_breed: [1],
+      photo: "",
+      video_url: "",
+      description: "I'm a good dog breed.",
+    };
 
-    elements = {
-      name: () => testComponent.find('#name'),
-      group: () => testComponent.find('#group'),
-      lifeSpan: () => testComponent.find('#life-span'),
-      height: () => testComponent.find('#height'),
-      weight: () => testComponent.find('#weight'),
-      temperament: () => testComponent.find('#temperament'),
-      bredFor: () => testComponent.find('#bred-for'),
-      petsWithBreed: () => testComponent.find('#pets-with-breed'),
-      sheltersWithBreed: () => testComponent.find('#shelters-with-breed')
-    }
-  })
+    let mobileComponent = () => testComponent.find(".mobile");
+    let desktopComponent = () => testComponent.find(".desktop");
 
-  // author Connor
-  it('should not crash when breed is empty', () => {
-    shallowWithBreed(emptyBreed)
-    expect(testComponent.html()).to.exist
-  })
+    mobile_elements = {
+      name: () => mobileComponent().find("#name"),
+      group: () => mobileComponent().find("#group"),
+      lifeSpan: () => mobileComponent().find("#life-span"),
+      height: () => mobileComponent().find("#height"),
+      weight: () => mobileComponent().find("#weight"),
+      temperament: () => mobileComponent().find("#temperament"),
+      bredFor: () => mobileComponent().find("#bred-for"),
+      about: () => mobileComponent().find("#about"),
+    };
 
-  // author Connor
-  it('should not crash when DogBreed is undefined', () => {
-    spyOnDogBreedsService(testBreed)
-    let testPage = mount(<DogBreedInstancePage
-      breed={undefined}
-      match={{params: { breed_id: `${testBreed.id}` }, isExact: true, path: "", url: ""}}
-    />)
-
-    expect(testPage.html()).to.exist
-  })
+    desktop_elements = {
+      name: () => desktopComponent().find("#name"),
+      group: () => desktopComponent().find("#group"),
+      lifeSpan: () => desktopComponent().find("#life-span"),
+      height: () => desktopComponent().find("#height"),
+      weight: () => desktopComponent().find("#weight"),
+      temperament: () => desktopComponent().find("#temperament"),
+      bredFor: () => desktopComponent().find("#bred-for"),
+      about: () => mobileComponent().find("#about"),
+    };
+  });
 
   // author Connor
-  it('should not crash when api DogBreed is empty', () => {
-    spyOnDogBreedsService(emptyBreed)
-    let testPage: ReactWrapper<DogBreedInstancePage> = mountWithBreed(emptyBreed)
-    testPage.setState(emptyBreed)
-
-    expect(testPage.html()).to.exist
-  })
+  it("should not crash when breed is empty", () => {
+    shallowWithBreed(emptyBreed);
+    expect(testComponent.html()).to.exist;
+  });
 
   // author Connor
-  it('should render all details', () => {
+  it("should not crash when DogBreed is undefined", () => {
+    spyOnDogBreedsService(undefined);
+    let testPage = mountWithBreed({} as DogBreed, "1");
 
-    shallowWithBreed(testBreed)
-
-    expect(elements.name().text()).to.include(testBreed.name)
-    expect(elements.group().text()).to.include(testBreed.breed_group)
-    expect(elements.lifeSpan().text()).to.include(testBreed.life_span.low)
-        .and.to.include(testBreed.life_span.high)
-    expect(elements.height().text()).to.include(testBreed.height_imperial.low)
-        .and.to.include(testBreed.height_imperial.high)
-    expect(elements.weight().text()).to.include(testBreed.weight_imperial.low)
-        .and.to.include(testBreed.weight_imperial.high)
-    expect(elements.temperament().text()).to.include(testBreed.temperament)
-    expect(elements.bredFor().text()).to.include(testBreed.bred_for)
-    expect(elements.petsWithBreed().text()).to.include(testBreed.dog_ids.length)
-    expect(elements.sheltersWithBreed().text()).to.include(testBreed.local_shelters_with_breed.length)
-  })
+    expect(testPage.html()).to.exist;
+  });
 
   // author Connor
-  it('should GET breed on component mount if no breed supplied in props', () => {
-    let getDogBreedSpy = spyOnDogBreedsService(testBreed)
+  it("should not crash when api DogBreed is empty", () => {
+    spyOnDogBreedsService(emptyBreed);
+    let testPage: ReactWrapper<DogBreedInstancePage> = mountWithBreed(
+      emptyBreed
+    );
+    testPage.setState(emptyBreed);
 
-    mountWithBreed(emptyBreed, `${testBreed.id}`)
+    expect(testPage.html()).to.exist;
+  });
 
-    expect(getDogBreedSpy).to.have.been.calledWith(`${testBreed.id}`)
-  })
+  // author Connor
+  it("should render all details on mobile", () => {
+    shallowWithBreed(testBreed);
 
-  // author connor
-  it('should GET breed on component mount if different breed supplied in props than url param', () => {
-    let getDogBreedSpy = spyOnDogBreedsService(testBreed)
-    let urlBreedId = testBreed.id + 1
-    mountWithBreed(testBreed, `${urlBreedId}`)
+    expect(mobile_elements.name().text()).to.include(testBreed.name);
+    expect(mobile_elements.group().text()).to.include(testBreed.breed_group);
+    expect(mobile_elements.lifeSpan().text())
+      .to.include(testBreed.life_span.low)
+      .and.to.include(testBreed.life_span.high);
+    expect(mobile_elements.height().text())
+      .to.include(testBreed.height_imperial.low)
+      .and.to.include(testBreed.height_imperial.high);
+    expect(mobile_elements.weight().text())
+      .to.include(testBreed.weight_imperial.low)
+      .and.to.include(testBreed.weight_imperial.high);
+    expect(mobile_elements.temperament().text()).to.include(
+      testBreed.temperament
+    );
+    expect(mobile_elements.bredFor().text()).to.include(testBreed.bred_for);
+    expect(mobile_elements.about().text()).to.include(testBreed.description);
+  });
 
-    expect(getDogBreedSpy).to.have.been.calledWith(`${urlBreedId}`)
-  })
-})
+  // author Rosemary
+  it("should render all details on desktop", () => {
+    shallowWithBreed(testBreed);
+
+    expect(desktop_elements.name().text()).to.include(testBreed.name);
+    expect(desktop_elements.group().text()).to.include(testBreed.breed_group);
+    expect(desktop_elements.lifeSpan().text())
+      .to.include(testBreed.life_span.low)
+      .and.to.include(testBreed.life_span.high);
+    expect(desktop_elements.height().text())
+      .to.include(testBreed.height_imperial.low)
+      .and.to.include(testBreed.height_imperial.high);
+    expect(desktop_elements.weight().text())
+      .to.include(testBreed.weight_imperial.low)
+      .and.to.include(testBreed.weight_imperial.high);
+    expect(desktop_elements.temperament().text()).to.include(
+      testBreed.temperament
+    );
+    expect(desktop_elements.bredFor().text()).to.include(testBreed.bred_for);
+    expect(desktop_elements.about().text()).to.include(testBreed.description);
+  });
+
+  // author Connor
+  it("should GET breed on component mount if no breed supplied in props", () => {
+    let getDogBreedSpy = spyOnDogBreedsService(testBreed);
+
+    mountWithBreed(emptyBreed, `${testBreed.id}`);
+
+    expect(getDogBreedSpy.getInstanceById).to.have.been.calledWith(
+      `${testBreed.id}`
+    );
+  });
+});

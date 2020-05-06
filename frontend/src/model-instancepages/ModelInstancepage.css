@@ -1,60 +1,184 @@
 .model-instancepage {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    padding-left: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.instancepage-image {
-    border-radius: 5px;
-    flex-grow: 3;
-    flex-direction: row;
+.instancepage-header {
+  text-align: center;
+}
+
+.instancepage-header a {
+  color: #528c8b;
+  text-decoration: underline;
+}
+
+.instancepage-header p {
+  color: #528c8b;
+}
+
+.instancepage-header a:hover {
+  color: #581730;
 }
 
 .image-gallery {
-    width: 90%;
-    margin: 0 auto;
-    margin-bottom: 20px;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
-.instancepage-image p {
-    color: #581730;
-    text-align: center;
+iframe {
+  margin: 0 auto;
+  display: block;
+  width: 90%;
+  height: 360px;
+}
+
+p,
+h1,
+h2,
+h4 {
+  color: #581730;
+  text-align: center;
+}
+
+.attributes h4 {
+  color: #528c8b;
+  font-weight: bold;
+}
+
+.about h2 {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.about h2,
+.about p {
+  text-align: left;
+}
+
+.temperament h2 {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.temperament h2,
+.temperament p {
+  text-align: left;
+}
+
+.alternate-names h2 {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.alternate-names h2,
+.alternate-names p {
+  text-align: left;
+}
+
+.adoption-policy h2 {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.adoption-policy h2,
+.adoption-policy p {
+  text-align: left;
+}
+
+.mission h2 {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.mission h2,
+.mission p {
+  text-align: left;
+}
+
+.cards-headers {
+  font-size: x-large;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.cards {
+  margin: 0 auto;
+}
+
+.dv-star-rating {
+  margin: 0 auto !important;
+}
+
+.instancepage-button {
+  background-color: #faa851 !important;
+  border-color: #faa851 !important;
+  width: min(90%, 500px);
+  margin: 0 auto;
+}
+
+.shelter-name > * {
+  text-align: left;
+  color: #581730;
+}
+
+.shelter-name h4 {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.fa-map-marker-alt,
+.fa-envelope,
+.fa-phone {
+  margin-left: 20px;
+  margin-right: 10px;
+}
+
+.shelter-name p {
+  color: #528c8b;
+  font-weight: bold;
 }
 
 .mapMedia {
-    margin-bottom: 20px;
+  width: min(90%, 800px);
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
-.logo {
-    padding: 2px;
-    height: 60px;
-    display: block;
+.top-breed,
+.top-breed-id {
+  margin: 0 auto;
 }
 
-.instancepage-text {
-    flex-grow: 2;
-    padding: 10px;
-    color: #581730;
+.top-breed-id a,
+.top-breed-id span {
+  color: #528c8b;
+  font-weight: bold;
+  font-size: larger;
 }
 
-.instancepage-text a, .instancepage-text a:hover{
-    color: #FAA851;
+.top-breed-id a {
+  text-decoration: underline;
 }
 
-@media screen and (min-width: 950px){
-    .model-instancepage {
-        flex-direction: row;
-    }
+.top-breed-id a:hover {
+  color: #581730;
+}
 
-    .instancepage-image {
-        max-width: 500px;
-        flex-direction: column;
-    }
+@media screen and (min-width: 1300px) {
+  .photo-and-map > * {
+    width: 700px;
+  }
 
-    .image-gallery{
-        width: 480px;
-    }
+  .instancepage-header > * {
+    text-align: left;
+  }
+
+  .instancepage-button {
+    width: 500px;
+  }
 }

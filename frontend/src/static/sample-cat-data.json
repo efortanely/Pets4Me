@@ -2,7 +2,7 @@
   "num_results": 8,
   "page": 1,
   "num_pages": 3,
-  "data" : [
+  "data": [
     {
       "id": "5e7a26c839ddd8cb3c541690",
       "name": "name 0",
@@ -28,7 +28,8 @@
       "age": "age 1",
       "desc": "age 1",
       "url": "url.com"
-    },{
+    },
+    {
       "id": "5e7a26c839ddd8cb3c541690",
       "name": "name 0",
       "index": 0,
@@ -53,7 +54,8 @@
       "age": "age 1",
       "desc": "age 1",
       "url": "url.com"
-    },{
+    },
+    {
       "id": "5e7a26c839ddd8cb3c541690",
       "name": "name 0",
       "index": 0,

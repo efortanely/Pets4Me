@@ -1,15 +1,41 @@
 .highlight {
-    background-color: #FFE854;
-    padding: 0;
-}
-
-h5 {
-    color: #581730;
-    margin-left: 20px;
+  background-color: #ffe854;
+  padding: 0;
 }
 
 h3 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  color: #581730;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.left-align {
+  text-align: left !important;
+  margin-left: 0;
+}
+
+.add-compare {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 0 2px 2px 2px !important;
+}
+
+.compare {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  height: 33px;
+}
+
+.compare-button-text {
+  margin-bottom: 3px;
+}
+
+.icon {
+  height: 20px;
+}
+
+.header-button {
+  margin-right: 10px;
 }

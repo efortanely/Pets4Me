@@ -1,5 +1,5 @@
 import os
-from flask import after_this_request, request, jsonify
+from flask import after_this_request, jsonify
 from sqlalchemy import (
     Column,
     Integer,
@@ -8,17 +8,21 @@ from sqlalchemy import (
     Float,
     alias,
     or_,
-    and_,
     func,
-    create_engine,
+    case,
 )
-from functools import reduce
 from sqlalchemy.dialects.postgresql import ARRAY as Array
 from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 import flask_restless as fr
-import pgeocode
-from util.sql import escape_like
+from .search_sort import (
+    searchable_query,
+    sorted_by_relationship,
+    sorted_by_cases,
+    request_max_dist,
+    request_user_loc,
+    should_default_sort,
+)
 
 db = SQLAlchemy()
 
@@ -37,29 +41,6 @@ def distance(pt1, pt2):
     c = 2 * func.atan2(func.sqrt(a), func.sqrt(1 - a))
     d = R * c
     return d
-
-
-def searchable_query(class_query):
-    def search_query(cls):
-        query = class_query(cls)
-
-        search = request.args.get("search")
-        if search:
-            search = escape_like(search.strip())
-            q_or = reduce(
-                or_,
-                (
-                    p.ilike("%" + w + "%", escape="\\")
-                    for w in search.split()
-                    for p in cls.str_params
-                ),
-            )
-
-            return query.filter(q_or)
-
-        return query
-
-    return search_query
 
 
 class Pet(db.Model):
@@ -113,18 +94,6 @@ class Pet(db.Model):
     description = Column(String(5000))
     url = Column(String(500))
 
-    str_params = [
-        name,
-        species,
-        gender,
-        primary_fallback_breed,
-        secondary_fallback_breed,
-        size,
-        color,
-        age,
-        description,
-    ]
-
     def primary_breed(self):
         id = None
         name = None
@@ -162,67 +131,43 @@ class Pet(db.Model):
         return {"small": self.photos_small, "full": self.photos_full}
 
     @classmethod
-    @searchable_query
+    @sorted_by_relationship(
+        "name",
+        "primary_dog_breed",
+        "secondary_dog_breed",
+        "primary_cat_breed",
+        "secondary_cat_breed",
+    )
+    @sorted_by_cases(names=("age",), cases=("Baby", "Young", "Adult", "Senior"))
+    @sorted_by_cases(names=("size",), cases=("Small", "Medium", "Large", "Extra Large"))
+    @searchable_query(
+        name,
+        species,
+        gender,
+        primary_fallback_breed,
+        secondary_fallback_breed,
+        size,
+        color,
+        age,
+        description,
+    )
     def query(cls):
         query = db.session.query(cls)
 
-        if "sort" in request.args and "dir" in request.args:
-            sort = request.args.get("sort")
-            dir = request.args.get("dir")
-            if sort == "primary_dog_breed":
-                if dir == "asc":
-                    query = query.join(cls.primary_dog_breed).order_by(DogBreed.name)
-                elif dir == "desc":
-                    query = query.join(cls.primary_dog_breed).order_by(
-                        DogBreed.name.desc()
-                    )
-            elif sort == "secondary_dog_breed":
-                if dir == "asc":
-                    query = query.join(cls.secondary_dog_breed).order_by(DogBreed.name)
-                elif dir == "desc":
-                    query = query.join(cls.secondary_dog_breed).order_by(
-                        DogBreed.name.desc()
-                    )
-            elif sort == "primary_cat_breed":
-                if dir == "asc":
-                    query = query.join(cls.primary_cat_breed).order_by(CatBreed.name)
-                elif dir == "desc":
-                    query = query.join(cls.primary_cat_breed).order_by(
-                        CatBreed.name.desc()
-                    )
-            elif sort == "secondary_cat_breed":
-                if dir == "asc":
-                    query = query.join(cls.secondary_cat_breed).order_by(CatBreed.name)
-                elif dir == "desc":
-                    query = query.join(cls.secondary_cat_breed).order_by(
-                        CatBreed.name.desc()
-                    )
-
-        if "max_dist" in request.args:
-            max_dist = request.args.get("max_dist")
-        else:
+        max_dist = request_max_dist()
+        if max_dist is None:
             return query
 
-        if "zip_code" in request.args:
-            nomi = pgeocode.Nominatim("us")
-            user_loc = nomi.query_postal_code(request.args.get("zip_code"))
-            user_loc = (user_loc["latitude"], user_loc["longitude"])
-        else:
-            user_loc = (30.286, -97.736)  # GDC
+        user_loc = request_user_loc()
+        query = query.join(cls.shelter_ref).filter(
+            distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+        )
+        if should_default_sort():
+            query = query.order_by(
+                distance(user_loc, (Shelter.latitude, Shelter.longitude))
+            )
 
-        if "q" in request.args and "order_by" in request.args.get("q"):
-            return query.join(cls.shelter_ref).filter(
-                distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
-            )
-        else:
-            return (
-                query.join(cls.shelter_ref)
-                .filter(
-                    distance(user_loc, (Shelter.latitude, Shelter.longitude))
-                    <= max_dist
-                )
-                .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
-            )
+        return query
 
 
 pet_includes = [
@@ -253,13 +198,8 @@ class DogBreed(db.Model):
     bred_for = Column(String(1000))
     breed_group = Column(String(100))
     photo = Column(String(500))
-
-    str_params = [
-        name,
-        temperament,
-        bred_for,
-        breed_group,
-    ]
+    video_url = Column(String(500))
+    description = Column(String(5000))
 
     def life_span(self):
         return {"low": self.life_span_low, "high": self.life_span_high}
@@ -274,31 +214,37 @@ class DogBreed(db.Model):
         return [dog.id for dog in self.dogs]
 
     def shelters_with_breed(self):
-        primary = alias(DogBreed)
-        secondary = alias(DogBreed)
         shelters = (
             db.session.query(Shelter.id)
             .join(Pet, Shelter.pets)
-            .join(primary, Pet.primary_dog_breed)
-            .join(secondary, Pet.secondary_dog_breed)
             .filter(
                 or_(
                     Pet.primary_dog_breed_id == self.id,
                     Pet.secondary_dog_breed_id == self.id,
                 )
             )
+            .distinct()
             .all()
         )
 
         return [shelter[0] for shelter in shelters]
 
     @classmethod
-    @searchable_query
+    @searchable_query(name, temperament, bred_for, breed_group, description)
     def query(cls):
         return db.session.query(cls)
 
 
-dog_breed_includes = ["id", "name", "temperament", "bred_for", "breed_group", "photo"]
+dog_breed_includes = [
+    "id",
+    "name",
+    "temperament",
+    "bred_for",
+    "breed_group",
+    "photo",
+    "video_url",
+    "description",
+]
 dog_breed_methods = [
     "life_span",
     "height_imperial",
@@ -325,11 +271,8 @@ class CatBreed(db.Model):
     # 1-5
     grooming_level = Column(Integer)
     photo = Column(String(500))
-
-    str_params = [
-        name,
-        temperament,
-    ]
+    video_url = Column(String(500))
+    description = Column(String(5000))
 
     def life_span(self):
         return {"low": self.life_span_low, "high": self.life_span_high}
@@ -338,26 +281,23 @@ class CatBreed(db.Model):
         return [cat.id for cat in self.cats]
 
     def shelters_with_breed(self):
-        primary = alias(CatBreed)
-        secondary = alias(CatBreed)
         shelters = (
             db.session.query(Shelter.id)
             .join(Pet, Shelter.pets)
-            .join(primary, Pet.primary_cat_breed)
-            .join(secondary, Pet.secondary_cat_breed)
             .filter(
                 or_(
                     Pet.primary_cat_breed_id == self.id,
                     Pet.secondary_cat_breed_id == self.id,
                 )
             )
+            .distinct()
             .all()
         )
 
         return [shelter[0] for shelter in shelters]
 
     @classmethod
-    @searchable_query
+    @searchable_query(name, temperament, description)
     def query(cls):
         return db.session.query(cls)
 
@@ -372,6 +312,8 @@ cat_breed_includes = [
     "child_friendly",
     "grooming_level",
     "photo",
+    "video_url",
+    "description",
 ]
 cat_breed_methods = ["life_span", "cat_ids", "shelters_with_breed"]
 
@@ -399,19 +341,6 @@ class Shelter(db.Model):
 
     # references to all pets for shelters, generated by setting shelter in pet instances
     pets = relationship("Pet", back_populates="shelter_ref")
-
-    str_params = [
-        name,
-        address1,
-        address2,
-        city,
-        state,
-        country,
-        email,
-        phone_number,
-        mission,
-        adoption_policy,
-    ]
 
     def address(self):
         return {
@@ -472,33 +401,34 @@ class Shelter(db.Model):
         return {"small": self.photos_small, "full": self.photos_full}
 
     @classmethod
-    @searchable_query
+    @searchable_query(
+        name,
+        address1,
+        address2,
+        city,
+        state,
+        country,
+        email,
+        phone_number,
+        mission,
+        adoption_policy,
+    )
     def query(cls):
-        if "max_dist" in request.args:
-            max_dist = request.args.get("max_dist")
-        else:
-            return db.session.query(cls)
+        query = db.session.query(cls)
+        max_dist = request_max_dist()
+        if max_dist is None:
+            return query
 
-        if "zip_code" in request.args:
-            nomi = pgeocode.Nominatim("us")
-            user_loc = nomi.query_postal_code(request.args.get("zip_code"))
-            user_loc = (user_loc["latitude"], user_loc["longitude"])
-        else:
-            user_loc = (30.286, -97.736)  # GDC
+        user_loc = request_user_loc()
+        query = query.filter(
+            distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
+        )
+        if should_default_sort():
+            query = query.order_by(
+                distance(user_loc, (Shelter.latitude, Shelter.longitude))
+            )
 
-        if "q" in request.args and "order_by" in request.args.get("q"):
-            return db.session.query(cls).filter(
-                distance(user_loc, (Shelter.latitude, Shelter.longitude)) <= max_dist
-            )
-        else:
-            return (
-                db.session.query(cls)
-                .filter(
-                    distance(user_loc, (Shelter.latitude, Shelter.longitude))
-                    <= max_dist
-                )
-                .order_by(distance(user_loc, (Shelter.latitude, Shelter.longitude)))
-            )
+        return query
 
 
 shelter_includes = ["id", "name", "mission", "adoption_policy"]
@@ -660,8 +590,8 @@ def setup(app):
                     "cat_breeds": unique_cat_breeds,
                     "unique_letters": unique_letter(unique_cat_breeds),
                     "life_span": {
-                        "min": min_max_dog_life_span[0],
-                        "max": min_max_dog_life_span[1],
+                        "min": min_max_cat_life_span[0],
+                        "max": min_max_cat_life_span[1],
                     },
                 },
                 "shelters": {
