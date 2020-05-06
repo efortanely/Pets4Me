@@ -46,6 +46,8 @@ Our goal is to make finding a new furry friend as easy as possible. Explore the 
 
 ## Project Info
 
+Grading SHA: 112469f36d6c32ef7e6a1b7cb72d3d27add5a9d5
+
 ### Leaders
 
 Phase One Project Leader: Connor Sheehan
